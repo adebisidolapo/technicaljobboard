@@ -47,6 +47,78 @@ export default function Home() {
           </button>
         </div>
       </section>
+
+      {/* Latest Jobs Section */}
+<section className="max-w-7xl mx-auto px-6 pb-20">
+  <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+    Latest Jobs
+  </h3>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {[
+      {
+        title: "Frontend Engineer",
+        company: "Innovatech",
+        location: "Remote",
+        type: "Full-time",
+      },
+      {
+        title: "Backend Developer",
+        company: "CloudWorks",
+        location: "New York, USA",
+        type: "Hybrid",
+      },
+      {
+        title: "DevOps Engineer",
+        company: "ScaleOps",
+        location: "London, UK",
+        type: "Contract",
+      },
+      {
+        title: "Mobile App Developer",
+        company: "Appify",
+        location: "Remote",
+        type: "Full-time",
+      },
+      {
+        title: "Data Engineer",
+        company: "DataNest",
+        location: "Berlin, Germany",
+        type: "On-site",
+      },
+      {
+        title: "QA Automation Engineer",
+        company: "TestLab",
+        location: "Toronto, Canada",
+        type: "Full-time",
+      },
+    ].map((job, index) => (
+      <div
+        key={index}
+        className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
+      >
+        <h4 className="text-lg font-semibold text-gray-900 mb-1">
+          {job.title}
+        </h4>
+        <p className="text-sm text-gray-600 mb-3">
+          {job.company}
+        </p>
+
+        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+          <span>{job.location}</span>
+          <span className="text-blue-600 font-medium">
+            {job.type}
+          </span>
+        </div>
+
+        <button className="text-blue-600 font-medium hover:underline">
+          View job →
+        </button>
+      </div>
+    ))}
+  </div>
+</section>
+
     </main>
   );
 }
