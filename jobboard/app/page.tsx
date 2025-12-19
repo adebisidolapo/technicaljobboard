@@ -1,41 +1,35 @@
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
-{/* Header */}
 <header className="bg-white border-b border-gray-200">
-  <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
 
     {/* Logo */}
-    <div className="flex items-center">
-      <img
-        src="/logo.png"
-        alt="Technical Jobboard"
-        className="h-10 w-auto"
-      />
-    </div>
+    <img
+      src="/logo.png"
+      alt="Technical Job Board"
+      className="h-12 w-auto"
+    />
 
-    {/* Job Board Navigation */}
-    <nav className="hidden lg:flex items-center space-x-8">
-      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
+    {/* Navigation */}
+    <nav className="hidden md:flex items-center space-x-10">
+      <a className="text-gray-700 hover:text-[#5633be] font-medium" href="#">
         Jobs
       </a>
-      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
-        Companies
+      <a className="text-gray-700 hover:text-[#5633be] font-medium" href="#">
+        Employers
       </a>
-      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
+      <a className="text-gray-700 hover:text-[#5633be] font-medium" href="#">
         Categories
-      </a>
-      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
-        Job Alerts
       </a>
     </nav>
 
     {/* Actions */}
     <div className="flex items-center space-x-4">
-      <button className="text-gray-700 hover:text-blue-600 font-medium">
-        Sign in
+      <button className="text-gray-700 hover:text-[#5633be] font-medium">
+        Login
       </button>
-      <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 font-medium">
+      <button className="bg-[#5633be] text-white px-6 py-2.5 rounded-lg hover:bg-[#4526a6] font-medium">
         Post a Job
       </button>
     </div>
@@ -43,33 +37,74 @@ export default function Home() {
   </div>
 </header>
 
-
 {/* Hero Section */}
-<section className="max-w-7xl mx-auto px-6 py-24 text-center">
-  <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-    Hire smarter. Get hired faster.
-  </h1>
+<section className="w-full bg-gradient-to-b from-[#5633be]/15 via-[#5633be]/5 to-white">
+  <div className="max-w-7xl mx-auto px-6 py-28 text-center">
 
-  <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
-    A focused job platform for technical professionals and companies
-    building the future.
-  </p>
+    <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+      Find your next Technical Job
+    </h1>
 
-  {/* Search Bar */}
-  <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row gap-4 max-w-3xl mx-auto">
-    <input
-      type="text"
-      placeholder="Job title or keyword"
-      className="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-    <input
-      type="text"
-      placeholder="Location"
-      className="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-    <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
-      Search Jobs
-    </button>
+    <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-14">
+      A curated job platform for engineers, developers, and technical professionals.
+    </p>
+
+    {/* Search Bar */}
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 flex flex-col lg:flex-row gap-4 max-w-5xl mx-auto">
+      
+      <input
+        type="text"
+        placeholder="Job title or keyword"
+        className="flex-1 px-5 py-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#5633be]"
+      />
+
+      <input
+        type="text"
+        placeholder="Location"
+        className="flex-1 px-5 py-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#5633be]"
+      />
+
+      <select
+        className="px-5 py-4 rounded-xl border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#5633be]"
+      >
+        <option>Job Type</option>
+        <option>Full-time</option>
+        <option>Part-time</option>
+        <option>Contract</option>
+        <option>Remote</option>
+      </select>
+
+      <button className="bg-[#5633be] text-white px-10 py-4 rounded-xl hover:bg-[#4526a6] font-medium">
+        Search Jobs
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<section className="max-w-7xl mx-auto px-6 py-24">
+  <h2 className="text-3xl font-semibold text-gray-900 mb-10 text-center">
+    Browse by Category
+  </h2>
+
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+    {[
+      "Engineering",
+      "Software",
+      "DevOps",
+      "Data",
+      "Cybersecurity",
+      "IT Support",
+    ].map((category) => (
+      <div
+        key={category}
+        className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition cursor-pointer"
+      >
+        <p className="font-medium text-gray-800">
+          {category}
+        </p>
+      </div>
+    ))}
   </div>
 </section>
 
