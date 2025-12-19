@@ -2,51 +2,69 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-900">
-            Technical Job Board
-          </h1>
-          <nav className="space-x-4">
-            <a className="text-gray-600 hover:text-gray-900" href="#">
-              Jobs
-            </a>
-            <a className="text-gray-600 hover:text-gray-900" href="#">
-              Employers
-            </a>
-            <a className="text-gray-600 hover:text-gray-900" href="#">
-              Login
-            </a>
-          </nav>
-        </div>
-      </header>
+     {/* Header */}
+<header className="bg-white border-b border-gray-200">
+  <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    {/* Logo */}
+    <div className="flex items-center space-x-2">
+      <span className="text-2xl font-bold text-gray-900">
+        Technical<span className="text-blue-600">.</span>
+      </span>
+      <span className="text-sm tracking-widest text-blue-600">
+        JOBBOARD
+      </span>
+    </div>
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">
-          Find your next tech job
-        </h2>
-        <p className="text-lg text-gray-600 mb-10">
-          Search thousands of jobs from top companies
-        </p>
+    {/* Navigation */}
+    <nav className="hidden md:flex items-center space-x-8">
+      <a href="#" className="text-gray-700 hover:text-blue-600">
+        Jobs
+      </a>
+      <a href="#" className="text-gray-700 hover:text-blue-600">
+        Employers
+      </a>
+    </nav>
 
-        {/* Search Box */}
-        <div className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row gap-4 max-w-3xl mx-auto">
-          <input
-            type="text"
-            placeholder="Job title or keyword"
-            className="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            className="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
-            Search Jobs
-          </button>
-        </div>
-      </section>
+    {/* Actions */}
+    <div className="flex items-center space-x-4">
+      <button className="text-gray-700 hover:text-blue-600">
+        Sign in
+      </button>
+      <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700">
+        Post a Job
+      </button>
+    </div>
+  </div>
+</header>
+
+{/* Hero Section */}
+<section className="max-w-7xl mx-auto px-6 py-24 text-center">
+  <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+    Hire smarter. Get hired faster.
+  </h1>
+
+  <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+    A focused job platform for technical professionals and companies
+    building the future.
+  </p>
+
+  {/* Search Bar */}
+  <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row gap-4 max-w-3xl mx-auto">
+    <input
+      type="text"
+      placeholder="Job title or keyword"
+      className="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <input
+      type="text"
+      placeholder="Location"
+      className="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+      Search Jobs
+    </button>
+  </div>
+</section>
 
       {/* Latest Jobs Section */}
 <section className="max-w-7xl mx-auto px-6 pb-20">
