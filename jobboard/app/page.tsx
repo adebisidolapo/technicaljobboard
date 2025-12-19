@@ -1,41 +1,48 @@
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Header */}
-     {/* Header */}
+{/* Header */}
 <header className="bg-white border-b border-gray-200">
   <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
     {/* Logo */}
-    <div className="flex items-center space-x-2">
-      <span className="text-2xl font-bold text-gray-900">
-        Technical<span className="text-blue-600">.</span>
-      </span>
-      <span className="text-sm tracking-widest text-blue-600">
-        JOBBOARD
-      </span>
+    <div className="flex items-center">
+      <img
+        src="/logo.png"
+        alt="Technical Jobboard"
+        className="h-10 w-auto"
+      />
     </div>
 
-    {/* Navigation */}
-    <nav className="hidden md:flex items-center space-x-8">
-      <a href="#" className="text-gray-700 hover:text-blue-600">
+    {/* Job Board Navigation */}
+    <nav className="hidden lg:flex items-center space-x-8">
+      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
         Jobs
       </a>
-      <a href="#" className="text-gray-700 hover:text-blue-600">
-        Employers
+      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
+        Companies
+      </a>
+      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
+        Categories
+      </a>
+      <a className="text-gray-700 hover:text-blue-600 font-medium" href="#">
+        Job Alerts
       </a>
     </nav>
 
     {/* Actions */}
     <div className="flex items-center space-x-4">
-      <button className="text-gray-700 hover:text-blue-600">
+      <button className="text-gray-700 hover:text-blue-600 font-medium">
         Sign in
       </button>
-      <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700">
+      <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 font-medium">
         Post a Job
       </button>
     </div>
+
   </div>
 </header>
+
 
 {/* Hero Section */}
 <section className="max-w-7xl mx-auto px-6 py-24 text-center">
