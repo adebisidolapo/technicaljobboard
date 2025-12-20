@@ -42,62 +42,66 @@ export default function Home() {
 <section
   className="w-full"
   style={{
-    background: "linear-gradient(90deg, #BED6FA 0%, #D3E3FA 60%, #F5F8FD 100%)",
+    background:
+      "linear-gradient(90deg, #BED6FA 0%, #D3E3FA 60%, #F5F8FD 100%)",
   }}
 >
-  <div className="max-w-7xl mx-auto px-6 py-28">
+  <div className="max-w-7xl mx-auto px-6 py-28 text-center">
 
-    <div className="max-w-3xl">
-      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-        Find your next Technical Job
-      </h1>
+    {/* Headline */}
+    <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+      Find your next Technical Job
+    </h1>
 
-      <p className="text-xl text-gray-700 mb-12">
-        Discover curated technical roles from companies building
-        the future of engineering and technology.
-      </p>
+    <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-14">
+      The curated job board for developers, engineers, and technical professionals
+    </p>
 
-      {/* Search Bar */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
-        
-        {/* Keyword */}
-        <div className="flex items-center border border-gray-300 rounded-xl px-4">
-          <span className="text-gray-400 mr-3">🔍</span>
-          <input
-            type="text"
-            placeholder="Job title or keyword"
-            className="w-full py-4 focus:outline-none"
-          />
-        </div>
+    {/* Search Box */}
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-4 flex flex-col md:flex-row items-stretch gap-4 max-w-5xl mx-auto">
 
-        {/* Location */}
-        <div className="flex items-center border border-gray-300 rounded-xl px-4">
-          <span className="text-gray-400 mr-3">📍</span>
-          <input
-            type="text"
-            placeholder="Location"
-            className="w-full py-4 focus:outline-none"
-          />
-        </div>
+      {/* Keyword */}
+      <div className="flex items-center flex-1 border border-gray-300 rounded-xl px-4">
+        <span className="text-gray-400 mr-3">🔍</span>
+        <input
+          type="text"
+          placeholder="Search by title, keyword"
+          className="w-full py-4 focus:outline-none text-gray-700"
+        />
+      </div>
 
-        {/* Job Type */}
-        <select className="border border-gray-300 rounded-xl px-4 py-4 text-gray-600 focus:outline-none">
+      {/* Location */}
+      <div className="flex items-center flex-1 border border-gray-300 rounded-xl px-4">
+        <span className="text-gray-400 mr-3">📍</span>
+        <input
+          type="text"
+          placeholder="Location"
+          className="w-full py-4 focus:outline-none text-gray-700"
+        />
+      </div>
+
+      {/* Job Type */}
+      <div className="flex items-center border border-gray-300 rounded-xl px-4">
+        <span className="text-gray-400 mr-3">🗂️</span>
+        <select className="py-4 bg-transparent focus:outline-none text-gray-700">
           <option>Job Type</option>
           <option>Full-time</option>
           <option>Part-time</option>
           <option>Contract</option>
           <option>Remote</option>
         </select>
-
-        {/* Button */}
-        <button className="bg-[#5633be] text-white rounded-xl px-6 py-4 font-medium hover:bg-[#4526a6]">
-          Search Jobs
-        </button>
       </div>
+
+      {/* Button */}
+      <button className="bg-[#5633be] text-white px-10 py-4 rounded-xl font-medium hover:bg-[#4526a6] transition">
+        Search Jobs
+      </button>
     </div>
 
   </div>
 </section>
+
+
 
 
 <section className="bg-white">
@@ -139,7 +143,7 @@ export default function Home() {
       Latest Jobs
     </h2>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {[
         {
           title: "Frontend Engineer",
@@ -157,16 +161,34 @@ export default function Home() {
           title: "DevOps Engineer",
           company: "ScaleOps",
           location: "London, UK",
-          type: "Contract",
+          type: "Full-time",
+        },
+        {
+          title: "Mobile App Developer",
+          company: "Apply",
+          location: "Remote",
+          type: "Full-time",
+        },
+        {
+          title: "Data Engineer",
+          company: "DataNest",
+          location: "Berlin, Germany",
+          type: "On-site",
+        },
+        {
+          title: "QA Automation Engineer",
+          company: "TestLab",
+          location: "Toronto, Canada",
+          type: "Full-time",
         },
       ].map((job, index) => (
         <div
           key={index}
-          className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition"
+          className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition"
         >
-          <h4 className="text-lg font-semibold text-gray-900 mb-1">
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">
             {job.title}
-          </h4>
+          </h3>
 
           <p className="text-sm text-gray-600 mb-3">
             {job.company}
@@ -188,6 +210,7 @@ export default function Home() {
 
   </div>
 </section>
+
         </>
   );
 }
