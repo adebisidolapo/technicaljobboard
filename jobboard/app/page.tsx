@@ -58,45 +58,93 @@ export default function Home() {
     </p>
 
     {/* Search Box */}
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-4 flex flex-col md:flex-row items-stretch gap-4 max-w-5xl mx-auto">
+<div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-4 flex flex-col md:flex-row items-stretch gap-4 max-w-5xl mx-auto">
 
-      {/* Keyword */}
-      <div className="flex items-center flex-1 border border-gray-300 rounded-xl px-4">
-        <span className="text-gray-400 mr-3">🔍</span>
-        <input
-          type="text"
-          placeholder="Search by title, keyword"
-          className="w-full py-4 focus:outline-none text-gray-700"
-        />
-      </div>
+  {/* Keyword */}
+  <div className="flex items-center flex-1 border border-gray-300 rounded-xl px-4">
+    <svg
+      className="w-5 h-5 text-gray-400 mr-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 3.5a7.5 7.5 0 0013.15 13.15z"
+      />
+    </svg>
 
-      {/* Location */}
-      <div className="flex items-center flex-1 border border-gray-300 rounded-xl px-4">
-        <span className="text-gray-400 mr-3">📍</span>
-        <input
-          type="text"
-          placeholder="Location"
-          className="w-full py-4 focus:outline-none text-gray-700"
-        />
-      </div>
+    <input
+      type="text"
+      placeholder="Search by title or keyword"
+      className="w-full py-4 focus:outline-none text-gray-700"
+    />
+  </div>
 
-      {/* Job Type */}
-      <div className="flex items-center border border-gray-300 rounded-xl px-4">
-        <span className="text-gray-400 mr-3">🗂️</span>
-        <select className="py-4 bg-transparent focus:outline-none text-gray-700">
-          <option>Job Type</option>
-          <option>Full-time</option>
-          <option>Part-time</option>
-          <option>Contract</option>
-          <option>Remote</option>
-        </select>
-      </div>
+  {/* Location */}
+  <div className="flex items-center flex-1 border border-gray-300 rounded-xl px-4">
+    <svg
+      className="w-5 h-5 text-gray-400 mr-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19.5 11c0 7.5-7.5 10.5-7.5 10.5S4.5 18.5 4.5 11a7.5 7.5 0 1115 0z"
+      />
+    </svg>
 
-      {/* Button */}
-      <button className="bg-[#5633be] text-white px-10 py-4 rounded-xl font-medium hover:bg-[#4526a6] transition">
-        Search Jobs
-      </button>
-    </div>
+    <input
+      type="text"
+      placeholder="Location"
+      className="w-full py-4 focus:outline-none text-gray-700"
+    />
+  </div>
+
+  {/* Job Type */}
+  <div className="flex items-center border border-gray-300 rounded-xl px-4">
+    <svg
+      className="w-5 h-5 text-gray-400 mr-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 7V6a3 3 0 013-3h6a3 3 0 013 3v1"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 7h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"
+      />
+    </svg>
+
+    <select className="py-4 bg-transparent focus:outline-none text-gray-700 w-full">
+      <option>Job Type</option>
+      <option>Full-time</option>
+      <option>Part-time</option>
+      <option>Contract</option>
+      <option>Remote</option>
+    </select>
+  </div>
+
+  {/* Button */}
+  <button className="bg-[#5633be] text-white px-10 py-4 rounded-xl font-medium hover:bg-[#4526a6] transition">
+    Search Jobs
+  </button>
 
   </div>
 </section>
