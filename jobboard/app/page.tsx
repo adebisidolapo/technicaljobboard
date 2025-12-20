@@ -1,27 +1,26 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50">
-<header className="bg-white border-b border-gray-200">
+    <header className="bg-white border-b border-gray-200">
   <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
 
     {/* Logo */}
     <img
       src="/logo.png"
       alt="Technical Job Board"
-      className="h-12 w-auto"
+      className="h-16 w-auto"
     />
 
     {/* Navigation */}
-    <nav className="hidden md:flex items-center space-x-10">
-      <a className="text-gray-700 hover:text-[#5633be] font-medium" href="#">
-        Jobs
-      </a>
-      <a className="text-gray-700 hover:text-[#5633be] font-medium" href="#">
-        Employers
-      </a>
-      <a className="text-gray-700 hover:text-[#5633be] font-medium" href="#">
-        Categories
-      </a>
+    <nav className="hidden lg:flex items-center space-x-10">
+      {["Home", "Jobs", "Categories", "Employers", "About Us"].map((item) => (
+        <a
+          key={item}
+          href="#"
+          className="text-gray-700 hover:text-[#5633be] font-medium"
+        >
+          {item}
+        </a>
+      ))}
     </nav>
 
     {/* Actions */}
@@ -29,7 +28,7 @@ export default function Home() {
       <button className="text-gray-700 hover:text-[#5633be] font-medium">
         Login
       </button>
-      <button className="bg-[#5633be] text-white px-6 py-2.5 rounded-lg hover:bg-[#4526a6] font-medium">
+      <button className="bg-[#5633be] text-white px-6 py-3 rounded-lg hover:bg-[#4526a6] font-medium">
         Post a Job
       </button>
     </div>
@@ -38,79 +37,102 @@ export default function Home() {
 </header>
 
 {/* Hero Section */}
-<section className="w-full bg-gradient-to-b from-[#5633be]/15 via-[#5633be]/5 to-white">
-  <div className="max-w-7xl mx-auto px-6 py-28 text-center">
+<section
+  className="w-full"
+  style={{
+    background: "linear-gradient(90deg, #BED6FA 0%, #D3E3FA 60%, #F5F8FD 100%)",
+  }}
+>
+  <div className="max-w-7xl mx-auto px-6 py-28">
 
-    <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-      Find your next Technical Job
-    </h1>
+    <div className="max-w-3xl">
+      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+        Find your next Technical Job
+      </h1>
 
-    <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-14">
-      A curated job platform for engineers, developers, and technical professionals.
-    </p>
+      <p className="text-xl text-gray-700 mb-12">
+        Discover curated technical roles from companies building
+        the future of engineering and technology.
+      </p>
 
-    {/* Search Bar */}
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 flex flex-col lg:flex-row gap-4 max-w-5xl mx-auto">
-      
-      <input
-        type="text"
-        placeholder="Job title or keyword"
-        className="flex-1 px-5 py-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#5633be]"
-      />
+      {/* Search Bar */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        {/* Keyword */}
+        <div className="flex items-center border border-gray-300 rounded-xl px-4">
+          <span className="text-gray-400 mr-3">🔍</span>
+          <input
+            type="text"
+            placeholder="Job title or keyword"
+            className="w-full py-4 focus:outline-none"
+          />
+        </div>
 
-      <input
-        type="text"
-        placeholder="Location"
-        className="flex-1 px-5 py-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#5633be]"
-      />
+        {/* Location */}
+        <div className="flex items-center border border-gray-300 rounded-xl px-4">
+          <span className="text-gray-400 mr-3">📍</span>
+          <input
+            type="text"
+            placeholder="Location"
+            className="w-full py-4 focus:outline-none"
+          />
+        </div>
 
-      <select
-        className="px-5 py-4 rounded-xl border border-gray-300 text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#5633be]"
-      >
-        <option>Job Type</option>
-        <option>Full-time</option>
-        <option>Part-time</option>
-        <option>Contract</option>
-        <option>Remote</option>
-      </select>
+        {/* Job Type */}
+        <select className="border border-gray-300 rounded-xl px-4 py-4 text-gray-600 focus:outline-none">
+          <option>Job Type</option>
+          <option>Full-time</option>
+          <option>Part-time</option>
+          <option>Contract</option>
+          <option>Remote</option>
+        </select>
 
-      <button className="bg-[#5633be] text-white px-10 py-4 rounded-xl hover:bg-[#4526a6] font-medium">
-        Search Jobs
-      </button>
+        {/* Button */}
+        <button className="bg-[#5633be] text-white rounded-xl px-6 py-4 font-medium hover:bg-[#4526a6]">
+          Search Jobs
+        </button>
+      </div>
     </div>
 
   </div>
 </section>
 
-<section className="max-w-7xl mx-auto px-6 py-24">
-  <h2 className="text-3xl font-semibold text-gray-900 mb-10 text-center">
-    Browse by Category
-  </h2>
 
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-    {[
-      "Engineering",
-      "Software",
-      "DevOps",
-      "Data",
-      "Cybersecurity",
-      "IT Support",
-    ].map((category) => (
-      <div
-        key={category}
-        className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition cursor-pointer"
-      >
-        <p className="font-medium text-gray-800">
-          {category}
-        </p>
-      </div>
-    ))}
+<section className="bg-white">
+  <div className="max-w-7xl mx-auto px-6 py-24">
+
+    <h2 className="text-3xl font-semibold text-gray-900 mb-12 text-center">
+      Browse by Category
+    </h2>
+
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      {[
+        "Engineering",
+        "Software",
+        "DevOps",
+        "Data",
+        "Cybersecurity",
+        "IT Support",
+      ].map((category) => (
+        <div
+          key={category}
+          className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition cursor-pointer"
+        >
+          <p className="font-medium text-gray-800">
+            {category}
+          </p>
+        </div>
+      ))}
+    </div>
+
   </div>
 </section>
 
+
       {/* Latest Jobs Section */}
-<section className="max-w-7xl mx-auto px-6 pb-20">
-  <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+<section className="bg-white">
+  <div className="max-w-7xl mx-auto px-6 py-24">
+    <h2 className="text-3xl font-semibold text-gray-900 mb-12">
     Latest Jobs
   </h3>
 
