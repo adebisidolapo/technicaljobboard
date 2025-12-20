@@ -1,5 +1,7 @@
 export default function Home() {
   return (
+    <>
+
     <header className="bg-white border-b border-gray-200">
   <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
 
@@ -202,5 +204,6 @@ export default function Home() {
 </section>
 
     </main>
+        </>
   );
 }
