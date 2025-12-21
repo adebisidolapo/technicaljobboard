@@ -22,7 +22,7 @@ export default function RootLayout({
       <img
   src="/logo.png"
   alt="Logo"
-  className="h-18 w-auto object-contain"
+  className="h-15 w-auto object-contain"
 />
     </div>
 
