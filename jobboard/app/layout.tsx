@@ -32,3 +32,27 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+import "./globals.css";
+import Header from "./components/Header";
+
+export const metadata = {
+  title: "Technical Job Board",
+  description: "Where technical careers meet opportunity",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <Header />
+        {children}
+      </body>
+    </html>
+  );
+}

@@ -1,0 +1,29 @@
+import Image from "next/image";
+
+export default function Header() {
+  return (
+    <header className="w-full bg-white border-b border-gray-200">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <Image
+          src="/logo(2).png"
+          alt="Technical Job Board Logo"
+          width={140}
+          height={36}
+          priority
+        />
+
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
+          <a href="#" className="hover:text-[#3017D3]">All Jobs</a>
+          <a href="#" className="hover:text-[#3017D3]">Jobseeker</a>
+          <a href="#" className="hover:text-[#3017D3]">Employer</a>
+          <a
+            href="#"
+            className="px-4 py-2 bg-[#3017D3] text-white rounded-md"
+          >
+            Post Job
+          </a>
+        </nav>
+      </div>
+    </header>
+  );
+}
