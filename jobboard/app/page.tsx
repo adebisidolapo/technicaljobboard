@@ -2,9 +2,14 @@ export default function Home() {
   return (
     <main>
       {/* HERO */}
-      <section className="bg-white py-24">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+<section className="relative bg-[#FAFAFF] py-24 overflow-hidden">
+  {/* Background decoration */}
+<div className="pointer-events-none absolute inset-0">
+  <div className="absolute top-16 left-0 w-64 h-64 border border-indigo-100 rotate-12" />
+  <div className="absolute bottom-16 right-0 w-96 h-96 border border-indigo-100 -rotate-12" />
+</div>
 
+<div className="max-w-4xl mx-auto px-6 text-center relative">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
             Where{" "}
             <span className="text-[#3017D3]">Technical</span>{" "}

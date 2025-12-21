@@ -20,10 +20,10 @@ export default function RootLayout({
     {/* Logo */}
     <div className="flex items-center">
       <img
-        src="/logo.png"
-        alt="Logo"
-        className="h-8 w-auto"
-      />
+  src="/logo.png"
+  alt="Logo"
+  className="h-10 w-auto object-contain"
+/>
     </div>
 
     {/* Menu */}
