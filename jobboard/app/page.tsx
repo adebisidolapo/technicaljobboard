@@ -49,8 +49,6 @@ export default function Home() {
             </button>
           </div>
       </section>
-    </main>
- 
 
 {/* JOB SEEKER / EMPLOYER CARDS */}
 <section className="bg-white py-16">
@@ -90,3 +88,6 @@ export default function Home() {
 
   </div>
 </section>
+</main>
+  );
+}
