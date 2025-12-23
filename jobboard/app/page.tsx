@@ -45,9 +45,46 @@ export default function Home() {
               Search Jobs
             </button>
           </div>
-
-        </div>
       </section>
     </main>
   );
 }
+
+{/* JOB SEEKER / EMPLOYER CARDS */}
+<section className="bg-white py-16">
+  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    {/* Job Seekers */}
+    <div className="border border-gray-200 rounded-xl p-6 flex items-center justify-between hover:shadow-md transition">
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900">
+          Job seekers
+        </h3>
+        <p className="mt-1 text-sm text-gray-600">
+          Browse jobs from the very best companies.
+        </p>
+      </div>
+
+      <button className="px-5 py-2 text-sm bg-[#3017D3] text-white rounded-md">
+        Find jobs
+      </button>
+    </div>
+
+    {/* Employers */}
+    <div className="border border-gray-200 rounded-xl p-6 flex items-center justify-between hover:shadow-md transition">
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900">
+          Employers
+        </h3>
+        <p className="mt-1 text-sm text-gray-600">
+          Reach job seekers and fill open positions.
+        </p>
+      </div>
+
+      <button className="px-5 py-2 text-sm bg-[#3017D3] text-white rounded-md">
+        Post a job
+      </button>
+    </div>
+
+  </div>
+</section>
