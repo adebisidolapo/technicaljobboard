@@ -3,20 +3,23 @@ export default function Home() {
     <main>
       {/* HERO */}
 <section className="relative bg-[#FAFAFF] py-24 overflow-hidden">  
-  {/* Background rings */}
-<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-  <div className="w-[700px] h-[700px] rounded-full border border-blue-100" />
-  <div className="absolute w-[900px] h-[900px] rounded-full border border-blue-50" />
-</div>
-
-{/* Floating avatars (decorative) */}
+ {/* Background decoration */}
 <div className="pointer-events-none absolute inset-0">
-  <div className="absolute top-24 left-20 w-10 h-10 rounded-full bg-blue-200" />
-  <div className="absolute top-32 right-24 w-12 h-12 rounded-full bg-indigo-200" />
-  <div className="absolute bottom-24 left-32 w-9 h-9 rounded-full bg-sky-200" />
-  <div className="absolute bottom-28 right-40 w-11 h-11 rounded-full bg-blue-300" />
+  <div className="absolute top-16 left-0 w-64 h-64 border border-indigo-100 rotate-12" />
+  <div className="absolute bottom-16 right-0 w-96 h-96 border border-indigo-100 -rotate-12" />
 </div>
 
+<div className="max-w-4xl mx-auto px-6 text-center relative">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Where{" "}
+            <span className="text-[#3017D3]">Technical</span>{" "}
+            Careers Meet Opportunity
+          </h1>
+
+          <p className="mt-4 text-lg text-gray-700 max-w-2xl mx-auto">
+            Explore curated roles built for developers, engineers, and modern
+            technical professionals.
+          </p>
           {/* SEARCH */}
           <div className="mt-10 bg-white border border-gray-300 rounded-xl shadow-sm p-4 flex flex-col md:flex-row gap-4 items-center">
             
