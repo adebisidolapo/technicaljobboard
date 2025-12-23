@@ -50,8 +50,7 @@ export default function Home() {
           </div>
       </section>
     </main>
-  );
-}
+ 
 
 {/* JOB SEEKER / EMPLOYER CARDS */}
 <section className="bg-white py-16">
