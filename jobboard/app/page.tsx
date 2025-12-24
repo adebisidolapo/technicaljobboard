@@ -73,8 +73,14 @@ export default function Home() {
       </section>
 
       {/* ================= CATEGORIES ================= */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/dots-bg.svg')] opacity-5" />
+      <section className="py-24 relative overflow-hidden"
+        style={{
+          backgroundImage: "url('/dots-bg.svg')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "auto",
+          backgroundColor: "#F5F7FF",
+        }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-[#EEF1FF]/85 to-white/90" />
 
         <div className="relative max-w-6xl mx-auto px-6">
           <div className="flex justify-between items-center mb-10">
@@ -87,7 +93,7 @@ export default function Home() {
               (cat) => (
                 <div
                   key={cat}
-                  className="h-32 bg-white border border-gray-200 rounded-xl p-5 text-gray-900 flex flex-col justify-between hover:shadow-md transition"
+                  className="h-32 bg-gradient-to-br from-white to-[#F8FAFF] border border-[#E3E7FF] rounded-xl p-5 text-gray-900 flex flex-col justify-between hover:shadow-lg transition"
                 >
                   <span className="font-medium">{cat}</span>
                   <span className="text-xs text-white/80">0 Jobs</span>
