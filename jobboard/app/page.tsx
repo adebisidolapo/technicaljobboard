@@ -4,38 +4,39 @@ export default function Home() {
 
       {/* ================= HERO ================= */}
       <section
-        className="relative py-28 overflow-hidden"
+        className="relative py-32 overflow-hidden"
         style={{
-          backgroundImage: "url('/hero-bg.png')",
+          backgroundImage: "url('/circuit-bg.svg')",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          backgroundSize: "contain",
-          backgroundColor: "#F8FAFF",
+          backgroundSize: "cover",
+          backgroundColor: "#0F1020",
         }}
       >
-        {/* overlay for readability */}
-        <div className="absolute inset-0 bg-white/85" />
+        {/* soft overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0F1020]/90 via-[#1B1D4E]/85 to-[#3017D3]/80" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-            Where <span className="text-[#3017D3]">Technical</span> Careers Meet Opportunity
+          <h1 className="text-4xl md:text-5xl font-bold text-white">
+            Where <span className="text-[#9AA5FF]">Technical Professionals</span><br />
+            Engineers & Developers Meet Opportunity
           </h1>
 
-          <p className="mt-4 text-lg text-gray-700 max-w-2xl mx-auto">
-            Explore curated roles built for developers, engineers, and modern
-            technical professionals.
+          <p className="mt-6 text-lg text-gray-200 max-w-2xl mx-auto">
+            Explore <span className="font-semibold">Curated Roles Built</span> for modern
+            technical careers across industries.
           </p>
 
-          <div className="mt-10 bg-white border border-gray-300 rounded-xl shadow-sm p-4 flex flex-col md:flex-row gap-4">
+          <div className="mt-12 bg-white/95 backdrop-blur border border-gray-200 rounded-xl shadow-lg p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
               placeholder="Job title or keyword"
-              className="flex-1 border border-gray-300 px-4 py-3 rounded-lg text-gray-900"
+              className="border px-4 py-3 rounded-lg text-gray-900"
             />
             <input
               placeholder="Location"
-              className="flex-1 border border-gray-300 px-4 py-3 rounded-lg text-gray-900"
+              className="border px-4 py-3 rounded-lg text-gray-900"
             />
-            <button className="px-6 py-3 bg-[#3017D3] text-white rounded-lg">
+            <button className="bg-[#3017D3] hover:bg-[#2411B5] transition text-white rounded-lg font-medium">
               Search Jobs
             </button>
           </div>
@@ -43,102 +44,71 @@ export default function Home() {
       </section>
 
       {/* ================= JOB SEEKER / EMPLOYER ================= */}
-      <section className="bg-white py-16">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="border rounded-xl p-6 flex justify-between items-center bg-[#F9FAFF]">
+      <section className="py-20 bg-gradient-to-r from-[#F8FAFF] to-[#EEF1FF]">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="h-full border rounded-2xl p-8 flex justify-between items-center bg-white shadow-sm">
             <div>
-              <h3 className="font-semibold text-lg text-gray-900">Job seekers</h3>
-              <p className="text-sm text-gray-700">
-                Browse jobs from the very best companies.
+              <h3 className="font-semibold text-xl text-gray-900">Job Seekers</h3>
+              <p className="text-sm text-gray-700 mt-1">
+                Discover opportunities from top technology-driven companies.
               </p>
             </div>
-            <button className="bg-[#3017D3] text-white px-5 py-2 rounded-md">
-              Find jobs
+            <button className="bg-[#3017D3] text-white px-6 py-3 rounded-lg">
+              Find Jobs
             </button>
           </div>
 
-          <div className="border rounded-xl p-6 flex justify-between items-center bg-[#F9FAFF]">
+          <div className="h-full border rounded-2xl p-8 flex justify-between items-center bg-[#3017D3] text-white shadow-sm">
             <div>
-              <h3 className="font-semibold text-lg text-gray-900">Employers</h3>
-              <p className="text-sm text-gray-700">
-                Reach job seekers and fill open positions.
+              <h3 className="font-semibold text-xl">Employers</h3>
+              <p className="text-sm text-white/90 mt-1">
+                Reach qualified engineers and technical professionals.
               </p>
             </div>
-            <button className="bg-[#3017D3] text-white px-5 py-2 rounded-md">
-              Post a job
+            <button className="bg-white text-[#3017D3] px-6 py-3 rounded-lg font-medium">
+              Post a Job
             </button>
           </div>
         </div>
       </section>
 
       {/* ================= CATEGORIES ================= */}
-      <section className="bg-[#F1F5FF] py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-semibold text-gray-900">Category</h2>
-            <span className="text-sm text-[#3017D3]">All jobs →</span>
+      <section className="py-24 bg-[#0F1020] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/dots-bg.svg')] opacity-10" />
+
+        <div className="relative max-w-6xl mx-auto px-6">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="text-2xl font-semibold text-white">Explore Categories</h2>
+            <span className="text-sm text-[#9AA5FF] cursor-pointer">All jobs →</span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {[
-              "Telecommunications",
-              "Networking",
-              "Cybersecurity",
-              "Data",
-              "Cloud Computing",
-              "Database",
-              "IT Project Management",
-              "Systems Analysis",
-            ].map((cat) => (
-              <div
-                key={cat}
-                className="bg-white border rounded-lg p-4 text-sm font-medium text-gray-900"
-              >
-                {cat}
-                <p className="text-xs text-gray-500 mt-1">0 Jobs</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= JOB ALERT ================= */}
-      <section className="bg-[#F8FAFC] py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-xl font-semibold text-gray-900">Job alert</h2>
-          <p className="text-sm text-gray-700 mt-1">
-            Transform your inbox into career launchpad
-          </p>
-
-          <div className="mt-6 bg-white border rounded-xl p-6 grid grid-cols-1 md:grid-cols-5 gap-4">
-            <input className="border px-4 py-3 rounded-lg text-gray-900" placeholder="Email address" />
-            <select className="border px-4 py-3 rounded-lg text-gray-900">
-              <option>Select job type</option>
-            </select>
-            <select className="border px-4 py-3 rounded-lg text-gray-900">
-              <option>Select category</option>
-            </select>
-            <select className="border px-4 py-3 rounded-lg text-gray-900">
-              <option>Select location</option>
-            </select>
-            <button className="bg-[#3017D3] text-white rounded-lg">
-              Create alert
-            </button>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            {["Telecommunications", "Networking", "Cybersecurity", "Data", "Cloud Computing", "Database", "IT Project Management", "Systems Analysis"].map(
+              (cat) => (
+                <div
+                  key={cat}
+                  className="h-32 bg-gradient-to-br from-[#1B1D4E] to-[#3017D3] rounded-xl p-5 text-white flex flex-col justify-between"
+                >
+                  <span className="font-medium">{cat}</span>
+                  <span className="text-xs text-white/80">0 Jobs</span>
+                </div>
+              )
+            )}
           </div>
         </div>
       </section>
 
       {/* ================= AVAILABLE JOBS ================= */}
-      <section className="bg-white py-20">
+      <section className="bg-gradient-to-br from-[#F9FAFF] to-[#EEF2FF] py-24">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <aside className="border rounded-xl p-5 bg-[#F9FAFF]">
-            <h3 className="font-semibold mb-4 text-gray-900">Jobs available</h3>
+          <aside className="border rounded-2xl p-6 bg-white shadow-sm">
+            <h3 className="font-semibold mb-4 text-gray-900">Jobs Available</h3>
             <input
-              className="w-full border px-3 py-2 rounded-lg mb-4 text-gray-900"
+              className="w-full border px-4 py-3 rounded-lg mb-6 text-gray-900"
               placeholder="Search job title"
             />
 
-            <p className="font-medium text-sm mb-2 text-gray-900">Category</p>
+            <p className="font-medium text-sm mb-3 text-gray-900">Category</p>
             <ul className="text-sm text-gray-700 space-y-2">
               <li>Administrative</li>
               <li>Application Support</li>
@@ -147,9 +117,9 @@ export default function Home() {
             </ul>
           </aside>
 
-          <div className="lg:col-span-3 flex items-center justify-center border rounded-xl py-24">
+          <div className="lg:col-span-3 flex items-center justify-center border rounded-2xl bg-white py-32 shadow-sm">
             <p className="text-gray-700 font-medium">
-              No jobs found yet! Keep searching — something great will come up.
+              No jobs found yet — exciting roles coming soon.
             </p>
           </div>
         </div>
