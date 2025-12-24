@@ -14,7 +14,7 @@ export default function Home() {
         }}
       >
         {/* soft overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F1020]/90 via-[#1B1D4E]/85 to-[#3017D3]/80" />
+        <div className="absolute inset-0 bg-[url('/dots-bg.svg')] opacity-10" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white">
@@ -73,13 +73,7 @@ export default function Home() {
       </section>
 
       {/* ================= CATEGORIES ================= */}
-      <section className="py-24 relative overflow-hidden"
-        style={{
-          backgroundImage: "url('/dots-bg.svg')",
-          backgroundRepeat: "repeat",
-          backgroundSize: "auto",
-          backgroundColor: "#F5F7FF",
-        }}>
+      <section className="py-24 bg-[#0F1020] relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-[#EEF1FF]/85 to-white/90" />
 
         <div className="relative max-w-6xl mx-auto px-6">
@@ -93,7 +87,7 @@ export default function Home() {
               (cat) => (
                 <div
                   key={cat}
-                  className="h-32 bg-gradient-to-br from-white to-[#F8FAFF] border border-[#E3E7FF] rounded-xl p-5 text-gray-900 flex flex-col justify-between hover:shadow-lg transition"
+                  className="h-32 bg-white rounded-xl p-5 text-gray-900 flex flex-col justify-between shadow-sm hover:shadow-md transition"
                 >
                   <span className="font-medium">{cat}</span>
                   <span className="text-xs text-white/80">0 Jobs</span>
