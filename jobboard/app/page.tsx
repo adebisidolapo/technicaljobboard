@@ -14,97 +14,116 @@ export default function Home() {
             Explore thousands of roles from fast-growing startups and tech companies.
           </p>
 
+          {/* Job Search Bar */}
           <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
-            <input className="border px-4 py-3 rounded-lg" placeholder="Keyword: e.g Frontend, Product Designer" />
-            <input className="border px-4 py-3 rounded-lg" placeholder="Location: e.g Lagos, Remote" />
-            <select className="border px-4 py-3 rounded-lg">
-              <option>Job Type: Full-time, Part-time, Contract</option>
-              <option>Full-time</option>
-              <option>Part-time</option>
-              <option>Contract</option>
-              <option>Internship</option>
-            </select>
+            <input
+              className="border px-4 py-3 rounded-lg"
+              placeholder="Job title or keyword e.g Frontend Engineer"
+            />
+            <input
+              className="border px-4 py-3 rounded-lg"
+              placeholder="Location or Remote e.g Lagos, Remote"
+            />
+            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
+              Search Jobs
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ================= FEATURED JOBS ================= */}
-      <section className="py-20 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl font-extrabold tracking-wide">Featured Startup Roles</h2>
-          </div>
+      {/* ================= WHY CHOOSE US ================= */}
+      <section className="py-28 bg-gray-100">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-semibold mb-12 tracking-tight text-gray-900">
+            Why Choose Us
+          </h2>
 
-          {/* Carousel / horizontal scroll */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {[
+              {
+                title: "Curated Startup Roles",
+                desc: "Handpicked opportunities tailored for growth and meaningful work.",
+                color: "#6F00FC",
+              },
+              {
+                title: "Verified Companies",
+                desc: "Work with trusted startups and recruiters only.",
+                color: "#8C33FD",
+              },
+              {
+                title: "Built for Growth",
+                desc: "Tools, insights, and guidance to accelerate your career.",
+                color: "#A866FE",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl p-10 shadow-lg transform hover:-translate-y-2 transition"
+                style={{ backgroundColor: item.color, color: "#fff" }}
+              >
+                <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
+                <p className="text-base">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FEATURED JOBS (Carousel) ================= */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-semibold mb-6 tracking-wide text-gray-900 text-center">
+            Featured Startup Roles
+          </h2>
+
           <div className="flex overflow-x-auto gap-8 snap-x snap-mandatory px-2">
             {[
               {
                 role: "Senior Frontend Engineer",
                 company: "NovaTech",
                 salary: "$120k – $150k",
-                desc: "Work on cutting-edge frontend technology with React, Next.js, and modern UI frameworks.",
+                desc: "Build responsive, scalable UI with React & Next.js.",
                 color: "#6F00FC",
               },
               {
                 role: "Product Designer",
                 company: "Launchify",
                 salary: "$90k – $120k",
-                desc: "Design intuitive user experiences and lead product design sprints for innovative solutions.",
+                desc: "Design intuitive user experiences and workflows.",
                 color: "#8C33FD",
               },
               {
                 role: "Backend Engineer",
                 company: "TechNova",
                 salary: "$100k – $140k",
-                desc: "Build scalable APIs, manage databases, and optimize backend performance for high-traffic apps.",
+                desc: "Develop and optimize APIs and databases for high performance.",
                 color: "#A866FE",
-              },
-              {
-                role: "Full Stack Developer",
-                company: "CodeCraft",
-                salary: "$110k – $160k",
-                desc: "Own the end-to-end development of web applications using modern stacks.",
-                color: "#6F00FC",
-              },
-              {
-                role: "Data Analyst",
-                company: "InsightLabs",
-                salary: "$80k – $110k",
-                desc: "Analyze large datasets, create dashboards, and provide actionable insights to decision-makers.",
-                color: "#8C33FD",
               },
             ].map((job, idx) => (
               <div
                 key={idx}
-                className="flex-none w-96 snap-center bg-white rounded-3xl p-8 shadow-xl border-l-4 hover:shadow-2xl transition"
+                className="flex-none w-96 snap-center bg-white rounded-3xl p-8 shadow-md border-l-4 hover:shadow-xl transition"
                 style={{ borderColor: job.color }}
               >
                 <p className="text-sm font-medium text-gray-500">{job.company}</p>
-                <h3 className="text-xl font-bold mt-1">{job.role}</h3>
+                <h3 className="text-xl font-semibold mt-1">{job.role}</h3>
                 <p className="text-sm font-medium mt-2" style={{ color: job.color }}>{job.salary}</p>
                 <p className="text-gray-600 mt-3 text-sm">{job.desc}</p>
-                <button className="mt-6 w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl font-semibold transition">
+                <button className="mt-6 w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl font-medium transition">
                   View Job
                 </button>
               </div>
-            ))}
-          </div>
-
-          {/* Centered Dots */}
-          <div className="flex justify-center mt-6 gap-2">
-            {[0, 1, 2, 3, 4].map((_, i) => (
-              <span key={i} className="w-3 h-3 rounded-full bg-gray-400"></span>
             ))}
           </div>
         </div>
       </section>
 
       {/* ================= BROWSE JOBS ================= */}
-      <section className="py-28 bg-white">
+      <section className="py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl font-extrabold tracking-wide">Browse Jobs</h2>
-            <span className="text-[#6F00FC] font-semibold underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
+            <h2 className="text-3xl font-semibold tracking-wide text-gray-900">Browse Jobs</h2>
+            <span className="text-[#6F00FC] font-medium underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
               Load More Jobs
             </span>
           </div>
@@ -113,8 +132,8 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
 
             {/* Filters */}
-            <aside className="bg-gray-100 rounded-3xl p-6 h-fit shadow-lg">
-              <h3 className="font-bold mb-4 tracking-wide">Filter Jobs</h3>
+            <aside className="bg-white rounded-3xl p-6 h-fit shadow-lg">
+              <h3 className="font-semibold mb-4 tracking-wide text-gray-900">Filter Jobs</h3>
               <input className="w-full border rounded-lg px-4 py-2 mb-3" placeholder="Keyword" />
               <input className="w-full border rounded-lg px-4 py-2 mb-3" placeholder="Location" />
               <select className="w-full border rounded-lg px-4 py-2 mb-3">
@@ -142,17 +161,52 @@ export default function Home() {
             {/* Job Feed */}
             <div className="lg:col-span-3 space-y-6">
               {[
-                { role: "Frontend Engineer", company: "NovaTech", location: "Remote (US)", salary: "$90k – $130k", desc: "Build scalable, beautiful UI with React & Next.js. Collaborate with cross-functional teams.", tags: ["Remote", "Full-time", "Senior"] },
-                { role: "Product Designer", company: "Launchify", location: "New York", salary: "$85k – $120k", desc: "Design intuitive experiences. Lead design sprints and usability testing.", tags: ["Hybrid", "Full-time"] },
-                { role: "Backend Developer", company: "TechNova", location: "San Francisco", salary: "$100k – $140k", desc: "Develop APIs, manage databases, optimize backend performance.", tags: ["Full-time", "Mid-level"] },
-                { role: "Data Analyst", company: "InsightLabs", location: "Remote", salary: "$80k – $110k", desc: "Analyze large datasets and create actionable dashboards.", tags: ["Remote", "Full-time"] },
-                { role: "Full Stack Developer", company: "CodeCraft", location: "Lagos", salary: "$110k – $160k", desc: "Build end-to-end web solutions using modern stacks.", tags: ["Full-time"] },
+                {
+                  role: "Frontend Engineer",
+                  company: "NovaTech",
+                  location: "Remote (US)",
+                  salary: "$90k – $130k",
+                  desc: "Develop responsive, scalable UIs with React & Next.js, collaborate across teams.",
+                  tags: ["Remote", "Full-time", "Senior"]
+                },
+                {
+                  role: "Product Designer",
+                  company: "Launchify",
+                  location: "New York",
+                  salary: "$85k – $120k",
+                  desc: "Lead design sprints, create prototypes, and improve user experiences.",
+                  tags: ["Hybrid", "Full-time"]
+                },
+                {
+                  role: "Backend Developer",
+                  company: "TechNova",
+                  location: "San Francisco",
+                  salary: "$100k – $140k",
+                  desc: "Build efficient APIs and optimize database performance.",
+                  tags: ["Full-time", "Mid-level"]
+                },
+                {
+                  role: "Data Analyst",
+                  company: "InsightLabs",
+                  location: "Remote",
+                  salary: "$80k – $110k",
+                  desc: "Analyze datasets and provide actionable insights to stakeholders.",
+                  tags: ["Remote", "Full-time"]
+                },
+                {
+                  role: "Full Stack Developer",
+                  company: "CodeCraft",
+                  location: "Lagos",
+                  salary: "$110k – $160k",
+                  desc: "End-to-end web application development using modern frameworks.",
+                  tags: ["Full-time"]
+                },
               ].map((job, idx) => (
                 <div key={idx} className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition flex justify-between items-start">
                   <div className="flex gap-4">
                     <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">{job.company[0]}</div>
                     <div>
-                      <h3 className="text-lg font-bold">{job.role}</h3>
+                      <h3 className="text-lg font-semibold">{job.role}</h3>
                       <p className="text-sm text-gray-600">{job.company} • {job.location}</p>
                       <p className="text-gray-700 mt-2 text-sm">{job.desc}</p>
                       <div className="flex flex-wrap gap-2 mt-3">
@@ -163,7 +217,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-bold text-[#6F00FC]">{job.salary}</p>
+                    <p className="text-sm font-medium text-[#6F00FC]">{job.salary}</p>
                     <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-semibold transition">View</button>
                   </div>
                 </div>
@@ -178,7 +232,7 @@ export default function Home() {
       <section className="py-28 bg-white">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
           
-          {/* Left Image */}
+          {/* Left Image (fictional objects) */}
           <div className="md:w-1/2">
             <img
               src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=800&q=80"
@@ -189,17 +243,54 @@ export default function Home() {
 
           {/* Right Text */}
           <div className="md:w-1/2">
-            <h2 className="text-3xl font-extrabold mb-6 tracking-wide">Empowering Job Seekers</h2>
+            <h2 className="text-3xl font-semibold mb-6 tracking-tight">Empowering Job Seekers</h2>
             <p className="text-gray-700 mb-6">
               We provide startup opportunities, verified companies, and career tools designed to help you grow faster and succeed in your dream role.
             </p>
-            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-semibold transition">
+            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">
               Get Started
             </button>
           </div>
 
         </div>
       </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="bg-[#02000D] text-white py-16">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+          
+          {/* Logo / Info */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">TechnicalJobboard</h2>
+            <p className="text-gray-300">
+              Connecting ambitious professionals with innovative startups.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="hover:text-[#6F00FC] transition">Home</a></li>
+              <li><a href="#" className="hover:text-[#8C33FD] transition">Jobs</a></li>
+              <li><a href="#" className="hover:text-[#A866FE] transition">About</a></li>
+              <li><a href="#" className="hover:text-[#6F00FC] transition">Contact</a></li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-semibold mb-4">Contact</h3>
+            <p className="text-gray-300 mb-2">Email: info@technicaljobboard.com</p>
+            <p className="text-gray-300 mb-2">Phone: +234 800 000 0000</p>
+            <p className="text-gray-300">Location: Lagos, Nigeria</p>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center text-gray-500 text-sm">
+          &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
+        </div>
+      </footer>
 
     </main>
   )
