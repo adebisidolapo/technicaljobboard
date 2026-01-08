@@ -3,8 +3,12 @@ export default function Home() {
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 {/* ================= HERO ================= */}
-<section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white">
+<section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white relative">
   <div className="max-w-6xl mx-auto px-6 text-center md:text-left">
+    
+    {/* Logo at top-left */}
+    <img src="/logo.png" alt="TechnicalJobboard Logo" className="w-32 mb-8 mx-auto md:mx-0" />
+
     <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
       Discover startup jobs<br />
       that <span className="text-[#02000D]">move your career forward</span>
@@ -14,17 +18,19 @@ export default function Home() {
       Explore thousands of USA-based roles from fast-growing startups and tech companies.
     </p>
 
-    {/* HERO SEARCH BAR WITH CONTENT */}
+    {/* HERO SEARCH BAR */}
     <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
       <input
-        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC]"
-        placeholder="Keyword or Job Title e.g. Frontend Engineer"
+        type="text"
+        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC] text-gray-900"
+        placeholder="Keyword or Job Title"
         defaultValue="Frontend Engineer"
       />
       <input
-        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD]"
-        placeholder="Location e.g. New York, Remote"
-        defaultValue="New York"
+        type="text"
+        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD] text-gray-900"
+        placeholder="Location"
+        defaultValue="New York, Remote"
       />
       <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
         Search Jobs
@@ -32,7 +38,6 @@ export default function Home() {
     </div>
   </div>
 </section>
-
 
 
       {/* ================= FEATURED STARTUP ROLES ================= */}
@@ -144,57 +149,32 @@ export default function Home() {
       </section>
 
       {/* ================= EMPOWERING JOB SEEKERS ================= */}
-      <section className="py-28 bg-white">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
-          
-          {/* Left Image (fictional) */}
-          <div className="md:w-1/2">
-            <img
-              src="/objects-placeholder.png"
-              alt="Empowering Job Seekers"
-              className="rounded-2xl shadow-lg"
-            />
-          </div>
+<section className="py-28 bg-white">
+  <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
+    
+    {/* Left Image (fictional objects placeholder) */}
+    <div className="md:w-1/2">
+      <img
+        src="/objects-placeholder.png"
+        alt="Empowering Job Seekers"
+        className="rounded-2xl shadow-lg"
+      />
+    </div>
 
-          {/* Right Text */}
-          <div className="md:w-1/2">
-            <h2 className="text-3xl font-semibold mb-6 tracking-tight">Empowering Job Seekers</h2>
-            <p className="text-gray-700 mb-6">
-              We provide startup opportunities, verified companies, and career tools designed to help you grow faster and succeed in your dream role.
-            </p>
-            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">
-              Get Started
-            </button>
-          </div>
+    {/* Right Text */}
+    <div className="md:w-1/2">
+      <h2 className="text-3xl font-semibold mb-6 tracking-tight">Empowering Job Seekers</h2>
+      <p className="text-gray-700 mb-6">
+        We provide USA-based startup opportunities, verified companies, and career tools designed to help you grow faster and succeed in your dream role.
+      </p>
+      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">
+        Get Started
+      </button>
+    </div>
 
-        </div>
-      </section>
+  </div>
+</section>
 
-      {/* ================= WHY CHOOSE US ================= */}
-      <section className="py-28 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-semibold mb-12 tracking-tight text-gray-900">
-            Why Choose Us
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {[
-              { title: "Curated Startup Roles", desc: "Handpicked opportunities tailored for growth.", color: "#6F00FC" },
-              { title: "Verified Companies", desc: "Work only with trusted companies.", color: "#8C33FD" },
-              { title: "Built for Growth", desc: "Tools & insights to accelerate your career.", color: "#A866FE" },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl p-10 shadow-lg transform hover:-translate-y-2 transition"
-                style={{ backgroundColor: item.color, color: "#fff" }}
-              >
-                <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
-                <p className="text-base">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
     {/* ================= FOOTER ================= */}
 <footer className="bg-[#02000D] text-white py-16">
