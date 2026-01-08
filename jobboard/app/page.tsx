@@ -231,4 +231,7 @@ export default function Home() {
   <div className="mt-12 text-center text-gray-500 text-sm">
     &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
   </div>
-</footer>
+</footer> 
+</main>
+  )
+}
