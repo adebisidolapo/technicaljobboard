@@ -2,36 +2,38 @@ export default function Home() {
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
-      {/* ================= HERO ================= */}
-      <section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white">
-        <div className="max-w-6xl mx-auto px-6 text-center md:text-left">
-          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
-            Discover startup jobs<br />
-            that <span className="text-[#02000D]">move your career forward</span>
-          </h1>
+{/* ================= HERO ================= */}
+<section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white">
+  <div className="max-w-6xl mx-auto px-6 text-center md:text-left">
+    <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
+      Discover startup jobs<br />
+      that <span className="text-[#02000D]">move your career forward</span>
+    </h1>
 
-          <p className="mt-6 text-lg md:text-xl max-w-2xl tracking-tight font-medium">
-            Explore thousands of roles from fast-growing startups and tech companies.
-          </p>
+    <p className="mt-6 text-lg md:text-xl max-w-2xl tracking-tight font-medium">
+      Explore thousands of USA-based roles from fast-growing startups and tech companies.
+    </p>
 
-          {/* FIXED JOB SEARCH BAR */}
-          <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
-            <input
-              className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC]"
-              placeholder="Job title or keyword"
-              value="Frontend Engineer"
-            />
-            <input
-              className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD]"
-              placeholder="Location or Remote"
-              value="Lagos"
-            />
-            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
-              Search Jobs
-            </button>
-          </div>
-        </div>
-      </section>
+    {/* HERO SEARCH BAR WITH CONTENT */}
+    <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
+      <input
+        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC]"
+        placeholder="Keyword or Job Title e.g. Frontend Engineer"
+        defaultValue="Frontend Engineer"
+      />
+      <input
+        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD]"
+        placeholder="Location e.g. New York, Remote"
+        defaultValue="New York"
+      />
+      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
+        Search Jobs
+      </button>
+    </div>
+  </div>
+</section>
+
+
 
       {/* ================= FEATURED STARTUP ROLES ================= */}
       <section className="py-20 bg-white">
@@ -194,42 +196,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="bg-[#02000D] text-white py-16">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-          
-          {/* Logo / Info */}
-          <div className="flex flex-col items-start">
-            <img src="/logo.png" alt="TechnicalJobboard Logo" className="w-32 mb-4" />
-            <p className="text-gray-300">
-              Connecting ambitious professionals with innovative startups.
-            </p>
-          </div>
+    {/* ================= FOOTER ================= */}
+<footer className="bg-[#02000D] text-white py-16">
+  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+    
+    {/* Logo / Info */}
+    <div className="flex flex-col items-start">
+      <img src="/logo.png" alt="TechnicalJobboard Logo" className="w-32 mb-4" />
+      <p className="text-gray-300">
+        Connecting ambitious professionals with innovative startups in the USA.
+      </p>
+    </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-[#6F00FC] transition">Home</a></li>
-              <li><a href="#" className="hover:text-[#8C33FD] transition">Jobs</a></li>
-              <li><a href="#" className="hover:text-[#A866FE] transition">About</a></li>
-              <li><a href="#" className="hover:text-[#6F00FC] transition">Contact</a></li>
-            </ul>
-          </div>
+    {/* Quick Links */}
+    <div>
+      <h3 className="font-semibold mb-4">Quick Links</h3>
+      <ul className="space-y-2">
+        <li><a href="#" className="hover:text-[#6F00FC] transition">Home</a></li>
+        <li><a href="#" className="hover:text-[#8C33FD] transition">Jobs</a></li>
+        <li><a href="#" className="hover:text-[#A866FE] transition">About</a></li>
+        <li><a href="#" className="hover:text-[#6F00FC] transition">Contact</a></li>
+      </ul>
+    </div>
 
-          {/* Contact */}
-          <div>
-            <h3 className="font-semibold mb-4">Contact</h3>
-            <p className="text-gray-300 mb-2">Email: info@technicaljobboard.com</p>
-            <p className="text-gray-300 mb-2">Phone: +234 800 000 0000</p>
-            <p className="text-gray-300">Location: Lagos, Nigeria</p>
-          </div>
-        </div>
+    {/* Contact */}
+    <div>
+      <h3 className="font-semibold mb-4">Contact</h3>
+      <p className="text-gray-300 mb-2">Email: info@technicaljobboard.com</p>
+      <p className="text-gray-300 mb-2">Phone: +1 800 000 0000</p>
+      <p className="text-gray-300">Location: USA</p>
+    </div>
+  </div>
 
-        <div className="mt-12 text-center text-gray-500 text-sm">
-          &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
-        </div>
-      </footer>
-    </main>
-  )
-}
+  <div className="mt-12 text-center text-gray-500 text-sm">
+    &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
+  </div>
+</footer>
