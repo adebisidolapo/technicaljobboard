@@ -142,27 +142,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= WHY CHOOSE US ================= */}
-      <section className="py-20 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-2xl font-semibold mb-10">Why choose us</h2>
+ {/* ================= WHY CHOOSE US ================= */}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              "Curated startup roles",
-              "Verified companies only",
-              "Built for career growth",
-            ].map((item) => (
-              <div key={item} className="bg-white rounded-xl p-6 shadow-sm">
-                <h3 className="font-semibold text-[#6F00FC]">{item}</h3>
-                <p className="text-sm text-gray-600 mt-2">
-                  Designed to help you find meaningful work faster.
-                </p>
-              </div>
-            ))}
-          </div>
+<section className="py-28 bg-gray-100">
+
+  <div className="max-w-6xl mx-auto px-6">
+
+    <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+      Why choose us
+    </h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {[
+        {
+          title: "Curated startup roles",
+          desc: "We handpick high-quality jobs to help you grow faster.",
+          color: "#6F00FC",
+        },
+        {
+          title: "Verified companies",
+          desc: "Work only with trusted companies and recruiters.",
+          color: "#8C33FD",
+        },
+        {
+          title: "Built for growth",
+          desc: "Tools and insights designed to accelerate your career.",
+          color: "#A866FE",
+        },
+      ].map((item) => (
+        <div
+          key={item.title}
+          className="rounded-2xl p-8 shadow-lg hover:shadow-2xl transition"
+          style={{ backgroundColor: item.color, color: "#fff" }}
+        >
+          <h3 className="text-xl font-bold mb-4">{item.title}</h3>
+          <p className="text-sm">{item.desc}</p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* ================= FOOTER ================= */}
       <footer className="bg-[#02000D] py-10 text-center text-sm text-gray-400">
