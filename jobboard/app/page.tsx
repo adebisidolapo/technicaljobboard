@@ -112,31 +112,68 @@ export default function Home() {
             </aside>
 
             {/* Job Cards */}
-            <div className="lg:col-span-3 space-y-6">
-              {["Frontend Developer", "Cloud Engineer", "Cybersecurity Analyst"].map(
-                (job, i) => (
-                  <div
-                    key={i}
-                    className="bg-white rounded-2xl p-6 shadow-md flex justify-between items-center"
-                  >
-                    <div>
-                      <span className="text-xs bg-[#A866FE] text-white px-3 py-1 rounded-full">
-                        Full-time
-                      </span>
-                      <h3 className="mt-3 text-lg font-semibold">{job}</h3>
-                      <p className="text-sm text-gray-600">Remote • USA</p>
-                    </div>
+            <div className="space-y-6">
+  {[
+    {
+      role: "Frontend Engineer",
+      company: "NovaTech",
+      location: "Remote (US)",
+      salary: "$90k – $130k",
+      tags: ["Remote", "Full-time", "Senior"],
+    },
+    {
+      role: "Product Designer",
+      company: "Launchify",
+      location: "New York, NY",
+      salary: "$85k – $120k",
+      tags: ["Hybrid", "Full-time"],
+    },
+  ].map((job, i) => (
+    <div
+      key={i}
+      className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition flex justify-between items-start"
+    >
+      {/* Left */}
+      <div className="flex gap-4">
+        {/* Company Logo Placeholder */}
+        <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">
+          {job.company[0]}
+        </div>
 
-                    <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white px-5 py-2 rounded-lg">
-                      Apply
-                    </button>
-                  </div>
-                )
-              )}
-            </div>
+        <div>
+          <h3 className="text-lg font-semibold text-[#02000D]">
+            {job.role}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {job.company} • {job.location}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mt-3">
+            {job.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Right */}
+      <div className="text-right">
+        <p className="text-sm font-medium text-[#6F00FC]">
+          {job.salary}
+        </p>
+        <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white px-4 py-2 rounded-lg text-sm">
+          View
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
 
       {/* ================= WHY CHOOSE US ================= */}
       <section className="py-24 bg-white">
