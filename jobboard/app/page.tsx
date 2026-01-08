@@ -199,6 +199,8 @@ export default function Home() {
               <li>Privacy Policy</li>
             </ul>
           </div>
-        </div>
+       
 
-        <div className="mt-10 text-center
+        <div className="mt-10 text-center text-sm text-gray-400">
+  © {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
+</div>
