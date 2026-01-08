@@ -115,22 +115,41 @@ export default function Home() {
       </section>
 
       {/* ================= EMPOWERING JOB SEEKERS ================= */}
-      <section className="py-28 bg-white">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
-          {/* Image */}
-          <div className="md:w-1/2">
-            <img src="https://via.placeholder.com/600x400" alt="Empowering Job Seekers" className="rounded-2xl shadow-lg" />
-          </div>
-          {/* Text */}
-          <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold mb-6">Empowering Job Seekers</h2>
-            <p className="text-gray-700 mb-6">
-              We provide startup opportunities, verified companies, and career tools designed to help you grow faster and succeed in your dream role.
-            </p>
-            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">Get Started</button>
-          </div>
-        </div>
-      </section>
+<section className="py-28 bg-white">
+  <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
+    
+    {/* Left Image */}
+    <div className="md:w-1/3">
+      <img
+        src="https://via.placeholder.com/400x400?text=Career+Growth"
+        alt="Career Growth"
+        className="rounded-2xl shadow-lg"
+      />
+    </div>
+
+    {/* Center Text */}
+    <div className="md:w-1/3 text-center md:text-left">
+      <h2 className="text-3xl font-bold mb-6">Empowering Job Seekers</h2>
+      <p className="text-gray-700 mb-6">
+        We provide startup opportunities, verified companies, and career tools designed to help you grow faster and succeed in your dream role.
+      </p>
+      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">
+        Get Started
+      </button>
+    </div>
+
+    {/* Right Image */}
+    <div className="md:w-1/3">
+      <img
+        src="https://via.placeholder.com/400x400?text=Job+Opportunities"
+        alt="Job Opportunities"
+        className="rounded-2xl shadow-lg"
+      />
+    </div>
+
+  </div>
+</section>
+
 
       {/* ================= WHY CHOOSE US ================= */}
       <section className="py-28 bg-gray-100">
