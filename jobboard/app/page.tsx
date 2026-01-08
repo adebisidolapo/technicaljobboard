@@ -20,13 +20,13 @@ export default function Home() {
         type="text"
         className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC] text-gray-900"
         placeholder="Keyword or Job Title"
-        defaultValue="Frontend Engineer"
+        
       />
       <input
         type="text"
         className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD] text-gray-900"
         placeholder="Location"
-        defaultValue="New York"
+   
       />
       <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
         Search Jobs
@@ -146,14 +146,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= EMPOWERING JOB SEEKERS ================= */}
+     {/* ================= EMPOWERING JOB SEEKERS ================= */}
 <section className="py-28 bg-white">
   <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
     
-    {/* Left Image (original image you had) */}
+    {/* Left Image (Laptop/Platform illustration) */}
     <div className="md:w-1/2">
       <img
-        src="/empowering-jobseeker.png"
+        src="/laptop-placeholder.png" // replace with your actual laptop/platform image file
         alt="Empowering Job Seekers"
         className="rounded-2xl shadow-lg"
       />
@@ -172,7 +172,6 @@ export default function Home() {
 
   </div>
 </section>
-
 
 
 {/* ================= FOOTER ================= */}
