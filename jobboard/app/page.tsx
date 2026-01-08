@@ -31,43 +31,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= WHY CHOOSE US ================= */}
-      <section className="py-28 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-semibold mb-12 tracking-tight text-gray-900">
-            Why Choose Us
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {[
-              {
-                title: "Curated Startup Roles",
-                desc: "Handpicked opportunities tailored for growth and meaningful work.",
-                color: "#6F00FC",
-              },
-              {
-                title: "Verified Companies",
-                desc: "Work with trusted startups and recruiters only.",
-                color: "#8C33FD",
-              },
-              {
-                title: "Built for Growth",
-                desc: "Tools, insights, and guidance to accelerate your career.",
-                color: "#A866FE",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl p-10 shadow-lg transform hover:-translate-y-2 transition"
-                style={{ backgroundColor: item.color, color: "#fff" }}
-              >
-                <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
-                <p className="text-base">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ================= FEATURED JOBS (Carousel) ================= */}
       <section className="py-20 bg-white">
@@ -254,6 +217,45 @@ export default function Home() {
 
         </div>
       </section>
+
+ {/* ================= WHY CHOOSE US ================= */}
+      <section className="py-28 bg-gray-100">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-semibold mb-12 tracking-tight text-gray-900">
+            Why Choose Us
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {[
+              {
+                title: "Curated Startup Roles",
+                desc: "Handpicked opportunities tailored for growth and meaningful work.",
+                color: "#6F00FC",
+              },
+              {
+                title: "Verified Companies",
+                desc: "Work with trusted startups and recruiters only.",
+                color: "#8C33FD",
+              },
+              {
+                title: "Built for Growth",
+                desc: "Tools, insights, and guidance to accelerate your career.",
+                color: "#A866FE",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl p-10 shadow-lg transform hover:-translate-y-2 transition"
+                style={{ backgroundColor: item.color, color: "#fff" }}
+              >
+                <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
+                <p className="text-base">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* ================= FOOTER ================= */}
       <footer className="bg-[#02000D] text-white py-16">
