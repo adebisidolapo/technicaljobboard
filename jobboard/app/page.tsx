@@ -119,16 +119,16 @@ export default function Home() {
   <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
     
     {/* Left Image */}
-    <div className="md:w-1/3">
+    <div className="md:w-1/2">
       <img
-        src="https://via.placeholder.com/400x400?text=Career+Growth"
-        alt="Career Growth"
+        src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80"
+        alt="Empowering Job Seekers"
         className="rounded-2xl shadow-lg"
       />
     </div>
 
-    {/* Center Text */}
-    <div className="md:w-1/3 text-center md:text-left">
+    {/* Right Text */}
+    <div className="md:w-1/2">
       <h2 className="text-3xl font-bold mb-6">Empowering Job Seekers</h2>
       <p className="text-gray-700 mb-6">
         We provide startup opportunities, verified companies, and career tools designed to help you grow faster and succeed in your dream role.
@@ -136,15 +136,6 @@ export default function Home() {
       <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">
         Get Started
       </button>
-    </div>
-
-    {/* Right Image */}
-    <div className="md:w-1/3">
-      <img
-        src="https://via.placeholder.com/400x400?text=Job+Opportunities"
-        alt="Job Opportunities"
-        className="rounded-2xl shadow-lg"
-      />
     </div>
 
   </div>
