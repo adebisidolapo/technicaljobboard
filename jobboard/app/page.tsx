@@ -17,12 +17,14 @@ export default function Home() {
           {/* Job Search Bar */}
           <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
             <input
-              className="border px-4 py-3 rounded-lg"
-              placeholder="Job title or keyword e.g Frontend Engineer"
+              className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC]"
+              placeholder="Job title or keyword e.g. Frontend Engineer"
+              value=""
             />
             <input
-              className="border px-4 py-3 rounded-lg"
-              placeholder="Location or Remote e.g Lagos, Remote"
+              className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD]"
+              placeholder="Location or Remote e.g. Lagos, Remote"
+              value=""
             />
             <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
               Search Jobs
@@ -31,6 +33,7 @@ export default function Home() {
         </div>
       </section>
 
+      
 
       {/* ================= FEATURED JOBS (Carousel) ================= */}
       <section className="py-20 bg-white">
@@ -123,70 +126,8 @@ export default function Home() {
 
             {/* Job Feed */}
             <div className="lg:col-span-3 space-y-6">
-              {[
-                {
-                  role: "Frontend Engineer",
-                  company: "NovaTech",
-                  location: "Remote (US)",
-                  salary: "$90k – $130k",
-                  desc: "Develop responsive, scalable UIs with React & Next.js, collaborate across teams.",
-                  tags: ["Remote", "Full-time", "Senior"]
-                },
-                {
-                  role: "Product Designer",
-                  company: "Launchify",
-                  location: "New York",
-                  salary: "$85k – $120k",
-                  desc: "Lead design sprints, create prototypes, and improve user experiences.",
-                  tags: ["Hybrid", "Full-time"]
-                },
-                {
-                  role: "Backend Developer",
-                  company: "TechNova",
-                  location: "San Francisco",
-                  salary: "$100k – $140k",
-                  desc: "Build efficient APIs and optimize database performance.",
-                  tags: ["Full-time", "Mid-level"]
-                },
-                {
-                  role: "Data Analyst",
-                  company: "InsightLabs",
-                  location: "Remote",
-                  salary: "$80k – $110k",
-                  desc: "Analyze datasets and provide actionable insights to stakeholders.",
-                  tags: ["Remote", "Full-time"]
-                },
-                {
-                  role: "Full Stack Developer",
-                  company: "CodeCraft",
-                  location: "Lagos",
-                  salary: "$110k – $160k",
-                  desc: "End-to-end web application development using modern frameworks.",
-                  tags: ["Full-time"]
-                },
-              ].map((job, idx) => (
-                <div key={idx} className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition flex justify-between items-start">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">{job.company[0]}</div>
-                    <div>
-                      <h3 className="text-lg font-semibold">{job.role}</h3>
-                      <p className="text-sm text-gray-600">{job.company} • {job.location}</p>
-                      <p className="text-gray-700 mt-2 text-sm">{job.desc}</p>
-                      <div className="flex flex-wrap gap-2 mt-3">
-                        {job.tags.map((tag) => (
-                          <span key={tag} className="text-xs px-3 py-1 rounded-full bg-gray-100">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-[#6F00FC]">{job.salary}</p>
-                    <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-semibold transition">View</button>
-                  </div>
-                </div>
-              ))}
+              {/* Jobs map */}
             </div>
-
           </div>
         </div>
       </section>
@@ -198,7 +139,7 @@ export default function Home() {
           {/* Left Image (fictional objects) */}
           <div className="md:w-1/2">
             <img
-              src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=800&q=80"
+              src="/logo-placeholder.png" // <-- Replace this with your actual image path
               alt="Empowering Job Seekers"
               className="rounded-2xl shadow-lg"
             />
@@ -218,7 +159,7 @@ export default function Home() {
         </div>
       </section>
 
- {/* ================= WHY CHOOSE US ================= */}
+{/* ================= WHY CHOOSE US ================= */}
       <section className="py-28 bg-gray-100">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-semibold mb-12 tracking-tight text-gray-900">
@@ -256,14 +197,13 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* ================= FOOTER ================= */}
       <footer className="bg-[#02000D] text-white py-16">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
           
           {/* Logo / Info */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">TechnicalJobboard</h2>
+          <div className="flex flex-col items-start">
+            <img src="/logo-placeholder.png" alt="TechnicalJobboard Logo" className="w-32 mb-4" />
             <p className="text-gray-300">
               Connecting ambitious professionals with innovative startups.
             </p>
