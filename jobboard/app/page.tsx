@@ -3,12 +3,8 @@ export default function Home() {
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 {/* ================= HERO ================= */}
-<section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white relative">
+<section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white">
   <div className="max-w-6xl mx-auto px-6 text-center md:text-left">
-    
-    {/* Logo at top-left */}
-    <img src="/logo.png" alt="TechnicalJobboard Logo" className="w-32 mb-8 mx-auto md:mx-0" />
-
     <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
       Discover startup jobs<br />
       that <span className="text-[#02000D]">move your career forward</span>
@@ -30,7 +26,7 @@ export default function Home() {
         type="text"
         className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD] text-gray-900"
         placeholder="Location"
-        defaultValue="New York, Remote"
+        defaultValue="New York"
       />
       <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
         Search Jobs
@@ -38,6 +34,8 @@ export default function Home() {
     </div>
   </div>
 </section>
+
+
 
 
       {/* ================= FEATURED STARTUP ROLES ================= */}
@@ -152,10 +150,10 @@ export default function Home() {
 <section className="py-28 bg-white">
   <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
     
-    {/* Left Image (fictional objects placeholder) */}
+    {/* Left Image (original image you had) */}
     <div className="md:w-1/2">
       <img
-        src="/objects-placeholder.png"
+        src="/empowering-jobseeker.png"
         alt="Empowering Job Seekers"
         className="rounded-2xl shadow-lg"
       />
@@ -176,7 +174,8 @@ export default function Home() {
 </section>
 
 
-    {/* ================= FOOTER ================= */}
+
+{/* ================= FOOTER ================= */}
 <footer className="bg-[#02000D] text-white py-16">
   <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
     
@@ -211,7 +210,8 @@ export default function Home() {
   <div className="mt-12 text-center text-gray-500 text-sm">
     &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
   </div>
-</footer> 
+</footer>
+
 </main>
   )
 }
