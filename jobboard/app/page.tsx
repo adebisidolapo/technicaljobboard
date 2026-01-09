@@ -249,17 +249,19 @@ export default function Home() {
   <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
 
     {/* Brand */}
-    <div>
-      <img
-        src="/logo-removebg-preview.png"
-        alt="TechnicalJobboard Logo"
-        className="w-36 mb-4"
-      />
-      <p className="text-gray-600 text-sm leading-relaxed">
-        Discover verified startup jobs, remote roles, and career-defining
-        opportunities across the United States.
-      </p>
-    </div>
+   <div className="flex items-start gap-4">
+  <img
+    src="/logo-removebg-preview.png"
+    alt="TechnicalJobboard Logo"
+    className="w-28 object-contain"
+  />
+
+  <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
+    Discover verified startup jobs, remote roles, and career-defining
+    opportunities across the United States.
+  </p>
+</div>
+
 
     {/* Quick Links */}
     <div>
