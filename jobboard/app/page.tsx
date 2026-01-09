@@ -245,27 +245,33 @@ export default function Home() {
 
 
 {/* ================= FOOTER ================= */}
-<footer className="bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 text-[#02000D] py-20 border-t border-gray-200">
-  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<footer className="bg-gray-100 text-[#02000D] py-20 border-t border-gray-200">
 
-    {/* Brand */}
-   <div className="flex items-start gap-4">
-  <img
-    src="/logo-removebg-preview.png"
-    alt="TechnicalJobboard Logo"
-    className="w-28 object-contain"
-  />
+  {/* ===== SECTION 1: 4 BLOCKS ===== */}
+  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 items-start">
 
-  <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
-    Discover verified startup jobs, remote roles, and career-defining
-    opportunities across the United States.
-  </p>
-</div>
+    {/* Block 1: Logo */}
+    <div className="flex items-center">
+      <img
+        src="/logo-removebg-preview.png"
+        alt="TechnicalJobboard Logo"
+        className="w-36 object-contain"
+      />
+    </div>
 
-
-    {/* Quick Links */}
+    {/* Block 2: Text */}
     <div>
-      <h3 className="font-semibold mb-4 text-gray-900">Explore</h3>
+      <p className="text-gray-600 text-sm leading-relaxed">
+        Discover verified startup jobs, remote roles, and career-defining
+        opportunities across the United States.
+      </p>
+    </div>
+
+    {/* Block 3: Explore */}
+    <div>
+      <h3 className="font-semibold mb-4 text-gray-900">
+        Explore
+      </h3>
       <ul className="space-y-3 text-sm">
         <li>
           <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
@@ -290,39 +296,15 @@ export default function Home() {
       </ul>
     </div>
 
-    {/* Social */}
-    <div>
-      <h3 className="font-semibold mb-4 text-gray-900">Connect</h3>
-      <div className="flex gap-4">
-        <a
-          href="#"
-          className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center hover:bg-[#6F00FC] hover:text-white transition"
-        >
-          in
-        </a>
-        <a
-          href="#"
-          className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center hover:bg-[#8C33FD] hover:text-white transition"
-        >
-          X
-        </a>
-        <a
-          href="#"
-          className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center hover:bg-[#A866FE] hover:text-white transition"
-        >
-          GH
-        </a>
-      </div>
-    </div>
-
-    {/* Newsletter */}
+    {/* Block 4: Get Job Alerts */}
     <div>
       <h3 className="font-semibold mb-4 text-gray-900">
         Get Job Alerts
       </h3>
       <p className="text-sm text-gray-600 mb-4">
-        Weekly hand-picked startup jobs straight to your inbox.
+        Weekly hand-picked startup jobs delivered to your inbox.
       </p>
+
       <div className="flex gap-2">
         <input
           type="email"
@@ -337,9 +319,38 @@ export default function Home() {
 
   </div>
 
-  <div className="mt-16 text-center text-gray-500 text-sm">
-    &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
+  {/* ===== SECTION 2: SOCIAL ICONS ===== */}
+  <div className="mt-16 pt-10 border-t border-gray-200">
+    <div className="max-w-6xl mx-auto px-6 flex justify-center gap-6">
+
+      <a
+        href="#"
+        className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#6F00FC] hover:text-white transition"
+      >
+        in
+      </a>
+
+      <a
+        href="#"
+        className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#8C33FD] hover:text-white transition"
+      >
+        X
+      </a>
+
+      <a
+        href="#"
+        className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#A866FE] hover:text-white transition"
+      >
+        GH
+      </a>
+
+    </div>
+
+    <p className="mt-8 text-center text-gray-500 text-sm">
+      &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
+    </p>
   </div>
+
 </footer>
 
 </main>
