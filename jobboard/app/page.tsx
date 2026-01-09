@@ -248,76 +248,71 @@ export default function Home() {
 <footer className="bg-gray-100 text-[#02000D] py-20 border-t border-gray-200">
 
   {/* ===== SECTION 1: 4 BLOCKS ===== */}
-  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 items-start">
+ <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-14 text-center items-center">
+
 
     {/* Block 1: Logo */}
-    <div className="flex items-center">
-      <img
-        src="/logo-removebg-preview.png"
-        alt="TechnicalJobboard Logo"
-        className="w-36 object-contain"
-      />
-    </div>
+    <div className="flex flex-col items-center">
+  <img
+    src="/logo-removebg-preview.png"
+    alt="TechnicalJobboard Logo"
+    className="w-36 object-contain mb-4"
+  />
+  <p className="text-gray-600 text-sm max-w-xs leading-relaxed">
+    Discover verified startup jobs, remote roles, and career-defining
+    opportunities across the United States.
+  </p>
+</div>
 
-    {/* Block 2: Text */}
-    <div>
-      <p className="text-gray-600 text-sm leading-relaxed">
-        Discover verified startup jobs, remote roles, and career-defining
-        opportunities across the United States.
-      </p>
-    </div>
+    {/* Block 2: Explore */}
+   <div className="flex flex-col items-center">
+  <h3 className="font-semibold mb-4 text-gray-900">
+    Explore
+  </h3>
+  <ul className="space-y-3 text-sm">
+    <li>
+      <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
+        Browse Jobs
+      </a>
+    </li>
+    <li>
+      <a href="#" className="text-gray-600 hover:text-[#8C33FD] transition">
+        Companies
+      </a>
+    </li>
+    <li>
+      <a href="#" className="text-gray-600 hover:text-[#A866FE] transition">
+        Career Resources
+      </a>
+    </li>
+    <li>
+      <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
+        Contact
+      </a>
+    </li>
+  </ul>
+</div>
 
-    {/* Block 3: Explore */}
-    <div>
-      <h3 className="font-semibold mb-4 text-gray-900">
-        Explore
-      </h3>
-      <ul className="space-y-3 text-sm">
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
-            Browse Jobs
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#8C33FD] transition">
-            Companies
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#A866FE] transition">
-            Career Resources
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
-            Contact
-          </a>
-        </li>
-      </ul>
-    </div>
+    {/* Block 3: Get Job Alerts */}
+  <div className="flex flex-col items-center">
+  <h3 className="font-semibold mb-4 text-gray-900">
+    Get Job Alerts
+  </h3>
+  <p className="text-sm text-gray-600 mb-4 max-w-xs">
+    Weekly hand-picked startup jobs delivered to your inbox.
+  </p>
 
-    {/* Block 4: Get Job Alerts */}
-    <div>
-      <h3 className="font-semibold mb-4 text-gray-900">
-        Get Job Alerts
-      </h3>
-      <p className="text-sm text-gray-600 mb-4">
-        Weekly hand-picked startup jobs delivered to your inbox.
-      </p>
-
-      <div className="flex gap-2">
-        <input
-          type="email"
-          placeholder="Your email"
-          className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
-        />
-        <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-          Join
-        </button>
-      </div>
-    </div>
-
+  <div className="flex w-full max-w-sm gap-2">
+    <input
+      type="email"
+      placeholder="Your email"
+      className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+    />
+    <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+      Join
+    </button>
   </div>
+</div>
 
   {/* ===== SECTION 2: SOCIAL ICONS ===== */}
   <div className="mt-16 pt-10 border-t border-gray-200">
