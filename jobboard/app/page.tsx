@@ -250,7 +250,7 @@ export default function Home() {
     
     {/* Logo / Info */}
     <div className="flex flex-col items-start">
-      <img src="/logo.png" alt="TechnicalJobboard Logo" className="w-32 mb-4" />
+      <img src="/logo-removebg-preview.png" alt="TechnicalJobboard Logo" className="w-32 mb-4" />
       <p className="text-gray-300">
         Connecting ambitious professionals with innovative startups in the USA.
       </p>
