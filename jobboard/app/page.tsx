@@ -43,13 +43,16 @@ export default function Home() {
     </div>
 
     {/* Right Illustration */}
-    <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
-      <img
-        src="/hero-platform.png" // Replace with your actual illustration
-        alt="Startup Jobs Platform Illustration"
-        className="w-full max-w-md rounded-2xl shadow-lg"
-      />
-    </div>
+<div className="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
+  <Image
+    src="/bg.png"
+    alt="Startup Jobs Platform Illustration"
+    width={520}
+    height={420}
+    priority
+    className="rounded-2xl shadow-2xl"
+  />
+</div>
 
   </div>
 </section>
