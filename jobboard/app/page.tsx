@@ -86,24 +86,93 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
 
             {/* Filters */}
-            <aside className="bg-white rounded-3xl p-6 h-fit shadow-lg">
-              <h3 className="font-semibold mb-4 tracking-wide text-gray-900">Filter Jobs</h3>
-              <input className="w-full border rounded-lg px-4 py-2 mb-3" placeholder="Keyword" />
-              <input className="w-full border rounded-lg px-4 py-2 mb-3" placeholder="Location" />
-              <select className="w-full border rounded-lg px-4 py-2 mb-3">
-                <option>Job Type</option>
-                <option>Full-time</option>
-                <option>Part-time</option>
-                <option>Contract</option>
-                <option>Internship</option>
-              </select>
-              <select className="w-full border rounded-lg px-4 py-2 mb-3">
-                <option>Experience Level</option>
-                <option>Junior</option>
-                <option>Mid</option>
-                <option>Senior</option>
-              </select>
-            </aside>
+<aside className="bg-white rounded-3xl p-8 h-fit shadow-xl border border-gray-100 sticky top-24">
+  <h3 className="font-semibold mb-6 tracking-wide text-gray-900 text-lg">
+    Refine Your Search
+  </h3>
+
+  {/* Keyword */}
+  <div className="mb-5">
+    <label className="text-sm font-medium text-gray-700 block mb-2">
+      Job title or keyword
+    </label>
+    <input
+      className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#6F00FC] outline-none"
+      placeholder="e.g. Frontend Engineer"
+    />
+  </div>
+
+  {/* Location */}
+  <div className="mb-5">
+    <label className="text-sm font-medium text-gray-700 block mb-2">
+      Location
+    </label>
+    <input
+      className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#8C33FD] outline-none"
+      placeholder="Remote or USA"
+    />
+  </div>
+
+  {/* Job Type */}
+  <div className="mb-5">
+    <label className="text-sm font-medium text-gray-700 block mb-2">
+      Job Type
+    </label>
+    <select className="w-full border rounded-xl px-4 py-3">
+      <option>All Types</option>
+      <option>Full-time</option>
+      <option>Part-time</option>
+      <option>Contract</option>
+      <option>Internship</option>
+    </select>
+  </div>
+
+  {/* Experience */}
+  <div className="mb-6">
+    <label className="text-sm font-medium text-gray-700 block mb-2">
+      Experience Level
+    </label>
+    <select className="w-full border rounded-xl px-4 py-3">
+      <option>Any level</option>
+      <option>Junior</option>
+      <option>Mid-level</option>
+      <option>Senior</option>
+    </select>
+  </div>
+
+  {/* Salary hint */}
+  <div className="mb-6 bg-gray-50 rounded-2xl p-4">
+    <p className="text-sm font-medium text-gray-700 mb-1">
+      Estimated Salary
+    </p>
+    <p className="text-xs text-gray-500">
+      $60k – $180k+ based on role & experience
+    </p>
+  </div>
+
+  {/* Popular tags */}
+  <div className="mb-6">
+    <p className="text-sm font-medium text-gray-700 mb-3">
+      Popular filters
+    </p>
+    <div className="flex flex-wrap gap-2">
+      {["Remote", "Startup", "React", "Next.js", "Senior"].map(tag => (
+        <span
+          key={tag}
+          className="text-xs px-3 py-1 rounded-full bg-gray-100 hover:bg-[#6F00FC] hover:text-white cursor-pointer transition"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  {/* CTA */}
+  <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white py-3 rounded-xl font-medium">
+    Apply Filters
+  </button>
+</aside>
+
 
             {/* Job Feed */}
             <div className="lg:col-span-3 space-y-6">
@@ -135,9 +204,10 @@ export default function Home() {
 
                   <div className="text-right">
                     <p className="text-sm font-medium text-[#6F00FC]">$90k – $130k</p>
-                    <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
-                      View
-                    </button>
+                    <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-5 py-2 rounded-xl text-sm font-medium">
+  View Details →
+</button>
+
                   </div>
                 </div>
               ))}
@@ -152,11 +222,11 @@ export default function Home() {
     
     {/* Left Image (Laptop/Platform illustration) */}
     <div className="md:w-1/2">
-      <img
-        src="/laptop-placeholder.png" // replace with your actual laptop/platform image file
-        alt="Empowering Job Seekers"
-        className="rounded-2xl shadow-lg"
-      />
+     <img
+  src="/empower-platform.png"
+  alt="Job platform dashboard illustration"
+  className="rounded-3xl shadow-xl bg-gray-50 p-4"
+/>
     </div>
 
     {/* Right Text */}
