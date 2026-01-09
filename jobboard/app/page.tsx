@@ -1,3 +1,5 @@
+import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
+
 export default function Home() {
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
@@ -243,12 +245,6 @@ export default function Home() {
   </div>
 </section>
 
-
-import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
-
-export default function Home() {
-  return (
-    <main className="font-sans bg-gray-100 text-[#02000D]">
 
       {/* ================= FOOTER ================= */}
       <footer className="">
