@@ -247,94 +247,110 @@ export default function Home() {
 {/* ================= FOOTER ================= */}
 <footer className="bg-gray-100 text-[#02000D] py-20 border-t border-gray-200">
 
-  {/* ===== SECTION 1: 4 BLOCKS ===== */}
- <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-14 text-center items-center">
+  {/* ===== SECTION 1: MAIN BLOCKS ===== */}
+  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center items-center">
 
-
-    {/* Block 1: Logo */}
+    {/* Brand */}
     <div className="flex flex-col items-center">
-  <img
-    src="/logo-removebg-preview.png"
-    alt="TechnicalJobboard Logo"
-    className="w-36 object-contain mb-4"
-  />
-  <p className="text-gray-600 text-sm max-w-xs leading-relaxed">
-    Discover verified startup jobs, remote roles, and career-defining
-    opportunities across the United States.
-  </p>
-</div>
+      <img
+        src="/logo-removebg-preview.png"
+        alt="TechnicalJobboard Logo"
+        className="w-36 object-contain mb-4"
+      />
+      <p className="text-gray-600 text-sm max-w-xs leading-relaxed">
+        Discover verified startup jobs, remote roles, and career-defining
+        opportunities across the United States.
+      </p>
+    </div>
 
-    {/* Block 2: Explore */}
-   <div className="flex flex-col items-center">
-  <h3 className="font-semibold mb-4 text-gray-900">
-    Explore
-  </h3>
-  <ul className="space-y-3 text-sm">
-    <li>
-      <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
-        Browse Jobs
-      </a>
-    </li>
-    <li>
-      <a href="#" className="text-gray-600 hover:text-[#8C33FD] transition">
-        Companies
-      </a>
-    </li>
-    <li>
-      <a href="#" className="text-gray-600 hover:text-[#A866FE] transition">
-        Career Resources
-      </a>
-    </li>
-    <li>
-      <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
-        Contact
-      </a>
-    </li>
-  </ul>
-</div>
+    {/* Explore */}
+    <div className="flex flex-col items-center">
+      <h3 className="font-semibold mb-4 text-gray-900">
+        Explore
+      </h3>
+      <ul className="space-y-3 text-sm">
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
+            Browse Jobs
+          </a>
+        </li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#8C33FD] transition">
+            Companies
+          </a>
+        </li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#A866FE] transition">
+            Career Resources
+          </a>
+        </li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
 
-    {/* Block 3: Get Job Alerts */}
-  <div className="flex flex-col items-center">
-  <h3 className="font-semibold mb-4 text-gray-900">
-    Get Job Alerts
-  </h3>
-  <p className="text-sm text-gray-600 mb-4 max-w-xs">
-    Weekly hand-picked startup jobs delivered to your inbox.
-  </p>
+    {/* Get Job Alerts */}
+    <div className="flex flex-col items-center">
+      <h3 className="font-semibold mb-4 text-gray-900">
+        Get Job Alerts
+      </h3>
+      <p className="text-sm text-gray-600 mb-4 max-w-xs">
+        Weekly hand-picked startup jobs delivered to your inbox.
+      </p>
 
-  <div className="flex w-full max-w-sm gap-2">
-    <input
-      type="email"
-      placeholder="Your email"
-      className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
-    />
-    <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-      Join
-    </button>
+      <div className="flex w-full max-w-sm gap-2">
+        <input
+          type="email"
+          placeholder="Your email"
+          className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+        />
+        <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+          Join
+        </button>
+      </div>
+    </div>
+
   </div>
-</div>
 
   {/* ===== SECTION 2: SOCIAL ICONS ===== */}
   <div className="mt-16 pt-10 border-t border-gray-200">
     <div className="max-w-6xl mx-auto px-6 flex justify-center gap-6">
 
+      {/* Twitter / X */}
       <a
         href="#"
-        className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#6F00FC] hover:text-white transition"
-      >
-        in
-      </a>
-
-      <a
-        href="#"
-        className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#8C33FD] hover:text-white transition"
+        aria-label="Twitter"
+        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#6F00FC] hover:text-white transition"
       >
         X
       </a>
 
+      {/* LinkedIn */}
       <a
         href="#"
-        className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#A866FE] hover:text-white transition"
+        aria-label="LinkedIn"
+        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#8C33FD] hover:text-white transition"
+      >
+        in
+      </a>
+
+      {/* Facebook */}
+      <a
+        href="#"
+        aria-label="Facebook"
+        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#A866FE] hover:text-white transition"
+      >
+        f
+      </a>
+
+      {/* GitHub */}
+      <a
+        href="#"
+        aria-label="GitHub"
+        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#6F00FC] hover:text-white transition"
       >
         GH
       </a>
