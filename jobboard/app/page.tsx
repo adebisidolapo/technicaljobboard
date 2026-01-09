@@ -244,246 +244,133 @@ export default function Home() {
 </section>
 
 
-{/* ================= FOOTER ================= */}
-<footer className="bg-gray-100 text-[#02000D] py-20 border-t border-gray-200">
+import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
-  {/* ===== SECTION 1: MAIN BLOCKS ===== */}
-  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center items-center">
+export default function Home() {
+  return (
+    <main className="font-sans bg-gray-100 text-[#02000D]">
 
-    {/* Brand */}
-    <div className="flex flex-col items-center">
-      <img
-        src="/logo-removebg-preview.png"
-        alt="TechnicalJobboard Logo"
-        className="w-50 object-contain mb-4"
-      />
-      <p className="text-gray-600 text-sm max-w-xs leading-relaxed">
-        Discover verified startup jobs, remote roles, and career-defining
-        opportunities across the United States.
-      </p>
-    </div>
+      {/* ================= FOOTER ================= */}
+      <footer className="">
 
-    {/* Explore */}
-    <div className="flex flex-col items-center">
-      <h3 className="font-semibold mb-4 text-gray-900">
-        Explore
-      </h3>
-      <ul className="space-y-3 text-sm">
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
-            Browse Jobs
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#8C33FD] transition">
-            Companies
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#A866FE] transition">
-            Career Resources
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
-            Contact
-          </a>
-        </li>
-      </ul>
-    </div>
+        {/* ===== SECTION 1: MAIN BLOCKS (Light Background) ===== */}
+        <div className="bg-gray-100 py-20">
+          <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center items-center">
 
-    {/* Get Job Alerts */}
-    <div className="flex flex-col items-center">
-      <h3 className="font-semibold mb-4 text-gray-900">
-        Get Job Alerts
-      </h3>
-      <p className="text-sm text-gray-600 mb-4 max-w-xs">
-        Weekly hand-picked startup jobs delivered to your inbox.
-      </p>
+            {/* Brand */}
+            <div className="flex flex-col items-center">
+              <img
+                src="/logo-removebg-preview.png"
+                alt="TechnicalJobboard Logo"
+                className="w-36 object-contain mb-4"
+              />
+              <p className="text-gray-800 text-sm max-w-xs leading-relaxed">
+                Discover verified startup jobs, remote roles, and career-defining
+                opportunities across the United States.
+              </p>
+            </div>
 
-      <div className="flex w-full max-w-sm gap-2">
-        <input
-          type="email"
-          placeholder="Your email"
-          className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
-        />
-        <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-          Join
-        </button>
-      </div>
-    </div>
+            {/* Explore */}
+            <div className="flex flex-col items-center">
+              <h3 className="font-semibold mb-4 text-gray-900">
+                Explore
+              </h3>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <a href="#" className="text-gray-800 hover:text-[#6F00FC] transition">
+                    Browse Jobs
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-800 hover:text-[#8C33FD] transition">
+                    Companies
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-800 hover:text-[#A866FE] transition">
+                    Career Resources
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-800 hover:text-[#6F00FC] transition">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-  </div>
+            {/* Get Job Alerts */}
+            <div className="flex flex-col items-center">
+              <h3 className="font-semibold mb-4 text-gray-900">
+                Get Job Alerts
+              </h3>
+              <p className="text-gray-800 text-sm mb-4 max-w-xs">
+                Weekly hand-picked startup jobs delivered to your inbox.
+              </p>
 
-  {/* ===== SECTION 2: SOCIAL ICONS ===== */}
-  <div className="mt-16 pt-10 border-t border-gray-200">
-    <div className="max-w-6xl mx-auto px-6 flex justify-center gap-6">
+              <div className="flex w-full max-w-sm gap-2">
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+                />
+                <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+                  Join
+                </button>
+              </div>
+            </div>
 
-      {/* Twitter / X */}
-      <a
-        href="#"
-        aria-label="Twitter"
-        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#6F00FC] hover:text-white transition"
-      >
-        X
-      </a>
-
-      {/* LinkedIn */}
-      <a
-        href="#"
-        aria-label="LinkedIn"
-        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#8C33FD] hover:text-white transition"
-      >
-        in
-      </a>
-
-      {/* Facebook */}
-      <a
-        href="#"
-        aria-label="Facebook"
-        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#A866FE] hover:text-white transition"
-      >
-        f
-      </a>
-
-      {/* GitHub */}
-      <a
-        href="#"
-        aria-label="GitHub"
-        className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-sm font-medium hover:bg-[#6F00FC] hover:text-white transition"
-      >
-        GH
-      </a>
-
-    </div>
-
-    <p className="mt-8 text-center text-gray-500 text-sm">
-      &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
-    </p>
-  </div>
-
-</footer>{/* ================= FOOTER ================= */}
-<footer className="">
-
-  {/* ===== SECTION 1: MAIN BLOCKS (Light Background) ===== */}
-  <div className="bg-gray-100 py-20">
-    <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center items-center">
-
-      {/* Brand */}
-      <div className="flex flex-col items-center">
-        <img
-          src="/logo-removebg-preview.png"
-          alt="TechnicalJobboard Logo"
-          className="w-36 object-contain mb-4"
-        />
-        <p className="text-gray-800 text-sm max-w-xs leading-relaxed">
-          Discover verified startup jobs, remote roles, and career-defining
-          opportunities across the United States.
-        </p>
-      </div>
-
-      {/* Explore */}
-      <div className="flex flex-col items-center">
-        <h3 className="font-semibold mb-4 text-gray-900">
-          Explore
-        </h3>
-        <ul className="space-y-3 text-sm">
-          <li>
-            <a href="#" className="text-gray-800 hover:text-[#6F00FC] transition">
-              Browse Jobs
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-gray-800 hover:text-[#8C33FD] transition">
-              Companies
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-gray-800 hover:text-[#A866FE] transition">
-              Career Resources
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-gray-800 hover:text-[#6F00FC] transition">
-              Contact
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      {/* Get Job Alerts */}
-      <div className="flex flex-col items-center">
-        <h3 className="font-semibold mb-4 text-gray-900">
-          Get Job Alerts
-        </h3>
-        <p className="text-gray-800 text-sm mb-4 max-w-xs">
-          Weekly hand-picked startup jobs delivered to your inbox.
-        </p>
-
-        <div className="flex w-full max-w-sm gap-2">
-          <input
-            type="email"
-            placeholder="Your email"
-            className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
-          />
-          <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-            Join
-          </button>
+          </div>
         </div>
-      </div>
 
-    </div>
-  </div>
+        {/* ===== SECTION 2: SOCIAL ICONS + COPYRIGHT (Black Background) ===== */}
+        <div className="bg-[#02000D] py-10">
+          <div className="max-w-6xl mx-auto px-6 flex justify-center gap-6">
 
+            {/* Twitter */}
+            <a
+              href="#"
+              aria-label="Twitter"
+              className="w-11 h-11 rounded-full bg-white text-[#1DA1F2] shadow flex items-center justify-center text-lg font-medium hover:bg-[#1DA1F2] hover:text-white transition"
+            >
+              <FaTwitter />
+            </a>
 
-{/* ===== SECTION 2: SOCIAL ICONS + COPYRIGHT (Black Background) ===== */}
-<div className="bg-[#02000D] py-10">
-  <div className="max-w-6xl mx-auto px-6 flex justify-center gap-6">
+            {/* LinkedIn */}
+            <a
+              href="#"
+              aria-label="LinkedIn"
+              className="w-11 h-11 rounded-full bg-white text-[#0077B5] shadow flex items-center justify-center text-lg font-medium hover:bg-[#0077B5] hover:text-white transition"
+            >
+              <FaLinkedinIn />
+            </a>
 
-    {/* Twitter */}
-    <a
-      href="#"
-      aria-label="Twitter"
-      className="w-11 h-11 rounded-full bg-white text-[#1DA1F2] shadow flex items-center justify-center text-lg font-medium hover:bg-[#1DA1F2] hover:text-white transition"
-    >
-      <FaTwitter />
-    </a>
+            {/* Facebook */}
+            <a
+              href="#"
+              aria-label="Facebook"
+              className="w-11 h-11 rounded-full bg-white text-[#1877F2] shadow flex items-center justify-center text-lg font-medium hover:bg-[#1877F2] hover:text-white transition"
+            >
+              <FaFacebookF />
+            </a>
 
-    {/* LinkedIn */}
-    <a
-      href="#"
-      aria-label="LinkedIn"
-      className="w-11 h-11 rounded-full bg-white text-[#0077B5] shadow flex items-center justify-center text-lg font-medium hover:bg-[#0077B5] hover:text-white transition"
-    >
-      <FaLinkedinIn />
-    </a>
+            {/* GitHub */}
+            <a
+              href="#"
+              aria-label="GitHub"
+              className="w-11 h-11 rounded-full bg-white text-black shadow flex items-center justify-center text-lg font-medium hover:bg-black hover:text-white transition"
+            >
+              <FaGithub />
+            </a>
 
-    {/* Facebook */}
-    <a
-      href="#"
-      aria-label="Facebook"
-      className="w-11 h-11 rounded-full bg-white text-[#1877F2] shadow flex items-center justify-center text-lg font-medium hover:bg-[#1877F2] hover:text-white transition"
-    >
-      <FaFacebookF />
-    </a>
+          </div>
 
-    {/* GitHub */}
-    <a
-      href="#"
-      aria-label="GitHub"
-      className="w-11 h-11 rounded-full bg-white text-black shadow flex items-center justify-center text-lg font-medium hover:bg-black hover:text-white transition"
-    >
-      <FaGithub />
-    </a>
+          <p className="mt-6 text-center text-white text-sm">
+            &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
+          </p>
+        </div>
 
-  </div>
-
-  <p className="mt-6 text-center text-white text-sm">
-    &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
-  </p>
-</div>
-</footer>
-
-</main>
+      </footer>
+    </main>
   )
 }
