@@ -5,38 +5,54 @@ export default function Home() {
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 {/* ================= HERO ================= */}
-<section className="py-28 bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] text-white">
-  <div className="max-w-6xl mx-auto px-6 text-center md:text-left">
-    <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
-      Discover startup jobs<br />
-      that <span className="text-[#02000D]">move your career forward</span>
-    </h1>
+<section className="relative py-28 bg-animated-gradient text-white overflow-hidden">
 
-    <p className="mt-6 text-lg md:text-xl max-w-2xl tracking-tight font-medium">
-      Explore thousands of USA-based roles from fast-growing startups and tech companies.
-    </p>
+  {/* Decorative Shapes */}
+  <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3"></div>
 
-    {/* HERO SEARCH BAR */}
-    <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
-      <input
-        type="text"
-        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC] text-gray-900"
-        placeholder="Keyword or Job Title"
-        
-      />
-      <input
-        type="text"
-        className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD] text-gray-900"
-        placeholder="Location"
-   
-      />
-      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
-        Search Jobs
-      </button>
+  <div className="max-w-6xl mx-auto px-6 relative z-10 md:flex md:items-center md:justify-between">
+
+    {/* Left Text */}
+    <div className="md:w-1/2 text-center md:text-left">
+      <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
+        Discover startup jobs<br />
+        that <span className="text-[#02000D]">move your career forward</span>
+      </h1>
+
+      <p className="mt-6 text-lg md:text-xl max-w-2xl tracking-tight font-medium">
+        Explore thousands of USA-based roles from fast-growing startups and tech companies.
+      </p>
+
+      {/* HERO SEARCH BAR */}
+      <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
+        <input
+          type="text"
+          className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC] text-gray-900"
+          placeholder="Keyword or Job Title"
+        />
+        <input
+          type="text"
+          className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD] text-gray-900"
+          placeholder="Location"
+        />
+        <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
+          Search Jobs
+        </button>
+      </div>
     </div>
+
+    {/* Right Illustration */}
+    <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
+      <img
+        src="/hero-platform.png" // Replace with your actual illustration
+        alt="Startup Jobs Platform Illustration"
+        className="w-full max-w-md rounded-2xl shadow-lg"
+      />
+    </div>
+
   </div>
 </section>
-
 
 
 
