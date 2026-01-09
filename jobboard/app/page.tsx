@@ -435,7 +435,6 @@ export default function Home() {
     </div>
   </div>
 
-  import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
 {/* ===== SECTION 2: SOCIAL ICONS + COPYRIGHT (Black Background) ===== */}
 <div className="bg-[#02000D] py-10">
