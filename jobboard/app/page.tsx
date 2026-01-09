@@ -255,7 +255,7 @@ export default function Home() {
       <img
         src="/logo-removebg-preview.png"
         alt="TechnicalJobboard Logo"
-        className="w-36 object-contain mb-4"
+        className="w-50 object-contain mb-4"
       />
       <p className="text-gray-600 text-sm max-w-xs leading-relaxed">
         Discover verified startup jobs, remote roles, and career-defining
