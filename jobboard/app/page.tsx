@@ -245,42 +245,67 @@ export default function Home() {
 
 
 {/* ================= FOOTER ================= */}
-<footer className="bg-[#02000D] text-white py-16">
+<footer className="bg-gray-100 text-[#02000D] py-20 border-t border-gray-200">
   <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-    
+
     {/* Logo / Info */}
     <div className="flex flex-col items-start">
-      <img src="/logo-removebg-preview.png" alt="TechnicalJobboard Logo" className="w-32 mb-4" />
-      <p className="text-gray-300">
-        Connecting ambitious professionals with innovative startups in the USA.
+      <img
+        src="/logo-removebg-preview.png"
+        alt="TechnicalJobboard Logo"
+        className="w-36 mb-4"
+      />
+      <p className="text-gray-600 max-w-sm">
+        Connecting ambitious professionals with innovative startups across the United States.
       </p>
     </div>
 
     {/* Quick Links */}
     <div>
-      <h3 className="font-semibold mb-4">Quick Links</h3>
+      <h3 className="font-semibold mb-4 text-gray-900">Quick Links</h3>
       <ul className="space-y-2">
-        <li><a href="#" className="hover:text-[#6F00FC] transition">Home</a></li>
-        <li><a href="#" className="hover:text-[#8C33FD] transition">Jobs</a></li>
-        <li><a href="#" className="hover:text-[#A866FE] transition">About</a></li>
-        <li><a href="#" className="hover:text-[#6F00FC] transition">Contact</a></li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#8C33FD] transition">
+            Jobs
+          </a>
+        </li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#A866FE] transition">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="#" className="text-gray-600 hover:text-[#6F00FC] transition">
+            Contact
+          </a>
+        </li>
       </ul>
     </div>
 
     {/* Contact */}
     <div>
-      <h3 className="font-semibold mb-4">Contact</h3>
-      <p className="text-gray-300 mb-2">Email: info@technicaljobboard.com</p>
-      <p className="text-gray-300 mb-2">Phone: +1 800 000 0000</p>
-      <p className="text-gray-300">Location: USA</p>
+      <h3 className="font-semibold mb-4 text-gray-900">Contact</h3>
+      <p className="text-gray-600 mb-2">
+        Email: info@technicaljobboard.com
+      </p>
+      <p className="text-gray-600 mb-2">
+        Phone: +1 800 000 0000
+      </p>
+      <p className="text-gray-600">
+        Location: USA
+      </p>
     </div>
   </div>
 
-  <div className="mt-12 text-center text-gray-500 text-sm">
+  <div className="mt-14 text-center text-gray-500 text-sm">
     &copy; {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
   </div>
 </footer>
-
 </main>
   )
 }
