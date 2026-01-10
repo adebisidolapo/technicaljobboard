@@ -1,5 +1,10 @@
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+
+
 
 export default function Home() {
   return (
@@ -43,25 +48,48 @@ export default function Home() {
       </div>
     </div>
 
-{/* Right Illustration – Floating 3D */}
-<div className="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-end perspective-1000">
-  <div className="relative float-3d group">
+{/* Right Illustration – FULL PREMIUM HERO */}
+<div
+  ref={heroImageRef}
+  className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end perspective-1000 parallax"
+>
+  <div className="relative float-3d animate-fade-in-up">
 
     {/* Glow */}
     <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110"></div>
 
-    {/* Image */}
+    {/* Floating Icons */}
+    <div className="absolute -top-6 -left-6 glass px-4 py-2 rounded-xl text-white text-sm shadow-lg">
+      💼 Remote Jobs
+    </div>
+
+    <div className="absolute top-10 -right-10 glass px-4 py-2 rounded-xl text-white text-sm shadow-lg">
+      📍 USA Only
+    </div>
+
+    <div className="absolute -bottom-6 left-10 glass px-4 py-2 rounded-xl text-white text-sm shadow-lg">
+      ⚡ Fast Apply
+    </div>
+
+    {/* Glass Card */}
+    <div className="absolute bottom-6 right-6 glass rounded-2xl p-4 shadow-xl text-white text-sm w-44">
+      <p className="font-semibold">Frontend Engineer</p>
+      <p className="text-xs opacity-80">Remote • $120k</p>
+    </div>
+
+    {/* Main Image */}
     <Image
       src="/bg.png"
       alt="Startup Jobs Platform"
       width={520}
       height={420}
       priority
-      className="relative z-10 rounded-3xl shadow-2xl transition-transform duration-500 group-hover:rotate-x-6 group-hover:-rotate-y-6"
+      className="relative z-10 rounded-3xl shadow-2xl"
     />
 
   </div>
 </div>
+
 
   </div>
 </section>

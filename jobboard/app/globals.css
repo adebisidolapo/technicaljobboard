@@ -35,13 +35,13 @@ body {
   background-size: 400% 400%;
   animation: gradientMove 15s ease infinite;
 }
-/* Floating 3D effect */
+/* ===== Floating 3D animation ===== */
 @keyframes float3d {
   0% {
     transform: translateY(0px) rotateX(0deg) rotateY(0deg);
   }
   50% {
-    transform: translateY(-14px) rotateX(6deg) rotateY(-6deg);
+    transform: translateY(-16px) rotateX(6deg) rotateY(-6deg);
   }
   100% {
     transform: translateY(0px) rotateX(0deg) rotateY(0deg);
@@ -52,6 +52,36 @@ body {
   animation: float3d 6s ease-in-out infinite;
   transform-style: preserve-3d;
 }
+
+/* ===== Parallax ===== */
+.parallax {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ===== Glassmorphism ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ===== Perspective ===== */
 .perspective-1000 {
   perspective: 1000px;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.9s ease-out forwards;
 }

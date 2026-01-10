@@ -6,6 +6,20 @@ import Link from "next/link";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+const heroImageRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleScroll = () => {
+    if (!heroImageRef.current) return;
+    const offset = window.scrollY * 0.15;
+    heroImageRef.current.style.transform = `translateY(${offset}px)`;
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+
   return (
     <header className="bg-gray-50 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
