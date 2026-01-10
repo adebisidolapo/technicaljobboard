@@ -1,4 +1,5 @@
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -42,7 +43,7 @@ export default function Home() {
       </div>
     </div>
 
-    {/* Right Illustration */}
+{/* Right Illustration */}
 <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
   <Image
     src="/bg.png"
@@ -53,6 +54,7 @@ export default function Home() {
     className="rounded-2xl shadow-2xl"
   />
 </div>
+
 
   </div>
 </section>
