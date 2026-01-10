@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRef, useEffect } from "react";
+
 
 
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
 
 export default function Home() {
+  const heroImageRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
