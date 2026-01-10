@@ -1,9 +1,10 @@
-import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 "use client";
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
+
+import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
 
 export default function Home() {
