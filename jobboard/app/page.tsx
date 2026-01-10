@@ -43,18 +43,25 @@ export default function Home() {
       </div>
     </div>
 
-{/* Right Illustration */}
-<div className="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
-  <Image
-    src="/bg.png"
-    alt="Startup Jobs Platform Illustration"
-    width={520}
-    height={420}
-    priority
-    className="rounded-2xl shadow-2xl"
-  />
-</div>
+{/* Right Illustration – Floating 3D */}
+<div className="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-end perspective-1000">
+  <div className="relative float-3d group">
 
+    {/* Glow */}
+    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110"></div>
+
+    {/* Image */}
+    <Image
+      src="/bg.png"
+      alt="Startup Jobs Platform"
+      width={520}
+      height={420}
+      priority
+      className="relative z-10 rounded-3xl shadow-2xl transition-transform duration-500 group-hover:rotate-x-6 group-hover:-rotate-y-6"
+    />
+
+  </div>
+</div>
 
   </div>
 </section>
