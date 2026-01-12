@@ -200,12 +200,25 @@ export default function Home() {
             <option>Senior</option>
           </select>
 
-          {/* Salary Range (Optional) */}
-          <input
-            type="text"
-            placeholder="Salary Range"
-            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#A866FE] outline-none text-sm"
-          />
+          {/* Estimated Salary */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
+            <option>Estimated Salary</option>
+            <option>$40k – $60k</option>
+            <option>$60k – $80k</option>
+            <option>$80k – $100k</option>
+            <option>$100k – $150k</option>
+          </select>
+
+          {/* Popular Filters */}
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Popular Filters</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Remote</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#8C33FD] hover:text-white transition">Full-time</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#A866FE] hover:text-white transition">Senior</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Contract</span>
+            </div>
+          </div>
 
           <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-2 rounded-xl font-medium transition">
             Apply Filters
