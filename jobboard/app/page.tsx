@@ -37,24 +37,32 @@ export default function Home() {
           Explore thousands of USA-based roles from fast-growing startups and tech companies.
         </p>
 
-        {/* HERO SEARCH BAR */}
-        <div className="w-full max-w-6xl mt-8">
-          <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
-            <input
-              type="text"
-              placeholder="Keyword or Job Title"
-              className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none text-black"
-            />
-            <input
-              type="text"
-              placeholder="Location"
-              className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none text-black"
-            />
-            <button className="px-12 py-5 bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
-              Search Jobs
-            </button>
-          </div>
-        </div>
+{/* HERO SEARCH BAR */}
+<div className="w-full max-w-4xl mt-8">
+  <div className="flex items-center bg-white rounded-full shadow-lg px-4 py-2">
+
+    <input
+      type="text"
+      placeholder="Search jobs by title, keyword, or company"
+      className="flex-1 px-4 py-3 text-gray-800 bg-transparent focus:outline-none"
+    />
+
+    <button className="ml-2 px-6 py-3 rounded-full bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
+      Search
+    </button>
+
+  </div>
+</div>
+
+{/* JUMP TO JOBS */}
+<button
+  onClick={() =>
+    document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+  }
+  className="mt-5 text-sm font-medium text-white/90 hover:text-white underline underline-offset-4 transition"
+>
+  Jump to Jobs ↓
+</button>
       </div>
 
       {/* Right Illustration */}
@@ -95,7 +103,7 @@ export default function Home() {
     </div>
 
     <div className="flex justify-center items-center gap-2">
-      <span>🇺🇸 USA Only</span>
+      <span>USA Only</span>
     </div>
 
   </div>
