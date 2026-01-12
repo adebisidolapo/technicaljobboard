@@ -88,7 +88,7 @@ export default function Home() {
 
     {/* Top Content */}
     <div className="md:flex md:items-center md:justify-between">
-
+<div className="md:w-1/2">
       {/* Left Text */}
       <div className="md:w-1/2 text-center md:text-left">
         <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-tight">
@@ -125,6 +125,7 @@ export default function Home() {
           }
           className="mt-6 inline-flex items-center gap-2 text-white font-medium px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition"
         >
+          </div>
           Jump to Jobs <span className="text-lg">↓</span>
         </button>
       </div>
