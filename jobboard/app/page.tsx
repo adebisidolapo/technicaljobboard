@@ -18,97 +18,92 @@ export default function Home() {
 <section className="relative py-28 bg-animated-gradient text-white overflow-hidden">
 
   {/* Decorative Shapes */}
-  <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-  <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3"></div>
+  <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
 
-  <div className="max-w-6xl mx-auto px-6 relative z-10 md:flex md:items-center md:justify-between">
+  <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-    {/* Left Text */}
-    <div className="md:w-1/2 text-center md:text-left">
-      <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
-        Discover startup jobs<br />
-        that <span className="text-[#02000D]">move your career forward</span>
-      </h1>
+    {/* Top Content */}
+    <div className="md:flex md:items-center md:justify-between">
 
-      <p className="mt-6 text-lg md:text-xl max-w-2xl tracking-tight font-medium">
-        Explore thousands of USA-based roles from fast-growing startups and tech companies.
-      </p>
+      {/* Left Text */}
+      <div className="md:w-1/2 text-center md:text-left">
+        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-wide">
+          Discover startup jobs<br />
+          that <span className="text-[#02000D]">move your career forward</span>
+        </h1>
 
-      {/* HERO SEARCH BAR */}
-      <div className="w-full max-w-6xl mt-8">
-  <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
-    
-    <input
-      type="text"
-      placeholder="Keyword or Job Title"
-      className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none"
-    />
+        <p className="mt-6 text-lg md:text-xl max-w-2xl tracking-tight font-medium">
+          Explore thousands of USA-based roles from fast-growing startups and tech companies.
+        </p>
 
-    <input
-      type="text"
-      placeholder="Location"
-      className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none"
-    />
+        {/* HERO SEARCH BAR */}
+        <div className="w-full max-w-6xl mt-8">
+          <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+            <input
+              type="text"
+              placeholder="Keyword or Job Title"
+              className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none text-black"
+            />
+            <input
+              type="text"
+              placeholder="Location"
+              className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none text-black"
+            />
+            <button className="px-12 py-5 bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
+              Search Jobs
+            </button>
+          </div>
+        </div>
+      </div>
 
-    <button className="px-12 py-5 bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
-      Search Jobs
-    </button>
+      {/* Right Illustration */}
+      <div
+        ref={heroImageRef}
+        className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end perspective-1000 parallax"
+      >
+        <div className="relative float-3d animate-fade-in-up">
 
-  </div>
-</div>
+          {/* Glow */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
 
-</div>
+          {/* Glass Card */}
+          <div className="absolute bottom-6 right-6 glass rounded-2xl p-4 shadow-xl text-white text-sm w-44">
+            <p className="font-semibold">Frontend Engineer</p>
+            <p className="text-xs opacity-80">Remote • $120k</p>
+          </div>
+
+        </div>
+      </div>
 
     </div>
 
-{/* Right Illustration – FULL PREMIUM HERO */}
-<div
-  ref={heroImageRef}
-  className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end perspective-1000 parallax"
->
-  <div className="relative float-3d animate-fade-in-up">
+    {/* ===== SPREAD ICONS ACROSS FULL HERO ===== */}
+    <div className="w-full mt-16">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 text-center">
 
-    {/* Glow */}
-    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110"></div>
+        <div className="flex justify-center items-center gap-2">
+          <FrontendIcon className="w-5 h-5 text-white" />
+          <span>Frontend</span>
+        </div>
 
-    {/* Floating Icons */}
-    <div className="w-full mt-10">
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 text-center">
-    
-    <div className="flex items-center justify-center gap-2">
-      <FrontendIcon className="w-5 h-5 text-purple-600" />
-      <span>Frontend</span>
+        <div className="flex justify-center items-center gap-2">
+          <RemoteIcon className="w-5 h-5 text-white" />
+          <span>Remote Jobs</span>
+        </div>
+
+        <div className="flex justify-center items-center gap-2">
+          <FastApplyIcon className="w-5 h-5 text-white" />
+          <span>Fast Apply</span>
+        </div>
+
+        <div className="flex justify-center items-center gap-2">
+          <UsaIcon className="w-5 h-5 text-white" />
+          <span>USA Only</span>
+        </div>
+
+      </div>
     </div>
-
-    <div className="flex items-center justify-center gap-2">
-      <RemoteIcon className="w-5 h-5 text-purple-600" />
-      <span>Remote Jobs</span>
-    </div>
-
-    <div className="flex items-center justify-center gap-2">
-      <FastApplyIcon className="w-5 h-5 text-purple-600" />
-      <span>Fast Apply</span>
-    </div>
-
-    <div className="flex items-center justify-center gap-2">
-      <UsaIcon className="w-5 h-5 text-purple-600" />
-      <span>USA Only</span>
-    </div>
-
-  </div>
-</div>
-
-    {/* Glass Card */}
-    <div className="absolute bottom-6 right-6 glass rounded-2xl p-4 shadow-xl text-white text-sm w-44">
-      <p className="font-semibold">Frontend Engineer</p>
-      <p className="text-xs opacity-80">Remote • $120k</p>
-    </div>
-
-    
-
-  </div>
-</div>
-
 
   </div>
 </section>
