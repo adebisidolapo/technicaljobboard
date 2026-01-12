@@ -1,11 +1,74 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+const [searchTerm, setSearchTerm] = useState("");
+const heroImageRef = useRef<HTMLDivElement | null>(null);
+
 
 
 
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
+
+const jobs = [
+  {
+    id: 1,
+    title: "Frontend Engineer",
+    company: "Acme Tech",
+    location: "Remote (USA)",
+    type: "Full-time",
+    salary: "$100k – $130k",
+    tag: "React",
+  },
+  {
+    id: 2,
+    title: "Backend Developer",
+    company: "CloudStack",
+    location: "Hybrid (USA)",
+    type: "Full-time",
+    salary: "$110k – $140k",
+    tag: "Node.js",
+  },
+  {
+    id: 3,
+    title: "UI/UX Designer",
+    company: "Pixel Labs",
+    location: "Remote (USA)",
+    type: "Contract",
+    salary: "$80k – $100k",
+    tag: "Figma",
+  },
+];
+function JobCard({ job }: { job: any }) {
+  return (
+    <div className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+      <h3 className="text-lg font-semibold text-gray-900">
+        {job.title}
+      </h3>
+
+      <p className="text-sm text-gray-600 mt-1">
+        {job.company} • {job.location}
+      </p>
+
+      <div className="flex flex-wrap gap-2 mt-4 text-sm">
+        <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700">
+          {job.type}
+        </span>
+        <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+          {job.tag}
+        </span>
+      </div>
+
+      <p className="mt-4 font-semibold text-gray-900">
+        {job.salary}
+      </p>
+
+      <button className="mt-6 w-full py-2 rounded-lg bg-purple-700 text-white font-medium hover:bg-purple-800 transition">
+        View Job
+      </button>
+    </div>
+  );
+}
 
 
 export default function Home() {
@@ -42,10 +105,13 @@ export default function Home() {
         <div className="w-full mt-10">
           <div className="flex items-center bg-white rounded-full shadow-xl px-6 py-3 max-w-5xl">
             <input
-              type="text"
-              placeholder="Search jobs by title, keyword, or company"
-              className="flex-1 px-3 py-3 text-gray-800 bg-transparent focus:outline-none text-base"
-            />
+  type="text"
+  placeholder="Search jobs by title, keyword, or company"
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  className="flex-1 px-3 py-3 text-gray-800 bg-transparent focus:outline-none text-base"
+/>
+
             <button className="ml-3 px-8 py-3 rounded-full bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
               Search
             </button>
@@ -124,6 +190,11 @@ export default function Home() {
 
     {/* Job Cards */}
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  {jobs.map((job) => (
+    <JobCard key={job.id} job={job} />
+  ))}
+</div>
+
 
       {/* Job Card */}
       <div className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
