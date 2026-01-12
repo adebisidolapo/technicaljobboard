@@ -83,34 +83,6 @@ export default function Home() {
 
         </div>
       </div>
-
-    </div>
-
-    {/* ===== SPREAD ICONS ACROSS FULL HERO ===== */}
-<div className="w-full mt-16">
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 text-center">
-
-    <div className="flex justify-center items-center gap-2">
-      <span>💻 Frontend</span>
-    </div>
-
-    <div className="flex justify-center items-center gap-2">
-      <span>🌍 Remote Jobs</span>
-    </div>
-
-    <div className="flex justify-center items-center gap-2">
-      <span>⚡ Fast Apply</span>
-    </div>
-
-    <div className="flex justify-center items-center gap-2">
-      <span>USA Only</span>
-    </div>
-
-  </div>
-</div>
-
-
-  </div>
 </section>
 
 
