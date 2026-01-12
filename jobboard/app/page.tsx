@@ -118,17 +118,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* JUMP TO JOBS */}
-        <button
-          onClick={() =>
-            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-          }
-          className="mt-6 inline-flex items-center gap-2 text-white font-medium px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition"
-        >
-          </div>
-          Jump to Jobs <span className="text-lg">↓</span>
-        </button>
-      </div>
+ {/* JUMP TO JOBS */}
+<button
+  onClick={() =>
+    document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+  }
+  className="mt-6 inline-flex items-center gap-2 text-white font-medium px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition"
+>
+  Jump to Jobs <span className="text-lg">↓</span>
+</button>
+
 
       {/* Right Illustration */}
       <div
