@@ -35,26 +35,28 @@ export default function Home() {
       </p>
 
       {/* HERO SEARCH BAR */}
-      <div className="w-full max-w-5xl mt-8">
-  <form className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-xl shadow-lg">
+      <div className="w-full max-w-6xl mt-8">
+  <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
     
     <input
       type="text"
       placeholder="Keyword or Job Title"
-      className="flex-1 px-5 py-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+      className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none"
     />
 
     <input
       type="text"
       placeholder="Location"
-      className="flex-1 px-5 py-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+      className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r focus:outline-none"
     />
 
-    <button className="px-10 py-4 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-800 transition">
-      Search
+    <button className="px-12 py-5 bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
+      Search Jobs
     </button>
 
-  </form>
+  </div>
+</div>
+
 </div>
 
     </div>
@@ -70,17 +72,31 @@ export default function Home() {
     <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110"></div>
 
     {/* Floating Icons */}
-    <div className="absolute -top-6 -left-6 glass px-4 py-2 rounded-xl text-white text-sm shadow-lg">
-      💼 Remote Jobs
+    <div className="w-full mt-10">
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 text-center">
+    
+    <div className="flex items-center justify-center gap-2">
+      <FrontendIcon className="w-5 h-5 text-purple-600" />
+      <span>Frontend</span>
     </div>
 
-    <div className="absolute top-10 -right-10 glass px-4 py-2 rounded-xl text-white text-sm shadow-lg">
-      📍 USA Only
+    <div className="flex items-center justify-center gap-2">
+      <RemoteIcon className="w-5 h-5 text-purple-600" />
+      <span>Remote Jobs</span>
     </div>
 
-    <div className="absolute -bottom-6 left-10 glass px-4 py-2 rounded-xl text-white text-sm shadow-lg">
-      ⚡ Fast Apply
+    <div className="flex items-center justify-center gap-2">
+      <FastApplyIcon className="w-5 h-5 text-purple-600" />
+      <span>Fast Apply</span>
     </div>
+
+    <div className="flex items-center justify-center gap-2">
+      <UsaIcon className="w-5 h-5 text-purple-600" />
+      <span>USA Only</span>
+    </div>
+
+  </div>
+</div>
 
     {/* Glass Card */}
     <div className="absolute bottom-6 right-6 glass rounded-2xl p-4 shadow-xl text-white text-sm w-44">
