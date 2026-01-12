@@ -169,8 +169,8 @@ export default function Home() {
   </div>
 </div>
 
-        </div> {/* closes md:flex */}
-      </div>   {/* closes max-w-7xl */}
+        </div> 
+      </div>   
 </section>
 
 
