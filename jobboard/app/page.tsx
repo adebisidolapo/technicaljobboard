@@ -27,46 +27,40 @@ export default function Home() {
     <div className="md:flex md:items-center md:justify-between">
 
       {/* Left Text */}
-    <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-tight">
-  Find meaningful startup jobs<br />
-  that <span className="text-[#02000D]">actually grow your career</span>
-</h1>
+      <div className="md:w-1/2 text-center md:text-left">
+        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-tight">
+          Find meaningful startup jobs<br />
+          that <span className="text-[#02000D]">actually grow your career</span>
+        </h1>
 
-<p className="mt-6 text-lg md:text-xl max-w-2xl text-white/90">
-  Discover verified USA-based roles from fast-growing startups, remote teams,
-  and innovative tech companies hiring now.
-</p>
- 
+        <p className="mt-6 text-lg md:text-xl max-w-2xl text-white/90">
+          Discover verified USA-based roles from fast-growing startups, remote teams,
+          and innovative tech companies hiring now.
+        </p>
 
-{/* HERO SEARCH BAR */}
-<div className="w-full mt-10">
-  <div className="flex items-center bg-white rounded-full shadow-xl px-6 py-3 max-w-5xl">
+        {/* HERO SEARCH BAR */}
+        <div className="w-full mt-10">
+          <div className="flex items-center bg-white rounded-full shadow-xl px-6 py-3 max-w-5xl">
+            <input
+              type="text"
+              placeholder="Search jobs by title, keyword, or company"
+              className="flex-1 px-3 py-3 text-gray-800 bg-transparent focus:outline-none text-base"
+            />
+            <button className="ml-3 px-8 py-3 rounded-full bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
+              Search
+            </button>
+          </div>
+        </div>
 
-    <input
-      type="text"
-      placeholder="Search jobs by title, keyword, or company"
-      className="flex-1 px-3 py-3 text-gray-800 bg-transparent focus:outline-none text-base"
-    />
-
-    <button className="ml-3 px-8 py-3 rounded-full bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
-      Search
-    </button>
-
-  </div>
-</div>
-
-
-{/* JUMP TO JOBS */}
-<button
-  onClick={() =>
-    document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="mt-6 inline-flex items-center gap-2 text-white font-medium px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition"
->
-  Jump to Jobs
-  <span className="text-lg">↓</span>
-</button>
-
+        {/* JUMP TO JOBS */}
+        <button
+          onClick={() =>
+            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="mt-6 inline-flex items-center gap-2 text-white font-medium px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition"
+        >
+          Jump to Jobs <span className="text-lg">↓</span>
+        </button>
       </div>
 
       {/* Right Illustration */}
@@ -85,26 +79,31 @@ export default function Home() {
             <p className="text-xs opacity-80">Remote • $120k</p>
           </div>
 
-{/* JOB ICON STRIP */}
-<div className="w-full mt-20">
-  <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 text-center text-sm text-white/80">
+        </div>
+      </div>
 
-    <span>Frontend</span>
-    <span>Backend</span>
-    <span>Design</span>
-    <span>Remote</span>
-    <span>Full-Time</span>
-    <span>Contract</span>
+    </div>
 
-    <span>USA Only</span>
-    <span>Fast Apply</span>
-    <span>Startup</span>
-    <span>Senior Roles</span>
-    <span>Junior Roles</span>
-    <span>High Paying</span>
+    {/* JOB ICON STRIP — FULL WIDTH */}
+    <div className="w-full mt-20">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 text-center text-sm text-white/80">
+        <span>Frontend</span>
+        <span>Backend</span>
+        <span>Design</span>
+        <span>Remote</span>
+        <span>Full-Time</span>
+        <span>Contract</span>
+
+        <span>USA Only</span>
+        <span>Fast Apply</span>
+        <span>Startup</span>
+        <span>Senior Roles</span>
+        <span>Junior Roles</span>
+        <span>High Paying</span>
+      </div>
+    </div>
 
   </div>
-</div>
 </section>
 
 
