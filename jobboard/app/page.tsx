@@ -152,61 +152,99 @@ export default function Home() {
 </section>
 
 {/* ================= BROWSE JOBS ================= */}
-<section id="jobs" className="py-28 bg-gray-50">
+<section className="py-28 bg-gray-50">
   <div className="max-w-7xl mx-auto px-6">
     <div className="flex justify-between items-center mb-6">
-      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
-        Browse Jobs
-      </h2>
-      <span className="text-[#6F00FC] font-medium underline cursor-pointer">
+      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">Browse Jobs</h2>
+      <span className="text-[#6F00FC] font-medium underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
         Load More Jobs
       </span>
     </div>
-
     <p className="text-gray-600 mb-8">Showing 200 available roles</p>
 
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
-      {/* Filters */}
-      <aside className="bg-white rounded-3xl p-8 h-fit shadow-xl border border-gray-100 sticky top-24">
-        <h3 className="font-semibold mb-6 text-lg">Refine Your Search</h3>
+    <div className="flex flex-col lg:flex-row gap-10">
 
-        <input
-          placeholder="Job title or keyword"
-          className="w-full border rounded-xl px-4 py-3 mb-4"
-        />
-        <input
-          placeholder="Location"
-          className="w-full border rounded-xl px-4 py-3 mb-4"
-        />
+      {/* ================= FILTERS ================= */}
+      <aside className="lg:w-1/4 w-full lg:sticky lg:top-28 h-fit">
+        <div className="bg-white rounded-3xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900">Refine Your Research</h3>
 
-        <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-3 rounded-xl font-medium">
-          Apply Filters
-        </button>
+          {/* Keyword */}
+          <input
+            type="text"
+            placeholder="Keyword or Job Title"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+          />
+
+          {/* Location */}
+          <input
+            type="text"
+            placeholder="Location"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm"
+          />
+
+          {/* Job Type */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
+            <option>Job Type</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Internship</option>
+          </select>
+
+          {/* Experience Level */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
+            <option>Experience Level</option>
+            <option>Junior</option>
+            <option>Mid</option>
+            <option>Senior</option>
+          </select>
+
+          {/* Salary Range (Optional) */}
+          <input
+            type="text"
+            placeholder="Salary Range"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#A866FE] outline-none text-sm"
+          />
+
+          <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-2 rounded-xl font-medium transition">
+            Apply Filters
+          </button>
+        </div>
       </aside>
 
-      {/* Job Feed */}
-      <div className="lg:col-span-3 space-y-6">
-        {[...Array(6)].map((_, idx) => (
+      {/* ================= JOB FEED ================= */}
+      <div className="lg:w-3/4 w-full space-y-6">
+        {[...Array(8)].map((_, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition flex justify-between"
+            className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition flex justify-between items-start"
           >
-            <div>
-              <h3 className="text-lg font-semibold">Frontend Engineer</h3>
-              <p className="text-sm text-gray-600">
-                NovaTech • Remote (US)
-              </p>
-              <p className="text-sm text-gray-500 mt-2">
-                Build modern frontend apps with React and Next.js.
-              </p>
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">
+                C
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold">Frontend Engineer</h3>
+                <p className="text-sm text-gray-600">
+                  NovaTech • Remote (US)
+                </p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Build scalable front-end applications with React & Next.js, collaborate with product teams, and contribute to cutting-edge projects.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Remote</span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Full-time</span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Senior</span>
+                </div>
+              </div>
             </div>
 
             <div className="text-right">
-              <p className="text-sm font-medium text-[#6F00FC]">
-                $90k – $130k
-              </p>
-              <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-5 py-2 rounded-xl text-sm font-medium">
-                View Details →
+              <p className="text-sm font-medium text-[#6F00FC]">$90k – $130k</p>
+              <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
+                View
               </button>
             </div>
           </div>
@@ -215,6 +253,7 @@ export default function Home() {
     </div>
   </div>
 </section>
+
 
 {/* ================= EMPOWERING JOB SEEKERS ================= */}
 <section className="py-28 bg-white">
