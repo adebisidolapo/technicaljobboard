@@ -150,27 +150,29 @@ export default function Home() {
 
     </div>
 
-    {/* JOB ICON STRIP — FULL WIDTH */}
-    <div className="w-full mt-20">
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 text-center text-sm text-white/80">
-        <span>Frontend</span>
-        <span>Backend</span>
-        <span>Design</span>
-        <span>Remote</span>
-        <span>Full-Time</span>
-        <span>Contract</span>
+   {/* JOB ICON STRIP */}
+<div className="w-full mt-20">
+  <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 text-center text-sm text-white/80">
+    <span>Frontend</span>
+    <span>Backend</span>
+    <span>Design</span>
+    <span>Remote</span>
+    <span>Full-Time</span>
+    <span>Contract</span>
 
-        <span>USA Only</span>
-        <span>Fast Apply</span>
-        <span>Startup</span>
-        <span>Senior Roles</span>
-        <span>Junior Roles</span>
-        <span>High Paying</span>
-      </div>
-    </div>
-
+    <span>USA Only</span>
+    <span>Fast Apply</span>
+    <span>Startup</span>
+    <span>Senior Roles</span>
+    <span>Junior Roles</span>
+    <span>High Paying</span>
   </div>
+</div>
+
+        </div> {/* closes md:flex */}
+      </div>   {/* closes max-w-7xl */}
 </section>
+
 
 
 
