@@ -35,21 +35,28 @@ export default function Home() {
       </p>
 
       {/* HERO SEARCH BAR */}
-      <div className="mt-10 bg-white rounded-3xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto md:mx-0">
-        <input
-          type="text"
-          className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F00FC] text-gray-900"
-          placeholder="Keyword or Job Title"
-        />
-        <input
-          type="text"
-          className="border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8C33FD] text-gray-900"
-          placeholder="Location"
-        />
-        <button className="bg-[#6F00FC] hover:bg-[#8C33FD] transition text-white rounded-lg font-medium">
-          Search Jobs
-        </button>
-      </div>
+      <div className="w-full max-w-5xl mt-8">
+  <form className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-xl shadow-lg">
+    
+    <input
+      type="text"
+      placeholder="Keyword or Job Title"
+      className="flex-1 px-5 py-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+    />
+
+    <input
+      type="text"
+      placeholder="Location"
+      className="flex-1 px-5 py-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+    />
+
+    <button className="px-10 py-4 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-800 transition">
+      Search
+    </button>
+
+  </form>
+</div>
+
     </div>
 
 {/* Right Illustration – FULL PREMIUM HERO */}
@@ -81,15 +88,7 @@ export default function Home() {
       <p className="text-xs opacity-80">Remote • $120k</p>
     </div>
 
-    {/* Main Image */}
-    <Image
-      src="/bg.png"
-      alt="Startup Jobs Platform"
-      width={520}
-      height={420}
-      priority
-      className="relative z-10 rounded-3xl shadow-2xl"
-    />
+    
 
   </div>
 </div>
