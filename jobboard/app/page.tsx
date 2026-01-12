@@ -108,39 +108,108 @@ export default function Home() {
 
 
 
-      {/* ================= FEATURED STARTUP ROLES ================= */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-6 tracking-wide text-gray-900 text-center">
-            Featured Startup Roles
-          </h2>
+{/* ================= FEATURED STARTUP ROLES ================= */}
+<section className="py-20 bg-white" id="jobs">
+  <div className="max-w-7xl mx-auto px-6">
 
-          <div className="flex overflow-x-auto gap-8 snap-x snap-mandatory px-2">
-            {[
-              { role: "Senior Frontend Engineer", company: "NovaTech", salary: "$120k – $150k", desc: "Build scalable UIs with React & Next.js.", color: "#6F00FC" },
-              { role: "Product Designer", company: "Launchify", salary: "$90k – $120k", desc: "Design intuitive UX.", color: "#8C33FD" },
-              { role: "Backend Engineer", company: "TechNova", salary: "$100k – $140k", desc: "Develop high-performance APIs.", color: "#A866FE" },
-              { role: "Marketing Specialist", company: "GrowthLab", salary: "$60k – $80k", desc: "Plan campaigns and drive engagement.", color: "#6F00FC" },
-              { role: "Data Analyst", company: "Insightify", salary: "$80k – $110k", desc: "Analyze metrics to drive decisions.", color: "#8C33FD" },
-              { role: "DevOps Engineer", company: "CloudWorks", salary: "$110k – $140k", desc: "Maintain CI/CD pipelines.", color: "#A866FE" },
-            ].map((job, idx) => (
-              <div
-                key={idx}
-                className="flex-none w-96 snap-center bg-white rounded-3xl p-8 shadow-md border-l-4 hover:shadow-xl transition"
-                style={{ borderColor: job.color }}
-              >
-                <p className="text-sm font-medium text-gray-500">{job.company}</p>
-                <h3 className="text-xl font-semibold mt-1">{job.role}</h3>
-                <p className="text-sm font-medium mt-2" style={{ color: job.color }}>{job.salary}</p>
-                <p className="text-gray-600 mt-3 text-sm">{job.desc}</p>
-                <button className="mt-6 w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl font-medium transition">
-                  View Job
-                </button>
-              </div>
-            ))}
-          </div>
+    {/* Section Header */}
+    <div className="text-center mb-14">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+        Featured Startup Jobs
+      </h2>
+      <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+        Hand-picked roles from fast-growing startups and tech companies hiring right now.
+      </p>
+    </div>
+
+    {/* Job Cards */}
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+      {/* Job Card */}
+      <div className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+        <h3 className="text-lg font-semibold text-gray-900">
+          Frontend Engineer
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Acme Tech • Remote (USA)
+        </p>
+
+        <div className="flex flex-wrap gap-2 mt-4 text-sm">
+          <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700">
+            Full-time
+          </span>
+          <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+            React
+          </span>
         </div>
-      </section>
+
+        <p className="mt-4 font-semibold text-gray-900">
+          $100k – $130k
+        </p>
+
+        <button className="mt-6 w-full py-2 rounded-lg bg-purple-700 text-white font-medium hover:bg-purple-800 transition">
+          View Job
+        </button>
+      </div>
+
+      {/* Job Card */}
+      <div className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+        <h3 className="text-lg font-semibold text-gray-900">
+          Backend Developer
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">
+          CloudStack • Hybrid (USA)
+        </p>
+
+        <div className="flex flex-wrap gap-2 mt-4 text-sm">
+          <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700">
+            Full-time
+          </span>
+          <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+            Node.js
+          </span>
+        </div>
+
+        <p className="mt-4 font-semibold text-gray-900">
+          $110k – $140k
+        </p>
+
+        <button className="mt-6 w-full py-2 rounded-lg bg-purple-700 text-white font-medium hover:bg-purple-800 transition">
+          View Job
+        </button>
+      </div>
+
+      {/* Job Card */}
+      <div className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition">
+        <h3 className="text-lg font-semibold text-gray-900">
+          UI/UX Designer
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Pixel Labs • Remote (USA)
+        </p>
+
+        <div className="flex flex-wrap gap-2 mt-4 text-sm">
+          <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700">
+            Contract
+          </span>
+          <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+            Figma
+          </span>
+        </div>
+
+        <p className="mt-4 font-semibold text-gray-900">
+          $80k – $100k
+        </p>
+
+        <button className="mt-6 w-full py-2 rounded-lg bg-purple-700 text-white font-medium hover:bg-purple-800 transition">
+          View Job
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
       {/* ================= BROWSE JOBS ================= */}
       <section className="py-28 bg-gray-50">
