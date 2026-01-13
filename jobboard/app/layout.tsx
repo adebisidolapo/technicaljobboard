@@ -19,8 +19,8 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
 
 {/* TechnicalJob Logo */}
-<div className="flex items-center -ml-4">
-  <img
+<div className="max-w-full px-4">
+    <img
     src="/Technicaljoblogo.png"
     alt="TechnicalJobboard"
     className="h-24 w-auto object-contain"

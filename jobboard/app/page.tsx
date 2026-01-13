@@ -99,6 +99,45 @@ export default function Home() {
         </div>
       </section>
 
+{/* ================= TRUSTED BY COMPANIES ================= */}
+<section className="py-20 bg-white border-t border-gray-100">
+  <div className="max-w-7xl mx-auto px-6">
+
+    <p className="text-center text-sm font-medium text-gray-500 uppercase tracking-wider mb-10">
+      Companies We’ve Worked With
+    </p>
+
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-10 items-center justify-center">
+      <img
+        src="/companies/google.png"
+        alt="Google"
+        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+      />
+      <img
+        src="/companies/microsoft.png"
+        alt="Microsoft"
+        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+      />
+      <img
+        src="/companies/amazon.png"
+        alt="Amazon"
+        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+      />
+      <img
+        src="/companies/meta.png"
+        alt="Meta"
+        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+      />
+      <img
+        src="/companies/netflix.png"
+        alt="Netflix"
+        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+      />
+    </div>
+
+  </div>
+</section>
+
       {/* ================= FEATURED STARTUP ROLES ================= */}
 <section className="py-20 bg-white">
   <div className="max-w-6xl mx-auto px-6">
