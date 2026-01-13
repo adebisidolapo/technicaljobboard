@@ -99,44 +99,45 @@ export default function Home() {
         </div>
       </section>
 
-{/* ================= TRUSTED BY COMPANIES ================= */}
-<section className="py-20 bg-white border-t border-gray-100">
+{/* ================= TRUSTED TEAMS ================= */}
+<section className="py-24 bg-white">
   <div className="max-w-7xl mx-auto px-6">
 
-    <p className="text-center text-sm font-medium text-gray-500 uppercase tracking-wider mb-10">
-      Companies We’ve Worked With
-    </p>
+    <h3 className="text-center text-sm font-medium text-gray-500 tracking-wide uppercase mb-12">
+      Teams Building With Us
+    </h3>
 
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-10 items-center justify-center">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-12 items-center">
       <img
-        src="/companies/google.png"
-        alt="Google"
-        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+        src="/companies/Architects.png"
+        alt="Architects"
+        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/microsoft.png"
-        alt="Microsoft"
-        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+        src="/companies/vermot.png"
+        alt="Vermot"
+        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/amazon.png"
-        alt="Amazon"
-        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+        src="/companies/Devops.png"
+        alt="Devops"
+        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/meta.png"
-        alt="Meta"
-        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+        src="/companies/Hiredengineer.png"
+        alt="Hiredengineer"
+        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/netflix.png"
-        alt="Netflix"
-        className="h-10 mx-auto object-contain grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition"
+        src="/companies/redtail.png"
+        alt="Redtail"
+        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
     </div>
 
   </div>
 </section>
+
 
       {/* ================= FEATURED STARTUP ROLES ================= */}
 <section className="py-20 bg-white">
