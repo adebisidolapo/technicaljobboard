@@ -26,7 +26,7 @@ useEffect(() => {
     <header className="bg-gray-50 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         
-        {/* LOGO */}
+        {/* Technicaljoblogo */}
         <Link href="/" className="text-xl font-bold text-gray-900">
           Technical<span className="text-blue-600">Jobboard</span>
         </Link>

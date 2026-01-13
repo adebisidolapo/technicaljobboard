@@ -301,7 +301,7 @@ export default function Home() {
 
       <div className="flex flex-col items-center">
         <img
-          src="/logo-removebg-preview.png"
+          src="/Technicaljoblogo-removebg-preview.png"
           alt="TechnicalJobboard Logo"
           className="w-36 object-contain mb-4"
         />
