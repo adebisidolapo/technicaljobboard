@@ -299,16 +299,16 @@ export default function Home() {
   <div className="bg-gray-100 py-20">
     <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center items-center">
 
-      <div className="flex flex-col items-center">
-      <img
-  src="/Technicaljoblogo-removebg-preview.png"
-  alt="TechnicalJobboard Logo"
-  className="h-24 md:h-28 lg:h-32 w-auto object-contain mb-6"
-/>
-        <p className="text-gray-800 text-sm max-w-xs">
-          Discover verified startup jobs and career-defining opportunities.
-        </p>
-      </div>
+<div className="flex flex-col items-start">
+  <img
+    src="/Technicaljoblogo-removebg-preview.png"
+    alt="TechnicalJobboard Logo"
+    className="h-20 md:h-24 lg:h-24 w-auto object-contain mb-4"
+  />
+  <p className="text-gray-800 text-sm max-w-xs">
+    Discover verified startup jobs and career-defining opportunities.
+  </p>
+</div>
 
       <div>
         <h3 className="font-semibold mb-4">Explore</h3>
