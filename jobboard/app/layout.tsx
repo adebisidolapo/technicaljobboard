@@ -18,15 +18,14 @@ export default function RootLayout({
         <header className="w-full bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
 
-            {/* Technicaljoblogo */}
-            <div className="flex items-center">
-              <img
-                src="/Technicaljoblogo.png"
-                alt="TechnicalJobboard"
-              className="w-100 object-contain mb-4"
-              className="h-15 w-auto object-contain"
-              />
-            </div>
+            {/* TechnicalJob Logo */}
+<div className="flex items-center">
+  <img
+    src="/Technicaljoblogo.png"
+    alt="TechnicalJobboard"
+    className="h-16 md:h-20 lg:h-24 w-auto object-contain"
+  />
+</div>
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-800">
