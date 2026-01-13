@@ -18,12 +18,12 @@ export default function RootLayout({
         <header className="w-full bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
 
-            {/* TechnicalJob Logo */}
+{/* TechnicalJob Logo */}
 <div className="flex items-center">
   <img
     src="/Technicaljoblogo.png"
     alt="TechnicalJobboard"
-    className="h-16 md:h-20 lg:h-24 w-auto object-contain"
+    className="h-28 md:h-32 lg:h-36 w-auto object-contain"
   />
 </div>
 
