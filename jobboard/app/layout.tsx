@@ -23,7 +23,8 @@ export default function RootLayout({
               <img
                 src="/Technicaljoblogo.png"
                 alt="TechnicalJobboard"
-              className="w-56 object-contain mb-4"
+              className="w-100 object-contain mb-4"
+              className="h-15 w-auto object-contain"
               />
             </div>
 
