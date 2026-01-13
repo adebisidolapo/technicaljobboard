@@ -303,7 +303,7 @@ export default function Home() {
         <img
           src="/Technicaljoblogo-removebg-preview.png"
           alt="TechnicalJobboard Logo"
-          className="w-36 object-contain mb-4"
+          className="w-56 object-contain mb-4"
         />
         <p className="text-gray-800 text-sm max-w-xs">
           Discover verified startup jobs and career-defining opportunities.
