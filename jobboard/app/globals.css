@@ -154,3 +154,54 @@ body {
     radial-gradient(700px 320px at 85% 30%, rgba(168,102,254,0.10), transparent 55%),
     linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%);
 }
+
+/* ===== Trusted Teams V-wave animation ===== */
+@keyframes wave-move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.wave-marquee {
+  display: flex;
+  width: max-content;
+  animation: wave-move 30s linear infinite;
+}
+
+.wave-item {
+  transform-origin: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.wave-item:nth-child(5n + 1) {
+  transform: translateY(20px) scale(0.92);
+}
+.wave-item:nth-child(5n + 2) {
+  transform: translateY(10px) scale(0.96);
+}
+.wave-item:nth-child(5n + 3) {
+  transform: translateY(0px) scale(1);
+}
+.wave-item:nth-child(5n + 4) {
+  transform: translateY(10px) scale(0.96);
+}
+.wave-item:nth-child(5n + 5) {
+  transform: translateY(20px) scale(0.92);
+}
+
+.wave-item:hover {
+  transform: translateY(0px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+}
+
+/* Background for trusted teams */
+.trusted-bg {
+  background:
+    radial-gradient(600px 300px at 20% 20%, rgba(111,0,252,0.12), transparent 55%),
+    radial-gradient(600px 300px at 80% 30%, rgba(168,102,254,0.10), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f6f2ff 100%);
+}

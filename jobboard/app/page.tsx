@@ -758,17 +758,22 @@ export default function Home() {
 </section>
 
 {/* ================= TRUSTED TEAMS ================= */}
-<section className="py-28 bg-white overflow-hidden">
+<section className="py-28 trusted-bg overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
     {/* Header */}
-    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 tracking-tight mb-16">
-      Trusted by teams building the future
-    </h3>
+    <div className="text-center mb-16">
+      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 tracking-tight">
+        Trusted by teams building the future
+      </h3>
+      <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+        Startups and technology teams that care about great talent.
+      </p>
+    </div>
 
-    {/* Marquee */}
+    {/* V-Wave Carousel */}
     <div className="relative">
-      <div className="flex gap-10 animate-marquee hover:[animation-play-state:paused]">
+      <div className="wave-marquee gap-10 hover:[animation-play-state:paused]">
         {[
           "/Architects.png",
           "/vermot.png",
@@ -783,27 +788,28 @@ export default function Home() {
         ].map((logo, i) => (
           <div
             key={i}
-            className="min-w-[220px] h-[120px] flex items-center justify-center
-                       rounded-2xl border border-gray-200 bg-white
-                       shadow-sm hover:shadow-md
-                       transition-all duration-300"
+            className="wave-item min-w-[220px] h-[120px]
+                       flex items-center justify-center
+                       rounded-3xl border border-gray-200
+                       bg-white shadow-sm"
           >
             <img
               src={logo}
               alt="Trusted company logo"
-              className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition"
+              className="h-16 md:h-20 object-contain opacity-90"
             />
           </div>
         ))}
       </div>
 
-      {/* Soft edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-28 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-28 bg-gradient-to-l from-white to-transparent" />
+      {/* Edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-white to-transparent" />
     </div>
 
   </div>
 </section>
+
 
 {/* ================= FOOTER ================= */}
 <footer>
