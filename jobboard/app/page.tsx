@@ -100,43 +100,49 @@ export default function Home() {
       </section>
 
 {/* ================= TRUSTED TEAMS ================= */}
-<section className="py-24 bg-white">
+<section className="py-24 bg-white overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
     <h3 className="text-center text-sm font-medium text-gray-500 tracking-wide uppercase mb-12">
       Teams Building With Us
     </h3>
 
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-12 items-center">
-      <img
-        src="/Architects.png"
-        alt="Architects"
-        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
-      />
-      <img
-        src="/vermot.png"
-        alt="Vermot"
-        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
-      />
-      <img
-        src="/Devops.png"
-        alt="Devops"
-        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
-      />
-      <img
-        src="/Hiredengineer.png"
-        alt="Hiredengineer"
-        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
-      />
-      <img
-        src="/redtail.png"
-        alt="Redtail"
-        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
-      />
+    {/* Marquee */}
+    <div className="relative">
+      <div className="flex gap-16 animate-marquee hover:[animation-play-state:paused]">
+        {[
+          "/Architects.png",
+          "/vermot.png",
+          "/Devops.png",
+          "/Hiredengineer.png",
+          "/redtail.png",
+          "/Architects.png",
+          "/vermot.png",
+          "/Devops.png",
+          "/Hiredengineer.png",
+          "/redtail.png",
+        ].map((logo, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-center min-w-[180px]"
+          >
+            <img
+              src={logo}
+              alt="Trusted company logo"
+              className="h-14 md:h-20 object-contain opacity-70 hover:opacity-100 hover:scale-105 transition duration-300"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Soft fade edges */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent" />
     </div>
 
   </div>
 </section>
+
 
 
 {/* ================= FEATURED JOBS ================= */}
