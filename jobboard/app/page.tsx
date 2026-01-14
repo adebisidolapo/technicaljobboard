@@ -111,27 +111,27 @@ export default function Home() {
       <img
         src="/Architects.png"
         alt="Architects"
-        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
+        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
         src="/vermot.png"
         alt="Vermot"
-        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
+        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
         src="/Devops.png"
         alt="Devops"
-        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
+        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
         src="/Hiredengineer.png"
         alt="Hiredengineer"
-        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
+        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
         src="/redtail.png"
         alt="Redtail"
-        className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
+        className="h-10 md:h-36 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
     </div>
 
@@ -142,88 +142,98 @@ export default function Home() {
 {/* ================= FEATURED JOBS ================= */}
 <section className="py-24 bg-gray-50">
   <div className="max-w-7xl mx-auto px-6">
-    <div className="flex justify-between items-center mb-10">
+    <div className="flex justify-between items-center mb-8">
       <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
         Featured Jobs
       </h2>
     </div>
 
     {/* Carousel */}
-    <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-6">
+    <div className="flex gap-6 overflow-x-auto pb-4">
       {[
         {
           title: "Senior Frontend Engineer",
           company: "NovaTech",
-          logo: "/logos/novatech.svg",
-          location: "Remote · United States",
+          location: "Remote (US)",
           type: "Full-time",
           pay: "$60 – $75 / hr",
           posted: "2 days ago",
-          color: "#6F00FC",
         },
         {
           title: "Product Designer",
           company: "Launchify",
-          logo: "/logos/launchify.svg",
           location: "San Francisco, CA",
           type: "Contract",
           pay: "$8,000 / month",
           posted: "4 days ago",
-          color: "#8C33FD",
         },
         {
           title: "Backend Engineer",
           company: "TechNova",
-          logo: "/logos/technova.svg",
           location: "Austin, TX",
           type: "Full-time",
           pay: "$110k – $140k",
           posted: "1 week ago",
-          color: "#A866FE",
         },
       ].map((job, idx) => (
         <div
           key={idx}
-          className="flex-none w-[440px] snap-center bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition-all border"
-          style={{ borderTop: `5px solid ${job.color}` }}
+          className="flex-none w-[380px] bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition border"
         >
           {/* Header */}
           <div className="flex justify-between items-start">
-            <div className="flex items-center gap-4">
-              <img
-                src={job.logo}
-                alt={job.company}
-                className="w-14 h-14 rounded-xl object-contain bg-gray-100 p-2"
-              />
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">
+                {job.company.charAt(0)}
+              </div>
+
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 leading-snug">
+                <h3 className="text-lg font-semibold text-gray-900">
                   {job.title}
                 </h3>
-                <p className="text-sm text-gray-600">{job.company}</p>
+                <p className="text-sm text-gray-600">
+                  {job.company} • {job.location}
+                </p>
               </div>
             </div>
 
-            {/* Save Icon */}
-            <button className="text-gray-400 hover:text-[#6F00FC] transition text-xl">
-              🔖
+            {/* Save */}
+            <button
+              aria-label="Save job"
+              className="text-gray-400 hover:text-[#6F00FC] transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"
+                />
+              </svg>
             </button>
           </div>
 
-          {/* Job Info */}
-          <div className="mt-6 space-y-3 text-sm text-gray-600">
-            <p>📍 {job.location}</p>
-            <p>🕒 {job.type}</p>
-            <p className="font-medium" style={{ color: job.color }}>
-              💰 {job.pay}
-            </p>
+          {/* Meta */}
+          <div className="flex flex-wrap gap-2 mt-4">
+            <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
+              {job.type}
+            </span>
+            <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
+              {job.pay}
+            </span>
           </div>
 
           {/* Footer */}
-          <div className="mt-8 flex justify-between items-center">
-            <button className="px-5 py-2 rounded-xl bg-gray-100 hover:bg-[#6F00FC] hover:text-white text-sm font-medium transition">
+          <div className="mt-6 flex justify-between items-center">
+            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
               Apply
             </button>
-
             <span className="text-xs text-gray-400">
               Posted {job.posted}
             </span>
@@ -232,16 +242,14 @@ export default function Home() {
       ))}
     </div>
 
-    {/* Load More */}
-    <div className="mt-12 flex justify-center">
-      <button className="px-8 py-3 rounded-2xl bg-[#6F00FC] hover:bg-[#8C33FD] text-white font-medium transition shadow-md">
+    {/* Load more */}
+    <div className="mt-10 flex justify-center">
+      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition">
         Load More Jobs
       </button>
     </div>
   </div>
 </section>
-
-
 
 {/* ================= BROWSE JOBS ================= */}
 <section className="py-28 bg-gray-50">
