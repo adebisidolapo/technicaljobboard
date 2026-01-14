@@ -139,92 +139,108 @@ export default function Home() {
 </section>
 
 
-{/* ================= FEATURED STARTUP ROLES ================= */}
-<section className="py-20 bg-white">
-  <div className="max-w-6xl mx-auto px-6">
-    <h2 className="text-3xl font-semibold mb-8 tracking-wide text-gray-900 text-center">
-      Featured Startup Roles
-    </h2>
+{/* ================= FEATURED JOBS ================= */}
+<section className="py-24 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="flex justify-between items-center mb-10">
+      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
+        Featured Jobs
+      </h2>
+    </div>
 
-    <div className="flex overflow-x-auto gap-6 snap-x snap-mandatory pb-2">
+    {/* Carousel */}
+    <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-6">
       {[
         {
           title: "Senior Frontend Engineer",
           company: "NovaTech",
-          location: "Remote · US",
+          logo: "/logos/novatech.svg",
+          location: "Remote · United States",
           type: "Full-time",
           pay: "$60 – $75 / hr",
+          posted: "2 days ago",
           color: "#6F00FC",
         },
         {
           title: "Product Designer",
           company: "Launchify",
+          logo: "/logos/launchify.svg",
           location: "San Francisco, CA",
           type: "Contract",
           pay: "$8,000 / month",
+          posted: "4 days ago",
           color: "#8C33FD",
         },
         {
           title: "Backend Engineer",
           company: "TechNova",
+          logo: "/logos/technova.svg",
           location: "Austin, TX",
           type: "Full-time",
           pay: "$110k – $140k",
+          posted: "1 week ago",
           color: "#A866FE",
         },
       ].map((job, idx) => (
         <div
           key={idx}
-          className="group flex-none w-[380px] snap-center bg-white rounded-2xl p-6 shadow-sm border hover:shadow-lg transition-all"
-          style={{ borderLeft: `4px solid ${job.color}` }}
+          className="flex-none w-[440px] snap-center bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition-all border"
+          style={{ borderTop: `5px solid ${job.color}` }}
         >
-          {/* Top Row */}
+          {/* Header */}
           <div className="flex justify-between items-start">
-            <h3 className="text-lg font-semibold text-gray-900 leading-snug">
-              {job.title}
-            </h3>
+            <div className="flex items-center gap-4">
+              <img
+                src={job.logo}
+                alt={job.company}
+                className="w-14 h-14 rounded-xl object-contain bg-gray-100 p-2"
+              />
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 leading-snug">
+                  {job.title}
+                </h3>
+                <p className="text-sm text-gray-600">{job.company}</p>
+              </div>
+            </div>
 
-            {/* Favorite Icon */}
-            <button className="text-gray-400 hover:text-[#6F00FC] transition">
-              ❤
+            {/* Save Icon */}
+            <button className="text-gray-400 hover:text-[#6F00FC] transition text-xl">
+              🔖
             </button>
           </div>
 
-          {/* Company + Location */}
-          <p className="text-sm text-gray-600 mt-1">
-            <span className="font-medium text-gray-800">{job.company}</span>
-            <span className="mx-1">•</span>
-            {job.location}
-          </p>
-
-          {/* Meta Row */}
-          <div className="flex flex-wrap gap-3 mt-4 text-xs">
-            <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
-              {job.type}
-            </span>
-            <span
-              className="px-3 py-1 rounded-full text-white"
-              style={{ backgroundColor: job.color }}
-            >
-              {job.pay}
-            </span>
+          {/* Job Info */}
+          <div className="mt-6 space-y-3 text-sm text-gray-600">
+            <p>📍 {job.location}</p>
+            <p>🕒 {job.type}</p>
+            <p className="font-medium" style={{ color: job.color }}>
+              💰 {job.pay}
+            </p>
           </div>
 
-          {/* Bottom Actions */}
-          <div className="mt-6 flex justify-between items-center">
-            <button className="text-sm font-medium px-4 py-2 rounded-lg bg-gray-100 hover:bg-[#6F00FC] hover:text-white transition">
+          {/* Footer */}
+          <div className="mt-8 flex justify-between items-center">
+            <button className="px-5 py-2 rounded-xl bg-gray-100 hover:bg-[#6F00FC] hover:text-white text-sm font-medium transition">
               Apply
             </button>
 
-            <span className="text-xs text-gray-400 group-hover:text-gray-600 transition">
-              Featured
+            <span className="text-xs text-gray-400">
+              Posted {job.posted}
             </span>
           </div>
         </div>
       ))}
     </div>
+
+    {/* Load More */}
+    <div className="mt-12 flex justify-center">
+      <button className="px-8 py-3 rounded-2xl bg-[#6F00FC] hover:bg-[#8C33FD] text-white font-medium transition shadow-md">
+        Load More Jobs
+      </button>
+    </div>
   </div>
 </section>
+
 
 
 {/* ================= BROWSE JOBS ================= */}
