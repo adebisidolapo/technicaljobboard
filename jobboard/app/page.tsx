@@ -77,33 +77,31 @@ export default function Home() {
 
           {/* Small duplicate "technical job" chips */}
           <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-6 shadow-2xl">
-            <p className="text-white/90 font-semibold mb-4">
-              Popular technical roles hiring now
-            </p>
+     {/* RIGHT */}
+<div
+  ref={heroImageRef}
+  className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end"
+>
+  <div className="relative w-full max-w-md">
+    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
 
-            <div className="flex flex-wrap gap-2">
-              {[
-                "Frontend Engineer",
-                "Backend Engineer",
-                "Fullstack Engineer",
-                "DevOps Engineer",
-                "Data Engineer",
-                "ML Engineer",
-                "Mobile Engineer",
-                "Security Engineer",
-                "QA Engineer",
-                "Cloud Engineer",
-                "Software Engineer",
-                "Site Reliability (SRE)",
-              ].map((role, i) => (
-                <span
-                  key={i}
-                  className="glass text-xs px-3 py-2 rounded-full border border-white/20 text-white/95 shadow-sm"
-                >
-                  {role}
-                </span>
-              ))}
-            </div>
+    <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-6 shadow-2xl">
+      <div className="text-white/90">
+        <p className="text-sm font-semibold">Verified roles</p>
+        <p className="text-xs opacity-90 mt-1">
+          Fast-growing startups • Remote-friendly • USA-based
+        </p>
+      </div>
+
+      {/* Tiny floating card */}
+      <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
+        <p className="font-semibold leading-snug">Frontend Engineer</p>
+        <p className="opacity-85">Remote • $120k</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
             {/* Tiny floating card (smaller than before) */}
             <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
@@ -300,6 +298,52 @@ export default function Home() {
   </div>
 </section>
 
+{/* ================= CATEGORIES ================= */}
+<section className="py-20 bg-white">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+      <div>
+        <h2 className="text-3xl font-semibold text-gray-900">Categories</h2>
+        <p className="text-gray-600 mt-2">
+          Explore jobs by role type — quickly jump into what you’re looking for.
+        </p>
+      </div>
+
+      <button
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="inline-flex items-center justify-center gap-2 bg-[#6F00FC] text-white font-semibold px-6 py-3 rounded-2xl shadow-sm hover:bg-[#8C33FD] transition"
+      >
+        Browse Jobs <span className="text-lg">→</span>
+      </button>
+    </div>
+
+    <div className="flex flex-wrap gap-3">
+      {[
+        "Frontend Engineer",
+        "Backend Engineer",
+        "Fullstack Engineer",
+        "DevOps Engineer",
+        "Data Engineer",
+        "ML Engineer",
+        "Mobile Engineer",
+        "Security Engineer",
+        "QA Engineer",
+        "Cloud Engineer",
+        "Software Engineer",
+        "Site Reliability (SRE)",
+      ].map((role, i) => (
+        <button
+          key={i}
+          className="px-4 py-2 rounded-full border border-gray-200 bg-gray-50 text-gray-800 text-sm hover:border-[#6F00FC] hover:bg-[#F6F2FF] transition"
+        >
+          {role}
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
 
 
 {/* ================= BROWSE JOBS ================= */}
