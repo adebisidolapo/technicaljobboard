@@ -100,16 +100,17 @@ export default function Home() {
       </section>
 
 {/* ================= TRUSTED TEAMS ================= */}
-<section className="py-24 bg-white overflow-hidden">
+<section className="py-28 bg-white overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
-    <h3 className="text-center text-sm font-medium text-gray-500 tracking-wide uppercase mb-12">
-      Teams Building With Us
+    {/* Header */}
+    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 tracking-tight mb-16">
+      Trusted by teams building the future
     </h3>
 
     {/* Marquee */}
     <div className="relative">
-      <div className="flex gap-16 animate-marquee hover:[animation-play-state:paused]">
+      <div className="flex gap-10 animate-marquee hover:[animation-play-state:paused]">
         {[
           "/Architects.png",
           "/vermot.png",
@@ -124,24 +125,28 @@ export default function Home() {
         ].map((logo, i) => (
           <div
             key={i}
-            className="flex items-center justify-center min-w-[180px]"
+            className="min-w-[220px] h-[120px] flex items-center justify-center
+                       rounded-2xl border border-gray-200 bg-white
+                       shadow-sm hover:shadow-md
+                       transition-all duration-300"
           >
             <img
               src={logo}
               alt="Trusted company logo"
-              className="h-14 md:h-20 object-contain opacity-70 hover:opacity-100 hover:scale-105 transition duration-300"
+              className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition"
             />
           </div>
         ))}
       </div>
 
-      {/* Soft fade edges */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent" />
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-28 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-28 bg-gradient-to-l from-white to-transparent" />
     </div>
 
   </div>
 </section>
+
 
 
 
