@@ -167,122 +167,216 @@ export default function Home() {
 
 
 {/* ================= FEATURED JOBS ================= */}
-<section className="py-28 bg-gradient-to-b from-[#F6F2FF] to-white border-y border-gray-200">
+<section className="py-28 hero-bg border-y border-gray-200">
   <div className="max-w-7xl mx-auto px-6">
 
     {/* Header */}
-    <div className="flex justify-between items-center mb-10">
-      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
-        Featured Jobs
-      </h2>
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+      <div>
+        <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
+          Featured Jobs
+        </h2>
+        <p className="text-gray-600 mt-2 max-w-2xl">
+          A friendly shortlist of standout roles — scroll sideways or use the arrows.
+        </p>
+      </div>
+
+      {/* Carousel Controls */}
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => {
+            const el = document.getElementById("featured-carousel");
+            if (!el) return;
+            el.scrollBy({ left: -420, behavior: "smooth" });
+          }}
+          className="px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+          aria-label="Scroll left"
+        >
+          ←
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            const el = document.getElementById("featured-carousel");
+            if (!el) return;
+            el.scrollBy({ left: 420, behavior: "smooth" });
+          }}
+          className="px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+          aria-label="Scroll right"
+        >
+          →
+        </button>
+      </div>
     </div>
 
     {/* Carousel */}
-    <div className="flex gap-6 overflow-x-auto pb-6">
-      {[
-        {
-          title: "Senior Frontend Engineer",
-          company: "NovaTech",
-          location: "Remote (US)",
-          type: "Full-time",
-          pay: "$60 – $75 / hr",
-          posted: "2 days ago",
-          color: "#6F00FC",
-        },
-        {
-          title: "Product Designer",
-          company: "Launchify",
-          location: "San Francisco, CA",
-          type: "Contract",
-          pay: "$8,000 / month",
-          posted: "4 days ago",
-          color: "#8C33FD",
-        },
-        {
-          title: "Backend Engineer",
-          company: "TechNova",
-          location: "Austin, TX",
-          type: "Full-time",
-          pay: "$110k – $140k",
-          posted: "1 week ago",
-          color: "#A866FE",
-        },
-      ].map((job, idx) => (
-        <div
-          key={idx}
-          className="flex-none w-[400px] bg-white rounded-2xl shadow-sm hover:shadow-md transition border relative overflow-hidden"
-        >
-          {/* Left Accent */}
+    <div className="relative">
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
+
+      <div
+        id="featured-carousel"
+        className="flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory
+                   [-ms-overflow-style:none] [scrollbar-width:none]"
+      >
+        {/* Hide scrollbar (webkit) */}
+        <style jsx>{`
+          #featured-carousel::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+
+        {[
+          {
+            title: "Senior Frontend Engineer",
+            company: "NovaTech",
+            location: "Remote (US)",
+            type: "Full-time",
+            pay: "$120k – $160k",
+            posted: "2 days ago",
+            color: "#6F00FC",
+          },
+          {
+            title: "Backend Engineer (Node/Go)",
+            company: "TechNova",
+            location: "Austin, TX",
+            type: "Full-time",
+            pay: "$130k – $175k",
+            posted: "3 days ago",
+            color: "#8C33FD",
+          },
+          {
+            title: "DevOps / Platform Engineer",
+            company: "CloudSprint",
+            location: "Remote (US)",
+            type: "Full-time",
+            pay: "$140k – $190k",
+            posted: "5 days ago",
+            color: "#A866FE",
+          },
+          {
+            title: "Product Designer",
+            company: "Launchify",
+            location: "San Francisco, CA",
+            type: "Contract",
+            pay: "$8,000 / month",
+            posted: "4 days ago",
+            color: "#6F00FC",
+          },
+          {
+            title: "Data Engineer",
+            company: "SignalWorks",
+            location: "New York, NY",
+            type: "Full-time",
+            pay: "$125k – $165k",
+            posted: "1 week ago",
+            color: "#8C33FD",
+          },
+          {
+            title: "Fullstack Engineer",
+            company: "PixelForge",
+            location: "Remote (US)",
+            type: "Full-time",
+            pay: "$115k – $155k",
+            posted: "6 days ago",
+            color: "#A866FE",
+          },
+          {
+            title: "Mobile Engineer (React Native)",
+            company: "BrightApps",
+            location: "Remote (US)",
+            type: "Full-time",
+            pay: "$110k – $145k",
+            posted: "1 week ago",
+            color: "#6F00FC",
+          },
+        ].map((job, idx) => (
           <div
-            className="absolute left-0 top-0 h-full w-1.5"
-            style={{ backgroundColor: job.color }}
-          />
+            key={idx}
+            className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
+                       bg-white rounded-2xl shadow-sm hover:shadow-lg transition
+                       border border-gray-200 relative overflow-hidden"
+          >
+            {/* Left Accent */}
+            <div
+              className="absolute left-0 top-0 h-full w-1.5"
+              style={{ backgroundColor: job.color }}
+            />
 
-          <div className="p-6 pl-8">
-            {/* Header */}
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div
-                  className="w-12 h-12 rounded-xl text-white flex items-center justify-center font-bold"
-                  style={{ backgroundColor: job.color }}
+            <div className="p-6 pl-8">
+              {/* Header */}
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4">
+                  <div
+                    className="w-12 h-12 rounded-xl text-white flex items-center justify-center font-bold shadow-sm"
+                    style={{ backgroundColor: job.color }}
+                  >
+                    {job.company.charAt(0)}
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 leading-snug">
+                      {job.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {job.company} • {job.location}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Save */}
+                <button
+                  aria-label="Save job"
+                  className="text-gray-400 hover:text-[#6F00FC] transition"
                 >
-                  {job.company.charAt(0)}
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {job.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {job.company} • {job.location}
-                  </p>
-                </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"
+                    />
+                  </svg>
+                </button>
               </div>
 
-              {/* Save */}
-              <button
-                aria-label="Save job"
-                className="text-gray-400 hover:text-[#6F00FC] transition"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"
-                  />
-                </svg>
-              </button>
-            </div>
+              {/* Meta */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {job.type}
+                </span>
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {job.pay}
+                </span>
+              </div>
 
-            {/* Meta */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
-                {job.type}
-              </span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
-                {job.pay}
-              </span>
-            </div>
+              {/* Friendly line */}
+              <p className="text-sm text-gray-600 mt-4">
+                Quick hiring process, modern stack, and a team that supports growth.
+              </p>
 
-            {/* Footer */}
-            <div className="mt-6 flex justify-between items-center">
-              <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
-                Apply
-              </button>
-              <span className="text-xs text-gray-400">
-                Posted {job.posted}
-              </span>
+              {/* Footer */}
+              <div className="mt-6 flex justify-between items-center">
+                <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                  View
+                </button>
+                <span className="text-xs text-gray-400">
+                  Posted {job.posted}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
 
     {/* Load more */}
@@ -290,54 +384,6 @@ export default function Home() {
       <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition shadow-sm">
         Load More Jobs
       </button>
-    </div>
-
-  </div>
-</section>
-
-{/* ================= TRUSTED TEAMS ================= */}
-<section className="py-28 bg-white overflow-hidden">
-  <div className="max-w-7xl mx-auto px-6">
-
-    {/* Header */}
-    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 tracking-tight mb-16">
-      Trusted by teams building the future
-    </h3>
-
-    {/* Marquee */}
-    <div className="relative">
-      <div className="flex gap-10 animate-marquee hover:[animation-play-state:paused]">
-        {[
-          "/Architects.png",
-          "/vermot.png",
-          "/Devops.png",
-          "/Hiredengineer.png",
-          "/redtail.png",
-          "/Architects.png",
-          "/vermot.png",
-          "/Devops.png",
-          "/Hiredengineer.png",
-          "/redtail.png",
-        ].map((logo, i) => (
-          <div
-            key={i}
-            className="min-w-[220px] h-[120px] flex items-center justify-center
-                       rounded-2xl border border-gray-200 bg-white
-                       shadow-sm hover:shadow-md
-                       transition-all duration-300"
-          >
-            <img
-              src={logo}
-              alt="Trusted company logo"
-              className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Soft edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-28 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-28 bg-gradient-to-l from-white to-transparent" />
     </div>
 
   </div>
@@ -506,6 +552,54 @@ export default function Home() {
         Get Started
       </button>
     </div>
+  </div>
+</section>
+
+{/* ================= TRUSTED TEAMS ================= */}
+<section className="py-28 bg-white overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6">
+
+    {/* Header */}
+    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 tracking-tight mb-16">
+      Trusted by teams building the future
+    </h3>
+
+    {/* Marquee */}
+    <div className="relative">
+      <div className="flex gap-10 animate-marquee hover:[animation-play-state:paused]">
+        {[
+          "/Architects.png",
+          "/vermot.png",
+          "/Devops.png",
+          "/Hiredengineer.png",
+          "/redtail.png",
+          "/Architects.png",
+          "/vermot.png",
+          "/Devops.png",
+          "/Hiredengineer.png",
+          "/redtail.png",
+        ].map((logo, i) => (
+          <div
+            key={i}
+            className="min-w-[220px] h-[120px] flex items-center justify-center
+                       rounded-2xl border border-gray-200 bg-white
+                       shadow-sm hover:shadow-md
+                       transition-all duration-300"
+          >
+            <img
+              src={logo}
+              alt="Trusted company logo"
+              className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-28 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-28 bg-gradient-to-l from-white to-transparent" />
+    </div>
+
   </div>
 </section>
 
