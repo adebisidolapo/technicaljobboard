@@ -217,15 +217,10 @@ export default function Home() {
       <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
       <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
 
- <div
-  id="featured-carousel"
-  className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory"
->
-
+      <div
+        id="featured-carousel"
+        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory"
       >
-        {/* Hide scrollbar (webkit) */}
-  
-
         {[
           {
             title: "Senior Frontend Engineer",
@@ -356,7 +351,6 @@ export default function Home() {
                 </span>
               </div>
 
-              {/* Friendly line */}
               <p className="text-sm text-gray-600 mt-4">
                 Quick hiring process, modern stack, and a team that supports growth.
               </p>
@@ -385,6 +379,7 @@ export default function Home() {
 
   </div>
 </section>
+
 
 
 {/* ================= BROWSE JOBS ================= */}
