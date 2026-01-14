@@ -101,72 +101,58 @@ export default function Home() {
     </div>
   </div>
 </div>
-
-
-            {/* Tiny floating card (smaller than before) */}
-            <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
-              <p className="font-semibold leading-snug">Frontend Engineer</p>
-              <p className="opacity-85">Remote • $120k</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
     {/* Removed the old bottom icons strip completely */}
   </div>
 </section>
 
-{/* ================= TRUSTED TEAMS ================= */}
-<section className="py-28 bg-white overflow-hidden">
+{/* ================= CATEGORIES ================= */}
+<section className="py-20 bg-white">
   <div className="max-w-7xl mx-auto px-6">
-
-    {/* Header */}
-    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 tracking-tight mb-16">
-      Trusted by teams building the future
-    </h3>
-
-    {/* Marquee */}
-    <div className="relative">
-      <div className="flex gap-10 animate-marquee hover:[animation-play-state:paused]">
-        {[
-          "/Architects.png",
-          "/vermot.png",
-          "/Devops.png",
-          "/Hiredengineer.png",
-          "/redtail.png",
-          "/Architects.png",
-          "/vermot.png",
-          "/Devops.png",
-          "/Hiredengineer.png",
-          "/redtail.png",
-        ].map((logo, i) => (
-          <div
-            key={i}
-            className="min-w-[220px] h-[120px] flex items-center justify-center
-                       rounded-2xl border border-gray-200 bg-white
-                       shadow-sm hover:shadow-md
-                       transition-all duration-300"
-          >
-            <img
-              src={logo}
-              alt="Trusted company logo"
-              className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition"
-            />
-          </div>
-        ))}
+    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+      <div>
+        <h2 className="text-3xl font-semibold text-gray-900">Categories</h2>
+        <p className="text-gray-600 mt-2">
+          Explore jobs by role type — quickly jump into what you’re looking for.
+        </p>
       </div>
 
-      {/* Soft edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-28 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-28 bg-gradient-to-l from-white to-transparent" />
+      <button
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="inline-flex items-center justify-center gap-2 bg-[#6F00FC] text-white font-semibold px-6 py-3 rounded-2xl shadow-sm hover:bg-[#8C33FD] transition"
+      >
+        Browse Jobs <span className="text-lg">→</span>
+      </button>
     </div>
 
+    <div className="flex flex-wrap gap-3">
+      {[
+        "Frontend Engineer",
+        "Backend Engineer",
+        "Fullstack Engineer",
+        "DevOps Engineer",
+        "Data Engineer",
+        "ML Engineer",
+        "Mobile Engineer",
+        "Security Engineer",
+        "QA Engineer",
+        "Cloud Engineer",
+        "Software Engineer",
+        "Site Reliability (SRE)",
+      ].map((role, i) => (
+        <button
+          key={i}
+          className="px-4 py-2 rounded-full border border-gray-200 bg-gray-50 text-gray-800 text-sm hover:border-[#6F00FC] hover:bg-[#F6F2FF] transition"
+        >
+          {role}
+        </button>
+      ))}
+    </div>
   </div>
 </section>
-
-
 
 
 {/* ================= FEATURED JOBS ================= */}
@@ -298,50 +284,51 @@ export default function Home() {
   </div>
 </section>
 
-{/* ================= CATEGORIES ================= */}
-<section className="py-20 bg-white">
+{/* ================= TRUSTED TEAMS ================= */}
+<section className="py-28 bg-white overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
-    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-      <div>
-        <h2 className="text-3xl font-semibold text-gray-900">Categories</h2>
-        <p className="text-gray-600 mt-2">
-          Explore jobs by role type — quickly jump into what you’re looking for.
-        </p>
+
+    {/* Header */}
+    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 tracking-tight mb-16">
+      Trusted by teams building the future
+    </h3>
+
+    {/* Marquee */}
+    <div className="relative">
+      <div className="flex gap-10 animate-marquee hover:[animation-play-state:paused]">
+        {[
+          "/Architects.png",
+          "/vermot.png",
+          "/Devops.png",
+          "/Hiredengineer.png",
+          "/redtail.png",
+          "/Architects.png",
+          "/vermot.png",
+          "/Devops.png",
+          "/Hiredengineer.png",
+          "/redtail.png",
+        ].map((logo, i) => (
+          <div
+            key={i}
+            className="min-w-[220px] h-[120px] flex items-center justify-center
+                       rounded-2xl border border-gray-200 bg-white
+                       shadow-sm hover:shadow-md
+                       transition-all duration-300"
+          >
+            <img
+              src={logo}
+              alt="Trusted company logo"
+              className="h-16 md:h-20 object-contain opacity-90 hover:opacity-100 transition"
+            />
+          </div>
+        ))}
       </div>
 
-      <button
-        onClick={() =>
-          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="inline-flex items-center justify-center gap-2 bg-[#6F00FC] text-white font-semibold px-6 py-3 rounded-2xl shadow-sm hover:bg-[#8C33FD] transition"
-      >
-        Browse Jobs <span className="text-lg">→</span>
-      </button>
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-28 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-28 bg-gradient-to-l from-white to-transparent" />
     </div>
 
-    <div className="flex flex-wrap gap-3">
-      {[
-        "Frontend Engineer",
-        "Backend Engineer",
-        "Fullstack Engineer",
-        "DevOps Engineer",
-        "Data Engineer",
-        "ML Engineer",
-        "Mobile Engineer",
-        "Security Engineer",
-        "QA Engineer",
-        "Cloud Engineer",
-        "Software Engineer",
-        "Site Reliability (SRE)",
-      ].map((role, i) => (
-        <button
-          key={i}
-          className="px-4 py-2 rounded-full border border-gray-200 bg-gray-50 text-gray-800 text-sm hover:border-[#6F00FC] hover:bg-[#F6F2FF] transition"
-        >
-          {role}
-        </button>
-      ))}
-    </div>
   </div>
 </section>
 
