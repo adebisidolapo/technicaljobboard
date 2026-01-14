@@ -227,6 +227,81 @@ export default function Home() {
 </section>
 
 
+{/* ================= BROWSE JOBS ================= */}
+<section className="py-28 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="flex justify-between items-center mb-6">
+      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">Browse Jobs</h2>
+      <span className="text-[#6F00FC] font-medium underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
+        Load More Jobs
+      </span>
+    </div>
+    <p className="text-gray-600 mb-8">Showing 200 available roles</p>
+
+    <div className="flex flex-col lg:flex-row gap-10">
+
+      {/* ================= FILTERS ================= */}
+      <aside className="lg:w-1/4 w-full lg:sticky lg:top-28 h-fit">
+        <div className="bg-white rounded-3xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900">Refine Your Research</h3>
+
+          {/* Keyword */}
+          <input
+            type="text"
+            placeholder="Keyword or Job Title"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+          />
+
+          {/* Location */}
+          <input
+            type="text"
+            placeholder="Location"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm"
+          />
+
+          {/* Job Type */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
+            <option>Job Type</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Internship</option>
+          </select>
+
+          {/* Experience Level */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
+            <option>Experience Level</option>
+            <option>Junior</option>
+            <option>Mid</option>
+            <option>Senior</option>
+          </select>
+
+          {/* Estimated Salary */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
+            <option>Estimated Salary</option>
+            <option>$40k – $60k</option>
+            <option>$60k – $80k</option>
+            <option>$80k – $100k</option>
+            <option>$100k – $150k</option>
+          </select>
+
+          {/* Popular Filters */}
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Popular Filters</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Remote</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#8C33FD] hover:text-white transition">Full-time</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#A866FE] hover:text-white transition">Senior</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Contract</span>
+            </div>
+          </div>
+
+          <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-2 rounded-xl font-medium transition">
+            Apply Filters
+          </button>
+        </div>
+      </aside>
+
       {/* ================= JOB FEED ================= */}
       <div className="lg:w-3/4 w-full space-y-6">
         {[...Array(8)].map((_, idx) => (
