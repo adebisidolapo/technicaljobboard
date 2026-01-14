@@ -383,61 +383,73 @@ export default function Home() {
 
 
 {/* ================= BROWSE JOBS ================= */}
-<section id="jobs" className="py-28 relative bg-dots-bg">
+<section id="jobs" className="py-28 relative jobs-bg">
   <div className="max-w-7xl mx-auto px-6">
-    <div className="flex justify-between items-center mb-6">
-      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">Browse Jobs</h2>
-      <span className="text-[#6F00FC] font-medium underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
+    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+      <div>
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
+          Browse Jobs
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Filter roles by title, location, type, and experience — then explore what matches.
+        </p>
+      </div>
+
+      <button className="text-[#6F00FC] font-semibold px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition">
         Load More Jobs
-      </span>
+      </button>
     </div>
-    <p className="text-gray-600 mb-8">Showing 200 available roles</p>
+
+    <div className="text-gray-600 mb-10">
+      Showing <span className="font-semibold text-gray-900">200</span> available roles
+    </div>
 
     <div className="flex flex-col lg:flex-row gap-10">
-
       {/* ================= FILTERS ================= */}
       <aside className="lg:w-1/4 w-full lg:sticky lg:top-28 h-fit">
-        <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900">Refine Your Research</h3>
+        <div className="rounded-3xl p-6 shadow-lg border border-gray-200 bg-white/90 backdrop-blur">
+          <div className="flex items-start justify-between gap-3 mb-6">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900">Filters</h3>
+              <p className="text-sm text-gray-600 mt-1">Narrow down your search.</p>
+            </div>
+
+            <button
+              type="button"
+              className="text-sm font-semibold text-gray-600 hover:text-gray-900 px-3 py-2 rounded-xl hover:bg-gray-100 transition"
+            >
+              Reset
+            </button>
+          </div>
 
           {/* Keyword */}
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Title / Keyword
+          </label>
           <input
             type="text"
-            placeholder="Keyword or Job Title"
-            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+            placeholder="e.g. Frontend, React, DevOps"
+            className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5
+                       focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm bg-white"
           />
 
           {/* Location */}
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Location
+          </label>
           <input
             type="text"
-            placeholder="Location"
-            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm"
+            placeholder="e.g. Remote, New York, Austin"
+            className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5
+                       focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm bg-white"
           />
 
-          {/* Company Filter */}
-          <div className="mb-4">
-            <p className="text-sm font-medium mb-2">Company</p>
-            <div className="flex flex-wrap gap-2">
-              {[
-                "/Architects.png",
-                "/vermot.png",
-                "/Devops.png",
-                "/Hiredengineer.png",
-                "/redtail.png",
-              ].map((logo, idx) => (
-                <div
-                  key={idx}
-                  className="w-14 h-14 rounded-lg overflow-hidden border cursor-pointer hover:border-[#6F00FC] transition"
-                >
-                  <img src={logo} alt={`Company ${idx}`} className="w-full h-full object-contain bg-white p-2" />
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Job Type */}
-          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
-            <option>Job Type</option>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Job Type
+          </label>
+          <select className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5 text-sm bg-white">
+            <option value="">Any</option>
             <option>Full-time</option>
             <option>Part-time</option>
             <option>Contract</option>
@@ -445,34 +457,44 @@ export default function Home() {
           </select>
 
           {/* Experience Level */}
-          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
-            <option>Experience Level</option>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Experience
+          </label>
+          <select className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5 text-sm bg-white">
+            <option value="">Any</option>
             <option>Junior</option>
             <option>Mid</option>
             <option>Senior</option>
           </select>
 
-          {/* Estimated Salary */}
-          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
-            <option>Estimated Salary</option>
+          {/* Salary */}
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Estimated Salary
+          </label>
+          <select className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-6 text-sm bg-white">
+            <option value="">Any</option>
             <option>$40k – $60k</option>
             <option>$60k – $80k</option>
             <option>$80k – $100k</option>
             <option>$100k – $150k</option>
           </select>
 
-          {/* Popular Filters */}
-          <div className="mb-4">
-            <p className="text-sm font-medium mb-2">Popular Filters</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Remote</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#8C33FD] hover:text-white transition">Full-time</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#A866FE] hover:text-white transition">Senior</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Contract</span>
-            </div>
+          {/* Quick Toggles */}
+          <p className="text-sm font-medium text-gray-700 mb-3">Quick Filters</p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {["Remote", "Full-time", "Senior", "Contract", "Fast Apply"].map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                className="text-xs px-3 py-2 rounded-full bg-gray-100 text-gray-700
+                           hover:bg-[#6F00FC] hover:text-white transition"
+              >
+                {tag}
+              </button>
+            ))}
           </div>
 
-          <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-2 rounded-xl font-medium transition">
+          <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-3 rounded-2xl font-semibold transition shadow-sm">
             Apply Filters
           </button>
         </div>
@@ -483,42 +505,53 @@ export default function Home() {
         {[...Array(8)].map((_, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition flex justify-between items-start"
+            className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition
+                       border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-start gap-6"
           >
             <div className="flex gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">
-                C
+              <div className="w-12 h-12 rounded-2xl bg-[#A866FE] text-white flex items-center justify-center font-bold shadow-sm">
+                N
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold">Frontend Engineer</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Frontend Engineer
+                </h3>
                 <p className="text-sm text-gray-600">
                   NovaTech • Remote (US)
                 </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  Build scalable front-end applications with React & Next.js, collaborate with product teams, and contribute to cutting-edge projects.
+                <p className="text-sm text-gray-500 mt-2 leading-relaxed max-w-2xl">
+                  Build clean UI with React & Next.js, collaborate with product and design,
+                  and ship features that users love.
                 </p>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Remote</span>
-                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Full-time</span>
-                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Senior</span>
+
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {["Remote", "Full-time", "Senior"].map((pill) => (
+                    <span
+                      key={pill}
+                      className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-700"
+                    >
+                      {pill}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
 
-            <div className="text-right">
-              <p className="text-sm font-medium text-[#6F00FC]">$90k – $130k</p>
-              <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
+            <div className="md:text-right">
+              <p className="text-sm font-semibold text-[#6F00FC]">$90k – $130k</p>
+              <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-5 py-2.5 rounded-2xl text-sm font-semibold transition shadow-sm">
                 View
               </button>
+              <p className="text-xs text-gray-400 mt-3">Posted 3 days ago</p>
             </div>
           </div>
         ))}
       </div>
-
     </div>
   </div>
 </section>
+
 
 
 {/* ================= EMPOWERING JOB SEEKERS ================= */}

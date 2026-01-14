@@ -148,3 +148,9 @@ body {
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
 }
+.jobs-bg {
+  background:
+    radial-gradient(700px 320px at 10% 20%, rgba(111,0,252,0.12), transparent 55%),
+    radial-gradient(700px 320px at 85% 30%, rgba(168,102,254,0.10), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%);
+}
