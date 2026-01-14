@@ -16,88 +16,109 @@ export default function Home() {
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
       {/* ================= HERO ================= */}
-      <section className="relative py-28 bg-animated-gradient text-white overflow-hidden">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
+<section className="relative py-24 md:py-28 bg-animated-gradient text-white overflow-hidden">
+  <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="md:flex md:items-center md:justify-between gap-12">
+  <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <div className="md:flex md:items-center md:justify-between gap-12">
 
-            {/* LEFT */}
-            <div className="md:w-1/2">
-              <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl tracking-tight">
-                Find meaningful startup jobs
-                <br />
-                that <span className="text-[#02000D]">actually grow your career</span>
-              </h1>
+      {/* LEFT */}
+      <div className="md:w-1/2">
+        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
+          Find your next <span className="text-[#02000D]">technical role</span>
+          <br />
+          at startups hiring in the U.S.
+        </h1>
 
-              <p className="mt-6 text-lg md:text-xl max-w-2xl text-white/90">
-                Discover verified USA-based roles from fast-growing startups,
-                remote teams, and innovative tech companies hiring now.
-              </p>
+        <p className="mt-5 text-base md:text-lg max-w-xl text-white/90">
+          Browse verified roles across engineering, product, data, and DevOps — including remote options.
+        </p>
 
-              <div className="w-full mt-10">
-                <div className="flex items-center bg-white rounded-full shadow-xl px-6 py-3 max-w-5xl">
-                  <input
-                    type="text"
-                    placeholder="Search jobs by title, keyword, or company"
-                    className="flex-1 px-3 py-3 text-gray-800 bg-transparent focus:outline-none text-base"
-                  />
-                  <button className="ml-3 px-8 py-3 rounded-full bg-purple-700 text-white font-semibold hover:bg-purple-800 transition">
-                    Search
-                  </button>
-                </div>
-              </div>
+        {/* Search Bar (3 equal boxes) */}
+        <div className="w-full mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl">
+            <input
+              type="text"
+              placeholder="Title / keyword"
+              className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
+            />
 
-              <button
-                onClick={() =>
-                  document
-                    .getElementById("jobs")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="mt-6 inline-flex items-center gap-2 text-white font-medium px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition"
-              >
-                Jump to Jobs <span className="text-lg">↓</span>
-              </button>
-            </div>
+            <input
+              type="text"
+              placeholder="Location (e.g. Remote, NY)"
+              className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
+            />
 
-            {/* RIGHT */}
-            <div
-              ref={heroImageRef}
-              className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
-
-                <div className="absolute bottom-6 right-6 glass rounded-2xl p-4 shadow-xl text-white text-sm w-44">
-                  <p className="font-semibold">Frontend Engineer</p>
-                  <p className="text-xs opacity-80">Remote • $120k</p>
-                </div>
-              </div>
-            </div>
-
+            <button className="w-full px-5 py-4 rounded-2xl bg-[#02000D] text-white font-semibold shadow-xl hover:bg-black transition">
+              Search Jobs
+            </button>
           </div>
-
-          {/* JOB ICON STRIP */}
-          <div className="w-full mt-20">
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 text-center text-sm text-white/80">
-              <span>Frontend</span>
-              <span>Backend</span>
-              <span>Design</span>
-              <span>Remote</span>
-              <span>Full-Time</span>
-              <span>Contract</span>
-              <span>USA Only</span>
-              <span>Fast Apply</span>
-              <span>Startup</span>
-              <span>Senior Roles</span>
-              <span>Junior Roles</span>
-              <span>High Paying</span>
-            </div>
-          </div>
-
         </div>
-      </section>
+
+        {/* Jump to Jobs (more visible) */}
+        <button
+          onClick={() =>
+            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="mt-6 inline-flex items-center justify-center gap-2 bg-white text-[#02000D] font-semibold px-6 py-3 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-[1px] transition border border-white/40"
+        >
+          Jump to Jobs <span className="text-lg">↓</span>
+        </button>
+      </div>
+
+      {/* RIGHT */}
+      <div
+        ref={heroImageRef}
+        className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end"
+      >
+        <div className="relative w-full max-w-md">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
+
+          {/* Small duplicate "technical job" chips */}
+          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-6 shadow-2xl">
+            <p className="text-white/90 font-semibold mb-4">
+              Popular technical roles hiring now
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {[
+                "Frontend Engineer",
+                "Backend Engineer",
+                "Fullstack Engineer",
+                "DevOps Engineer",
+                "Data Engineer",
+                "ML Engineer",
+                "Mobile Engineer",
+                "Security Engineer",
+                "QA Engineer",
+                "Cloud Engineer",
+                "Software Engineer",
+                "Site Reliability (SRE)",
+              ].map((role, i) => (
+                <span
+                  key={i}
+                  className="glass text-xs px-3 py-2 rounded-full border border-white/20 text-white/95 shadow-sm"
+                >
+                  {role}
+                </span>
+              ))}
+            </div>
+
+            {/* Tiny floating card (smaller than before) */}
+            <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
+              <p className="font-semibold leading-snug">Frontend Engineer</p>
+              <p className="opacity-85">Remote • $120k</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {/* Removed the old bottom icons strip completely */}
+  </div>
+</section>
 
 {/* ================= TRUSTED TEAMS ================= */}
 <section className="py-28 bg-white overflow-hidden">

@@ -97,3 +97,39 @@ body {
 .animate-marquee {
   animation: marquee 35s linear infinite;
 }
+/* Animated gradient background */
+.bg-animated-gradient {
+  background: linear-gradient(120deg, #6f00fc, #8c33fd, #a866fe);
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+/* Simple marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+/* Dotted background */
+.bg-dots-bg {
+  background-image: radial-gradient(rgba(2,0,13,0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
