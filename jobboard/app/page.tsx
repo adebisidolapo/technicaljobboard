@@ -282,17 +282,8 @@ export default function Home() {
 
 
 {/* ================= BROWSE JOBS ================= */}
-<section className="py-28 relative bg-gradient-to-br from-purple-50 via-purple-100 to-white">
-  {/* Optional blurred background image */}
-  <div className="absolute inset-0">
-    <img
-      src="/jobs-bg.png" // replace with your background image
-      alt="Jobs background"
-      className="w-full h-full object-cover opacity-20 blur-md"
-    />
-  </div>
-
-  <div className="relative max-w-7xl mx-auto px-6">
+<section id="jobs" className="py-28 relative bg-dots-bg">
+  <div className="max-w-7xl mx-auto px-6">
     <div className="flex justify-between items-center mb-6">
       <h2 className="text-3xl font-semibold tracking-wide text-gray-900">Browse Jobs</h2>
       <span className="text-[#6F00FC] font-medium underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
@@ -305,13 +296,46 @@ export default function Home() {
 
       {/* ================= FILTERS ================= */}
       <aside className="lg:w-1/4 w-full lg:sticky lg:top-28 h-fit">
-        <div className="bg-white rounded-3xl p-6 shadow-lg space-y-4">
-          <h3 className="text-xl font-semibold text-gray-900">Refine Your Search</h3>
+        <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900">Refine Your Research</h3>
 
-          <input type="text" placeholder="Keyword or Job Title" className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm" />
-          <input type="text" placeholder="Location" className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm" />
+          {/* Keyword */}
+          <input
+            type="text"
+            placeholder="Keyword or Job Title"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
+          />
 
-          <select className="w-full border rounded-lg px-4 py-2 text-sm">
+          {/* Location */}
+          <input
+            type="text"
+            placeholder="Location"
+            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm"
+          />
+
+          {/* Company Filter */}
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Company</p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                "/Architects.png",
+                "/vermot.png",
+                "/Devops.png",
+                "/Hiredengineer.png",
+                "/redtail.png",
+              ].map((logo, idx) => (
+                <div
+                  key={idx}
+                  className="w-14 h-14 rounded-lg overflow-hidden border cursor-pointer hover:border-[#6F00FC] transition"
+                >
+                  <img src={logo} alt={`Company ${idx}`} className="w-full h-full object-contain bg-white p-2" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Job Type */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
             <option>Job Type</option>
             <option>Full-time</option>
             <option>Part-time</option>
@@ -319,14 +343,16 @@ export default function Home() {
             <option>Internship</option>
           </select>
 
-          <select className="w-full border rounded-lg px-4 py-2 text-sm">
+          {/* Experience Level */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
             <option>Experience Level</option>
             <option>Junior</option>
             <option>Mid</option>
             <option>Senior</option>
           </select>
 
-          <select className="w-full border rounded-lg px-4 py-2 text-sm">
+          {/* Estimated Salary */}
+          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
             <option>Estimated Salary</option>
             <option>$40k – $60k</option>
             <option>$60k – $80k</option>
@@ -334,11 +360,15 @@ export default function Home() {
             <option>$100k – $150k</option>
           </select>
 
-          <p className="text-sm font-medium">Popular Filters</p>
-          <div className="flex flex-wrap gap-2">
-            {["Remote", "Full-time", "Senior", "Contract"].map((filt) => (
-              <span key={filt} className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">{filt}</span>
-            ))}
+          {/* Popular Filters */}
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Popular Filters</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Remote</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#8C33FD] hover:text-white transition">Full-time</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#A866FE] hover:text-white transition">Senior</span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Contract</span>
+            </div>
           </div>
 
           <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-2 rounded-xl font-medium transition">
@@ -350,20 +380,24 @@ export default function Home() {
       {/* ================= JOB FEED ================= */}
       <div className="lg:w-3/4 w-full space-y-6">
         {[...Array(8)].map((_, idx) => (
-          <div key={idx} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition flex flex-col md:flex-row justify-between items-start gap-4">
-            
-            <div className="flex gap-4 flex-1">
-              {/* Company Logo */}
-              <img
-                src={`/company-logo-${idx + 1}.png`} // replace with actual logo paths
-                alt="Company logo"
-                className="w-12 h-12 rounded-xl object-contain"
-              />
+          <div
+            key={idx}
+            className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition flex justify-between items-start"
+          >
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">
+                C
+              </div>
 
               <div>
                 <h3 className="text-lg font-semibold">Frontend Engineer</h3>
-                <p className="text-sm text-gray-600">NovaTech • Remote (US)</p>
-                <div className="flex flex-wrap gap-2 mt-2">
+                <p className="text-sm text-gray-600">
+                  NovaTech • Remote (US)
+                </p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Build scalable front-end applications with React & Next.js, collaborate with product teams, and contribute to cutting-edge projects.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-3">
                   <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Remote</span>
                   <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Full-time</span>
                   <span className="text-xs px-3 py-1 rounded-full bg-gray-100">Senior</span>
@@ -371,15 +405,16 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="text-right mt-4 md:mt-0">
+            <div className="text-right">
               <p className="text-sm font-medium text-[#6F00FC]">$90k – $130k</p>
-              <button className="mt-3 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
-                Apply
+              <button className="mt-4 bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
+                View
               </button>
             </div>
           </div>
         ))}
       </div>
+
     </div>
   </div>
 </section>
