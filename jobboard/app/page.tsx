@@ -109,27 +109,27 @@ export default function Home() {
 
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-12 items-center">
       <img
-        src="/companies/Architects.png"
+        src="/Architects.png"
         alt="Architects"
         className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/vermot.png"
+        src="/vermot.png"
         alt="Vermot"
         className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/Devops.png"
+        src="/Devops.png"
         alt="Devops"
         className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/Hiredengineer.png"
+        src="/Hiredengineer.png"
         alt="Hiredengineer"
         className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
       <img
-        src="/companies/redtail.png"
+        src="/redtail.png"
         alt="Redtail"
         className="h-10 md:h-12 mx-auto object-contain opacity-80 hover:opacity-100 transition"
       />
