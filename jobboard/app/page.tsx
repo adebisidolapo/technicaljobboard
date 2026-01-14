@@ -139,132 +139,93 @@ export default function Home() {
 </section>
 
 
-      {/* ================= FEATURED STARTUP ROLES ================= */}
+{/* ================= FEATURED STARTUP ROLES ================= */}
 <section className="py-20 bg-white">
   <div className="max-w-6xl mx-auto px-6">
-    <h2 className="text-3xl font-semibold mb-6 tracking-wide text-gray-900 text-center">
+    <h2 className="text-3xl font-semibold mb-8 tracking-wide text-gray-900 text-center">
       Featured Startup Roles
     </h2>
 
-    <div className="flex overflow-x-auto gap-8 snap-x snap-mandatory px-2">
+    <div className="flex overflow-x-auto gap-6 snap-x snap-mandatory pb-2">
       {[
         {
-          role: "Senior Frontend Engineer",
+          title: "Senior Frontend Engineer",
           company: "NovaTech",
-          salary: "$120k – $150k",
-          desc: "Build scalable UIs with React & Next.js.",
+          location: "Remote · US",
+          type: "Full-time",
+          pay: "$60 – $75 / hr",
           color: "#6F00FC",
         },
         {
-          role: "Product Designer",
+          title: "Product Designer",
           company: "Launchify",
-          salary: "$90k – $120k",
-          desc: "Design intuitive UX.",
+          location: "San Francisco, CA",
+          type: "Contract",
+          pay: "$8,000 / month",
           color: "#8C33FD",
         },
         {
-          role: "Backend Engineer",
+          title: "Backend Engineer",
           company: "TechNova",
-          salary: "$100k – $140k",
-          desc: "Develop high-performance APIs.",
+          location: "Austin, TX",
+          type: "Full-time",
+          pay: "$110k – $140k",
           color: "#A866FE",
         },
       ].map((job, idx) => (
         <div
           key={idx}
-          className="flex-none w-96 snap-center bg-white rounded-3xl p-8 shadow-md border-l-4 hover:shadow-xl transition"
-          style={{ borderColor: job.color }}
+          className="group flex-none w-[380px] snap-center bg-white rounded-2xl p-6 shadow-sm border hover:shadow-lg transition-all"
+          style={{ borderLeft: `4px solid ${job.color}` }}
         >
-          <p className="text-sm font-medium text-gray-500">{job.company}</p>
-          <h3 className="text-xl font-semibold mt-1">{job.role}</h3>
-          <p className="text-sm font-medium mt-2" style={{ color: job.color }}>
-            {job.salary}
-          </p>
-          <p className="text-gray-600 mt-3 text-sm">{job.desc}</p>
+          {/* Top Row */}
+          <div className="flex justify-between items-start">
+            <h3 className="text-lg font-semibold text-gray-900 leading-snug">
+              {job.title}
+            </h3>
 
-          <button className="mt-6 w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-xl font-medium transition">
-            View Job
-          </button>
+            {/* Favorite Icon */}
+            <button className="text-gray-400 hover:text-[#6F00FC] transition">
+              ❤
+            </button>
+          </div>
+
+          {/* Company + Location */}
+          <p className="text-sm text-gray-600 mt-1">
+            <span className="font-medium text-gray-800">{job.company}</span>
+            <span className="mx-1">•</span>
+            {job.location}
+          </p>
+
+          {/* Meta Row */}
+          <div className="flex flex-wrap gap-3 mt-4 text-xs">
+            <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+              {job.type}
+            </span>
+            <span
+              className="px-3 py-1 rounded-full text-white"
+              style={{ backgroundColor: job.color }}
+            >
+              {job.pay}
+            </span>
+          </div>
+
+          {/* Bottom Actions */}
+          <div className="mt-6 flex justify-between items-center">
+            <button className="text-sm font-medium px-4 py-2 rounded-lg bg-gray-100 hover:bg-[#6F00FC] hover:text-white transition">
+              Apply
+            </button>
+
+            <span className="text-xs text-gray-400 group-hover:text-gray-600 transition">
+              Featured
+            </span>
+          </div>
         </div>
       ))}
     </div>
   </div>
 </section>
 
-{/* ================= BROWSE JOBS ================= */}
-<section className="py-28 bg-gray-50">
-  <div className="max-w-7xl mx-auto px-6">
-    <div className="flex justify-between items-center mb-6">
-      <h2 className="text-3xl font-semibold tracking-wide text-gray-900">Browse Jobs</h2>
-      <span className="text-[#6F00FC] font-medium underline cursor-pointer hover:bg-gray-100 px-2 rounded transition">
-        Load More Jobs
-      </span>
-    </div>
-    <p className="text-gray-600 mb-8">Showing 200 available roles</p>
-
-    <div className="flex flex-col lg:flex-row gap-10">
-
-      {/* ================= FILTERS ================= */}
-      <aside className="lg:w-1/4 w-full lg:sticky lg:top-28 h-fit">
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900">Refine Your Research</h3>
-
-          {/* Keyword */}
-          <input
-            type="text"
-            placeholder="Keyword or Job Title"
-            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#6F00FC] outline-none text-sm"
-          />
-
-          {/* Location */}
-          <input
-            type="text"
-            placeholder="Location"
-            className="w-full border rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#8C33FD] outline-none text-sm"
-          />
-
-          {/* Job Type */}
-          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
-            <option>Job Type</option>
-            <option>Full-time</option>
-            <option>Part-time</option>
-            <option>Contract</option>
-            <option>Internship</option>
-          </select>
-
-          {/* Experience Level */}
-          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
-            <option>Experience Level</option>
-            <option>Junior</option>
-            <option>Mid</option>
-            <option>Senior</option>
-          </select>
-
-          {/* Estimated Salary */}
-          <select className="w-full border rounded-lg px-4 py-2 mb-4 text-sm">
-            <option>Estimated Salary</option>
-            <option>$40k – $60k</option>
-            <option>$60k – $80k</option>
-            <option>$80k – $100k</option>
-            <option>$100k – $150k</option>
-          </select>
-
-          {/* Popular Filters */}
-          <div className="mb-4">
-            <p className="text-sm font-medium mb-2">Popular Filters</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Remote</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#8C33FD] hover:text-white transition">Full-time</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#A866FE] hover:text-white transition">Senior</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 cursor-pointer hover:bg-[#6F00FC] hover:text-white transition">Contract</span>
-            </div>
-          </div>
-
-          <button className="w-full bg-[#6F00FC] hover:bg-[#8C33FD] text-white py-2 rounded-xl font-medium transition">
-            Apply Filters
-          </button>
-        </div>
-      </aside>
 
       {/* ================= JOB FEED ================= */}
       <div className="lg:w-3/4 w-full space-y-6">
