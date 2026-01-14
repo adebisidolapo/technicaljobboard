@@ -95,12 +95,23 @@ export default function Home() {
 
       {/* Tiny floating card */}
       <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
-        <p className="font-semibold leading-snug">Frontend Engineer</p>
-        <p className="opacity-85">Remote • $120k</p>
+        <p className="font-semibold leading-snug">Architectural Engineer</p>
+        <p className="opacity-85">Remote • $150k</p>
       </div>
     </div>
   </div>
 </div>
+
+
+            {/* Tiny floating card (smaller than before) */}
+            <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
+              <p className="font-semibold leading-snug">Frontend Engineer</p>
+              <p className="opacity-85">Remote • $120k</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     {/* Removed the old bottom icons strip completely */}
