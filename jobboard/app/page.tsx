@@ -151,16 +151,18 @@ export default function Home() {
 
 
 {/* ================= FEATURED JOBS ================= */}
-<section className="py-24 bg-gray-50">
+<section className="py-28 bg-gradient-to-b from-[#F6F2FF] to-white border-y border-gray-200">
   <div className="max-w-7xl mx-auto px-6">
-    <div className="flex justify-between items-center mb-8">
+
+    {/* Header */}
+    <div className="flex justify-between items-center mb-10">
       <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
         Featured Jobs
       </h2>
     </div>
 
     {/* Carousel */}
-    <div className="flex gap-6 overflow-x-auto pb-4">
+    <div className="flex gap-6 overflow-x-auto pb-6">
       {[
         {
           title: "Senior Frontend Engineer",
@@ -169,6 +171,7 @@ export default function Home() {
           type: "Full-time",
           pay: "$60 – $75 / hr",
           posted: "2 days ago",
+          color: "#6F00FC",
         },
         {
           title: "Product Designer",
@@ -177,6 +180,7 @@ export default function Home() {
           type: "Contract",
           pay: "$8,000 / month",
           posted: "4 days ago",
+          color: "#8C33FD",
         },
         {
           title: "Backend Engineer",
@@ -185,82 +189,97 @@ export default function Home() {
           type: "Full-time",
           pay: "$110k – $140k",
           posted: "1 week ago",
+          color: "#A866FE",
         },
       ].map((job, idx) => (
         <div
           key={idx}
-          className="flex-none w-[380px] bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition border"
+          className="flex-none w-[400px] bg-white rounded-2xl shadow-sm hover:shadow-md transition border relative overflow-hidden"
         >
-          {/* Header */}
-          <div className="flex justify-between items-start">
-            <div className="flex gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#A866FE] text-white flex items-center justify-center font-bold">
-                {job.company.charAt(0)}
+          {/* Left Accent */}
+          <div
+            className="absolute left-0 top-0 h-full w-1.5"
+            style={{ backgroundColor: job.color }}
+          />
+
+          <div className="p-6 pl-8">
+            {/* Header */}
+            <div className="flex justify-between items-start">
+              <div className="flex gap-4">
+                <div
+                  className="w-12 h-12 rounded-xl text-white flex items-center justify-center font-bold"
+                  style={{ backgroundColor: job.color }}
+                >
+                  {job.company.charAt(0)}
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {job.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {job.company} • {job.location}
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {job.title}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {job.company} • {job.location}
-                </p>
-              </div>
+              {/* Save */}
+              <button
+                aria-label="Save job"
+                className="text-gray-400 hover:text-[#6F00FC] transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"
+                  />
+                </svg>
+              </button>
             </div>
 
-            {/* Save */}
-            <button
-              aria-label="Save job"
-              className="text-gray-400 hover:text-[#6F00FC] transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"
-                />
-              </svg>
-            </button>
-          </div>
+            {/* Meta */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
+                {job.type}
+              </span>
+              <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
+                {job.pay}
+              </span>
+            </div>
 
-          {/* Meta */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
-              {job.type}
-            </span>
-            <span className="text-xs px-3 py-1 rounded-full bg-gray-100">
-              {job.pay}
-            </span>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-6 flex justify-between items-center">
-            <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
-              Apply
-            </button>
-            <span className="text-xs text-gray-400">
-              Posted {job.posted}
-            </span>
+            {/* Footer */}
+            <div className="mt-6 flex justify-between items-center">
+              <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm">
+                Apply
+              </button>
+              <span className="text-xs text-gray-400">
+                Posted {job.posted}
+              </span>
+            </div>
           </div>
         </div>
       ))}
     </div>
 
     {/* Load more */}
-    <div className="mt-10 flex justify-center">
-      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition">
+    <div className="mt-12 flex justify-center">
+      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition shadow-sm">
         Load More Jobs
       </button>
     </div>
+
   </div>
 </section>
+
+
 
 {/* ================= BROWSE JOBS ================= */}
 <section className="py-28 bg-gray-50">
