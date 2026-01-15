@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import React, { useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import {
   FaTwitter,
@@ -12,6 +13,218 @@ import {
 
 export default function Home() {
   const heroImageRef = useRef<HTMLDivElement | null>(null);
+    const searchParams = useSearchParams();
+
+  // ===== Category definitions (grouped + icons) =====
+  const CATEGORY_GROUPS = [
+    {
+      title: "Industrial & Field",
+      items: [
+        { label: "Skilled Trades & Field Technicians", slug: "skilled-trades", icon: "🧰" },
+        { label: "Maintenance & Reliability", slug: "maintenance-reliability", icon: "🛠️" },
+        { label: "Field Service & Commissioning", slug: "field-service", icon: "🚚" },
+        { label: "Manufacturing & Production Operations", slug: "manufacturing-production", icon: "🏭" },
+      ],
+    },
+    {
+      title: "Engineering & Built World",
+      items: [
+        { label: "Engineering (Non-Software)", slug: "engineering-non-software", icon: "📐" },
+        { label: "Automation & Controls (PLC / Robotics)", slug: "automation-controls", icon: "🤖" },
+        { label: "Construction & Building Systems (MEP)", slug: "construction-mep", icon: "🏗️" },
+        { label: "Architecture & Design Systems", slug: "architecture", icon: "🏛️" },
+      ],
+    },
+    {
+      title: "Compliance & Operations",
+      items: [
+        { label: "Quality, Inspection & Compliance", slug: "quality-compliance", icon: "✅" },
+        { label: "Safety (EHS) & Industrial Compliance", slug: "safety-ehs", icon: "🦺" },
+        { label: "Lab, Testing & Calibration", slug: "lab-testing", icon: "🧪" },
+        { label: "Supply Chain & Technical Logistics", slug: "supply-chain", icon: "📦" },
+      ],
+    },
+    {
+      title: "Specialized Sectors",
+      items: [
+        { label: "Healthcare Technical Roles", slug: "healthcare-technical", icon: "🏥" },
+        { label: "Aerospace & Defense", slug: "aerospace-defense", icon: "🛰️" },
+        { label: "Energy, Utilities & Environmental", slug: "energy-utilities", icon: "⚡" },
+        { label: "Project & Technical Management", slug: "project-management", icon: "📋" },
+      ],
+    },
+  ] as const;
+
+  // Flatten categories for easy lookup
+  const ALL_CATEGORIES = useMemo(
+    () => CATEGORY_GROUPS.flatMap((g) => g.items),
+    []
+  );
+
+  // ===== Filter state shared by Categories + Browse Jobs =====
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [experience, setExperience] = useState("");
+  const [quickFilters, setQuickFilters] = useState<string[]>([]);
+
+  // Read category from URL like: /?category=aerospace-defense
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) setSelectedCategory(cat);
+  }, [searchParams]);
+
+  const resetFilters = () => {
+    setSelectedCategory("");
+    setKeyword("");
+    setLocation("");
+    setJobType("");
+    setExperience("");
+    setQuickFilters([]);
+  };
+
+  const toggleQuick = (tag: string) => {
+    setQuickFilters((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  // ===== Sample jobs (add/edit freely) =====
+  const jobs = [
+    {
+      title: "Maintenance Technician",
+      company: "PlantWorks",
+      location: "Houston, TX",
+      type: "Full-time",
+      experience: "Mid",
+      salary: "$28–$38/hr",
+      category: "maintenance-reliability",
+      tags: ["Full-time", "On-site"],
+      posted: "2 days ago",
+      description: "Preventive maintenance, troubleshooting, and equipment reliability support.",
+    },
+    {
+      title: "Electrical Engineer",
+      company: "GridLine",
+      location: "Remote",
+      type: "Full-time",
+      experience: "Senior",
+      salary: "$120k–$160k",
+      category: "engineering-non-software",
+      tags: ["Remote", "Full-time", "Senior"],
+      posted: "4 days ago",
+      description: "Power systems design, documentation, testing, and field coordination.",
+    },
+    {
+      title: "Automation & Controls Engineer (PLC)",
+      company: "AutoForge",
+      location: "Chicago, IL",
+      type: "Full-time",
+      experience: "Senior",
+      salary: "$130k–$175k",
+      category: "automation-controls",
+      tags: ["Full-time", "Senior"],
+      posted: "1 week ago",
+      description: "PLC programming, commissioning support, and process improvement.",
+    },
+    {
+      title: "Quality Inspector",
+      company: "PrecisionCo",
+      location: "Austin, TX",
+      type: "Contract",
+      experience: "Junior",
+      salary: "$22–$28/hr",
+      category: "quality-compliance",
+      tags: ["Contract"],
+      posted: "3 days ago",
+      description: "Inspection, reporting, and compliance checks with documented standards.",
+    },
+    {
+      title: "Healthcare Technical Project Coordinator",
+      company: "CareOps",
+      location: "New York, NY",
+      type: "Full-time",
+      experience: "Mid",
+      salary: "$85k–$110k",
+      category: "healthcare-technical",
+      tags: ["Full-time"],
+      posted: "5 days ago",
+      description: "Coordinate technical projects across clinical operations and vendor teams.",
+    },
+    {
+      title: "Aerospace Quality Engineer",
+      company: "AeroShield",
+      location: "On-site",
+      type: "Full-time",
+      experience: "Senior",
+      salary: "$140k–$190k",
+      category: "aerospace-defense",
+      tags: ["Full-time", "Senior"],
+      posted: "6 days ago",
+      description: "Quality systems, audits, supplier validation, and compliance documentation.",
+    },
+    {
+      title: "Architectural Technician",
+      company: "BuildStudio",
+      location: "San Francisco, CA",
+      type: "Full-time",
+      experience: "Mid",
+      salary: "$75k–$95k",
+      category: "architecture",
+      tags: ["Full-time"],
+      posted: "2 days ago",
+      description: "Drafting, coordination, and documentation for building design systems.",
+    },
+    {
+      title: "Field Service Technician",
+      company: "InstallPro",
+      location: "Remote",
+      type: "Contract",
+      experience: "Mid",
+      salary: "$35–$55/hr",
+      category: "field-service",
+      tags: ["Remote", "Contract"],
+      posted: "1 week ago",
+      description: "Installation, troubleshooting, and commissioning support for client sites.",
+    },
+  ];
+
+  // ===== Filtering logic =====
+  const filteredJobs = useMemo(() => {
+    return jobs.filter((job) => {
+      const matchesCategory =
+        selectedCategory === "" || job.category === selectedCategory;
+
+      const matchesKeyword =
+        keyword.trim() === "" ||
+        job.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        job.company.toLowerCase().includes(keyword.toLowerCase());
+
+      const matchesLocation =
+        location.trim() === "" ||
+        job.location.toLowerCase().includes(location.toLowerCase());
+
+      const matchesType = jobType === "" || job.type === jobType;
+
+      const matchesExperience =
+        experience === "" || job.experience === experience;
+
+      const matchesQuick =
+        quickFilters.length === 0 ||
+        quickFilters.every((f) => job.tags.includes(f));
+
+      return (
+        matchesCategory &&
+        matchesKeyword &&
+        matchesLocation &&
+        matchesType &&
+        matchesExperience &&
+        matchesQuick
+      );
+    });
+  }, [jobs, selectedCategory, keyword, location, jobType, experience, quickFilters]);
+
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
@@ -128,47 +341,86 @@ export default function Home() {
   <div className="max-w-7xl mx-auto px-6">
     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
       <div>
-        <h2 className="text-3xl font-semibold text-gray-900">Categories</h2>
-        <p className="text-gray-600 mt-2">
-          Explore jobs by role type — quickly jump into what you’re looking for.
+        <h2 className="text-3xl font-semibold text-gray-900">
+          Technical Job Categories
+        </h2>
+        <p className="text-gray-600 mt-2 max-w-2xl">
+          Explore Technical careers across engineering, industrial operations, healthcare, aerospace, and the built world.
         </p>
       </div>
 
       <button
-        onClick={() =>
-          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-        }
+        type="button"
+        onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
         className="inline-flex items-center justify-center gap-2 bg-[#6F00FC] text-white font-semibold px-6 py-3 rounded-2xl shadow-sm hover:bg-[#8C33FD] transition"
       >
         Browse Jobs <span className="text-lg">→</span>
       </button>
     </div>
 
-    <div className="flex flex-wrap gap-3">
-      {[
-        "Frontend Engineer",
-        "Backend Engineer",
-        "Fullstack Engineer",
-        "DevOps Engineer",
-        "Data Engineer",
-        "ML Engineer",
-        "Mobile Engineer",
-        "Security Engineer",
-        "QA Engineer",
-        "Cloud Engineer",
-        "Software Engineer",
-        "Site Reliability (SRE)",
-      ].map((role, i) => (
+    {/* Selected pill */}
+    {selectedCategory && (
+      <div className="mb-6 flex items-center gap-3">
+        <span className="text-sm text-gray-600">Selected:</span>
+        <span className="px-3 py-1.5 rounded-full bg-[#F6F2FF] border border-[#6F00FC]/20 text-[#6F00FC] text-sm font-semibold">
+          {ALL_CATEGORIES.find((c) => c.slug === selectedCategory)?.label ?? "Category"}
+        </span>
         <button
-          key={i}
-          className="px-4 py-2 rounded-full border border-gray-200 bg-gray-50 text-gray-800 text-sm hover:border-[#6F00FC] hover:bg-[#F6F2FF] transition"
+          type="button"
+          onClick={() => setSelectedCategory("")}
+          className="text-sm font-semibold text-gray-700 hover:text-gray-900 px-3 py-1.5 rounded-xl hover:bg-gray-100 transition"
         >
-          {role}
+          Clear
         </button>
+      </div>
+    )}
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {CATEGORY_GROUPS.map((group) => (
+        <div key={group.title} className="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{group.title}</h3>
+
+          <div className="flex flex-wrap gap-3">
+            {group.items.map((cat) => {
+              const isActive = selectedCategory === cat.slug;
+
+              return (
+                <div key={cat.slug} className="flex items-center gap-2">
+                  {/* Filter button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(cat.slug);
+                      document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className={`px-4 py-2 rounded-full border text-sm transition flex items-center gap-2
+                      ${
+                        isActive
+                          ? "bg-[#6F00FC] text-white border-[#6F00FC]"
+                          : "bg-gray-50 text-gray-800 border-gray-200 hover:border-[#6F00FC] hover:bg-[#F6F2FF]"
+                      }`}
+                  >
+                    <span aria-hidden>{cat.icon}</span>
+                    {cat.label}
+                  </button>
+
+                  {/* Landing page link */}
+                  <Link
+                    href={`/categories/${cat.slug}`}
+                    className="text-xs text-gray-500 hover:text-[#6F00FC] underline underline-offset-4"
+                  >
+                    View page
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       ))}
     </div>
   </div>
 </section>
+
 
 
 {/* ================= FEATURED JOBS ================= */}

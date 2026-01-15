@@ -264,3 +264,10 @@ body {
     transition: transform 0.25s ease;
   }
 }
+.category-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+}
