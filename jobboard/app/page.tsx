@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+
 
 type CategoryItem = {
   label: string;
@@ -17,7 +17,7 @@ type CategoryGroup = {
 
 export default function Home() {
   const heroImageRef = useRef<HTMLDivElement | null>(null);
-  const searchParams = useSearchParams();
+  
 
   // ================= CATEGORY GROUPS =================
   const CATEGORY_GROUPS: CategoryGroup[] = [
@@ -73,10 +73,14 @@ export default function Home() {
   const [quickFilters, setQuickFilters] = useState<string[]>([]);
 
   // Read from URL: /?category=aerospace-defense
-  useEffect(() => {
-    const cat = searchParams.get("category");
-    if (cat) setSelectedCategory(cat);
-  }, [searchParams]);
+ useEffect(() => {
+  // Read /?category=... safely on the client (avoids prerender errors)
+  if (typeof window === "undefined") return;
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get("category");
+  if (cat) setSelectedCategory(cat);
+}, []);
+
 
   const resetFilters = () => {
     setSelectedCategory("");
