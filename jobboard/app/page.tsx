@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
-     {/* ================= HERO ================= */}
+{/* ================= HERO ================= */}
 <section className="relative py-24 md:py-28 bg-animated-gradient text-white overflow-hidden">
   <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
   <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
@@ -27,13 +27,13 @@ export default function Home() {
       {/* LEFT */}
       <div className="md:w-1/2">
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
-          Find your next <span className="text-[#02000D]">Technical role</span>
+          Discover verified <span className="text-[#02000D]">Technical jobs</span>
           <br />
-          with teams hiring right now
+          built for long-term careers
         </h1>
 
         <p className="mt-5 text-base md:text-lg max-w-xl text-white/90">
-          Browse verified roles across Engineering, Product, Data, Cloud, and DevOps — including remote options.
+          Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
         </p>
 
         {/* Search Bar (3 equal boxes) */}
@@ -77,19 +77,43 @@ export default function Home() {
         <div className="relative w-full max-w-md">
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
 
-          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-6 shadow-2xl">
+          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-7 shadow-2xl overflow-hidden">
             <div className="text-white/90">
               <p className="text-sm font-semibold">Verified Technical roles</p>
               <p className="text-xs opacity-90 mt-1">
-                Remote-friendly • Clear salary ranges • Fast hiring teams
+                Clear salary ranges • Remote options • Fast response teams
               </p>
             </div>
 
-            {/* Tiny floating card */}
-            <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
-              <p className="font-semibold leading-snug">Architectural Engineer</p>
-              <p className="opacity-85">Remote • $150k</p>
+            {/* Floating verified cards (hidden on mobile to prevent overlap) */}
+            <div className="hidden md:block">
+             <div className="absolute -bottom-5 -right-4 glass float-1 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-44 border border-white/20">
+                <p className="font-semibold leading-snug">Systems Engineer</p>
+                <p className="opacity-85">Remote • $145k</p>
+              </div>
+
+              <div className="absolute -top-6 -left-4 glass float-2 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-48 border border-white/20">
+               <p className="font-semibold leading-snug">DevOps Engineer</p>
+                <p className="opacity-85">Hybrid • $155k</p>
+              </div>
+
+              <div className="absolute top-16 -right-6 glass float-3 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-48 border border-white/20">
+                <p className="font-semibold leading-snug">Data Engineer</p>
+                <p className="opacity-85">Remote • $160k</p>
+              </div>
+
+              <div className="absolute bottom-20 -left-6 glass float-4 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-56 border border-white/20">
+                <p className="font-semibold leading-snug">Network Security Engineer</p>
+                <p className="opacity-85">On-site • $170k</p>
+              </div>
             </div>
+
+            {/* Mobile-friendly single card (shows only on small screens) */}
+            <div className="md:hidden mt-6 glass rounded-2xl px-4 py-3 shadow-xl text-white text-sm border border-white/20">
+              <p className="font-semibold">Network Security Engineer</p>
+              <p className="text-xs opacity-85 mt-1">Remote • $170k</p>
+            </div>
+
           </div>
         </div>
       </div>

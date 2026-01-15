@@ -205,3 +205,62 @@ body {
     radial-gradient(600px 300px at 80% 30%, rgba(168,102,254,0.10), transparent 55%),
     linear-gradient(180deg, #ffffff 0%, #f6f2ff 100%);
 }
+/* ================= HERO FLOATING CARDS ================= */
+
+/* Soft floating animation */
+@keyframes floatSoft {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatSoftReverse {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Animation utility classes */
+.float-1 {
+  animation: floatSoft 5s ease-in-out infinite;
+}
+
+.float-2 {
+  animation: floatSoftReverse 6s ease-in-out infinite;
+}
+
+.float-3 {
+  animation: floatSoft 7s ease-in-out infinite;
+}
+
+.float-4 {
+  animation: floatSoftReverse 8s ease-in-out infinite;
+}
+
+/* Improve glass cards a bit */
+.glass {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* Slight hover lift for desktop */
+@media (hover: hover) {
+  .glass:hover {
+    transform: translateY(-2px) scale(1.02);
+    transition: transform 0.25s ease;
+  }
+}
