@@ -1,11 +1,16 @@
 import Link from "next/link";
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default function CategoryPage({
+  params,
+}: {
+  params?: { slug?: string };
+}) {
+  const slug = params?.slug ?? "category";
 
   const pretty = slug
-    .replaceAll("-", " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .split("-")
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : ""))
+    .join(" ");
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-16">
@@ -13,9 +18,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         ← Back to Home
       </Link>
 
-      <h1 className="text-3xl font-semibold text-gray-900 mt-6">
-        {pretty}
-      </h1>
+      <h1 className="text-3xl font-semibold text-gray-900 mt-6">{pretty}</h1>
 
       <p className="text-gray-600 mt-3 max-w-2xl">
         Explore roles, pay ranges, and opportunities in this Technical category.
@@ -23,7 +26,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Link
-          href={`/?category=${slug}#jobs`}
+          href={`/?category=${encodeURIComponent(slug)}#jobs`}
           className="px-6 py-3 rounded-2xl bg-[#6F00FC] text-white font-semibold hover:bg-[#8C33FD] transition text-center"
         >
           View jobs in this category
