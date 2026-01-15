@@ -24,49 +24,21 @@ type CategoryGroup = {
 export default function Home() {
   const heroImageRef = useRef<HTMLDivElement | null>(null);
 
-  // ===== Category definitions (grouped + icons) =====
-  // IMPORTANT: No "as const" here (it caused your TS error)
-  const CATEGORY_GROUPS: CategoryGroup[] = [
-    {
-      title: "Industrial & Field",
-      items: [
-        { label: "Skilled Trades & Field Technicians", slug: "skilled-trades", icon: "🧰" },
-        { label: "Maintenance & Reliability", slug: "maintenance-reliability", icon: "🛠️" },
-        { label: "Field Service & Commissioning", slug: "field-service", icon: "🚚" },
-        { label: "Manufacturing & Production Operations", slug: "manufacturing-production", icon: "🏭" },
-      ],
-    },
-    {
-      title: "Engineering & Built World",
-      items: [
-        { label: "Engineering (Non-Software)", slug: "engineering-non-software", icon: "📐" },
-        { label: "Automation & Controls (PLC / Robotics)", slug: "automation-controls", icon: "🤖" },
-        { label: "Construction & Building Systems (MEP)", slug: "construction-mep", icon: "🏗️" },
-        { label: "Architecture & Design Systems", slug: "architecture", icon: "🏛️" },
-      ],
-    },
-    {
-      title: "Compliance & Operations",
-      items: [
-        { label: "Quality, Inspection & Compliance", slug: "quality-compliance", icon: "✅" },
-        { label: "Safety (EHS) & Industrial Compliance", slug: "safety-ehs", icon: "🦺" },
-        { label: "Lab, Testing & Calibration", slug: "lab-testing", icon: "🧪" },
-        { label: "Supply Chain & Technical Logistics", slug: "supply-chain", icon: "📦" },
-      ],
-    },
-    {
-      title: "Specialized Sectors",
-      items: [
-        { label: "Healthcare Technical Roles", slug: "healthcare-technical", icon: "🏥" },
-        { label: "Aerospace & Defense", slug: "aerospace-defense", icon: "🛰️" },
-        { label: "Energy, Utilities & Environmental", slug: "energy-utilities", icon: "⚡" },
-        { label: "Project & Technical Management", slug: "project-management", icon: "📋" },
-      ],
-    },
-  ];
+const CATEGORIES = [
+  { label: "Healthcare IT", slug: "healthcare-it" },
+  { label: "Aerospace / Defense", slug: "aerospace-defense" },
+  { label: "Architecture", slug: "architecture" },
+  { label: "Project Management", slug: "project-management" },
+  { label: "Construction / Building Systems", slug: "construction-mep" },
+  { label: "Manufacturing / Production", slug: "manufacturing-production" },
+  { label: "Field Service / Commissioning", slug: "field-service" },
+  { label: "Quality / Compliance", slug: "quality-compliance" },
+  { label: "Maintenance / Reliability", slug: "maintenance-reliability" },
+];
+
 
   // Flatten categories for easy lookup
-  const ALL_CATEGORIES = useMemo(
+  const ALL_CATEGORIES = CATEGORIES;
     () => CATEGORY_GROUPS.flatMap((g) => g.items),
     [CATEGORY_GROUPS]
   );
@@ -355,16 +327,18 @@ export default function Home() {
     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
       <div>
         <h2 className="text-3xl font-semibold text-gray-900">
-          Technical Job Categories
+          Categories
         </h2>
-        <p className="text-gray-600 mt-2 max-w-2xl">
-          Explore Technical careers across engineering, industrial operations, healthcare, aerospace, and the built world.
+        <p className="text-gray-600 mt-2">
+          Explore Technical jobs by category — tap one to filter results below.
         </p>
       </div>
 
       <button
         type="button"
-        onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
         className="inline-flex items-center justify-center gap-2 bg-[#6F00FC] text-white font-semibold px-6 py-3 rounded-2xl shadow-sm hover:bg-[#8C33FD] transition"
       >
         Browse Jobs <span className="text-lg">→</span>
@@ -373,7 +347,7 @@ export default function Home() {
 
     {/* Selected pill */}
     {selectedCategory && (
-      <div className="mb-6 flex items-center gap-3">
+      <div className="mb-6 flex flex-wrap items-center gap-3">
         <span className="text-sm text-gray-600">Selected:</span>
         <span className="px-3 py-1.5 rounded-full bg-[#F6F2FF] border border-[#6F00FC]/20 text-[#6F00FC] text-sm font-semibold">
           {ALL_CATEGORIES.find((c) => c.slug === selectedCategory)?.label ?? "Category"}
@@ -388,48 +362,30 @@ export default function Home() {
       </div>
     )}
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {CATEGORY_GROUPS.map((group) => (
-        <div key={group.title} className="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">{group.title}</h3>
+    {/* Simple pill buttons */}
+    <div className="flex flex-wrap gap-3">
+      {ALL_CATEGORIES.map((cat) => {
+        const isActive = selectedCategory === cat.slug;
 
-          <div className="flex flex-wrap gap-3">
-            {group.items.map((cat) => {
-              const isActive = selectedCategory === cat.slug;
-
-              return (
-                <div key={cat.slug} className="flex items-center gap-2">
-                  {/* Filter button */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedCategory(cat.slug);
-                      document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className={`px-4 py-2 rounded-full border text-sm transition flex items-center gap-2
-                      ${
-                        isActive
-                          ? "bg-[#6F00FC] text-white border-[#6F00FC]"
-                          : "bg-gray-50 text-gray-800 border-gray-200 hover:border-[#6F00FC] hover:bg-[#F6F2FF]"
-                      }`}
-                  >
-                    <span aria-hidden>{cat.icon}</span>
-                    {cat.label}
-                  </button>
-
-                  {/* Landing page link */}
-                  <Link
-                    href={`/categories/${cat.slug}`}
-                    className="text-xs text-gray-500 hover:text-[#6F00FC] underline underline-offset-4"
-                  >
-                    View page
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
+        return (
+          <button
+            key={cat.slug}
+            type="button"
+            onClick={() => {
+              setSelectedCategory(cat.slug);
+              document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className={`px-4 py-2 rounded-full border text-sm transition
+              ${
+                isActive
+                  ? "bg-[#6F00FC] text-white border-[#6F00FC]"
+                  : "border-gray-200 bg-gray-50 text-gray-800 hover:border-[#6F00FC] hover:bg-[#F6F2FF]"
+              }`}
+          >
+            {cat.label}
+          </button>
+        );
+      })}
     </div>
   </div>
 </section>
