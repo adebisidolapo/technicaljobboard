@@ -654,15 +654,15 @@ const CATEGORIES = [
 </section>
 
 {/* ================= BROWSE JOBS ================= */}
-<section id="jobs" className="py-28 relative jobs-bg">
+<section id="jobs" className="py-24 md:py-28 relative browse-bg overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
     {/* Header */}
     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
       <div>
         <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
-          Browse Jobs
-        </h2>
+  ALL JOBS
+</h2>
         <p className="text-gray-600 mt-2 max-w-2xl">
           Filter by keyword, location, job type, and experience — then explore what matches.
         </p>
@@ -816,9 +816,9 @@ const CATEGORIES = [
             roles
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-10">
+<div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
             {/* ================= FILTERS ================= */}
-            <aside className="lg:w-1/4 w-full lg:sticky lg:top-28 h-fit">
+<aside className="lg:w-1/4 w-full lg:sticky lg:top-24 h-fit">
               <div className="rounded-3xl p-6 shadow-lg border border-gray-200 bg-white/90 backdrop-blur">
                 <div className="flex items-start justify-between gap-3 mb-6">
                   <div>
@@ -948,13 +948,15 @@ const CATEGORIES = [
                 filteredJobs.map((job, idx) => (
                   <div
                     key={idx}
-                    className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition
-                               border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-start gap-6"
+                    className="bg-white rounded-3xl p-5 md:p-6 shadow-sm hover:shadow-lg transition
+           border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-start gap-5 md:gap-6"
+
                   >
                     <div className="flex gap-4 min-w-0">
-                      <div className="w-12 h-12 shrink-0 rounded-2xl bg-[#A866FE] text-white flex items-center justify-center font-bold shadow-sm">
-                        {job.company.charAt(0)}
-                      </div>
+                      <div className="w-12 h-12 shrink-0 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-sm">
+  {job.company.charAt(0)}
+</div>
+
 
                       <div className="min-w-0">
                         <h3 className="text-lg font-semibold text-gray-900 truncate">
