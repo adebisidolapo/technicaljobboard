@@ -38,10 +38,8 @@ const CATEGORIES = [
 
 
   // Flatten categories for easy lookup
-  const ALL_CATEGORIES = CATEGORIES;
-    () => CATEGORY_GROUPS.flatMap((g) => g.items),
-    [CATEGORY_GROUPS]
-  );
+ const ALL_CATEGORIES = CATEGORIES;
+
 
   // ===== Filter state shared by Categories + Browse Jobs =====
   const [selectedCategory, setSelectedCategory] = useState<string>("");
