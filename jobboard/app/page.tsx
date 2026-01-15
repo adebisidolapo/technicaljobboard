@@ -322,26 +322,15 @@ const CATEGORIES = [
 {/* ================= CATEGORIES ================= */}
 <section className="py-20 bg-white">
   <div className="max-w-7xl mx-auto px-6">
-    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-      <div>
-        <h2 className="text-3xl font-semibold text-gray-900">
-          Categories
-        </h2>
-        <p className="text-gray-600 mt-2">
-          Explore Technical jobs by category — tap one to filter results below.
-        </p>
-      </div>
+    <div className="mb-10">
+  <h2 className="text-3xl font-semibold text-gray-900">
+    Available Categories
+  </h2>
+  <p className="text-gray-600 mt-2">
+    Tap a category to filter jobs below.
+  </p>
+</div>
 
-      <button
-        type="button"
-        onClick={() =>
-          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="inline-flex items-center justify-center gap-2 bg-[#6F00FC] text-white font-semibold px-6 py-3 rounded-2xl shadow-sm hover:bg-[#8C33FD] transition"
-      >
-        Browse Jobs <span className="text-lg">→</span>
-      </button>
-    </div>
 
     {/* Selected pill */}
     {selectedCategory && (
@@ -596,9 +585,15 @@ const CATEGORIES = [
 
     {/* Load more */}
     <div className="mt-12 flex justify-center">
-      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition shadow-sm">
-        Load More Jobs
-      </button>
+      <button
+  type="button"
+  className="group inline-flex items-center gap-3 bg-[#02000D] text-white px-8 py-4 rounded-2xl font-semibold transition shadow-lg hover:shadow-xl"
+>
+  Load More Jobs
+  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition">
+    →
+  </span>
+</button>
     </div>
 
   </div>
@@ -673,9 +668,14 @@ const CATEGORIES = [
         </p>
       </div>
 
-      <button className="w-full md:w-auto text-[#6F00FC] font-semibold px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition">
-        Load More Jobs
-      </button>
+      <button
+  type="button"
+  className="w-full md:w-auto inline-flex items-center justify-center md:justify-end gap-2
+             text-[#6F00FC] font-semibold underline underline-offset-4
+             hover:text-[#8C33FD] transition px-2 py-2"
+>
+  Load More Jobs <span aria-hidden>→</span>
+</button>
     </div>
 
     {/* ===== Jobs data + filter logic (keep INSIDE the section so it's easy) ===== */}
