@@ -1,33 +1,37 @@
 import Link from "next/link";
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
+export default function CategoryPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
+  const pretty = slug
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
   return (
-    <main className="max-w-5xl mx-auto px-6 py-16">
-      <Link href="/categories" className="text-sm text-gray-600 underline">
-        ← Back to Categories
+    <main className="max-w-6xl mx-auto px-6 py-16">
+      <Link href="/" className="text-sm text-gray-600 underline">
+        ← Back to Home
       </Link>
 
       <h1 className="text-3xl font-semibold text-gray-900 mt-6">
-        Category: {slug.replaceAll("-", " ")}
+        {pretty}
       </h1>
 
-      <p className="text-gray-600 mt-3">
-        This page will show featured roles, salary ranges, and top companies for this category.
+      <p className="text-gray-600 mt-3 max-w-2xl">
+        Explore roles, pay ranges, and opportunities in this Technical category.
       </p>
 
-      <div className="mt-8 flex gap-3">
+      <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Link
           href={`/?category=${slug}#jobs`}
-          className="px-5 py-3 rounded-2xl bg-[#6F00FC] text-white font-semibold hover:bg-[#8C33FD] transition"
+          className="px-6 py-3 rounded-2xl bg-[#6F00FC] text-white font-semibold hover:bg-[#8C33FD] transition text-center"
         >
           View jobs in this category
         </Link>
 
         <Link
           href="/#jobs"
-          className="px-5 py-3 rounded-2xl bg-white border border-gray-200 text-gray-900 font-semibold hover:shadow-sm transition rounded-2xl"
+          className="px-6 py-3 rounded-2xl bg-white border border-gray-200 text-gray-900 font-semibold hover:shadow-sm transition text-center"
         >
           Browse all jobs
         </Link>
