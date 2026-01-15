@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
-      {/* ================= HERO ================= */}
+     {/* ================= HERO ================= */}
 <section className="relative py-24 md:py-28 bg-animated-gradient text-white overflow-hidden">
   <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
   <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
@@ -27,13 +27,13 @@ export default function Home() {
       {/* LEFT */}
       <div className="md:w-1/2">
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
-          Find your next <span className="text-[#02000D]">technical role</span>
+          Find your next <span className="text-[#02000D]">Technical role</span>
           <br />
-          at startups hiring in the U.S.
+          with teams hiring right now
         </h1>
 
         <p className="mt-5 text-base md:text-lg max-w-xl text-white/90">
-          Browse verified roles across engineering, product, data, and DevOps — including remote options.
+          Browse verified roles across Engineering, Product, Data, Cloud, and DevOps — including remote options.
         </p>
 
         {/* Search Bar (3 equal boxes) */}
@@ -47,7 +47,7 @@ export default function Home() {
 
             <input
               type="text"
-              placeholder="Location (e.g. Remote, NY)"
+              placeholder="Location (e.g. Remote, New York)"
               className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
             />
 
@@ -57,8 +57,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Jump to Jobs (more visible) */}
+        {/* Jump to Jobs (very visible + works) */}
         <button
+          type="button"
           onClick={() =>
             document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
           }
@@ -76,48 +77,27 @@ export default function Home() {
         <div className="relative w-full max-w-md">
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
 
-          {/* Small duplicate "technical job" chips */}
           <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-6 shadow-2xl">
-     {/* RIGHT */}
-<div
-  ref={heroImageRef}
-  className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end"
->
-  <div className="relative w-full max-w-md">
-    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
+            <div className="text-white/90">
+              <p className="text-sm font-semibold">Verified Technical roles</p>
+              <p className="text-xs opacity-90 mt-1">
+                Remote-friendly • Clear salary ranges • Fast hiring teams
+              </p>
+            </div>
 
-    <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-6 shadow-2xl">
-      <div className="text-white/90">
-        <p className="text-sm font-semibold">Verified roles</p>
-        <p className="text-xs opacity-90 mt-1">
-          Fast-growing startups • Remote-friendly • USA-based
-        </p>
-      </div>
-
-      {/* Tiny floating card */}
-      <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
-        <p className="font-semibold leading-snug">Architectural Engineer</p>
-        <p className="opacity-85">Remote • $150k</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-            {/* Tiny floating card (smaller than before) */}
+            {/* Tiny floating card */}
             <div className="absolute -bottom-4 -right-3 glass rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-40 border border-white/20">
-              <p className="font-semibold leading-snug">Frontend Engineer</p>
-              <p className="opacity-85">Remote • $120k</p>
+              <p className="font-semibold leading-snug">Architectural Engineer</p>
+              <p className="opacity-85">Remote • $150k</p>
             </div>
           </div>
         </div>
       </div>
 
     </div>
-
-    {/* Removed the old bottom icons strip completely */}
   </div>
 </section>
+
 
 {/* ================= CATEGORIES ================= */}
 <section className="py-20 bg-white">
