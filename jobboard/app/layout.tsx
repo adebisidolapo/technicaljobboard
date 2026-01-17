@@ -18,18 +18,18 @@ export default function RootLayout({
         {/* HEADER (NOT sticky) */}
         <header className="w-full bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
-            <div className="h-24 md:h-28 lg:h-32 flex items-center justify-between">
+<div className="h-20 md:h-22 lg:h-24 flex items-center justify-between">
               {/* LOGO (bigger + responsive) */}
               <Link href="/" className="flex items-center">
                 <img
                   src="/Technicaljoblogo-removebg-preview.png"
                   alt="TechnicalJobboard"
-                  className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain"
+className="h-18 sm:h-20 md:h-22 lg:h-24 w-auto object-contain"
                 />
               </Link>
 
               {/* DESKTOP MENU */}
-              <nav className="hidden md:flex items-center gap-10 text-base lg:text-lg font-semibold text-gray-900">
+<nav className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold text-gray-900">
                 <Link href="#jobs" className="hover:text-[#3017D3] transition">
                   All Jobs
                 </Link>
@@ -41,7 +41,7 @@ export default function RootLayout({
                 </Link>
                 <Link
                   href="#"
-                  className="px-5 py-3 bg-[#3017D3] text-white rounded-2xl shadow-sm hover:bg-[#2a12c0] transition"
+className="px-4 py-2.5 bg-[#3017D3] text-white rounded-xl shadow-sm hover:bg-[#2a12c0] transition"
                 >
                   Post Job
                 </Link>
