@@ -22,6 +22,11 @@
     --foreground: #ededed;
   }
 }
+:root{
+  --brand: #3017D3;     /* your purple */
+  --brand-dark: #2a12c0;
+  --ink: #02000D;       /* your dark */
+}
 
 body {
   background: var(--background);
@@ -283,3 +288,5 @@ body {
     radial-gradient(650px 420px at 50% 100%, rgba(16, 185, 129, 0.10), transparent 60%),
     linear-gradient(180deg, #f8fafc 0%, #ffffff 55%, #f9fafb 100%);
 }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

@@ -18,7 +18,7 @@ export default function RootLayout({
         {/* HEADER (NOT sticky) */}
        <header className="w-full bg-white border-b border-gray-200">
   <div className="max-w-7xl mx-auto px-1 sm:px-2 md:px-4">
-    <div className="h-20 md:h-22 lg:h-24 flex items-center justify-between">
+<div className="h-20 md:h-22 lg:h-24 flex items-center justify-between overflow-visible">
       {/* LOGO (KEEP BIG) */}
       <Link href="/" className="flex items-center">
         <img
