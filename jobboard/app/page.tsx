@@ -382,7 +382,6 @@ const CATEGORIES = [
 {/* ================= FEATURED JOBS ================= */}
 <section className="py-28 hero-bg border-y border-gray-200">
   <div className="max-w-7xl mx-auto px-6">
-
     {/* Header */}
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
       <div>
@@ -438,11 +437,10 @@ const CATEGORIES = [
           {
             title: "Senior Frontend Engineer",
             company: "NovaTech",
-            location: "Remote (US)",
+            location: "Remote",
             type: "Full-time",
             pay: "$120k – $160k",
             posted: "2 days ago",
-            color: "#6F00FC",
           },
           {
             title: "Backend Engineer (Node/Go)",
@@ -451,16 +449,14 @@ const CATEGORIES = [
             type: "Full-time",
             pay: "$130k – $175k",
             posted: "3 days ago",
-            color: "#8C33FD",
           },
           {
             title: "DevOps / Platform Engineer",
             company: "CloudSprint",
-            location: "Remote (US)",
+            location: "Remote",
             type: "Full-time",
             pay: "$140k – $190k",
             posted: "5 days ago",
-            color: "#A866FE",
           },
           {
             title: "Product Designer",
@@ -469,7 +465,6 @@ const CATEGORIES = [
             type: "Contract",
             pay: "$8,000 / month",
             posted: "4 days ago",
-            color: "#6F00FC",
           },
           {
             title: "Data Engineer",
@@ -478,25 +473,22 @@ const CATEGORIES = [
             type: "Full-time",
             pay: "$125k – $165k",
             posted: "1 week ago",
-            color: "#8C33FD",
           },
           {
             title: "Fullstack Engineer",
             company: "PixelForge",
-            location: "Remote (US)",
+            location: "Remote",
             type: "Full-time",
             pay: "$115k – $155k",
             posted: "6 days ago",
-            color: "#A866FE",
           },
           {
             title: "Mobile Engineer (React Native)",
             company: "BrightApps",
-            location: "Remote (US)",
+            location: "Remote",
             type: "Full-time",
             pay: "$110k – $145k",
             posted: "1 week ago",
-            color: "#6F00FC",
           },
         ].map((job, idx) => (
           <div
@@ -505,28 +497,23 @@ const CATEGORIES = [
                        bg-white rounded-2xl shadow-sm hover:shadow-lg transition
                        border border-gray-200 relative overflow-hidden"
           >
-            {/* Left Accent */}
-            <div
-              className="absolute left-0 top-0 h-full w-1.5"
-              style={{ backgroundColor: job.color }}
-            />
+            {/* Left Accent (consistent + not purple-heavy) */}
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-slate-900 via-slate-700 to-emerald-600" />
 
             <div className="p-6 pl-8">
               {/* Header */}
               <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <div
-                    className="w-12 h-12 rounded-xl text-white flex items-center justify-center font-bold shadow-sm"
-                    style={{ backgroundColor: job.color }}
-                  >
+                <div className="flex gap-4 min-w-0">
+                  {/* Company mark (matches All Jobs) */}
+                  <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-sm">
                     {job.company.charAt(0)}
                   </div>
 
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 leading-snug">
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-gray-900 leading-snug truncate">
                       {job.title}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 truncate">
                       {job.company} • {job.location}
                     </p>
                   </div>
@@ -535,7 +522,7 @@ const CATEGORIES = [
                 {/* Save */}
                 <button
                   aria-label="Save job"
-                  className="text-gray-400 hover:text-[#6F00FC] transition"
+                  className="text-gray-400 hover:text-slate-900 transition"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -565,12 +552,12 @@ const CATEGORIES = [
               </div>
 
               <p className="text-sm text-gray-600 mt-4">
-                Quick hiring process, modern stack, and a team that supports growth.
+                Quick hiring process, clear expectations, and a team that supports growth.
               </p>
 
               {/* Footer */}
               <div className="mt-6 flex justify-between items-center">
-                <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                <button className="bg-[#02000D] hover:bg-black text-white px-4 py-2 rounded-lg text-sm font-medium transition">
                   View
                 </button>
                 <span className="text-xs text-gray-400">
@@ -586,16 +573,15 @@ const CATEGORIES = [
     {/* Load more */}
     <div className="mt-12 flex justify-center">
       <button
-  type="button"
-  className="group inline-flex items-center gap-3 bg-[#02000D] text-white px-8 py-4 rounded-2xl font-semibold transition shadow-lg hover:shadow-xl"
->
-  Load More Jobs
-  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition">
-    →
-  </span>
-</button>
+        type="button"
+        className="group inline-flex items-center gap-3 bg-[#02000D] text-white px-8 py-4 rounded-2xl font-semibold transition shadow-lg hover:shadow-xl"
+      >
+        Load More Jobs
+        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition">
+          →
+        </span>
+      </button>
     </div>
-
   </div>
 </section>
 
