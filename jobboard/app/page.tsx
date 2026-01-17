@@ -58,6 +58,23 @@ const CATEGORIES = [
     if (cat) setSelectedCategory(cat);
   }, []);
 
+  useEffect(() => {
+  const els = Array.from(document.querySelectorAll(".reveal"));
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("is-visible");
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  els.forEach((el) => io.observe(el));
+
+  return () => io.disconnect();
+}, []);
+
   const resetFilters = () => {
     setSelectedCategory("");
     setKeyword("");
@@ -845,29 +862,74 @@ const CATEGORIES = [
 
 
 {/* ============ EMPOWERING JOB SEEKERS ================= */}
-<section className="py-28 bg-white">
-  <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
-    <div className="md:w-1/2">
-      <img
-        src="/empower-platform.png"
-        alt="Job platform dashboard illustration"
-        className="rounded-3xl shadow-xl bg-gray-50 p-4"
-      />
-    </div>
+<section
+  id="empowering"
+  className="relative py-28 overflow-hidden bg-gradient-to-br from-[#F6F2FF] via-white to-[#F9F7FF]"
+>
+  {/* Decorative background accents */}
+  <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#6F00FC]/10 blur-3xl" />
+  <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#8C33FD]/10 blur-3xl" />
 
-    <div className="md:w-1/2">
-      <h2 className="text-3xl font-semibold mb-6 tracking-tight">
-        Empowering Job Seekers
-      </h2>
-      <p className="text-gray-700 mb-6">
-        Verified Technical roles, trusted companies, and career tools built
-      </p>
-      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-6 py-3 rounded-xl font-medium transition">
-        Get Started
-      </button>
+  <div className="relative max-w-6xl mx-auto px-6">
+    <div className="reveal flex flex-col md:flex-row items-center gap-14">
+      {/* Image */}
+      <div className="md:w-1/2 w-full">
+        <div className="relative rounded-3xl bg-white p-4 shadow-xl">
+          <img
+            src="/empower-platform.png"
+            alt="Job platform dashboard illustration"
+            className="rounded-2xl w-full"
+          />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="md:w-1/2 w-full">
+        <span className="inline-block mb-4 text-sm font-semibold text-[#6F00FC] bg-[#F0EBFF] px-4 py-1.5 rounded-full">
+          Built for Technical Careers
+        </span>
+
+        <h2 className="text-3xl md:text-4xl font-semibold mb-6 tracking-tight text-gray-900">
+          Empowering Job Seekers
+        </h2>
+
+        <p className="text-gray-700 mb-6 leading-relaxed max-w-xl">
+          Discover verified Technical roles, transparent salary ranges, and trusted employers —
+          all in one place designed to support long-term career growth.
+        </p>
+
+        <ul className="space-y-3 mb-8 text-gray-700">
+          <li className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+            Verified Technical opportunities only
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+            Clear expectations & salary visibility
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+            Roles built for growth, not churn
+          </li>
+        </ul>
+
+        {/* Scroll to All Jobs */}
+        <button
+          type="button"
+          onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
+          className="inline-flex items-center gap-3 bg-[#6F00FC] hover:bg-[#8C33FD]
+                     text-white px-7 py-3 rounded-2xl font-semibold transition shadow-lg hover:shadow-xl"
+        >
+          Get Started
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+            →
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
+
 
 {/* ================= FOOTER ================= */}
 <footer>
