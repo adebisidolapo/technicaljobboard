@@ -381,9 +381,11 @@ const CATEGORIES = [
 
 {/* ================= FEATURED JOBS ================= */}
 <section className="py-28 hero-bg border-y border-gray-200">
-  {/* Header stays inside max width */}
-  <div className="max-w-7xl mx-auto px-6">
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+  {/* Full-width container for carousel feel */}
+  <div className="max-w-[100vw] overflow-hidden">
+
+    {/* Header */}
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
       <div>
         <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
           Featured Jobs
@@ -393,7 +395,7 @@ const CATEGORIES = [
         </p>
       </div>
 
-      {/* Controls */}
+      {/* Carousel Controls */}
       <div className="flex items-center gap-3">
         <button
           type="button"
@@ -422,126 +424,133 @@ const CATEGORIES = [
         </button>
       </div>
     </div>
-  </div>
 
-  {/* FULL-WIDTH carousel area */}
-  <div className="relative">
-    {/* Soft fades */}
-    <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
-    <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
+    {/* Carousel */}
+    <div className="relative">
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
 
-    <div
-      id="featured-carousel"
-      className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-10"
-    >
-      {[
-        {
-          title: "Senior Frontend Engineer",
-          company: "NovaTech",
-          location: "Remote",
-          type: "Full-time",
-          pay: "$120k – $160k",
-          posted: "2 days ago",
-        },
-        {
-          title: "Automation & Controls Engineer (PLC)",
-          company: "AutoForge",
-          location: "Chicago, IL",
-          type: "Full-time",
-          pay: "$110k – $150k",
-          posted: "3 days ago",
-        },
-        {
-          title: "Aerospace Quality Engineer",
-          company: "AeroShield",
-          location: "On-site",
-          type: "Full-time",
-          pay: "$140k – $190k",
-          posted: "5 days ago",
-        },
-        {
-          title: "Healthcare Technical Project Coordinator",
-          company: "CareOps",
-          location: "New York, NY",
-          type: "Full-time",
-          pay: "$85k – $110k",
-          posted: "6 days ago",
-        },
-        {
-          title: "Architectural Technician",
-          company: "BuildStudio",
-          location: "San Francisco, CA",
-          type: "Full-time",
-          pay: "$75k – $95k",
-          posted: "1 week ago",
-        },
-      ].map((job, idx) => (
-        <div
-          key={idx}
-          className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
-                     bg-white rounded-2xl shadow-sm hover:shadow-md transition
-                     border border-gray-200 relative overflow-hidden"
-        >
-          {/* Left Accent (neutral) */}
-          <div className="absolute left-0 top-0 h-full w-1.5 bg-[#02000D]" />
+      <div
+        id="featured-carousel"
+        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 px-6 md:px-12 scroll-smooth snap-x snap-mandatory"
+      >
+        {[
+          {
+            title: "Senior Frontend Engineer",
+            company: "NovaTech",
+            location: "Remote",
+            type: "Full-time",
+            pay: "$120k – $160k",
+            posted: "2 days ago",
+          },
+          {
+            title: "Backend Engineer (Node/Go)",
+            company: "TechNova",
+            location: "Austin, TX",
+            type: "Full-time",
+            pay: "$130k – $175k",
+            posted: "3 days ago",
+          },
+          {
+            title: "DevOps / Platform Engineer",
+            company: "CloudSprint",
+            location: "Remote",
+            type: "Full-time",
+            pay: "$140k – $190k",
+            posted: "5 days ago",
+          },
+          {
+            title: "Product Designer",
+            company: "Launchify",
+            location: "San Francisco, CA",
+            type: "Contract",
+            pay: "$8,000 / month",
+            posted: "4 days ago",
+          },
+          {
+            title: "Data Engineer",
+            company: "SignalWorks",
+            location: "New York, NY",
+            type: "Full-time",
+            pay: "$125k – $165k",
+            posted: "1 week ago",
+          },
+        ].map((job, idx) => (
+          <div
+            key={idx}
+            className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
+                       bg-white rounded-2xl shadow-sm hover:shadow-lg transition
+                       border border-gray-200 relative overflow-hidden"
+          >
+            {/* Purple accent */}
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-[#6F00FC]" />
 
-          <div className="p-6 pl-8">
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4 min-w-0">
-                {/* Company mark (use same color as All Jobs so it matches) */}
-                <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-sm">
-                  {job.company.charAt(0)}
+            <div className="p-6 pl-8">
+              {/* Header */}
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#6F00FC] text-white flex items-center justify-center font-bold shadow-sm">
+                    {job.company.charAt(0)}
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 leading-snug">
+                      {job.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {job.company} • {job.location}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 leading-snug truncate">
-                    {job.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 truncate">
-                    {job.company} • {job.location}
-                  </p>
-                </div>
+                {/* Save */}
+                <button
+                  aria-label="Save job"
+                  className="text-gray-400 hover:text-[#6F00FC] transition"
+                >
+                  ★
+                </button>
               </div>
 
-              {/* Save */}
-              <button aria-label="Save job" className="text-gray-400 hover:text-[#02000D] transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z" />
-                </svg>
-              </button>
-            </div>
+              {/* Meta */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {job.type}
+                </span>
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {job.pay}
+                </span>
+              </div>
 
-            <div className="flex flex-wrap gap-2 mt-4">
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">{job.type}</span>
-              <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">{job.pay}</span>
-            </div>
+              <p className="text-sm text-gray-600 mt-4">
+                Quick hiring process, modern stack, and a team that supports growth.
+              </p>
 
-            <p className="text-sm text-gray-600 mt-4">
-              Clear expectations, good teams, and real Technical work.
-            </p>
-
-            <div className="mt-6 flex justify-between items-center">
-              <button className="bg-[#3017D3] hover:bg-[#2a12c0] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-                View
-              </button>
-              <span className="text-xs text-gray-400">Posted {job.posted}</span>
+              {/* Footer */}
+              <div className="mt-6 flex justify-between items-center">
+                <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                  View
+                </button>
+                <span className="text-xs text-gray-400">
+                  Posted {job.posted}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+
+    {/* Load more */}
+    <div className="mt-12 flex justify-center">
+      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition shadow-sm">
+        Load More Jobs
+      </button>
     </div>
   </div>
-
-  {/* Unique Load More button */}
-  <div className="mt-12 flex justify-center">
-    <button
-      type="button"
-      className="px-7 py-3 rounded-2xl bg-[#02000D] text-white font-semibold shadow-sm hover:bg-black transition"
-    >
-      Load More Jobs
-    </button>
-  </div>
 </section>
+
 
 
 
