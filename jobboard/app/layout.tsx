@@ -1,13 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Link from "next/link";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Technical Job Board",
@@ -20,86 +13,79 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="bg-gray-50 font-sans antialiased">
-        {/* HEADER (overlay style so it blends into hero) */}
-        <header className="fixed top-0 z-50 w-full">
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6">
-            <div className="mt-3 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md">
-              <div className="h-16 md:h-20 flex items-center justify-between px-3 sm:px-4 md:px-6">
-                {/* LOGO (bigger + closer to left) */}
-                <Link href="/" className="flex items-center">
-                  <img
-                    src="/Technicaljoblogo-removebg-preview.png"
-                    alt="TechnicalJobboard"
-                    className="h-12 sm:h-14 md:h-16 w-auto object-contain"
-                  />
-                </Link>
+    <html lang="en">
+      <body className="bg-gray-50 font-sans">
+        {/* HEADER (NOT sticky) */}
+        <header className="w-full bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
+            <div className="h-20 md:h-24 flex items-center justify-between">
+              {/* LOGO (big + far left) */}
+              <Link href="/" className="flex items-center">
+                <img
+                  src="/Technicaljoblogo-removebg-preview.png"
+                  alt="TechnicalJobboard"
+                  className="h-14 sm:h-16 md:h-20 w-auto object-contain"
+                />
+              </Link>
 
-                {/* DESKTOP MENU (bigger + more visible) */}
-                <nav className="hidden md:flex items-center gap-10 text-base font-semibold text-white">
-                  <Link href="#jobs" className="hover:text-white/80 transition">
+              {/* DESKTOP MENU (bigger + visible) */}
+              <nav className="hidden md:flex items-center gap-10 text-base lg:text-lg font-semibold text-gray-900">
+                <Link href="#jobs" className="hover:text-[#3017D3] transition">
+                  All Jobs
+                </Link>
+                <Link href="#" className="hover:text-[#3017D3] transition">
+                  Jobseeker
+                </Link>
+                <Link href="#" className="hover:text-[#3017D3] transition">
+                  Employer
+                </Link>
+                <Link
+                  href="#"
+                  className="px-5 py-3 bg-[#3017D3] text-white rounded-2xl shadow-sm hover:bg-[#2a12c0] transition"
+                >
+                  Post Job
+                </Link>
+              </nav>
+
+              {/* MOBILE MENU */}
+              <details className="md:hidden relative">
+                <summary className="list-none cursor-pointer px-4 py-2 rounded-xl border border-gray-200 text-gray-900 font-semibold">
+                  ☰
+                </summary>
+
+                {/* Dropdown */}
+                <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl p-2 z-50">
+                  <Link
+                    href="#jobs"
+                    className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+                  >
                     All Jobs
                   </Link>
-                  <Link href="#" className="hover:text-white/80 transition">
+                  <Link
+                    href="#"
+                    className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+                  >
                     Jobseeker
                   </Link>
-                  <Link href="#" className="hover:text-white/80 transition">
+                  <Link
+                    href="#"
+                    className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+                  >
                     Employer
                   </Link>
                   <Link
                     href="#"
-                    className="px-5 py-2.5 rounded-2xl bg-white text-[#02000D] hover:bg-white/90 transition shadow-sm"
+                    className="mt-2 block text-center px-4 py-3 rounded-xl bg-[#3017D3] text-white font-semibold"
                   >
                     Post Job
                   </Link>
-                </nav>
-
-                {/* MOBILE MENU (dropdown using <details>) */}
-                <details className="md:hidden relative">
-                  <summary className="list-none cursor-pointer inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-white shadow-sm">
-                    ☰
-                  </summary>
-
-                  {/* Overlay click area */}
-                  <div className="fixed inset-0 z-40 bg-black/30" />
-
-                  {/* Dropdown panel */}
-                  <div className="absolute right-0 mt-3 z-50 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl p-2">
-                    <Link
-                      href="#jobs"
-                      className="block px-4 py-3 rounded-xl hover:bg-gray-50 text-gray-900 font-semibold"
-                    >
-                      All Jobs
-                    </Link>
-                    <Link
-                      href="#"
-                      className="block px-4 py-3 rounded-xl hover:bg-gray-50 text-gray-900 font-semibold"
-                    >
-                      Jobseeker
-                    </Link>
-                    <Link
-                      href="#"
-                      className="block px-4 py-3 rounded-xl hover:bg-gray-50 text-gray-900 font-semibold"
-                    >
-                      Employer
-                    </Link>
-
-                    <Link
-                      href="#"
-                      className="mt-2 block text-center px-4 py-3 rounded-xl bg-[#3017D3] text-white font-semibold"
-                    >
-                      Post Job
-                    </Link>
-                  </div>
-                </details>
-              </div>
+                </div>
+              </details>
             </div>
           </div>
         </header>
 
-        {/* IMPORTANT: add top padding so content doesn't hide under fixed header */}
-        <main className="pt-24 md:pt-28">{children}</main>
+        {children}
       </body>
     </html>
   );
