@@ -1,92 +1,64 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import Link from "next/link";
+<header className="w-full bg-white border-b border-gray-200">
+  <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
+    <div className="h-24 md:h-28 lg:h-32 flex items-center justify-between">
+      <Link href="/" className="flex items-center">
+        <img
+          src="/Technicaljoblogo-removebg-preview.png"
+          alt="TechnicalJobboard"
+          className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain"
+        />
+      </Link>
 
-export const metadata: Metadata = {
-  title: "Technical Job Board",
-  description: "Where technical careers meet opportunity",
-};
+      <nav className="hidden md:flex items-center gap-10 text-base lg:text-lg font-semibold text-gray-900">
+        <Link href="#jobs" className="hover:text-[#3017D3] transition">
+          All Jobs
+        </Link>
+        <Link href="#" className="hover:text-[#3017D3] transition">
+          Jobseeker
+        </Link>
+        <Link href="#" className="hover:text-[#3017D3] transition">
+          Employer
+        </Link>
+        <Link
+          href="#"
+          className="px-5 py-3 bg-[#3017D3] text-white rounded-2xl shadow-sm hover:bg-[#2a12c0] transition"
+        >
+          Post Job
+        </Link>
+      </nav>
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body className="bg-gray-50 font-sans">
-        {/* HEADER (NOT sticky) */}
-        <header className="w-full bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
-            <div className="h-20 md:h-24 flex items-center justify-between">
-              {/* LOGO (big + far left) */}
-              <Link href="/" className="flex items-center">
-                <img
-                  src="/Technicaljoblogo-removebg-preview.png"
-                  alt="TechnicalJobboard"
-                  className="h-14 sm:h-16 md:h-20 w-auto object-contain"
-                />
-              </Link>
+      <details className="md:hidden relative">
+        <summary className="list-none cursor-pointer px-4 py-2 rounded-xl border border-gray-200 text-gray-900 font-semibold">
+          ☰
+        </summary>
 
-              {/* DESKTOP MENU (bigger + visible) */}
-              <nav className="hidden md:flex items-center gap-10 text-base lg:text-lg font-semibold text-gray-900">
-                <Link href="#jobs" className="hover:text-[#3017D3] transition">
-                  All Jobs
-                </Link>
-                <Link href="#" className="hover:text-[#3017D3] transition">
-                  Jobseeker
-                </Link>
-                <Link href="#" className="hover:text-[#3017D3] transition">
-                  Employer
-                </Link>
-                <Link
-                  href="#"
-                  className="px-5 py-3 bg-[#3017D3] text-white rounded-2xl shadow-sm hover:bg-[#2a12c0] transition"
-                >
-                  Post Job
-                </Link>
-              </nav>
-
-              {/* MOBILE MENU */}
-              <details className="md:hidden relative">
-                <summary className="list-none cursor-pointer px-4 py-2 rounded-xl border border-gray-200 text-gray-900 font-semibold">
-                  ☰
-                </summary>
-
-                {/* Dropdown */}
-                <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl p-2 z-50">
-                  <Link
-                    href="#jobs"
-                    className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
-                  >
-                    All Jobs
-                  </Link>
-                  <Link
-                    href="#"
-                    className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
-                  >
-                    Jobseeker
-                  </Link>
-                  <Link
-                    href="#"
-                    className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
-                  >
-                    Employer
-                  </Link>
-                  <Link
-                    href="#"
-                    className="mt-2 block text-center px-4 py-3 rounded-xl bg-[#3017D3] text-white font-semibold"
-                  >
-                    Post Job
-                  </Link>
-                </div>
-              </details>
-            </div>
-          </div>
-        </header>
-
-        {children}
-      </body>
-    </html>
-  );
-}
+        <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl p-2 z-50">
+          <Link
+            href="#jobs"
+            className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+          >
+            All Jobs
+          </Link>
+          <Link
+            href="#"
+            className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+          >
+            Jobseeker
+          </Link>
+          <Link
+            href="#"
+            className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+          >
+            Employer
+          </Link>
+          <Link
+            href="#"
+            className="mt-2 block text-center px-4 py-3 rounded-xl bg-[#3017D3] text-white font-semibold"
+          >
+            Post Job
+          </Link>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
