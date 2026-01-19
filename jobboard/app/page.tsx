@@ -397,29 +397,30 @@ const CATEGORIES = [
 
 
 {/* ================= FEATURED JOBS ================= */}
-<section className="py-28 hero-bg border-y border-gray-200">
-  {/* Full-width container for carousel feel */}
-  <div className="max-w-[100vw] overflow-hidden">
+<section className="py-28 hero-bg border-y border-gray-200 relative overflow-hidden">
+  {/* Soft decorative highlights */}
+  <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#6F00FC]/10 rounded-full blur-3xl" />
+  <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#A866FE]/10 rounded-full blur-3xl" />
 
+  <div className="relative max-w-[100vw] overflow-hidden">
     {/* Header */}
-    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
       <div>
-        <h2 className="text-3xl font-semibold tracking-wide text-gray-900">
+        <h2 className="text-3xl font-semibold tracking-tight text-gray-900">
           Featured Jobs
         </h2>
         <p className="text-gray-600 mt-2 max-w-2xl">
-          A friendly shortlist of standout roles — scroll sideways or use the arrows.
+          A curated selection of standout roles from trusted teams.
         </p>
       </div>
 
-      {/* Carousel Controls */}
+      {/* Carousel controls */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => {
             const el = document.getElementById("featured-carousel");
-            if (!el) return;
-            el.scrollBy({ left: -420, behavior: "smooth" });
+            el?.scrollBy({ left: -420, behavior: "smooth" });
           }}
           className="px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
           aria-label="Scroll left"
@@ -431,8 +432,7 @@ const CATEGORIES = [
           type="button"
           onClick={() => {
             const el = document.getElementById("featured-carousel");
-            if (!el) return;
-            el.scrollBy({ left: 420, behavior: "smooth" });
+            el?.scrollBy({ left: 420, behavior: "smooth" });
           }}
           className="px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
           aria-label="Scroll right"
@@ -444,13 +444,13 @@ const CATEGORIES = [
 
     {/* Carousel */}
     <div className="relative">
-      {/* Soft edge fades */}
+      {/* Edge fades */}
       <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
       <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
 
       <div
         id="featured-carousel"
-        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 px-6 md:px-12 scroll-smooth snap-x snap-mandatory"
+        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 px-6 md:px-12 scroll-smooth snap-x snap-mandatory featured-autoscroll"
       >
         {[
           {
@@ -460,6 +460,7 @@ const CATEGORIES = [
             type: "Full-time",
             pay: "$120k – $160k",
             posted: "2 days ago",
+            verified: true,
           },
           {
             title: "Backend Engineer (Node/Go)",
@@ -468,6 +469,7 @@ const CATEGORIES = [
             type: "Full-time",
             pay: "$130k – $175k",
             posted: "3 days ago",
+            verified: true,
           },
           {
             title: "DevOps / Platform Engineer",
@@ -476,6 +478,7 @@ const CATEGORIES = [
             type: "Full-time",
             pay: "$140k – $190k",
             posted: "5 days ago",
+            verified: false,
           },
           {
             title: "Product Designer",
@@ -484,6 +487,7 @@ const CATEGORIES = [
             type: "Contract",
             pay: "$8,000 / month",
             posted: "4 days ago",
+            verified: true,
           },
           {
             title: "Data Engineer",
@@ -492,6 +496,7 @@ const CATEGORIES = [
             type: "Full-time",
             pay: "$125k – $165k",
             posted: "1 week ago",
+            verified: false,
           },
         ].map((job, idx) => (
           <div
@@ -500,34 +505,43 @@ const CATEGORIES = [
                        bg-white rounded-2xl shadow-sm hover:shadow-lg transition
                        border border-gray-200 relative overflow-hidden"
           >
-            {/* Purple accent */}
+            {/* Purple accent bar */}
             <div className="absolute left-0 top-0 h-full w-1.5 bg-[#6F00FC]" />
 
             <div className="p-6 pl-8">
-              {/* Header */}
-              <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#6F00FC] text-white flex items-center justify-center font-bold shadow-sm">
-                    {job.company.charAt(0)}
-                  </div>
+              {/* Top row: badge + save */}
+              <div className="flex items-center justify-between mb-4">
+                {job.verified ? (
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-[#F6F2FF] text-[#6F00FC] border border-[#6F00FC]/20">
+                    <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+                    Verified
+                  </span>
+                ) : (
+                  <span className="text-xs text-gray-400">Featured</span>
+                )}
 
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 leading-snug">
-                      {job.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      {job.company} • {job.location}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Save */}
                 <button
                   aria-label="Save job"
                   className="text-gray-400 hover:text-[#6F00FC] transition"
                 >
                   ★
                 </button>
+              </div>
+
+              {/* Header */}
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#6F00FC] text-white flex items-center justify-center font-bold shadow-sm">
+                  {job.company.charAt(0)}
+                </div>
+
+                <div className="min-w-0">
+                  <h3 className="text-lg font-semibold text-gray-900 leading-snug truncate">
+                    {job.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 truncate">
+                    {job.company} • {job.location}
+                  </p>
+                </div>
               </div>
 
               {/* Meta */}
@@ -541,7 +555,7 @@ const CATEGORIES = [
               </div>
 
               <p className="text-sm text-gray-600 mt-4">
-                Quick hiring process, modern stack, and a team that supports growth.
+                Fast hiring teams, clear expectations, and modern workflows.
               </p>
 
               {/* Footer */}
@@ -558,71 +572,9 @@ const CATEGORIES = [
         ))}
       </div>
     </div>
-
-    {/* Load more */}
-    <div className="mt-12 flex justify-center">
-      <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-8 py-3 rounded-xl font-medium transition shadow-sm">
-        Load More Jobs
-      </button>
-    </div>
   </div>
 </section>
 
-
-
-
-{/* ================= TRUSTED TEAMS ================= */}
-<section className="py-28 trusted-bg overflow-hidden">
-  <div className="max-w-7xl mx-auto px-6">
-
-    {/* Header */}
-    <div className="text-center mb-16">
-      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 tracking-tight">
-        Trusted by teams building the future
-      </h3>
-      <p className="text-gray-600 mt-3 max-w-xl mx-auto">
-        Startups and technology teams that care about great talent.
-      </p>
-    </div>
-
-    {/* V-Wave Carousel */}
-    <div className="relative">
-      <div className="wave-marquee gap-10 hover:[animation-play-state:paused]">
-        {[
-          "/Architects.png",
-          "/vermot.png",
-          "/Devops.png",
-          "/Hiredengineer.png",
-          "/redtail.png",
-          "/Architects.png",
-          "/vermot.png",
-          "/Devops.png",
-          "/Hiredengineer.png",
-          "/redtail.png",
-        ].map((logo, i) => (
-          <div
-            key={i}
-            className="wave-item min-w-[220px] h-[120px]
-                       flex items-center justify-center
-                       rounded-3xl border border-gray-200
-                       bg-white shadow-sm"
-          >
-            <img
-              src={logo}
-              alt="Trusted company logo"
-              className="h-16 md:h-20 object-contain opacity-90"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-white to-transparent" />
-    </div>
-
-  </div>
-</section>
 
 {/* ================= ALL JOBS ================= */}
 <section id="jobs" className="py-24 md:py-28 bg-white border-t border-gray-200">
