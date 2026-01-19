@@ -442,9 +442,9 @@ const CATEGORIES = [
       </div>
     </div>
 
-{/* Carousel (FULL BLEED) */}
-<div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-  {/* Edge fades */}
+{/* Carousel (TRUE FULL WIDTH) */}
+<div className="relative -mx-6 md:-mx-12">
+  {/* Soft edge fades */}
   <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
   <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
 
