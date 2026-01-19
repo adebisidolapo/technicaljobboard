@@ -930,5 +930,8 @@ const CATEGORIES = [
   </div>
 </section>
 
+    </main>
+  );
+}
 
 
