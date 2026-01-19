@@ -402,7 +402,7 @@ const CATEGORIES = [
   <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#6F00FC]/10 rounded-full blur-3xl" />
   <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#A866FE]/10 rounded-full blur-3xl" />
 
-  <div className="relative max-w-[100vw] overflow-hidden">
+<div className="relative w-full">
     {/* Header */}
     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
       <div>
@@ -442,16 +442,16 @@ const CATEGORIES = [
       </div>
     </div>
 
-    {/* Carousel */}
-    <div className="relative">
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
+{/* Carousel (FULL BLEED) */}
+<div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+  {/* Edge fades */}
+  <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
+  <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
 
-      <div
-        id="featured-carousel"
-        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 px-6 md:px-12 scroll-smooth snap-x snap-mandatory featured-autoscroll"
-      >
+  <div
+    id="featured-carousel"
+    className="no-scrollbar featured-autoscroll flex gap-6 overflow-x-auto pb-6 px-6 md:px-12 scroll-smooth snap-x snap-mandatory"
+  >
         {[
           {
             title: "Senior Frontend Engineer",
