@@ -1,119 +1,81 @@
-"use client";
+{/* HEADER (Desktop cleaned + logo stays big) */}
+<header className="w-full bg-white border-b border-gray-200">
+  <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+    <div className="h-[76px] lg:h-[82px] flex items-center justify-between">
+      {/* LOGO (big, far-left, not squeezed) */}
+      <Link href="/" className="flex items-center shrink-0 -ml-1">
+        <img
+          src="/Technicaljoblogo-removebg-preview.png"
+          alt="TechnicalJobboard"
+          className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain"
+        />
+      </Link>
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+      {/* DESKTOP MENU (clean spacing + better sizing) */}
+      <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-[15px] lg:text-base font-semibold text-gray-900">
+        <Link
+          href="#jobs"
+          className="px-2 py-2 rounded-lg hover:bg-gray-50 hover:text-[#3017D3] transition"
+        >
+          All Jobs
+        </Link>
 
-export default function SiteHeader() {
-  const [open, setOpen] = useState(false);
+        <Link
+          href="#"
+          className="px-2 py-2 rounded-lg hover:bg-gray-50 hover:text-[#3017D3] transition"
+        >
+          Jobseeker
+        </Link>
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+        <Link
+          href="#"
+          className="px-2 py-2 rounded-lg hover:bg-gray-50 hover:text-[#3017D3] transition"
+        >
+          Employer
+        </Link>
 
-  useEffect(() => {
-    if (!open) return;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+        <Link
+          href="#"
+          className="ml-1 inline-flex items-center justify-center px-4 py-2.5 rounded-xl
+                     bg-[#3017D3] text-white shadow-sm hover:bg-[#2a12c0] transition"
+        >
+          Post Job
+        </Link>
+      </nav>
 
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/85 backdrop-blur">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-20 flex items-center justify-between">
-      <Link href="/" className="flex items-center">
-  <img
-    src="/Technicaljoblogo-removebg-preview.png"
-    alt="TechnicalJobboard"
-    className="
-      h-20 sm:h-24 md:h-28 lg:h-32
-      w-auto
-      object-contain
-    "
-  />
-</Link>
+      {/* MOBILE MENU (unchanged, but slightly tidier button) */}
+      <details className="md:hidden relative">
+        <summary className="list-none cursor-pointer px-3 py-2 rounded-xl border border-gray-200 text-gray-900 font-semibold">
+          ☰
+        </summary>
 
-
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-900">
-          <Link href="#jobs" className="hover:text-[#3017D3] transition">
+        <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl p-2 z-50">
+          <Link
+            href="#jobs"
+            className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+          >
             All Jobs
           </Link>
-          <Link href="#" className="hover:text-[#3017D3] transition">
+          <Link
+            href="#"
+            className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+          >
             Jobseeker
           </Link>
-          <Link href="#" className="hover:text-[#3017D3] transition">
+          <Link
+            href="#"
+            className="block px-4 py-3 rounded-xl hover:bg-gray-50 font-semibold text-gray-900"
+          >
             Employer
           </Link>
           <Link
             href="#"
-            className="px-4 py-2 rounded-xl bg-[#3017D3] text-white hover:opacity-95 transition shadow-sm"
+            className="mt-2 block text-center px-4 py-3 rounded-xl bg-[#3017D3] text-white font-semibold"
           >
             Post Job
           </Link>
-        </nav>
-
-        <button
-          type="button"
-          className="md:hidden inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-3 py-2 text-gray-900 shadow-sm"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label="Open menu"
-        >
-          ☰
-        </button>
-      </div>
-
-      {open && (
-        <div className="md:hidden">
-          <button
-            type="button"
-            className="fixed inset-0 z-40 bg-black/30"
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-          />
-
-          <div id="mobile-menu" className="relative z-50 border-t border-gray-200 bg-white">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-3">
-              <Link
-                href="#jobs"
-                onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 text-gray-900 font-medium"
-              >
-                All Jobs
-              </Link>
-
-              <Link
-                href="#"
-                onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 text-gray-900 font-medium"
-              >
-                Jobseeker
-              </Link>
-
-              <Link
-                href="#"
-                onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 text-gray-900 font-medium"
-              >
-                Employer
-              </Link>
-
-              <Link
-                href="#"
-                onClick={() => setOpen(false)}
-                className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[#3017D3] text-white font-semibold shadow-sm"
-              >
-                Post Job
-              </Link>
-            </div>
-          </div>
         </div>
-      )}
-    </header>
-  );
-}
+      </details>
+    </div>
+  </div>
+</header>
