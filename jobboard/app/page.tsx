@@ -229,16 +229,17 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO ================= */}
-<section className="relative py-24 md:py-28 bg-animated-gradient text-white overflow-hidden">
-  <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-  <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
+{/* ================= HERO (Cleaner Desktop) ================= */}
+<section className="relative py-22 md:py-24 bg-animated-gradient text-white overflow-hidden">
+  {/* Softer background blobs */}
+  <div className="absolute top-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
+  <div className="absolute bottom-0 right-0 w-72 h-72 md:w-[28rem] md:h-[28rem] bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
 
   <div className="max-w-7xl mx-auto px-6 relative z-10">
-    <div className="md:flex md:items-center md:justify-between gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
 
       {/* LEFT */}
-      <div className="md:w-1/2">
+      <div>
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
           Discover verified <span className="text-[#02000D]">Technical jobs</span>
           <br />
@@ -249,7 +250,7 @@ const CATEGORIES = [
           Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
         </p>
 
-        {/* Search Bar (3 equal boxes) */}
+        {/* Search Bar */}
         <div className="w-full mt-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl">
             <input
@@ -270,27 +271,23 @@ const CATEGORIES = [
           </div>
         </div>
 
-        {/* Jump to Jobs (very visible + works) */}
+        {/* Jump to Jobs */}
         <button
           type="button"
-          onClick={() =>
-            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-          }
+          onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
           className="mt-6 inline-flex items-center justify-center gap-2 bg-white text-[#02000D] font-semibold px-6 py-3 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-[1px] transition border border-white/40"
         >
           Jump to Jobs <span className="text-lg">↓</span>
         </button>
       </div>
 
-      {/* RIGHT */}
-      <div
-        ref={heroImageRef}
-        className="md:w-1/2 mt-14 md:mt-0 flex justify-center md:justify-end"
-      >
+      {/* RIGHT (Clean stats + one compact card) */}
+      <div className="mt-12 md:mt-0 flex justify-center md:justify-end">
         <div className="relative w-full max-w-md">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-3xl opacity-30 scale-110" />
+          {/* Reduced glow */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-2xl opacity-20 scale-105" />
 
-          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 backdrop-blur p-7 shadow-2xl overflow-hidden">
+          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/14 backdrop-blur-md p-7 shadow-2xl">
             <div className="text-white/90">
               <p className="text-sm font-semibold">Verified Technical roles</p>
               <p className="text-xs opacity-90 mt-1">
@@ -298,35 +295,42 @@ const CATEGORIES = [
               </p>
             </div>
 
-            {/* Floating verified cards (hidden on mobile to prevent overlap) */}
-            <div className="hidden md:block">
-             <div className="absolute -bottom-5 -right-4 glass float-1 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-44 border border-white/20">
-                <p className="font-semibold leading-snug">Systems Engineer</p>
-                <p className="opacity-85">Remote • $145k</p>
+            {/* Desktop: stats row (clean + professional) */}
+            <div className="hidden md:grid mt-6 grid-cols-3 gap-3">
+              <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3">
+                <p className="text-lg font-extrabold leading-none">1.2k+</p>
+                <p className="text-xs text-white/80 mt-1">Roles listed</p>
               </div>
-
-              <div className="absolute -top-6 -left-4 glass float-2 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-48 border border-white/20">
-               <p className="font-semibold leading-snug">DevOps Engineer</p>
-                <p className="opacity-85">Hybrid • $155k</p>
+              <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3">
+                <p className="text-lg font-extrabold leading-none">Fast</p>
+                <p className="text-xs text-white/80 mt-1">Hiring teams</p>
               </div>
-
-              <div className="absolute top-16 -right-6 glass float-3 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-48 border border-white/20">
-                <p className="font-semibold leading-snug">Data Engineer</p>
-                <p className="opacity-85">Remote • $160k</p>
-              </div>
-
-              <div className="absolute bottom-20 -left-6 glass float-4 rounded-2xl px-3 py-2 shadow-xl text-white text-xs w-56 border border-white/20">
-                <p className="font-semibold leading-snug">Network Security Engineer</p>
-                <p className="opacity-85">On-site • $170k</p>
+              <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3">
+                <p className="text-lg font-extrabold leading-none">Clear</p>
+                <p className="text-xs text-white/80 mt-1">Salary ranges</p>
               </div>
             </div>
 
-            {/* Mobile-friendly single card (shows only on small screens) */}
-            <div className="md:hidden mt-6 glass rounded-2xl px-4 py-3 shadow-xl text-white text-sm border border-white/20">
-              <p className="font-semibold">Network Security Engineer</p>
-              <p className="text-xs opacity-85 mt-1">Remote • $170k</p>
+            {/* One compact featured card (desktop + mobile) */}
+            <div className="mt-6 rounded-2xl bg-white/10 border border-white/15 p-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <p className="text-xs text-white/80">Featured role</p>
+                  <p className="font-semibold truncate">Network Security Engineer</p>
+                  <p className="text-xs text-white/80 mt-1">Remote • $170k</p>
+                </div>
+
+                <span className="shrink-0 inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-white/15 border border-white/15">
+                  <span className="h-2 w-2 rounded-full bg-white" />
+                  Verified
+                </span>
+              </div>
             </div>
 
+            {/* Mobile-only extra helper text */}
+            <p className="md:hidden text-xs text-white/80 mt-4">
+              Browse verified roles with clear expectations and fast response teams.
+            </p>
           </div>
         </div>
       </div>
@@ -334,6 +338,7 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
+
 
 
 {/* ================= CATEGORIES ================= */}
