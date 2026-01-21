@@ -576,6 +576,114 @@ const CATEGORIES = [
 </section>
 
 
+{/* ================= COMPANIES / TRUSTED TEAMS (FULL WIDTH) ================= */}
+<section className="py-20 md:py-24 bg-white">
+  {/* Full-bleed wrapper */}
+  <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+    <div className="max-w-7xl mx-auto px-6">
+      {/* Header */}
+      <div className="text-center mb-10 md:mb-14">
+        <p className="text-sm font-semibold tracking-widest text-gray-500 uppercase">
+          Trusted by teams
+        </p>
+        <h3 className="mt-3 text-2xl md:text-4xl font-semibold text-gray-900">
+          Companies we’ve worked with
+        </h3>
+      </div>
+
+      {(() => {
+        const logos = [
+          { src: "/Architects.png", alt: "Architects" },
+          { src: "/vermot.png", alt: "Vermot" },
+          { src: "/Devops.png", alt: "Devops" },
+          { src: "/Hiredengineer.png", alt: "HiredEngineer" },
+          { src: "/redtail.png", alt: "Redtail" },
+        ];
+
+        const [active, setActive] = React.useState(0);
+
+        const next = () => setActive((i) => (i + 1) % logos.length);
+        const prev = () => setActive((i) => (i - 1 + logos.length) % logos.length);
+
+        // Auto-play (pauses if user interacts by clicking arrows/dots)
+        React.useEffect(() => {
+          const t = setInterval(() => {
+            setActive((i) => (i + 1) % logos.length);
+          }, 3500);
+          return () => clearInterval(t);
+        }, [logos.length]);
+
+        return (
+          <div className="relative">
+            {/* Card track */}
+            <div className="relative rounded-3xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+              {/* Soft background like your reference */}
+              <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
+
+              <div className="relative px-4 sm:px-8 py-10 sm:py-12">
+                {/* Arrows */}
+                <button
+                  type="button"
+                  onClick={prev}
+                  aria-label="Previous company"
+                  className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2
+                             h-11 w-11 rounded-2xl border border-gray-200 bg-white shadow-sm
+                             hover:shadow-md transition flex items-center justify-center"
+                >
+                  ←
+                </button>
+
+                <button
+                  type="button"
+                  onClick={next}
+                  aria-label="Next company"
+                  className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2
+                             h-11 w-11 rounded-2xl border border-gray-200 bg-white shadow-sm
+                             hover:shadow-md transition flex items-center justify-center"
+                >
+                  →
+                </button>
+
+                {/* Logo (one at a time) */}
+                <div className="mx-auto w-full max-w-4xl">
+                  <div className="h-24 sm:h-28 md:h-32 flex items-center justify-center">
+                    <img
+                      key={logos[active].src}
+                      src={logos[active].src}
+                      alt={logos[active].alt}
+                      className="max-h-16 sm:max-h-20 md:max-h-24 w-auto object-contain
+                                 opacity-90 transition"
+                    />
+                  </div>
+                </div>
+
+                {/* Dots */}
+                <div className="mt-6 flex items-center justify-center gap-2">
+                  {logos.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setActive(i)}
+                      aria-label={`Go to company ${i + 1}`}
+                      className={`h-2.5 rounded-full transition-all ${
+                        i === active
+                          ? "w-7 bg-[#6F00FC]"
+                          : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+    </div>
+  </div>
+</section>
+
+
+
 {/* ================= ALL JOBS ================= */}
 <section id="jobs" className="py-24 md:py-28 bg-white border-t border-gray-200">
   <div className="max-w-7xl mx-auto px-6">
@@ -811,41 +919,6 @@ const CATEGORIES = [
   </div>
 </section>
 
-{/* ================= TRUSTED TEAMS ================= */}
-<section className="py-24 bg-white">
-  <div className="max-w-7xl mx-auto px-6">
-
-    {/* Header */}
-    <div className="text-center mb-14">
-      <p className="text-sm font-semibold tracking-wider text-gray-500 uppercase">
-        Trusted by teams
-      </p>
-      <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-gray-900">
-        Companies hiring through our platform
-      </h3>
-    </div>
-
-    {/* Logos */}
-    <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-10">
-      {[
-        "/Architects.png",
-        "/Devops.png",
-        "/Hiredengineer.png",
-        "/vermot.png",
-        "/redtail.png",
-      ].map((logo, i) => (
-        <div key={i} className="flex items-center justify-center">
-          <img
-            src={logo}
-            alt="Trusted company logo"
-            className="h-10 sm:h-12 md:h-14 object-contain opacity-70 hover:opacity-100 transition"
-          />
-        </div>
-      ))}
-    </div>
-
-  </div>
-</section>
 
 
 {/* ============ EMPOWERING JOB SEEKERS ================= */}
