@@ -811,6 +811,41 @@ const CATEGORIES = [
   </div>
 </section>
 
+{/* ================= TRUSTED TEAMS ================= */}
+<section className="py-24 bg-white">
+  <div className="max-w-7xl mx-auto px-6">
+
+    {/* Header */}
+    <div className="text-center mb-14">
+      <p className="text-sm font-semibold tracking-wider text-gray-500 uppercase">
+        Trusted by teams
+      </p>
+      <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-gray-900">
+        Companies hiring through our platform
+      </h3>
+    </div>
+
+    {/* Logos */}
+    <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-10">
+      {[
+        "/Architects.png",
+        "/Devops.png",
+        "/Hiredengineer.png",
+        "/vermot.png",
+        "/redtail.png",
+      ].map((logo, i) => (
+        <div key={i} className="flex items-center justify-center">
+          <img
+            src={logo}
+            alt="Trusted company logo"
+            className="h-10 sm:h-12 md:h-14 object-contain opacity-70 hover:opacity-100 transition"
+          />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
 
 
 {/* ============ EMPOWERING JOB SEEKERS ================= */}
