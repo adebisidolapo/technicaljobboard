@@ -302,27 +302,3 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Featured Jobs: gentle premium auto-scroll (pauses on hover) */
-.featured-autoscroll {
-  animation: featuredScroll 28s linear infinite;
-}
-.featured-autoscroll:hover {
-  animation-play-state: paused;
-}
-
-/* Reduce motion accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .featured-autoscroll {
-    animation: none;
-  }
-}
-
-@keyframes featuredScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-420px);
-  }
-}

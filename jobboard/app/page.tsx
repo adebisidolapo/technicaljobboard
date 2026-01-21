@@ -402,7 +402,7 @@ const CATEGORIES = [
   <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#6F00FC]/10 rounded-full blur-3xl" />
   <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#A866FE]/10 rounded-full blur-3xl" />
 
-<div className="relative w-full">
+  <div className="relative w-full">
     {/* Header */}
     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
       <div>
@@ -442,16 +442,17 @@ const CATEGORIES = [
       </div>
     </div>
 
-{/* Carousel (TRUE FULL WIDTH) */}
-<div className="relative -mx-6 md:-mx-12">
-  {/* Soft edge fades */}
-  <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
-  <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
+    {/* Carousel (FULL WIDTH + DOES NOT MOVE SECTION) */}
+    <div className="relative w-full">
+      {/* Edge fades */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
 
-  <div
-    id="featured-carousel"
-    className="no-scrollbar featured-autoscroll flex gap-6 overflow-x-auto pb-6 px-6 md:px-12 scroll-smooth snap-x snap-mandatory"
-  >
+      <div
+        id="featured-carousel"
+        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory
+                   px-6 md:px-12"
+      >
         {[
           {
             title: "Senior Frontend Engineer",
@@ -509,7 +510,7 @@ const CATEGORIES = [
             <div className="absolute left-0 top-0 h-full w-1.5 bg-[#6F00FC]" />
 
             <div className="p-6 pl-8">
-              {/* Top row: badge + save */}
+              {/* Top row */}
               <div className="flex items-center justify-between mb-4">
                 {job.verified ? (
                   <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-[#F6F2FF] text-[#6F00FC] border border-[#6F00FC]/20">
@@ -528,7 +529,7 @@ const CATEGORIES = [
                 </button>
               </div>
 
-              {/* Header */}
+              {/* Title row */}
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#6F00FC] text-white flex items-center justify-center font-bold shadow-sm">
                   {job.company.charAt(0)}
@@ -563,9 +564,7 @@ const CATEGORIES = [
                 <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
                   View
                 </button>
-                <span className="text-xs text-gray-400">
-                  Posted {job.posted}
-                </span>
+                <span className="text-xs text-gray-400">Posted {job.posted}</span>
               </div>
             </div>
           </div>
@@ -574,6 +573,7 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
+
 
 
 {/* ================= COMPANIES / TRUSTED TEAMS (FULL WIDTH + PURPLE GLOW) ================= */}
