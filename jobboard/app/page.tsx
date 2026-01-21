@@ -576,26 +576,21 @@ const CATEGORIES = [
 </section>
 
 
-{/* ================= TRUSTED COMPANIES ================= */}
-<section className="relative w-full overflow-hidden py-24">
+{/* ================= TRUSTED COMPANIES (SINGLE LOGO) ================= */}
+<section className="relative w-full py-28 overflow-hidden">
   {/* Background */}
   <div className="absolute inset-0 bg-gradient-to-br from-[#2a12c0] via-[#4b1fe0] to-[#6F00FC]" />
-  <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-white/10 blur-3xl" />
+  <div className="absolute inset-0 backdrop-blur-[2px]" />
 
-  <div className="relative z-10">
-    {/* Header */}
-    <div className="text-center mb-14 px-6">
-      <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
-        Trusted by Companies Building the Future
-      </h2>
-      <p className="mt-4 text-white/85 max-w-xl mx-auto text-base">
-        Teams that rely on verified talent to build, scale, and deliver.
-      </p>
-    </div>
+  <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+    {/* Heading */}
+    <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight">
+      Popular companies we have worked with
+    </h2>
 
-    {/* Carousel */}
-    <div className="relative">
-      <div className="flex gap-20 items-center overflow-x-auto scroll-smooth no-scrollbar px-12">
+    {/* Logo carousel */}
+    <div className="mt-14 overflow-hidden">
+      <div className="flex items-center justify-center animate-company-slide">
         {[
           "/Architects.png",
           "/vermot.png",
@@ -605,21 +600,17 @@ const CATEGORIES = [
         ].map((logo, i) => (
           <div
             key={i}
-            className="flex-none flex items-center justify-center min-w-[260px] md:min-w-[320px]"
+            className="flex-shrink-0 w-full flex justify-center"
           >
             <img
               src={logo}
               alt="Company logo"
-              className="h-20 md:h-24 lg:h-28 w-auto object-contain
-                         filter drop-shadow-lg"
+              className="h-24 md:h-28 lg:h-32 w-auto object-contain
+                         opacity-90"
             />
           </div>
         ))}
       </div>
-
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-[#3a18d8] to-transparent" />
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-[#5a2cf2] to-transparent" />
     </div>
   </div>
 </section>
