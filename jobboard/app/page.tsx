@@ -229,115 +229,65 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (Cleaner Desktop) ================= */}
-<section className="relative py-22 md:py-24 bg-animated-gradient text-white overflow-hidden">
+{/* ================= HERO (LEFT ONLY – CLEAN) ================= */}
+<section className="relative py-20 md:py-24 bg-animated-gradient text-white overflow-hidden">
   {/* Softer background blobs */}
   <div className="absolute top-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
   <div className="absolute bottom-0 right-0 w-72 h-72 md:w-[28rem] md:h-[28rem] bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
 
-  <div className="max-w-7xl mx-auto px-6 relative z-10">
-    <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+  <div className="relative z-10 max-w-7xl mx-auto px-6">
+    {/* SINGLE COLUMN */}
+    <div className="max-w-3xl">
+      <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
+        Discover verified{" "}
+        <span className="text-[#02000D]">Technical jobs</span>
+        <br />
+        built for long-term careers
+      </h1>
 
-      {/* LEFT */}
-      <div>
-        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
-          Discover verified <span className="text-[#02000D]">Technical jobs</span>
-          <br />
-          built for long-term careers
-        </h1>
+      <p className="mt-5 text-base md:text-lg text-white/90">
+        Browse roles across Engineering, Infrastructure, Cloud, Security, and
+        Data — including remote options.
+      </p>
 
-        <p className="mt-5 text-base md:text-lg max-w-xl text-white/90">
-          Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
-        </p>
+      {/* Search */}
+      <div className="mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input
+            type="text"
+            placeholder="Title / keyword"
+            className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
+          />
 
-        {/* Search Bar */}
-        <div className="w-full mt-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl">
-            <input
-              type="text"
-              placeholder="Title / keyword"
-              className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
-            />
+          <input
+            type="text"
+            placeholder="Location (e.g. Remote, New York)"
+            className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
+          />
 
-            <input
-              type="text"
-              placeholder="Location (e.g. Remote, New York)"
-              className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
-            />
-
-            <button className="w-full px-5 py-4 rounded-2xl bg-[#02000D] text-white font-semibold shadow-xl hover:bg-black transition">
-              Search Jobs
-            </button>
-          </div>
-        </div>
-
-        {/* Jump to Jobs */}
-        <button
-          type="button"
-          onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
-          className="mt-6 inline-flex items-center justify-center gap-2 bg-white text-[#02000D] font-semibold px-6 py-3 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-[1px] transition border border-white/40"
-        >
-          Jump to Jobs <span className="text-lg">↓</span>
-        </button>
-      </div>
-
-      {/* RIGHT (Clean stats + one compact card) */}
-      <div className="mt-12 md:mt-0 flex justify-center md:justify-end">
-        <div className="relative w-full max-w-md">
-          {/* Reduced glow */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#6F00FC] via-[#8C33FD] to-[#A866FE] blur-2xl opacity-20 scale-105" />
-
-          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/14 backdrop-blur-md p-7 shadow-2xl">
-            <div className="text-white/90">
-              <p className="text-sm font-semibold">Verified Technical roles</p>
-              <p className="text-xs opacity-90 mt-1">
-                Clear salary ranges • Remote options • Fast response teams
-              </p>
-            </div>
-
-            {/* Desktop: stats row (clean + professional) */}
-            <div className="hidden md:grid mt-6 grid-cols-3 gap-3">
-              <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3">
-                <p className="text-lg font-extrabold leading-none">1.2k+</p>
-                <p className="text-xs text-white/80 mt-1">Roles listed</p>
-              </div>
-              <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3">
-                <p className="text-lg font-extrabold leading-none">Fast</p>
-                <p className="text-xs text-white/80 mt-1">Hiring teams</p>
-              </div>
-              <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3">
-                <p className="text-lg font-extrabold leading-none">Clear</p>
-                <p className="text-xs text-white/80 mt-1">Salary ranges</p>
-              </div>
-            </div>
-
-            {/* One compact featured card (desktop + mobile) */}
-            <div className="mt-6 rounded-2xl bg-white/10 border border-white/15 p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-xs text-white/80">Featured role</p>
-                  <p className="font-semibold truncate">Network Security Engineer</p>
-                  <p className="text-xs text-white/80 mt-1">Remote • $170k</p>
-                </div>
-
-                <span className="shrink-0 inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-white/15 border border-white/15">
-                  <span className="h-2 w-2 rounded-full bg-white" />
-                  Verified
-                </span>
-              </div>
-            </div>
-
-            {/* Mobile-only extra helper text */}
-            <p className="md:hidden text-xs text-white/80 mt-4">
-              Browse verified roles with clear expectations and fast response teams.
-            </p>
-          </div>
+          <button className="w-full px-5 py-4 rounded-2xl bg-[#02000D] text-white font-semibold shadow-xl hover:bg-black transition">
+            Search Jobs
+          </button>
         </div>
       </div>
 
+      {/* Jump to Jobs */}
+      <button
+        type="button"
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="mt-6 inline-flex items-center gap-2 bg-white text-[#02000D]
+                   font-semibold px-6 py-3 rounded-2xl shadow-xl
+                   hover:shadow-2xl hover:-translate-y-[1px] transition
+                   border border-white/40"
+      >
+        Jump to Jobs <span className="text-lg">↓</span>
+      </button>
     </div>
   </div>
 </section>
+
 
 
 
