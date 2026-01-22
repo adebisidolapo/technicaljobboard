@@ -229,25 +229,30 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (Desktop cleaned + brand button + brand highlight) ================= */}
-<section className="relative py-20 md:py-22 bg-animated-gradient text-white overflow-hidden">
-  {/* Softer background blobs */}
-  <div className="absolute top-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-  <div className="absolute bottom-0 right-0 w-72 h-72 md:w-[28rem] md:h-[28rem] bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
+{/* ================= HERO (Light, Clean, Virelynx-style) ================= */}
+<section className="relative py-20 md:py-24 overflow-hidden bg-[#F6F7FB]">
+  {/* Very subtle background shapes */}
+  <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#3017D3]/5 blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#3017D3]/5 blur-3xl" />
 
-  <div className="max-w-7xl mx-auto px-6 relative z-10">
-    {/* Single column (removed RIGHT side completely) */}
+  <div className="relative max-w-7xl mx-auto px-6">
     <div className="max-w-3xl">
-      <h1 className="text-[2.35rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight">
+      {/* Small pill (optional, like Virelynx) */}
+      <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-white border border-gray-200 text-sm text-gray-700 shadow-sm">
+        <span className="h-2 w-2 rounded-full bg-[#3017D3]" />
+        Verified Technical Roles
+      </div>
+
+      <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight text-gray-900">
         Discover verified{" "}
-        <span className="text-[#211b34] drop-shadow-sm">
+        <span className="text-[#3017D3]">
           Technical jobs
         </span>
         <br />
         built for long-term careers
       </h1>
 
-      <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-white/85 max-w-2xl">
+      <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600 max-w-2xl">
         Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
       </p>
 
@@ -257,43 +262,44 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-3.5 rounded-xl bg-white text-gray-900 text-sm shadow-md outline-none focus:ring-2 focus:ring-[#3017D3]/40"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#3017D3]/30"
           />
 
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-3.5 rounded-xl bg-white text-gray-900 text-sm shadow-md outline-none focus:ring-2 focus:ring-[#3017D3]/40"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#3017D3]/30"
           />
 
-         <button
-  className="
-    w-full px-5 py-3.5 rounded-xl text-sm font-semibold
-    text-white
-    bg-gradient-to-b from-[#1A2040] to-[#0F1426]
-    border border-white/10
-    shadow-[0_10px_28px_rgba(15,20,38,0.55)]
-    hover:from-[#1F2550] hover:to-[#141A2F]
-    transition
-  "
->
-  Search Jobs
-</button>
-
+          <button
+            className="
+              w-full px-5 py-3.5 rounded-xl text-sm font-semibold
+              text-white
+              bg-[#3017D3]
+              hover:bg-[#2a12c0]
+              shadow-[0_10px_26px_rgba(48,23,211,0.35)]
+              transition
+            "
+          >
+            Search Jobs
+          </button>
         </div>
       </div>
 
       {/* Jump to Jobs */}
       <button
         type="button"
-        onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
-        className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/90 text-[#3017D3] hover:bg-white transition shadow-sm"
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#3017D3] hover:underline"
       >
-        Jump to Jobs <span className="text-base">↓</span>
+        Jump to Jobs <span>↓</span>
       </button>
     </div>
   </div>
 </section>
+
 
 
 
