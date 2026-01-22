@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="pointer-events-none absolute -bottom-28 -right-28 h-[28rem] w-[28rem] rounded-full bg-[#6F00FC]/18 blur-3xl" />
 
         {/* tighter container padding */}
-        <div className="relative mx-auto max-w-7xl px-6 pt-4 pb-8">
+<div className="relative mx-auto max-w-7xl px-6 pt-4 pb-10">
           {/* LOGO + TEXT (CROPPED tighter) */}
           <div className="flex flex-col items-center text-center">
             {/* Logo crop wrapper (removes transparent padding "look") */}
