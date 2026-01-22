@@ -266,9 +266,20 @@ const CATEGORIES = [
             className="w-full px-5 py-3.5 rounded-xl bg-white text-gray-900 text-sm shadow-md outline-none focus:ring-2 focus:ring-[#3017D3]/40"
           />
 
-          <button className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-b from-[#3017D3] to-[#2a12c0] shadow-[0_10px_24px_rgba(48,23,211,0.35)] hover:from-[#3a22e6] hover:to-[#2a12c0] transition">
-            Search Jobs
-          </button>
+         <button
+  className="
+    w-full px-5 py-3.5 rounded-xl text-sm font-semibold
+    text-white
+    bg-gradient-to-b from-[#1A2040] to-[#0F1426]
+    border border-white/10
+    shadow-[0_10px_28px_rgba(15,20,38,0.55)]
+    hover:from-[#1F2550] hover:to-[#141A2F]
+    transition
+  "
+>
+  Search Jobs
+</button>
+
         </div>
       </div>
 
