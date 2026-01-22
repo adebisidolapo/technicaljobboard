@@ -14,24 +14,29 @@ export default function Footer() {
 
         {/* tighter container padding */}
 <div className="relative mx-auto max-w-7xl px-6 pt-4 pb-10">
-          {/* LOGO + TEXT (CROPPED tighter) */}
-          <div className="flex flex-col items-center text-center">
-            {/* Logo crop wrapper (removes transparent padding "look") */}
-            <div className="overflow-hidden leading-none">
-              {/* control height per breakpoint */}
-<div className="h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px] overflow-hidden">
-                <img
-                  src="/logo.png"
-                  alt="TechnicalJobboard Logo"
-                  className="
-                    block mx-auto h-auto w-[260px] sm:w-[320px] md:w-[380px] lg:w-[440px]
-                    object-contain
--translate-y-4 sm:-translate-y-6 md:-translate-y-8 lg:-translate-y-10
-                    drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
-                    select-none
-                  "
-                />
-              </div>
+         {/* LOGO */}
+<div className="flex flex-col items-center text-center">
+  <img
+    src="/logo.png"
+    alt="TechnicalJobboard Logo"
+    className="
+      w-[260px]
+      sm:w-[320px]
+      md:w-[380px]
+      lg:w-[440px]
+      h-auto object-contain
+      drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
+    "
+  />
+
+  {/* Added breathing room */}
+  <p className="mt-4 text-white/90 text-sm sm:text-base max-w-2xl">
+    Discover verified{" "}
+    <span className="font-semibold text-white">Technical jobs</span>{" "}
+    and career-defining opportunities.
+  </p>
+</div>
+
             </div>
 
             {/* zero-ish gap */}
