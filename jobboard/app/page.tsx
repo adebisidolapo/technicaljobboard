@@ -584,7 +584,11 @@ const CATEGORIES = [
 {/* ================= COMPANIES / TRUSTED TEAMS (FULL WIDTH + PURPLE GLOW) ================= */}
 <section className="relative py-20 md:py-24 overflow-hidden">
   {/* Full-bleed purple background (site shade) */}
-  <div className="absolute inset-0 bg-gradient-to-br from-[#140047] via-[#3017D3] to-[#6F00FC]" />
+<div className="absolute inset-0 bg-gradient-to-b 
+  from-[#3017D3] 
+  via-[#24105a] 
+  to-[#1A2040]" 
+/>
 
   {/* Soft blur glows */}
   <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
@@ -674,6 +678,9 @@ const CATEGORIES = [
                     />
                   </div>
                 </div>
+{/* Footer blend overlay */}
+<div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40
+                bg-gradient-to-b from-transparent to-[#1A2040]" />
 
                 {/* Dots */}
                 <div className="mt-7 flex items-center justify-center gap-2">
