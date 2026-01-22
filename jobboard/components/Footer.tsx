@@ -19,14 +19,14 @@ export default function Footer() {
             {/* Logo crop wrapper (removes transparent padding "look") */}
             <div className="overflow-hidden leading-none">
               {/* control height per breakpoint */}
-              <div className="h-[84px] sm:h-[96px] md:h-[112px] lg:h-[120px] overflow-hidden">
+<div className="h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px] overflow-hidden">
                 <img
                   src="/logo.png"
                   alt="TechnicalJobboard Logo"
                   className="
                     block mx-auto h-auto w-[260px] sm:w-[320px] md:w-[380px] lg:w-[440px]
                     object-contain
-                    -translate-y-10 sm:-translate-y-12 md:-translate-y-14 lg:-translate-y-16
+-translate-y-4 sm:-translate-y-6 md:-translate-y-8 lg:-translate-y-10
                     drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
                     select-none
                   "
