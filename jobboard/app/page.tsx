@@ -557,131 +557,111 @@ const CATEGORIES = [
 
 
 
-{/* ================= COMPANIES / TRUSTED TEAMS (FULL WIDTH + PURPLE GLOW) ================= */}
-<section className="relative py-20 md:py-24 overflow-hidden">
-  {/* Full-bleed purple background (site shade) */}
-<div className="absolute inset-0 bg-gradient-to-b 
-  from-[#3017D3] 
-  via-[#24105a] 
-  to-[#1A2040]" 
-/>
+{/* ================= COMPANIES / TRUSTED TEAMS (CLEAN GREY) ================= */}
+<section className="relative py-20 md:py-24 bg-gray-50 overflow-hidden">
+  {/* Very subtle texture (optional, calm) */}
+  <div className="pointer-events-none absolute inset-0 bg-dots-bg opacity-40" />
 
-  {/* Soft blur glows */}
-  <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-  <div className="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-  <div className="pointer-events-none absolute top-1/2 left-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/5 blur-3xl" />
+  <div className="relative max-w-7xl mx-auto px-6">
+    {/* Header */}
+    <div className="text-center mb-10 md:mb-14">
+      <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
+        Trusted by teams
+      </p>
+      <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+        Companies we’ve worked with
+      </h3>
+      <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+        A quick look at teams that trust TechnicalJobboard.
+      </p>
+    </div>
 
-  {/* Full-bleed wrapper */}
-  <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-    <div className="max-w-7xl mx-auto px-6">
-      {/* Header */}
-      <div className="text-center mb-10 md:mb-14">
-        <p className="text-sm font-semibold tracking-[0.22em] text-white/80 uppercase">
-          Trusted by teams
-        </p>
-        <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-white tracking-tight">
-          Companies we’ve worked with
-        </h3>
-        <p className="mt-3 text-white/85 text-sm md:text-base max-w-2xl mx-auto">
-          A quick look at some teams that trust TechnicalJobboard.
-        </p>
-      </div>
+    {(() => {
+      const logos = [
+        { src: "/Architects.png", alt: "Architects" },
+        { src: "/vermot.png", alt: "Vermot" },
+        { src: "/Devops.png", alt: "Devops" },
+        { src: "/Hiredengineer.png", alt: "HiredEngineer" },
+        { src: "/redtail.png", alt: "Redtail" },
+      ];
 
-      {(() => {
-        const logos = [
-          { src: "/Architects.png", alt: "Architects" },
-          { src: "/vermot.png", alt: "Vermot" },
-          { src: "/Devops.png", alt: "Devops" },
-          { src: "/Hiredengineer.png", alt: "HiredEngineer" },
-          { src: "/redtail.png", alt: "Redtail" },
-        ];
+      const [active, setActive] = React.useState(0);
 
-        const [active, setActive] = React.useState(0);
+      const next = () => setActive((i) => (i + 1) % logos.length);
+      const prev = () => setActive((i) => (i - 1 + logos.length) % logos.length);
 
-        const next = () => setActive((i) => (i + 1) % logos.length);
-        const prev = () => setActive((i) => (i - 1 + logos.length) % logos.length);
+      React.useEffect(() => {
+        const t = setInterval(() => {
+          setActive((i) => (i + 1) % logos.length);
+        }, 3200);
+        return () => clearInterval(t);
+      }, []);
 
-        React.useEffect(() => {
-          const t = setInterval(() => {
-            setActive((i) => (i + 1) % logos.length);
-          }, 3200);
-          return () => clearInterval(t);
-        }, [logos.length]);
+      return (
+        <div className="relative max-w-4xl mx-auto">
+          {/* Card */}
+          <div className="relative rounded-3xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+            <div className="relative px-6 sm:px-10 py-10 sm:py-12">
+              {/* Arrows */}
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous company"
+                className="absolute left-4 top-1/2 -translate-y-1/2
+                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
+                           text-gray-700 shadow-sm hover:bg-gray-100 transition
+                           flex items-center justify-center"
+              >
+                ←
+              </button>
 
-        return (
-          <div className="relative">
-            {/* Card */}
-            <div className="relative rounded-3xl border border-white/15 bg-white/10 backdrop-blur-xl shadow-2xl overflow-hidden">
-              {/* extra subtle sheen */}
-              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next company"
+                className="absolute right-4 top-1/2 -translate-y-1/2
+                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
+                           text-gray-700 shadow-sm hover:bg-gray-100 transition
+                           flex items-center justify-center"
+              >
+                →
+              </button>
 
-              <div className="relative px-4 sm:px-8 py-10 sm:py-12">
-                {/* Arrows */}
-                <button
-                  type="button"
-                  onClick={prev}
-                  aria-label="Previous company"
-                  className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2
-                             h-11 w-11 rounded-2xl border border-white/20 bg-white/15
-                             text-white shadow-sm hover:bg-white/25 transition
-                             flex items-center justify-center"
-                >
-                  ←
-                </button>
+              {/* Logo */}
+              <div className="mx-auto flex items-center justify-center h-32 sm:h-36 md:h-40">
+                <img
+                  key={logos[active].src}
+                  src={logos[active].src}
+                  alt={logos[active].alt}
+                  className="max-h-24 sm:max-h-28 md:max-h-32
+                             w-auto object-contain transition"
+                />
+              </div>
 
-                <button
-                  type="button"
-                  onClick={next}
-                  aria-label="Next company"
-                  className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2
-                             h-11 w-11 rounded-2xl border border-white/20 bg-white/15
-                             text-white shadow-sm hover:bg-white/25 transition
-                             flex items-center justify-center"
-                >
-                  →
-                </button>
-
-                {/* Logo (BIGGER) */}
-                <div className="mx-auto w-full max-w-5xl">
-                  <div className="h-28 sm:h-32 md:h-40 flex items-center justify-center">
-                    <img
-                      key={logos[active].src}
-                      src={logos[active].src}
-                      alt={logos[active].alt}
-                      className="max-h-20 sm:max-h-24 md:max-h-28 lg:max-h-32
-                                 w-auto object-contain drop-shadow-[0_18px_35px_rgba(0,0,0,0.35)]
-                                 opacity-95 transition"
-                    />
-                  </div>
-                </div>
-{/* Footer blend overlay */}
-<div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40
-                bg-gradient-to-b from-transparent to-[#1A2040]" />
-
-                {/* Dots */}
-                <div className="mt-7 flex items-center justify-center gap-2">
-                  {logos.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setActive(i)}
-                      aria-label={`Go to company ${i + 1}`}
-                      className={`h-2.5 rounded-full transition-all ${
-                        i === active
-                          ? "w-8 bg-white"
-                          : "w-2.5 bg-white/40 hover:bg-white/60"
-                      }`}
-                    />
-                  ))}
-                </div>
+              {/* Dots */}
+              <div className="mt-6 flex items-center justify-center gap-2">
+                {logos.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={`Go to company ${i + 1}`}
+                    className={`h-2.5 rounded-full transition-all ${
+                      i === active
+                        ? "w-8 bg-[#3017D3]"
+                        : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
-        );
-      })()}
-    </div>
+        </div>
+      );
+    })()}
   </div>
 </section>
+
 
 
 
