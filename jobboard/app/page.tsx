@@ -240,7 +240,7 @@ const CATEGORIES = [
     <div className="max-w-3xl">
       <h1 className="text-[2.35rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight">
         Discover verified{" "}
-        <span className="text-[#3A22E6] drop-shadow-sm">
+        <span className="text-[#211b34] drop-shadow-sm">
           Technical jobs
         </span>
         <br />
