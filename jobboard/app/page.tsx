@@ -359,17 +359,18 @@ const CATEGORIES = [
 
 
 
-{/* ================= FEATURED JOBS ================= */}
-<section className="py-28 hero-bg border-y border-gray-200 relative overflow-hidden">
-  {/* Soft decorative highlights */}
-  <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#6F00FC]/10 rounded-full blur-3xl" />
-  <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#A866FE]/10 rounded-full blur-3xl" />
+{/* ================= FEATURED JOBS (FOOTER-TONE, NO PINK) ================= */}
+<section className="relative py-24 border-y border-gray-200 overflow-hidden bg-[#F7F8FC]">
+
+  {/* Subtle dark glow (footer-family, not purple) */}
+  <div className="pointer-events-none absolute -top-32 -left-32 w-[36rem] h-[36rem] rounded-full bg-[#1A2040]/10 blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-32 -right-32 w-[36rem] h-[36rem] rounded-full bg-[#0F1426]/10 blur-3xl" />
 
   <div className="relative w-full">
     {/* Header */}
     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
       <div>
-        <h2 className="text-3xl font-semibold tracking-tight text-gray-900">
+        <h2 className="text-3xl font-semibold tracking-tight text-[#0F1426]">
           Featured Jobs
         </h2>
         <p className="text-gray-600 mt-2 max-w-2xl">
@@ -381,11 +382,12 @@ const CATEGORIES = [
       <div className="flex items-center gap-3">
         <button
           type="button"
-          onClick={() => {
-            const el = document.getElementById("featured-carousel");
-            el?.scrollBy({ left: -420, behavior: "smooth" });
-          }}
-          className="px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+          onClick={() =>
+            document
+              .getElementById("featured-carousel")
+              ?.scrollBy({ left: -420, behavior: "smooth" })
+          }
+          className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
           aria-label="Scroll left"
         >
           ←
@@ -393,11 +395,12 @@ const CATEGORIES = [
 
         <button
           type="button"
-          onClick={() => {
-            const el = document.getElementById("featured-carousel");
-            el?.scrollBy({ left: 420, behavior: "smooth" });
-          }}
-          className="px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+          onClick={() =>
+            document
+              .getElementById("featured-carousel")
+              ?.scrollBy({ left: 420, behavior: "smooth" })
+          }
+          className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
           aria-label="Scroll right"
         >
           →
@@ -405,16 +408,15 @@ const CATEGORIES = [
       </div>
     </div>
 
-    {/* Carousel (FULL WIDTH + DOES NOT MOVE SECTION) */}
+    {/* Carousel */}
     <div className="relative w-full">
       {/* Edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-10 md:w-16 bg-gradient-to-r from-white/90 to-transparent z-10" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-10 md:w-16 bg-gradient-to-l from-white/90 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-[#F7F8FC] to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-[#F7F8FC] to-transparent z-10" />
 
       <div
         id="featured-carousel"
-        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory
-                   px-6 md:px-12"
+        className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-12"
       >
         {[
           {
@@ -469,15 +471,16 @@ const CATEGORIES = [
                        bg-white rounded-2xl shadow-sm hover:shadow-lg transition
                        border border-gray-200 relative overflow-hidden"
           >
-            {/* Purple accent bar */}
-            <div className="absolute left-0 top-0 h-full w-1.5 bg-[#6F00FC]" />
+            {/* Dark accent bar (footer tone) */}
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-[#1A2040]" />
 
             <div className="p-6 pl-8">
               {/* Top row */}
               <div className="flex items-center justify-between mb-4">
                 {job.verified ? (
-                  <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-[#F6F2FF] text-[#6F00FC] border border-[#6F00FC]/20">
-                    <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
+                                   bg-[#EEF1FA] text-[#1A2040] border border-[#1A2040]/20">
+                    <span className="h-2 w-2 rounded-full bg-[#1A2040]" />
                     Verified
                   </span>
                 ) : (
@@ -486,7 +489,7 @@ const CATEGORIES = [
 
                 <button
                   aria-label="Save job"
-                  className="text-gray-400 hover:text-[#6F00FC] transition"
+                  className="text-gray-400 hover:text-[#1A2040] transition"
                 >
                   ★
                 </button>
@@ -494,12 +497,12 @@ const CATEGORIES = [
 
               {/* Title row */}
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#6F00FC] text-white flex items-center justify-center font-bold shadow-sm">
+                <div className="w-12 h-12 rounded-xl bg-[#1A2040] text-white flex items-center justify-center font-bold shadow-sm">
                   {job.company.charAt(0)}
                 </div>
 
                 <div className="min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 leading-snug truncate">
+                  <h3 className="text-lg font-semibold text-[#0F1426] leading-snug truncate">
                     {job.title}
                   </h3>
                   <p className="text-sm text-gray-600 truncate">
@@ -524,10 +527,19 @@ const CATEGORIES = [
 
               {/* Footer */}
               <div className="mt-6 flex justify-between items-center">
-                <button className="bg-[#6F00FC] hover:bg-[#8C33FD] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                <button
+                  className="
+                    px-4 py-2 rounded-lg text-sm font-medium text-white
+                    bg-gradient-to-b from-[#1A2040] to-[#0F1426]
+                    hover:from-[#1F2550] hover:to-[#141A2F]
+                    shadow-sm transition
+                  "
+                >
                   View
                 </button>
-                <span className="text-xs text-gray-400">Posted {job.posted}</span>
+                <span className="text-xs text-gray-400">
+                  Posted {job.posted}
+                </span>
               </div>
             </div>
           </div>
@@ -536,6 +548,7 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
+
 
 
 
