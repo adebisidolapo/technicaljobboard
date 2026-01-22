@@ -7,55 +7,51 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden text-white">
-      {/* Background */}
       <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
         {/* Glows */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-[#3017D3]/25 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -right-28 h-[28rem] w-[28rem] rounded-full bg-[#6F00FC]/18 blur-3xl" />
 
-        {/* ✅ MUCH TIGHTER TOP/BOTTOM PADDING */}
+        {/* tighter container padding */}
         <div className="relative mx-auto max-w-7xl px-6 pt-4 pb-8">
-          {/* LOGO + DISCOVER (VERY CLOSE) */}
+          {/* LOGO + TEXT (CROPPED tighter) */}
           <div className="flex flex-col items-center text-center">
-            <img
-              src="/logo.png"
-              alt="TechnicalJobboard Logo"
-              className="
-                w-[260px]
-                sm:w-[320px]
-                md:w-[380px]
-                lg:w-[440px]
-                h-auto object-contain
-                drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
-              "
-            />
+            {/* Logo crop wrapper (removes transparent padding "look") */}
+            <div className="overflow-hidden leading-none">
+              {/* control height per breakpoint */}
+              <div className="h-[84px] sm:h-[96px] md:h-[112px] lg:h-[120px] overflow-hidden">
+                <img
+                  src="/logo.png"
+                  alt="TechnicalJobboard Logo"
+                  className="
+                    block mx-auto h-auto w-[260px] sm:w-[320px] md:w-[380px] lg:w-[440px]
+                    object-contain
+                    -translate-y-10 sm:-translate-y-12 md:-translate-y-14 lg:-translate-y-16
+                    drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
+                    select-none
+                  "
+                />
+              </div>
+            </div>
 
-            {/* ✅ REMOVE EXTRA GAP */}
-            <p className="mt-0.5 text-white/90 text-sm sm:text-base max-w-2xl">
+            {/* zero-ish gap */}
+            <p className="-mt-1 text-white/90 text-sm sm:text-base max-w-2xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* ✅ PULL COLUMNS UP HARD (CLOSE TO LOGO/TEXT) */}
-          <div className="mt-2 md:mt-3 -translate-y-1 grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-9 text-center">
+          {/* columns pulled up */}
+          <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-9 text-center">
             {/* Explore */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg mb-2">Explore</h3>
               <ul className="space-y-1.5 text-white/80 text-sm">
-                <li className="hover:text-white transition cursor-pointer">
-                  All Jobs
-                </li>
-                <li className="hover:text-white transition cursor-pointer">
-                  Categories
-                </li>
-                <li className="hover:text-white transition cursor-pointer">
-                  Career Resources
-                </li>
-                <li className="hover:text-white transition cursor-pointer">
-                  Contact
-                </li>
+                <li className="hover:text-white transition cursor-pointer">All Jobs</li>
+                <li className="hover:text-white transition cursor-pointer">Categories</li>
+                <li className="hover:text-white transition cursor-pointer">Career Resources</li>
+                <li className="hover:text-white transition cursor-pointer">Contact</li>
               </ul>
             </div>
 
@@ -87,47 +83,37 @@ export default function Footer() {
                 </button>
               </div>
 
-              <p className="mt-1.5 text-xs text-white/60">
-                Unsubscribe anytime.
-              </p>
+              <p className="mt-1.5 text-xs text-white/60">Unsubscribe anytime.</p>
             </div>
 
             {/* Connect */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg mb-2">Connect</h3>
               <div className="flex gap-4">
-                {[FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub].map(
-                  (Icon, i) => (
-                    <a
-                      key={i}
-                      href="#"
-                      className="h-11 w-11 rounded-2xl bg-white/10 border border-white/20
-                                 flex items-center justify-center hover:bg-white/15 transition"
-                    >
-                      <Icon />
-                    </a>
-                  )
-                )}
+                {[FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="h-11 w-11 rounded-2xl bg-white/10 border border-white/20
+                               flex items-center justify-center hover:bg-white/15 transition"
+                  >
+                    <Icon />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* ✅ LESS SPACE BEFORE DIVIDER */}
-          <div className="mt-5 h-px bg-white/12" />
+          {/* divider closer */}
+          <div className="mt-6 h-px bg-white/12" />
 
-          {/* Bottom */}
+          {/* bottom */}
           <div className="mt-3 flex flex-col md:flex-row items-center justify-between gap-4 text-white/65 text-sm">
             <p>© {year} TechnicalJobboard. All rights reserved.</p>
             <div className="flex gap-6">
-              <span className="hover:text-white transition cursor-pointer">
-                Terms
-              </span>
-              <span className="hover:text-white transition cursor-pointer">
-                Privacy Policy
-              </span>
-              <span className="hover:text-white transition cursor-pointer">
-                Support
-              </span>
+              <span className="hover:text-white transition cursor-pointer">Terms</span>
+              <span className="hover:text-white transition cursor-pointer">Privacy Policy</span>
+              <span className="hover:text-white transition cursor-pointer">Support</span>
             </div>
           </div>
         </div>
