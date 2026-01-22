@@ -15,58 +15,49 @@ export default function Footer() {
         {/* Soft white haze for depth */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/5 to-transparent" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-16">
-         
-         {/* TOP: Logo + writeup */}
-<div className="flex flex-col items-center text-center">
-  <img
-    src="/logo.png"
-    alt="TechnicalJobboard Logo"
-    className="
-      w-[220px]
-      sm:w-[260px]
-      md:w-[320px]
-      lg:w-[380px]
-      xl:w-[420px]
-      h-auto
-      object-contain
-      drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
-    "
-  />
+        {/* ↓ Reduced overall height (py-16 → py-10/12) */}
+        <div className="relative mx-auto max-w-7xl px-6 py-10 md:py-12">
+          {/* TOP: Logo + writeup */}
+          <div className="flex flex-col items-center text-center">
+            <img
+              src="/logo.png"
+              alt="TechnicalJobboard Logo"
+              className="
+                w-[240px]
+                sm:w-[300px]
+                md:w-[360px]
+                lg:w-[420px]
+                xl:w-[460px]
+                h-auto object-contain
+                drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
+              "
+            />
 
-<p className="mt-3 text-white/90 text-sm sm:text-base max-w-2xl">
-    Discover verified{" "}
-    <span className="font-semibold text-white">Technical jobs</span>{" "}
-    and career-defining opportunities.
-  </p>
-</div>
+            {/* ↓ Slightly tighter spacing */}
+            <p className="mt-2 text-white/90 text-sm sm:text-base max-w-2xl">
+              Discover verified{" "}
+              <span className="font-semibold text-white">Technical jobs</span>{" "}
+              and career-defining opportunities.
+            </p>
+          </div>
 
-
-          {/* 3 columns (NO boxes) */}
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center">
+          {/* ↓ Bring columns MUCH closer to logo (mt-14 → mt-7/8) */}
+          <div className="mt-7 md:mt-8 grid grid-cols-1 md:grid-cols-3 gap-9 md:gap-10 text-center">
             {/* Explore */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-lg mb-5">Explore</h3>
+              <h3 className="font-semibold text-lg mb-4">Explore</h3>
               <ul className="space-y-3 text-white/80 text-sm">
-                <li className="hover:text-white transition cursor-pointer">
-                  All Jobs
-                </li>
-                <li className="hover:text-white transition cursor-pointer">
-                  Categories
-                </li>
-                <li className="hover:text-white transition cursor-pointer">
-                  Career Resources
-                </li>
-                <li className="hover:text-white transition cursor-pointer">
-                  Contact
-                </li>
+                <li className="hover:text-white transition cursor-pointer">All Jobs</li>
+                <li className="hover:text-white transition cursor-pointer">Categories</li>
+                <li className="hover:text-white transition cursor-pointer">Career Resources</li>
+                <li className="hover:text-white transition cursor-pointer">Contact</li>
               </ul>
             </div>
 
             {/* Newsletter */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-lg mb-5">Get Job Alerts</h3>
-              <p className="text-white/80 text-sm mb-5 max-w-sm">
+              <h3 className="font-semibold text-lg mb-4">Get Job Alerts</h3>
+              <p className="text-white/80 text-sm mb-4 max-w-sm">
                 Weekly updates with new Technical roles — no spam.
               </p>
 
@@ -78,18 +69,29 @@ export default function Footer() {
                              text-white placeholder:text-white/55 outline-none
                              focus:ring-2 focus:ring-[#3017D3]/60"
                 />
-                <button className="w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold transition
-                                   bg-[#3017D3] hover:bg-[#2a12c0] text-white shadow-sm">
+
+                {/* ✅ Button color updated to match brand + look premium */}
+                <button
+                  type="button"
+                  className="
+                    w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold transition
+                    bg-gradient-to-b from-[#3017D3] to-[#2a12c0]
+                    hover:from-[#3a22e6] hover:to-[#2a12c0]
+                    shadow-[0_10px_30px_rgba(48,23,211,0.25)]
+                    border border-white/10
+                    focus:outline-none focus:ring-2 focus:ring-white/30
+                  "
+                >
                   Join
                 </button>
               </div>
 
-              <p className="mt-4 text-xs text-white/65">Unsubscribe anytime.</p>
+              <p className="mt-3 text-xs text-white/65">Unsubscribe anytime.</p>
             </div>
 
             {/* Connect */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-lg mb-5">Connect</h3>
+              <h3 className="font-semibold text-lg mb-4">Connect</h3>
 
               <div className="flex justify-center gap-4">
                 {[
@@ -110,29 +112,23 @@ export default function Footer() {
                 ))}
               </div>
 
-              <p className="mt-5 text-xs text-white/65">
+              <p className="mt-4 text-xs text-white/65">
                 Follow us for new roles & updates.
               </p>
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="mt-14 h-px bg-white/12" />
+          {/* Divider (tighter) */}
+          <div className="mt-9 md:mt-10 h-px bg-white/12" />
 
-          {/* Bottom */}
-          <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-white/65 text-sm">
+          {/* Bottom (tighter) */}
+          <div className="mt-5 flex flex-col md:flex-row items-center justify-between gap-4 text-white/65 text-sm">
             <p>© {year} TechnicalJobboard. All rights reserved.</p>
 
             <div className="flex gap-6">
-              <span className="hover:text-white transition cursor-pointer">
-                Terms
-              </span>
-              <span className="hover:text-white transition cursor-pointer">
-                Privacy Policy
-              </span>
-              <span className="hover:text-white transition cursor-pointer">
-                Support
-              </span>
+              <span className="hover:text-white transition cursor-pointer">Terms</span>
+              <span className="hover:text-white transition cursor-pointer">Privacy Policy</span>
+              <span className="hover:text-white transition cursor-pointer">Support</span>
             </div>
           </div>
         </div>
