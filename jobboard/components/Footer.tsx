@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden">
       {/* Background */}
-      <div className="relative bg-gradient-to-br from-[#02000D] via-[#140047] to-[#6F00FC] text-white">
+<div className="relative bg-gradient-to-b from-[#1A2040] to-[#0F1426] text-white">
         {/* Soft glow accents */}
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
