@@ -3,39 +3,40 @@
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="relative overflow-hidden">
-      {/* Background */}
-<div className="relative bg-gradient-to-b from-[#1A2040] to-[#0F1426] text-white">
-        {/* Soft glow accents */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
+    <footer className="relative overflow-hidden text-white">
+      {/* Background (navy base + subtle brand purple glow) */}
+      <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
+        {/* Purple brand glow (subtle) */}
+        <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-[#3017D3]/25 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-28 h-[28rem] w-[28rem] rounded-full bg-[#6F00FC]/18 blur-3xl" />
+        {/* Soft white haze for depth */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/5 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-16">
-          {/* TOP: Logo + writeup */}
+        <div className="relative mx-auto max-w-7xl px-6 py-16">
+          {/* TOP: Logo + writeup (no white box) */}
           <div className="flex flex-col items-center text-center">
-            <div className="rounded-3xl bg-white/95 text-[#02000D] shadow-xl border border-white/20 px-7 py-6 sm:px-10 sm:py-7">
-              <img
-                src="/logo.png"
-                alt="TechnicalJobboard Logo"
-                className="h-16 sm:h-20 md:h-24 w-auto object-contain mx-auto"
-              />
-            </div>
+            <img
+              src="/logo.png"
+              alt="TechnicalJobboard Logo"
+              className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+            />
 
-            <p className="mt-5 text-white/90 text-sm sm:text-base max-w-2xl">
+            <p className="mt-5 text-white/85 text-sm sm:text-base max-w-2xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* 3 columns as equal-height cards */}
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-stretch text-center">
+          {/* 3 columns (NO boxes) */}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center">
             {/* Explore */}
-            <div className="h-full rounded-3xl bg-white/10 border border-white/20 backdrop-blur p-8 flex flex-col">
+            <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg mb-5">Explore</h3>
-
-              <ul className="space-y-3 text-white/85 text-sm flex-1">
+              <ul className="space-y-3 text-white/80 text-sm">
                 <li className="hover:text-white transition cursor-pointer">
                   All Jobs
                 </li>
@@ -49,44 +50,37 @@ export default function Footer() {
                   Contact
                 </li>
               </ul>
-
-              <div className="mt-7 h-px bg-white/15" />
-              <p className="mt-5 text-xs text-white/70">
-                Explore roles, categories, and resources.
-              </p>
             </div>
 
             {/* Newsletter */}
-            <div className="h-full rounded-3xl bg-white/10 border border-white/20 backdrop-blur p-8 flex flex-col">
+            <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg mb-5">Get Job Alerts</h3>
-
-              <p className="text-white/85 text-sm mb-6 flex-1">
+              <p className="text-white/80 text-sm mb-5 max-w-sm">
                 Weekly updates with new Technical roles — no spam.
               </p>
 
-              <div className="flex flex-col gap-3">
+              <div className="w-full max-w-sm flex flex-col sm:flex-row gap-3">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/10 border border-white/25
-                             text-white placeholder:text-white/60 outline-none
-                             focus:ring-2 focus:ring-white/40"
+                  className="w-full px-4 py-3 rounded-2xl bg-white/10 border border-white/20
+                             text-white placeholder:text-white/55 outline-none
+                             focus:ring-2 focus:ring-[#3017D3]/60"
                 />
-                <button className="w-full bg-white text-[#02000D] px-6 py-3 rounded-2xl font-semibold hover:bg-white/90 transition">
+                <button className="w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold transition
+                                   bg-[#3017D3] hover:bg-[#2a12c0] text-white shadow-sm">
                   Join
                 </button>
               </div>
 
-              <p className="mt-4 text-xs text-white/70">
-                Unsubscribe anytime.
-              </p>
+              <p className="mt-4 text-xs text-white/65">Unsubscribe anytime.</p>
             </div>
 
             {/* Connect */}
-            <div className="h-full rounded-3xl bg-white/10 border border-white/20 backdrop-blur p-8 flex flex-col">
+            <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg mb-5">Connect</h3>
 
-              <div className="flex justify-center gap-4 flex-1">
+              <div className="flex justify-center gap-4">
                 {[
                   { Icon: FaTwitter, label: "Twitter" },
                   { Icon: FaLinkedinIn, label: "LinkedIn" },
@@ -97,36 +91,33 @@ export default function Footer() {
                     key={label}
                     href="#"
                     aria-label={label}
-                    className="h-11 w-11 rounded-2xl bg-white/10 border border-white/25
-                               flex items-center justify-center hover:bg-white/20 transition"
+                    className="h-11 w-11 rounded-2xl bg-white/10 border border-white/20
+                               flex items-center justify-center hover:bg-white/15 transition"
                   >
                     <Icon />
                   </a>
                 ))}
               </div>
 
-              <div className="mt-7 h-px bg-white/15" />
-              <p className="mt-5 text-xs text-white/70">
+              <p className="mt-5 text-xs text-white/65">
                 Follow us for new roles & updates.
               </p>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="mt-14 h-px bg-white/15" />
+          <div className="mt-14 h-px bg-white/12" />
 
           {/* Bottom */}
-          <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-white/70 text-sm">
-            <p>
-              © {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
-            </p>
+          <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-white/65 text-sm">
+            <p>© {year} TechnicalJobboard. All rights reserved.</p>
 
-            <div className="flex gap-5">
-              <span className="hover:text-white transition cursor-pointer">
-                Privacy
-              </span>
+            <div className="flex gap-6">
               <span className="hover:text-white transition cursor-pointer">
                 Terms
+              </span>
+              <span className="hover:text-white transition cursor-pointer">
+                Privacy Policy
               </span>
               <span className="hover:text-white transition cursor-pointer">
                 Support
