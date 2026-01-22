@@ -229,43 +229,44 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (LEFT ONLY – CLEAN) ================= */}
-<section className="relative py-20 md:py-24 bg-animated-gradient text-white overflow-hidden">
+{/* ================= HERO (Desktop cleaned + brand button + brand highlight) ================= */}
+<section className="relative py-20 md:py-22 bg-animated-gradient text-white overflow-hidden">
   {/* Softer background blobs */}
   <div className="absolute top-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
   <div className="absolute bottom-0 right-0 w-72 h-72 md:w-[28rem] md:h-[28rem] bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
 
-  <div className="relative z-10 max-w-7xl mx-auto px-6">
-    {/* SINGLE COLUMN */}
+  <div className="max-w-7xl mx-auto px-6 relative z-10">
+    {/* Single column (removed RIGHT side completely) */}
     <div className="max-w-3xl">
-      <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
+      <h1 className="text-[2.35rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight">
         Discover verified{" "}
-        <span className="text-[#02000D]">Technical jobs</span>
+        <span className="text-[#3A22E6] drop-shadow-sm">
+          Technical jobs
+        </span>
         <br />
         built for long-term careers
       </h1>
 
-      <p className="mt-5 text-base md:text-lg text-white/90">
-        Browse roles across Engineering, Infrastructure, Cloud, Security, and
-        Data — including remote options.
+      <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-white/85 max-w-2xl">
+        Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
       </p>
 
-      {/* Search */}
-      <div className="mt-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      {/* Search Bar */}
+      <div className="mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl">
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
+            className="w-full px-5 py-3.5 rounded-xl bg-white text-gray-900 text-sm shadow-md outline-none focus:ring-2 focus:ring-[#3017D3]/40"
           />
 
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-4 rounded-2xl bg-white text-gray-900 shadow-xl outline-none focus:ring-2 focus:ring-[#A866FE]"
+            className="w-full px-5 py-3.5 rounded-xl bg-white text-gray-900 text-sm shadow-md outline-none focus:ring-2 focus:ring-[#3017D3]/40"
           />
 
-          <button className="w-full px-5 py-4 rounded-2xl bg-[#02000D] text-white font-semibold shadow-xl hover:bg-black transition">
+          <button className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-b from-[#3017D3] to-[#2a12c0] shadow-[0_10px_24px_rgba(48,23,211,0.35)] hover:from-[#3a22e6] hover:to-[#2a12c0] transition">
             Search Jobs
           </button>
         </div>
@@ -274,19 +275,15 @@ const CATEGORIES = [
       {/* Jump to Jobs */}
       <button
         type="button"
-        onClick={() =>
-          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="mt-6 inline-flex items-center gap-2 bg-white text-[#02000D]
-                   font-semibold px-6 py-3 rounded-2xl shadow-xl
-                   hover:shadow-2xl hover:-translate-y-[1px] transition
-                   border border-white/40"
+        onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
+        className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/90 text-[#3017D3] hover:bg-white transition shadow-sm"
       >
-        Jump to Jobs <span className="text-lg">↓</span>
+        Jump to Jobs <span className="text-base">↓</span>
       </button>
     </div>
   </div>
 </section>
+
 
 
 
