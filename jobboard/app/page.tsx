@@ -472,17 +472,20 @@ const CATEGORIES = [
                        border border-gray-200 relative overflow-hidden"
           >
             {/* Dark accent bar (footer tone) */}
-            <div className="absolute left-0 top-0 h-full w-1.5 bg-[#1A2040]" />
+<div className="absolute left-0 top-0 h-full w-1.5 bg-[#3017D3]" />
 
             <div className="p-6 pl-8">
               {/* Top row */}
               <div className="flex items-center justify-between mb-4">
                 {job.verified ? (
-                  <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
-                                   bg-[#EEF1FA] text-[#1A2040] border border-[#1A2040]/20">
-                    <span className="h-2 w-2 rounded-full bg-[#1A2040]" />
-                    Verified
-                  </span>
+    <span
+  className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
+             bg-[#F6F2FF] text-[#3017D3] border border-[#3017D3]/25"
+>
+  <span className="h-2 w-2 rounded-full bg-[#3017D3]" />
+  Featured
+</span>
+
                 ) : (
                   <span className="text-xs text-gray-400">Featured</span>
                 )}
@@ -528,15 +531,17 @@ const CATEGORIES = [
               {/* Footer */}
               <div className="mt-6 flex justify-between items-center">
                 <button
-                  className="
-                    px-4 py-2 rounded-lg text-sm font-medium text-white
-                    bg-gradient-to-b from-[#1A2040] to-[#0F1426]
-                    hover:from-[#1F2550] hover:to-[#141A2F]
-                    shadow-sm transition
-                  "
-                >
-                  View
-                </button>
+  className="
+    px-4 py-2 rounded-lg text-sm font-medium text-white
+    bg-gradient-to-b from-[#3017D3] to-[#2a12c0]
+    hover:from-[#3a22e6] hover:to-[#2a12c0]
+    shadow-[0_6px_18px_rgba(48,23,211,0.35)]
+    transition
+  "
+>
+  View
+</button>
+
                 <span className="text-xs text-gray-400">
                   Posted {job.posted}
                 </span>
