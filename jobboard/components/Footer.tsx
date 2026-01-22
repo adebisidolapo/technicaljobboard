@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#3017D3]/20 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#6F00FC]/20 blur-3xl" />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-10">
+        <div className="relative max-w-7xl mx-auto px-6 py-14">
           {/* TOP: Logo + writeup */}
           <div className="flex flex-col items-center text-center">
             <img
@@ -20,18 +20,18 @@ export default function Footer() {
               className="h-28 sm:h-32 md:h-36 w-auto object-contain"
             />
 
-            <p className="mt-2 text-white/90 text-sm sm:text-base max-w-xl">
+            <p className="mt-3 text-white/90 text-sm sm:text-base max-w-xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* 3 columns */}
-          <div className="mt-6 md:mt-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          {/* 3 columns (closer to logo) */}
+          <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {/* Explore */}
             <div>
-              <h3 className="font-semibold text-lg mb-3">Explore</h3>
+              <h3 className="font-semibold text-lg mb-4">Explore</h3>
               <ul className="space-y-3 text-white/80 text-sm">
                 <li className="hover:text-white transition cursor-pointer">
                   All Jobs
@@ -50,7 +50,7 @@ export default function Footer() {
 
             {/* Newsletter */}
             <div>
-              <h3 className="font-semibold text-lg mb-3">Get Job Alerts</h3>
+              <h3 className="font-semibold text-lg mb-4">Get Job Alerts</h3>
               <p className="text-white/80 text-sm mb-4">
                 Weekly updates — no spam.
               </p>
@@ -63,11 +63,7 @@ export default function Footer() {
                              text-white placeholder:text-white/60 outline-none
                              focus:ring-2 focus:ring-[#3017D3]"
                 />
-
-                <button
-                  type="button"
-                  className="bg-[#3017D3] hover:bg-[#2a12c0] text-white px-6 py-3 rounded-xl font-semibold transition shadow-sm"
-                >
+                <button className="bg-[#3017D3] hover:bg-[#2a12c0] text-white px-6 py-3 rounded-xl font-semibold transition">
                   Join
                 </button>
               </div>
@@ -75,7 +71,7 @@ export default function Footer() {
 
             {/* Connect */}
             <div>
-              <h3 className="font-semibold text-lg mb-3">Connect</h3>
+              <h3 className="font-semibold text-lg mb-4">Connect</h3>
               <div className="flex justify-center gap-4">
                 {[FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub].map(
                   (Icon, i) => (
@@ -84,7 +80,6 @@ export default function Footer() {
                       href="#"
                       className="h-11 w-11 rounded-xl bg-white/10 border border-white/20
                                  flex items-center justify-center hover:bg-white/20 transition"
-                      aria-label="Social link"
                     >
                       <Icon />
                     </a>
@@ -95,10 +90,10 @@ export default function Footer() {
           </div>
 
           {/* Divider */}
-          <div className="mt-8 h-px bg-white/15" />
+          <div className="mt-10 h-px bg-white/15" />
 
           {/* Bottom */}
-          <div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-4 text-white/70 text-sm">
+          <div className="mt-5 flex flex-col md:flex-row items-center justify-between gap-4 text-white/70 text-sm">
             <p>
               © {new Date().getFullYear()} TechnicalJobboard. All rights reserved.
             </p>
