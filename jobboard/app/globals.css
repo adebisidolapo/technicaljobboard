@@ -22,11 +22,11 @@
     --foreground: #ededed;
   }
 }
-:root{
-  --brand: #3017D3;     /* your purple */
-  --brand-dark: #2a12c0;
-  --ink: #02000D;       /* your dark */
+:root {
+  --brand-purple: #6A6FF2;
+  --brand-purple-dark: #585de0;
 }
+
 
 body {
   background: var(--background);

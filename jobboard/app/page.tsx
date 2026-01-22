@@ -671,7 +671,7 @@ const CATEGORIES = [
     {/* Header */}
     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
       <div>
-        <p className="text-sm font-semibold tracking-widest text-[#3017D3]">
+        <p className="text-sm font-semibold tracking-widest text-[var(--brand-purple)]">
           ALL JOBS
         </p>
         <h2 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
@@ -682,41 +682,19 @@ const CATEGORIES = [
         </p>
       </div>
 
-      {/* Text-style button (as you requested) */}
       <button
         type="button"
-        className="w-full md:w-auto inline-flex items-center justify-center md:justify-end gap-2
-                   text-[#3017D3] font-semibold underline underline-offset-4
-                   hover:text-[#2a12c0] transition px-2 py-2"
+        className="w-full md:w-auto inline-flex items-center justify-center gap-2
+                   text-[var(--brand-purple)] font-semibold underline underline-offset-4
+                   hover:text-[var(--brand-purple-dark)] transition px-2 py-2"
       >
-        Load More Jobs <span aria-hidden>→</span>
+        Load More Jobs <span>→</span>
       </button>
     </div>
 
-    {/* Selected category (optional, only shows when selected) */}
-    {selectedCategory && (
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <span className="text-sm text-gray-600">Selected category:</span>
-        <span className="px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200 text-gray-900 text-sm font-semibold">
-          {ALL_CATEGORIES.find((c) => c.slug === selectedCategory)?.label ?? "Category"}
-        </span>
-        <button
-          type="button"
-          onClick={() => setSelectedCategory("")}
-          className="text-sm font-semibold text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-xl hover:bg-gray-100 transition"
-        >
-          Clear
-        </button>
-      </div>
-    )}
-
     {/* Count */}
     <div className="text-gray-600 mb-10">
-      Showing{" "}
-      <span className="font-semibold text-gray-900">
-        {filteredJobs.length}
-      </span>{" "}
-      roles
+      Showing <span className="font-semibold text-gray-900">{filteredJobs.length}</span> roles
     </div>
 
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
@@ -724,102 +702,18 @@ const CATEGORIES = [
       {/* Filters */}
       <aside className="lg:w-1/4 w-full lg:sticky lg:top-24 h-fit">
         <div className="rounded-3xl p-6 shadow-lg border border-gray-200 bg-white">
-          <div className="flex items-start justify-between gap-3 mb-6">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900">Filters</h3>
-              <p className="text-sm text-gray-600 mt-1">Refine your results.</p>
-            </div>
+          <h3 className="text-xl font-semibold text-gray-900 mb-6">Filters</h3>
 
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="text-sm font-semibold text-gray-600 hover:text-gray-900 px-3 py-2 rounded-xl hover:bg-gray-100 transition"
-            >
-              Reset
-            </button>
-          </div>
-
-          {/* Keyword */}
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Title / Keyword
-          </label>
           <input
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            type="text"
-            placeholder="e.g. Maintenance, PLC, Quality"
+            placeholder="Title / Keyword"
             className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5
-                       focus:ring-2 focus:ring-[#3017D3] outline-none text-sm bg-white"
+                       focus:ring-2 focus:ring-[var(--brand-purple)] outline-none text-sm"
           />
-
-          {/* Location */}
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Location
-          </label>
-          <input
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            type="text"
-            placeholder="e.g. Remote, New York, Austin"
-            className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5
-                       focus:ring-2 focus:ring-[#3017D3] outline-none text-sm bg-white"
-          />
-
-          {/* Job Type */}
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Job Type
-          </label>
-          <select
-            value={jobType}
-            onChange={(e) => setJobType(e.target.value)}
-            className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5 text-sm bg-white"
-          >
-            <option value="">Any</option>
-            <option>Full-time</option>
-            <option>Part-time</option>
-            <option>Contract</option>
-            <option>Internship</option>
-          </select>
-
-          {/* Experience */}
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Experience
-          </label>
-          <select
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
-            className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-6 text-sm bg-white"
-          >
-            <option value="">Any</option>
-            <option>Junior</option>
-            <option>Mid</option>
-            <option>Senior</option>
-          </select>
-
-          {/* Quick Filters */}
-          <p className="text-sm font-medium text-gray-700 mb-3">
-            Quick Filters
-          </p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {["Remote", "Full-time", "Senior", "Contract"].map((tag) => (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => toggleQuick(tag)}
-                className={`text-xs px-3 py-2 rounded-full transition ${
-                  quickFilters.includes(tag)
-                    ? "bg-[#3017D3] text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
 
           <button
-            type="button"
-            className="w-full bg-[#3017D3] hover:bg-[#2a12c0] text-white py-3 rounded-2xl font-semibold transition shadow-sm"
+            className="w-full bg-[var(--brand-purple)]
+                       hover:bg-[var(--brand-purple-dark)]
+                       text-white py-3 rounded-2xl font-semibold transition shadow-sm"
           >
             Apply Filters
           </button>
@@ -828,72 +722,41 @@ const CATEGORIES = [
 
       {/* Job Feed */}
       <div className="lg:w-3/4 w-full space-y-6">
-        {filteredJobs.length === 0 ? (
-          <div className="bg-white rounded-3xl p-8 border border-gray-200 text-gray-700">
-            <p className="font-semibold text-gray-900">No results found.</p>
-            <p className="text-sm text-gray-600 mt-2">
-              Try clearing filters or searching a different keyword/location.
-            </p>
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="mt-4 bg-[#3017D3] hover:bg-[#2a12c0] text-white px-5 py-3 rounded-2xl text-sm font-semibold transition"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          filteredJobs.map((job, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-3xl p-5 md:p-6 shadow-sm hover:shadow-lg transition
-                         border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-start gap-5 md:gap-6"
-            >
-              <div className="flex gap-4 min-w-0">
-                {/* Company mark (kept green as you want) */}
-                <div className="w-12 h-12 shrink-0 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-sm">
-                  {job.company.charAt(0)}
-                </div>
-
-                <div className="min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 truncate">
-                    {job.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {job.company} • {job.location}
-                  </p>
-
-                  <p className="text-sm text-gray-500 mt-2 leading-relaxed">
-                    {job.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {job.tags.map((pill) => (
-                      <span
-                        key={pill}
-                        className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-700"
-                      >
-                        {pill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+        {filteredJobs.map((job, idx) => (
+          <div
+            key={idx}
+            className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition
+                       border border-gray-200 flex flex-col md:flex-row gap-6"
+          >
+            <div className="flex gap-4 min-w-0">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+                {job.company.charAt(0)}
               </div>
 
-              <div className="md:text-right shrink-0">
-                <p className="text-sm font-semibold text-[#3017D3]">
-                  {job.salary}
-                </p>
-                <button className="mt-4 w-full md:w-auto bg-[#3017D3] hover:bg-[#2a12c0] text-white px-5 py-2.5 rounded-2xl text-sm font-semibold transition shadow-sm">
-                  View
-                </button>
-                <p className="text-xs text-gray-400 mt-3">
-                  Posted {job.posted}
+              <div className="min-w-0">
+                <h3 className="text-lg font-semibold text-gray-900 truncate">
+                  {job.title}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {job.company} • {job.location}
                 </p>
               </div>
             </div>
-          ))
-        )}
+
+            <div className="md:ml-auto text-right">
+              <p className="text-sm font-semibold text-[var(--brand-purple)]">
+                {job.salary}
+              </p>
+              <button
+                className="mt-3 bg-[var(--brand-purple)]
+                           hover:bg-[var(--brand-purple-dark)]
+                           text-white px-5 py-2.5 rounded-2xl text-sm font-semibold transition"
+              >
+                View
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
