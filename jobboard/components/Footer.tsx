@@ -18,11 +18,20 @@ export default function Footer() {
         <div className="relative mx-auto max-w-7xl px-6 py-16">
           {/* TOP: Logo + writeup (no white box) */}
           <div className="flex flex-col items-center text-center">
-            <img
-              src="/logo.png"
-              alt="TechnicalJobboard Logo"
-              className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
-            />
+    <img
+  src="/logo.png"
+  alt="TechnicalJobboard Logo"
+  className="
+    h-20
+    sm:h-24
+    md:h-32
+    lg:h-40
+    xl:h-44
+    w-auto
+    object-contain
+  "
+/>
+
 
             <p className="mt-5 text-white/85 text-sm sm:text-base max-w-2xl">
               Discover verified{" "}
