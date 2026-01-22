@@ -35,7 +35,7 @@ export default function Footer() {
             </div>
 
             {/* zero-ish gap */}
-            <p className="-mt-1 text-white/90 text-sm sm:text-base max-w-2xl">
+<p className="mt-0.5 text-white/90 text-sm sm:text-base max-w-2xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
