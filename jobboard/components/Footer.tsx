@@ -16,29 +16,31 @@ export default function Footer() {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/5 to-transparent" />
 
         <div className="relative mx-auto max-w-7xl px-6 py-16">
-          {/* TOP: Logo + writeup (no white box) */}
-          <div className="flex flex-col items-center text-center">
-    <img
-  src="/logo.png"
-  alt="TechnicalJobboard Logo"
-  className="
-    h-20
-    sm:h-24
-    md:h-32
-    lg:h-40
-    xl:h-44
-    w-auto
-    object-contain
-  "
-/>
+         
+         {/* TOP: Logo + writeup */}
+<div className="flex flex-col items-center text-center">
+  <img
+    src="/logo.png"
+    alt="TechnicalJobboard Logo"
+    className="
+      w-[220px]
+      sm:w-[260px]
+      md:w-[320px]
+      lg:w-[380px]
+      xl:w-[420px]
+      h-auto
+      object-contain
+      drop-shadow-[0_0_40px_rgba(111,0,252,0.35)]
+    "
+  />
 
+  <p className="mt-6 text-white/90 text-sm sm:text-base max-w-2xl">
+    Discover verified{" "}
+    <span className="font-semibold text-white">Technical jobs</span>{" "}
+    and career-defining opportunities.
+  </p>
+</div>
 
-            <p className="mt-5 text-white/85 text-sm sm:text-base max-w-2xl">
-              Discover verified{" "}
-              <span className="font-semibold text-white">Technical jobs</span>{" "}
-              and career-defining opportunities.
-            </p>
-          </div>
 
           {/* 3 columns (NO boxes) */}
           <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center">
