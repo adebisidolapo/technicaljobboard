@@ -332,18 +332,24 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (Light + Visible Legacy Purple) ================= */}
+{/* ================= HERO (Virelynx-style: cool lavender/grey, NO pink) ================= */}
 <section className="relative py-20 md:py-24 overflow-hidden bg-[#F6F7FB]">
+  {/* Base soft wash (cool, not pink) */}
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#F6F7FB] to-[#F2F4FF]" />
 
-  {/* Legacy purple wash (VISIBLE now) */}
-  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#3017D3]/12 via-transparent to-[#6F00FC]/10" />
+  {/* Big geometric “diamond” shapes like Virelynx (cool lavender) */}
+  <div
+    className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rotate-45
+               rounded-[72px] bg-[#5F6BF2]/[0.08]"
+  />
+  <div
+    className="pointer-events-none absolute -bottom-52 -right-52 h-[620px] w-[620px] rotate-45
+               rounded-[84px] bg-[#5F6BF2]/[0.06]"
+  />
 
-  {/* Legacy radial glows (these make it clearly show without looking “pink”) */}
-  <div className="pointer-events-none absolute -top-24 -left-24 h-[520px] w-[520px] rounded-full bg-[#3017D3]/10 blur-3xl" />
-  <div className="pointer-events-none absolute -bottom-28 -right-28 h-[560px] w-[560px] rounded-full bg-[#6F00FC]/8 blur-3xl" />
-
-  {/* Modern accent blobs (new purple, subtle) */}
-  <div className="pointer-events-none absolute top-16 right-20 h-72 w-72 rounded-full bg-[#5F6BF2]/8 blur-3xl" />
+  {/* Secondary cool legacy blue glow (still not pink) */}
+  <div className="pointer-events-none absolute top-10 right-16 h-[380px] w-[380px] rounded-full bg-[#3017D3]/[0.06] blur-3xl" />
+  <div className="pointer-events-none absolute bottom-10 left-12 h-[420px] w-[420px] rounded-full bg-[#5F6BF2]/[0.07] blur-3xl" />
 
   <div className="relative max-w-7xl mx-auto px-6">
     <div className="max-w-3xl">
@@ -364,13 +370,17 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#5F6BF2]/30"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200
+                       text-gray-900 text-sm shadow-sm outline-none
+                       focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#5F6BF2]/30"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200
+                       text-gray-900 text-sm shadow-sm outline-none
+                       focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <button
