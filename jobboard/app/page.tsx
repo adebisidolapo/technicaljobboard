@@ -332,12 +332,12 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (Virelynx-style: cool lavender/grey, NO pink) ================= */}
+{/* ================= HERO (Centered, refined typography) ================= */}
 <section className="relative py-20 md:py-24 overflow-hidden bg-[#F6F7FB]">
-  {/* Base soft wash (cool, not pink) */}
+  {/* Base soft wash */}
   <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#F6F7FB] to-[#F2F4FF]" />
 
-  {/* Big geometric “diamond” shapes like Virelynx (cool lavender) */}
+  {/* Geometric shapes */}
   <div
     className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rotate-45
                rounded-[72px] bg-[#5F6BF2]/[0.08]"
@@ -347,30 +347,35 @@ const CATEGORIES = [
                rounded-[84px] bg-[#5F6BF2]/[0.06]"
   />
 
-  {/* Secondary cool legacy blue glow (still not pink) */}
+  {/* Cool glows */}
   <div className="pointer-events-none absolute top-10 right-16 h-[380px] w-[380px] rounded-full bg-[#3017D3]/[0.06] blur-3xl" />
   <div className="pointer-events-none absolute bottom-10 left-12 h-[420px] w-[420px] rounded-full bg-[#5F6BF2]/[0.07] blur-3xl" />
 
   <div className="relative max-w-7xl mx-auto px-6">
-    <div className="max-w-3xl">
-      <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight text-gray-900">
+    <div className="max-w-3xl mx-auto text-center">
+      {/* Headline */}
+      <h1 className="text-[2.1rem] sm:text-[2.6rem] md:text-[2.9rem]
+                     font-extrabold leading-[1.15] tracking-tight text-gray-900">
         Discover vetted{" "}
         <span className="text-[#5F6BF2]">Technical jobs</span>
         <br />
         built for long-term careers
       </h1>
 
-      <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600 max-w-2xl">
-        Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
+      {/* Subtext */}
+      <p className="mt-4 text-[14.5px] md:text-[15.5px] leading-relaxed
+                    text-gray-600 max-w-xl mx-auto">
+        Browse roles across Engineering, Infrastructure, Cloud, Security,
+        and Data — including remote options.
       </p>
 
       {/* Search Bar */}
-      <div className="mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl">
+      <div className="mt-8 flex justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full max-w-3xl">
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200
+            className="w-full px-5 py-3 rounded-xl bg-white border border-gray-200
                        text-gray-900 text-sm shadow-sm outline-none
                        focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
@@ -378,13 +383,13 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200
+            className="w-full px-5 py-3 rounded-xl bg-white border border-gray-200
                        text-gray-900 text-sm shadow-sm outline-none
                        focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <button
-            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white
+            className="w-full px-5 py-3 rounded-xl text-sm font-semibold text-white
                        bg-[#5F6BF2] hover:bg-[#4B55D8]
                        shadow-[0_10px_26px_rgba(95,107,242,0.35)]
                        transition"
@@ -394,17 +399,21 @@ const CATEGORIES = [
         </div>
       </div>
 
-      {/* Jump to Jobs */}
+      {/* Jump */}
       <button
         type="button"
-        onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
-        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#5F6BF2] hover:underline"
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold
+                   text-[#5F6BF2] hover:underline"
       >
         Jump to Jobs <span>↓</span>
       </button>
     </div>
   </div>
 </section>
+
 
 
 
