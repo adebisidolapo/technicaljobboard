@@ -12,10 +12,9 @@ export default function Footer() {
         <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-6 pt-10 pb-8">
-          {/* ===== TOP GRID ===== */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
-
+        <div className="relative mx-auto max-w-7xl px-6 pt-8 pb-8">
+          {/* ===== TOP ROW (ALIGNED) ===== */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 items-center">
             {/* LEFT — CONNECT + FORM */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left">
               <h3 className="font-semibold text-base mb-3">Connect</h3>
@@ -36,8 +35,8 @@ export default function Footer() {
                 )}
               </div>
 
-              {/* FORM UNDER ICONS */}
-              <div className="w-full max-w-xs flex gap-2">
+              {/* FORM under icons */}
+              <div className="w-full max-w-[340px] flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
@@ -46,20 +45,18 @@ export default function Footer() {
                              focus:ring-2 focus:ring-[#5F6BF2]/55"
                 />
                 <button
-                  className="
-                    px-4 py-2.5 rounded-xl font-semibold text-white
-                    bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
-                    hover:from-[#6E78FF] hover:to-[#4B55D8]
-                    transition
-                  "
+                  className="px-5 py-2.5 rounded-xl font-semibold text-white
+                             bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
+                             hover:from-[#6E78FF] hover:to-[#4B55D8]
+                             transition"
                 >
                   Join
                 </button>
               </div>
             </div>
 
-            {/* CENTER — LOGO */}
-            <div className="flex flex-col items-center text-center">
+            {/* CENTER — LOGO + TAGLINE (KEPT TOGETHER + CENTERED) */}
+            <div className="flex flex-col items-center text-center justify-center">
               <img
                 src="/logo.png"
                 alt="TechnicalJobboard Logo"
@@ -73,7 +70,8 @@ export default function Footer() {
                 "
               />
 
-              <p className="mt-2 text-white/90 text-sm sm:text-base max-w-md">
+              {/* CLOSE GAP (THIS is what you wanted) */}
+              <p className="mt-1 text-white/90 text-sm sm:text-base max-w-md">
                 Discover verified{" "}
                 <span className="font-semibold text-white">Technical jobs</span>{" "}
                 and career-defining opportunities.
@@ -95,7 +93,7 @@ export default function Footer() {
           </div>
 
           {/* DIVIDER */}
-          <div className="mt-10 h-px bg-white/12" />
+          <div className="mt-8 h-px bg-white/12" />
 
           {/* BOTTOM */}
           <div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-3 text-white/65 text-xs sm:text-sm">
