@@ -9,13 +9,12 @@ export default function Footer() {
     <footer className="relative overflow-hidden text-white">
       {/* Background */}
       <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
-        {/* Glows */}
-        <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#3017D3]/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#6F00FC]/18 blur-3xl" />
+        {/* Glows (updated to new purple) */}
+        <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
         {/* Container (LESS vertical padding) */}
         <div className="relative mx-auto max-w-7xl px-6 pt-4 pb-8">
-          
           {/* LOGO + TAGLINE (TIGHT) */}
           <div className="flex flex-col items-center text-center">
             <img
@@ -27,11 +26,10 @@ export default function Footer() {
                 md:w-[330px]
                 lg:w-[380px]
                 h-auto object-contain
-                drop-shadow-[0_0_32px_rgba(111,0,252,0.3)]
+                drop-shadow-[0_0_28px_rgba(95,107,242,0.28)]
               "
             />
 
-            {/* MUCH CLOSER */}
             <p className="mt-2 text-white/90 text-sm sm:text-base max-w-xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
@@ -41,14 +39,15 @@ export default function Footer() {
 
           {/* COLUMNS (PULLED UP HARD) */}
           <div className="mt-4 md:mt-5 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
-            
             {/* Explore */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-base mb-2">Explore</h3>
               <ul className="space-y-1.5 text-white/80 text-sm">
                 <li className="hover:text-white cursor-pointer">All Jobs</li>
                 <li className="hover:text-white cursor-pointer">Categories</li>
-                <li className="hover:text-white cursor-pointer">Career Resources</li>
+                <li className="hover:text-white cursor-pointer">
+                  Career Resources
+                </li>
                 <li className="hover:text-white cursor-pointer">Contact</li>
               </ul>
             </div>
@@ -66,14 +65,15 @@ export default function Footer() {
                   placeholder="Your email"
                   className="flex-1 px-4 py-2.5 rounded-xl bg-white/10 border border-white/20
                              text-white placeholder:text-white/55 outline-none
-                             focus:ring-2 focus:ring-[#3017D3]/60"
+                             focus:ring-2 focus:ring-[#5F6BF2]/55"
                 />
+
                 <button
                   className="
-                    px-5 py-2.5 rounded-xl font-semibold
-                    bg-gradient-to-b from-[#3017D3] to-[#2a12c0]
-                    hover:from-[#3a22e6] hover:to-[#2a12c0]
-                    shadow-[0_6px_18px_rgba(48,23,211,0.3)]
+                    px-5 py-2.5 rounded-xl font-semibold text-white
+                    bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
+                    hover:from-[#6E78FF] hover:to-[#4B55D8]
+                    shadow-[0_6px_18px_rgba(95,107,242,0.28)]
                     transition
                   "
                 >
@@ -93,6 +93,7 @@ export default function Footer() {
                       href="#"
                       className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
                                  flex items-center justify-center hover:bg-white/15 transition"
+                      aria-label="Social link"
                     >
                       <Icon />
                     </a>
@@ -114,7 +115,6 @@ export default function Footer() {
               <span className="hover:text-white cursor-pointer">Support</span>
             </div>
           </div>
-
         </div>
       </div>
     </footer>
