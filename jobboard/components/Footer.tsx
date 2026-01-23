@@ -12,22 +12,11 @@ export default function Footer() {
         <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-6 pt-8 pb-8">
-          {/* ===== TOP ROW (BALANCED) ===== */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 items-center">
-            {/* LEFT — EXPLORE */}
+        <div className="relative mx-auto max-w-7xl px-6 pt-10 pb-8">
+          {/* ===== 3 COLUMNS ===== */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-center">
+            {/* LEFT — LOGO + TAGLINE */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left">
-              <h3 className="font-semibold text-base mb-3">Explore</h3>
-              <ul className="space-y-1.5 text-white/80 text-sm">
-                <li className="hover:text-white cursor-pointer">All Jobs</li>
-                <li className="hover:text-white cursor-pointer">Categories</li>
-                <li className="hover:text-white cursor-pointer">Career Resources</li>
-                <li className="hover:text-white cursor-pointer">Contact</li>
-              </ul>
-            </div>
-
-            {/* CENTER — LOGO + TAGLINE (TAGLINE DIRECTLY UNDER LOGO) */}
-            <div className="flex flex-col items-center text-center justify-center">
               <img
                 src="/logo.png"
                 alt="TechnicalJobboard Logo"
@@ -41,12 +30,23 @@ export default function Footer() {
                 "
               />
 
-              {/* tight gap directly under logo */}
-              <p className="mt-1 text-white/90 text-sm sm:text-base max-w-md">
+              {/* tight, directly under logo */}
+              <p className="mt-2 text-white/90 text-sm sm:text-base max-w-md">
                 Discover vetted{" "}
                 <span className="font-semibold text-white">Technical jobs</span>{" "}
                 and career-defining opportunities.
               </p>
+            </div>
+
+            {/* MIDDLE — EXPLORE */}
+            <div className="flex flex-col items-center text-center">
+              <h3 className="font-semibold text-base mb-3">Explore</h3>
+              <ul className="space-y-2 text-white/80 text-sm">
+                <li className="hover:text-white cursor-pointer">All Jobs</li>
+                <li className="hover:text-white cursor-pointer">Categories</li>
+                <li className="hover:text-white cursor-pointer">Career Resources</li>
+                <li className="hover:text-white cursor-pointer">Contact</li>
+              </ul>
             </div>
 
             {/* RIGHT — CONNECT + FORM */}
@@ -68,7 +68,7 @@ export default function Footer() {
               </div>
 
               {/* Form under icons */}
-              <div className="w-full max-w-[340px] flex gap-2">
+              <div className="w-full max-w-[360px] md:max-w-[340px] flex gap-2 justify-center md:justify-end">
                 <input
                   type="email"
                   placeholder="Your email"
@@ -80,6 +80,7 @@ export default function Footer() {
                   className="px-5 py-2.5 rounded-xl font-semibold text-white
                              bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
                              hover:from-[#6E78FF] hover:to-[#4B55D8]
+                             shadow-[0_6px_18px_rgba(95,107,242,0.28)]
                              transition"
                 >
                   Join
