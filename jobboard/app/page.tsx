@@ -296,25 +296,31 @@ const CATEGORIES = [
   {/* Legacy purple wash (VERY subtle, old brand) */}
   <div
     className="pointer-events-none absolute inset-0
-               bg-gradient-to-br from-[#3017D3]/[0.035] via-transparent to-[#6F00FC]/[0.03]"
+               bg-gradient-to-br
+               from-[#3017D3]/[0.035]
+               via-transparent
+               to-[#6F00FC]/[0.03]"
   />
 
   {/* Soft modern accent blobs (new brand purple) */}
-  <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#5F6BF2]/4 blur-3xl" />
-  <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#5F6BF2]/4 blur-3xl" />
+  <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#5F6BF2]/5 blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#5F6BF2]/5 blur-3xl" />
 
   <div className="relative max-w-7xl mx-auto px-6">
     <div className="max-w-3xl">
 
-      <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight text-gray-900">
+      <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem]
+                     font-extrabold leading-[1.12] tracking-tight text-gray-900">
         Discover vetted{" "}
         <span className="text-[#5F6BF2]">Technical jobs</span>
         <br />
         built for long-term careers
       </h1>
 
-      <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600 max-w-2xl">
-        Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
+      <p className="mt-4 text-[15px] md:text-[16px]
+                    leading-relaxed text-gray-600 max-w-2xl">
+        Browse roles across Engineering, Infrastructure, Cloud, Security,
+        and Data — including remote options.
       </p>
 
       {/* Search Bar */}
@@ -323,7 +329,8 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200
+            className="w-full px-5 py-3.5 rounded-xl
+                       bg-white border border-gray-200
                        text-gray-900 text-sm shadow-sm outline-none
                        focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
@@ -331,18 +338,17 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200
+            className="w-full px-5 py-3.5 rounded-xl
+                       bg-white border border-gray-200
                        text-gray-900 text-sm shadow-sm outline-none
                        focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <button
-            className="
-              w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white
-              bg-[#5F6BF2] hover:bg-[#4B55D8]
-              shadow-[0_10px_26px_rgba(95,107,242,0.35)]
-              transition
-            "
+            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold
+                       text-white bg-[#5F6BF2] hover:bg-[#4B55D8]
+                       shadow-[0_10px_26px_rgba(95,107,242,0.35)]
+                       transition"
           >
             Search Jobs
           </button>
@@ -353,9 +359,10 @@ const CATEGORIES = [
       <button
         type="button"
         onClick={() =>
-          document.getElementById('jobs')?.scrollIntoView({ behavior: 'smooth' })
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
         }
-        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#5F6BF2] hover:underline"
+        className="mt-5 inline-flex items-center gap-2
+                   text-sm font-semibold text-[#5F6BF2] hover:underline"
       >
         Jump to Jobs <span>↓</span>
       </button>
@@ -363,6 +370,7 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
+
 
 
 
