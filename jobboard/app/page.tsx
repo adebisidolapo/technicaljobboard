@@ -290,37 +290,30 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (Light + Subtle Legacy Purple) ================= */}
+{/* ================= HERO (Light + Visible Legacy Purple) ================= */}
 <section className="relative py-20 md:py-24 overflow-hidden bg-[#F6F7FB]">
 
-  {/* Legacy purple wash (VERY subtle, old brand) */}
-  <div
-    className="pointer-events-none absolute inset-0
-               bg-gradient-to-br
-               from-[#3017D3]/[0.035]
-               via-transparent
-               to-[#6F00FC]/[0.03]"
-  />
+  {/* Legacy purple wash (VISIBLE now) */}
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#3017D3]/12 via-transparent to-[#6F00FC]/10" />
 
-  {/* Soft modern accent blobs (new brand purple) */}
-  <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#5F6BF2]/5 blur-3xl" />
-  <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#5F6BF2]/5 blur-3xl" />
+  {/* Legacy radial glows (these make it clearly show without looking “pink”) */}
+  <div className="pointer-events-none absolute -top-24 -left-24 h-[520px] w-[520px] rounded-full bg-[#3017D3]/10 blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-28 -right-28 h-[560px] w-[560px] rounded-full bg-[#6F00FC]/8 blur-3xl" />
+
+  {/* Modern accent blobs (new purple, subtle) */}
+  <div className="pointer-events-none absolute top-16 right-20 h-72 w-72 rounded-full bg-[#5F6BF2]/8 blur-3xl" />
 
   <div className="relative max-w-7xl mx-auto px-6">
     <div className="max-w-3xl">
-
-      <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem]
-                     font-extrabold leading-[1.12] tracking-tight text-gray-900">
+      <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight text-gray-900">
         Discover vetted{" "}
         <span className="text-[#5F6BF2]">Technical jobs</span>
         <br />
         built for long-term careers
       </h1>
 
-      <p className="mt-4 text-[15px] md:text-[16px]
-                    leading-relaxed text-gray-600 max-w-2xl">
-        Browse roles across Engineering, Infrastructure, Cloud, Security,
-        and Data — including remote options.
+      <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-gray-600 max-w-2xl">
+        Browse roles across Engineering, Infrastructure, Cloud, Security, and Data — including remote options.
       </p>
 
       {/* Search Bar */}
@@ -329,24 +322,18 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-3.5 rounded-xl
-                       bg-white border border-gray-200
-                       text-gray-900 text-sm shadow-sm outline-none
-                       focus:ring-2 focus:ring-[#5F6BF2]/30"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-3.5 rounded-xl
-                       bg-white border border-gray-200
-                       text-gray-900 text-sm shadow-sm outline-none
-                       focus:ring-2 focus:ring-[#5F6BF2]/30"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <button
-            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold
-                       text-white bg-[#5F6BF2] hover:bg-[#4B55D8]
+            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white
+                       bg-[#5F6BF2] hover:bg-[#4B55D8]
                        shadow-[0_10px_26px_rgba(95,107,242,0.35)]
                        transition"
           >
@@ -358,20 +345,14 @@ const CATEGORIES = [
       {/* Jump to Jobs */}
       <button
         type="button"
-        onClick={() =>
-          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="mt-5 inline-flex items-center gap-2
-                   text-sm font-semibold text-[#5F6BF2] hover:underline"
+        onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
+        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#5F6BF2] hover:underline"
       >
         Jump to Jobs <span>↓</span>
       </button>
-
     </div>
   </div>
 </section>
-
-
 
 
 
