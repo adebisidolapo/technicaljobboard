@@ -23,57 +23,8 @@ type CategoryGroup = {
 
 export default function Home() {
 
-const COMPANY_LOGOS = [
-  { src: "/Architects.png", alt: "Architects" },
-  { src: "/vermot.png", alt: "Vermot" },
-  { src: "/Devops.png", alt: "Devops" },
-  { src: "/Hiredengineer.png", alt: "HiredEngineer" },
-  { src: "/redtail.png", alt: "Redtail" },
-];
 
-function CompanyLogoCarousel() {
-  const [active, setActive] = React.useState(0);
-
-  React.useEffect(() => {
-    const t = setInterval(() => {
-      setActive((i) => (i + 1) % COMPANY_LOGOS.length);
-    }, 2600);
-    return () => clearInterval(t);
-  }, []);
-
-  const logo = COMPANY_LOGOS[active];
-
-  return (
-    <div className="mt-10 md:mt-12">
-      <div className="flex items-center justify-center">
-        <img
-          key={logo.src}
-          src={logo.src}
-          alt={logo.alt}
-          className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain opacity-60 grayscale transition duration-500"
-        />
-      </div>
-
-      <div className="mt-10 h-px w-full bg-gray-200" />
-
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {COMPANY_LOGOS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={`h-2 rounded-full transition-all ${
-              i === active
-                ? "w-8 bg-gray-400"
-                : "w-2 bg-gray-200 hover:bg-gray-300"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-
+  
   const heroImageRef = useRef<HTMLDivElement | null>(null);
 type FeaturedJob = {
   title: string;
