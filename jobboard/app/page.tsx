@@ -405,9 +405,20 @@ const CATEGORIES = [
 
   <div className="relative max-w-7xl mx-auto px-6">
     {/* Title like screenshot */}
-    <h3 className="text-center text-[22px] sm:text-3xl md:text-4xl font-medium tracking-[0.06em] text-gray-900 uppercase">
-      Popular companies we have worked with
-    </h3>
+  <div className="text-center mb-10 md:mb-14">
+  <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
+    Trusted by teams
+  </p>
+
+  <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+    Popular companies we have worked with
+  </h3>
+
+  <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+    A quick look at teams that trust TechnicalJobboard.
+  </p>
+</div>
+
 
     {/* Logo carousel area */}
     <CompanyLogoCarousel />
