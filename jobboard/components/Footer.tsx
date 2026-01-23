@@ -7,41 +7,41 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden text-white">
-      {/* Background */}
       <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
-        {/* Glows */}
-        <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-        {/* Container */}
-        <div className="relative mx-auto max-w-7xl px-6 pt-1 pb-6">
+        {/* subtle glow */}
+        <div className="pointer-events-none absolute -top-16 -left-16 h-72 w-72 rounded-full bg-[#5F6BF2]/18 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-          {/* LOGO + TAGLINE (TIGHT FIX) */}
+        {/* CONTAINER — NO TOP FAT */}
+        <div className="relative mx-auto max-w-7xl px-6 pt-0 pb-6">
+
+          {/* LOGO + TAGLINE — ULTRA TIGHT */}
           <div className="flex flex-col items-center text-center">
             <img
               src="/logo.png"
               alt="TechnicalJobboard Logo"
               className="
-                w-[200px] sm:w-[240px] md:w-[300px] lg:w-[360px]
+                w-[180px] sm:w-[200px] md:w-[220px]
                 h-auto object-contain
-                drop-shadow-[0_0_22px_rgba(95,107,242,0.25)]
               "
             />
 
-            <p className="mt-0.5 text-white/90 text-sm sm:text-base max-w-xl">
+            {/* GAP ≈ 2 */}
+            <p className="mt-1 text-white/90 text-sm sm:text-base max-w-xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* COLUMNS */}
-          <div className="mt-2 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
-            
+          {/* COLUMNS — FORCED UP */}
+          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+
             {/* Explore */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-base mb-2">Explore</h3>
-              <ul className="space-y-1.5 text-white/80 text-sm">
+              <h3 className="font-semibold text-base mb-1">Explore</h3>
+              <ul className="space-y-1 text-white/80 text-sm">
                 <li className="hover:text-white cursor-pointer">All Jobs</li>
                 <li className="hover:text-white cursor-pointer">Categories</li>
                 <li className="hover:text-white cursor-pointer">Career Resources</li>
@@ -49,25 +49,23 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Newsletter (NO extra text) */}
+            {/* Job Alerts — NO DESCRIPTION */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-base mb-3">Get Job Alerts</h3>
+              <h3 className="font-semibold text-base mb-2">Get Job Alerts</h3>
 
               <div className="w-full max-w-sm flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/10 border border-white/20
+                  className="flex-1 px-4 py-2 rounded-xl bg-white/10 border border-white/20
                              text-white placeholder:text-white/55 outline-none
                              focus:ring-2 focus:ring-[#5F6BF2]/55"
                 />
 
                 <button
                   className="
-                    px-5 py-2.5 rounded-xl font-semibold text-white
-                    bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
-                    hover:from-[#6E78FF] hover:to-[#4B55D8]
-                    shadow-[0_6px_18px_rgba(95,107,242,0.28)]
+                    px-5 py-2 rounded-xl font-semibold text-white
+                    bg-[#5F6BF2] hover:bg-[#4B55D8]
                     transition
                   "
                 >
@@ -85,7 +83,7 @@ export default function Footer() {
                     <a
                       key={i}
                       href="#"
-                      className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
+                      className="h-9 w-9 rounded-xl bg-white/10 border border-white/20
                                  flex items-center justify-center hover:bg-white/15 transition"
                       aria-label="Social link"
                     >
@@ -98,12 +96,12 @@ export default function Footer() {
           </div>
 
           {/* Divider */}
-          <div className="mt-5 h-px bg-white/12" />
+          <div className="mt-4 h-px bg-white/10" />
 
           {/* Bottom */}
-          <div className="mt-3 flex flex-col md:flex-row items-center justify-between gap-3 text-white/65 text-xs sm:text-sm">
+          <div className="mt-2 flex flex-col md:flex-row items-center justify-between gap-2 text-white/65 text-xs sm:text-sm">
             <p>© {year} TechnicalJobboard. All rights reserved.</p>
-            <div className="flex gap-5">
+            <div className="flex gap-4">
               <span className="hover:text-white cursor-pointer">Terms</span>
               <span className="hover:text-white cursor-pointer">Privacy</span>
               <span className="hover:text-white cursor-pointer">Support</span>
