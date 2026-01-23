@@ -232,15 +232,15 @@ const CATEGORIES = [
 {/* ================= HERO (Light, Clean, Virelynx-style) ================= */}
 <section className="relative py-20 md:py-24 overflow-hidden bg-[#F6F7FB]">
   {/* Very subtle background shapes */}
-  <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#3017D3]/5 blur-3xl" />
-  <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#3017D3]/5 blur-3xl" />
+  <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#5F6BF2]/5 blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#5F6BF2]/5 blur-3xl" />
 
   <div className="relative max-w-7xl mx-auto px-6">
     <div className="max-w-3xl">
   
       <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight text-gray-900">
         Discover verified{" "}
-        <span className="text-[#3017D3]">
+        <span className="text-[#5F6BF2]">
           Technical jobs
         </span>
         <br />
@@ -257,22 +257,22 @@ const CATEGORIES = [
           <input
             type="text"
             placeholder="Title / keyword"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#3017D3]/30"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <input
             type="text"
             placeholder="Location (e.g. Remote, New York)"
-            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#3017D3]/30"
+            className="w-full px-5 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm shadow-sm outline-none focus:ring-2 focus:ring-[#5F6BF2]/30"
           />
 
           <button
             className="
               w-full px-5 py-3.5 rounded-xl text-sm font-semibold
               text-white
-              bg-[#3017D3]
-              hover:bg-[#2a12c0]
-              shadow-[0_10px_26px_rgba(48,23,211,0.35)]
+              bg-[#5F6BF2]
+              hover:bg-[#4B55D8]
+              shadow-[0_10px_26px_rgba(95,107,242,0.35)]
               transition
             "
           >
@@ -287,7 +287,7 @@ const CATEGORIES = [
         onClick={() =>
           document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
         }
-        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#3017D3] hover:underline"
+        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#5F6BF2] hover:underline"
       >
         Jump to Jobs <span>↓</span>
       </button>
@@ -296,9 +296,9 @@ const CATEGORIES = [
 </section>
 
 
+
 {/* ================= COMPANIES / TRUSTED TEAMS (ONE-LOGO STYLE) ================= */}
 <section className="relative py-20 md:py-24 bg-gray-50 overflow-hidden">
-  {/* subtle dots texture (optional) */}
   <div className="pointer-events-none absolute inset-0 bg-dots-bg opacity-35" />
 
   <div className="relative max-w-7xl mx-auto px-6">
@@ -315,95 +315,34 @@ const CATEGORIES = [
       </p>
     </div>
 
-    {(() => {
-      const logos = [
-        { src: "/Architects.png", alt: "Architects" },
-        { src: "/vermot.png", alt: "Vermot" },
-        { src: "/Devops.png", alt: "Devops" },
-        { src: "/Hiredengineer.png", alt: "HiredEngineer" },
-        { src: "/redtail.png", alt: "Redtail" },
-      ];
+    {/* Carousel */}
+    <div className="relative max-w-5xl mx-auto">
+      <div className="relative rounded-3xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+        <div className="relative px-6 sm:px-10 py-12 sm:py-14">
+          {/* logo */}
+          <div className="mx-auto flex items-center justify-center h-32 sm:h-36 md:h-44">
+            <img
+              src="/Architects.png"
+              alt="Company logo"
+              className="max-h-20 sm:max-h-24 md:max-h-28 lg:max-h-32
+                         w-auto object-contain opacity-90"
+            />
+          </div>
 
-      const [active, setActive] = React.useState(0);
+          {/* divider */}
+          <div className="mt-10 h-px w-full bg-gray-200" />
 
-      const next = () => setActive((i) => (i + 1) % logos.length);
-      const prev = () => setActive((i) => (i - 1 + logos.length) % logos.length);
-
-      React.useEffect(() => {
-        const t = setInterval(() => {
-          setActive((i) => (i + 1) % logos.length);
-        }, 3200);
-        return () => clearInterval(t);
-      }, [logos.length]);
-
-      return (
-        <div className="relative max-w-5xl mx-auto">
-          {/* main card */}
-          <div className="relative rounded-3xl border border-gray-200 bg-white shadow-xl overflow-hidden">
-            <div className="relative px-6 sm:px-10 py-12 sm:py-14">
-              {/* arrows */}
-              <button
-                type="button"
-                onClick={prev}
-                aria-label="Previous company"
-                className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2
-                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
-                           text-gray-700 shadow-sm hover:bg-gray-50 transition
-                           flex items-center justify-center"
-              >
-                ←
-              </button>
-
-              <button
-                type="button"
-                onClick={next}
-                aria-label="Next company"
-                className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2
-                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
-                           text-gray-700 shadow-sm hover:bg-gray-50 transition
-                           flex items-center justify-center"
-              >
-                →
-              </button>
-
-              {/* logo */}
-              <div className="mx-auto flex items-center justify-center h-32 sm:h-36 md:h-44">
-                <img
-                  key={logos[active].src}
-                  src={logos[active].src}
-                  alt={logos[active].alt}
-                  className="max-h-20 sm:max-h-24 md:max-h-28 lg:max-h-32
-                             w-auto object-contain opacity-90"
-                />
-              </div>
-
-              {/* divider line like your screenshot */}
-              <div className="mt-10 h-px w-full bg-gray-200" />
-
-              {/* dots */}
-              <div className="mt-6 flex items-center justify-center gap-2">
-                {logos.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setActive(i)}
-                    aria-label={`Go to company ${i + 1}`}
-                    className={`h-2.5 rounded-full transition-all ${
-                      i === active
-                        ? "w-8 bg-[#3017D3]"
-                        : "w-2.5 bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
+          {/* dots */}
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <button className="h-2.5 w-8 rounded-full bg-[#5F6BF2]" />
+            <button className="h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-gray-400" />
+            <button className="h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-gray-400" />
           </div>
         </div>
-      );
-    })()}
+      </div>
+    </div>
   </div>
 </section>
-
 
 
 
