@@ -22,6 +22,58 @@ type CategoryGroup = {
 };
 
 export default function Home() {
+
+const COMPANY_LOGOS = [
+  { src: "/Architects.png", alt: "Architects" },
+  { src: "/vermot.png", alt: "Vermot" },
+  { src: "/Devops.png", alt: "Devops" },
+  { src: "/Hiredengineer.png", alt: "HiredEngineer" },
+  { src: "/redtail.png", alt: "Redtail" },
+];
+
+function CompanyLogoCarousel() {
+  const [active, setActive] = React.useState(0);
+
+  React.useEffect(() => {
+    const t = setInterval(() => {
+      setActive((i) => (i + 1) % COMPANY_LOGOS.length);
+    }, 2600);
+    return () => clearInterval(t);
+  }, []);
+
+  const logo = COMPANY_LOGOS[active];
+
+  return (
+    <div className="mt-10 md:mt-12">
+      <div className="flex items-center justify-center">
+        <img
+          key={logo.src}
+          src={logo.src}
+          alt={logo.alt}
+          className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain opacity-60 grayscale transition duration-500"
+        />
+      </div>
+
+      <div className="mt-10 h-px w-full bg-gray-200" />
+
+      <div className="mt-6 flex items-center justify-center gap-2">
+        {COMPANY_LOGOS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`h-2 rounded-full transition-all ${
+              i === active
+                ? "w-8 bg-gray-400"
+                : "w-2 bg-gray-200 hover:bg-gray-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
   const heroImageRef = useRef<HTMLDivElement | null>(null);
 type FeaturedJob = {
   title: string;
@@ -356,102 +408,22 @@ const CATEGORIES = [
 
 
 
-{/* ================= COMPANIES / TRUSTED TEAMS (ONE-LOGO CAROUSEL) ================= */}
-<section className="relative py-20 md:py-24 bg-gray-50 overflow-hidden">
-  <div className="pointer-events-none absolute inset-0 bg-dots-bg opacity-35" />
+{/* ================= COMPANIES / TRUSTED TEAMS (VIRELYNX-STYLE) ================= */}
+<section className="relative py-16 md:py-20 bg-white overflow-hidden">
+  {/* optional: very light texture */}
+  <div className="pointer-events-none absolute inset-0 bg-dots-bg opacity-20" />
 
   <div className="relative max-w-7xl mx-auto px-6">
-    <div className="text-center mb-10 md:mb-14">
-      <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
-        Trusted by teams
-      </p>
-      <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-        Popular companies we have worked with
-      </h3>
-      <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-        A quick look at teams that trust TechnicalJobboard.
-      </p>
-    </div>
+    {/* Title like screenshot */}
+    <h3 className="text-center text-[22px] sm:text-3xl md:text-4xl font-medium tracking-[0.06em] text-gray-900 uppercase">
+      Popular companies we have worked with
+    </h3>
 
-    {(() => {
-      const [active, setActive] = React.useState(0);
-
-      const next = () => setActive((i) => (i + 1) % COMPANY_LOGOS.length);
-      const prev = () => setActive((i) => (i - 1 + COMPANY_LOGOS.length) % COMPANY_LOGOS.length);
-
-      React.useEffect(() => {
-        const t = setInterval(() => {
-          setActive((i) => (i + 1) % COMPANY_LOGOS.length);
-        }, 3200);
-        return () => clearInterval(t);
-      }, []);
-
-      return (
-        <div className="relative max-w-5xl mx-auto">
-          <div className="relative rounded-3xl border border-gray-200 bg-white shadow-xl overflow-hidden">
-            <div className="relative px-6 sm:px-10 py-12 sm:py-14">
-              {/* arrows */}
-              <button
-                type="button"
-                onClick={prev}
-                aria-label="Previous company"
-                className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2
-                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
-                           text-gray-700 shadow-sm hover:bg-gray-50 transition
-                           flex items-center justify-center"
-              >
-                ←
-              </button>
-
-              <button
-                type="button"
-                onClick={next}
-                aria-label="Next company"
-                className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2
-                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
-                           text-gray-700 shadow-sm hover:bg-gray-50 transition
-                           flex items-center justify-center"
-              >
-                →
-              </button>
-
-              {/* logo */}
-              <div className="mx-auto flex items-center justify-center h-32 sm:h-36 md:h-44">
-                <img
-                  key={COMPANY_LOGOS[active].src}
-                  src={COMPANY_LOGOS[active].src}
-                  alt={COMPANY_LOGOS[active].alt}
-                  className="max-h-20 sm:max-h-24 md:max-h-28 lg:max-h-32
-                             w-auto object-contain opacity-95"
-                />
-              </div>
-
-              {/* divider line (like screenshot) */}
-              <div className="mt-10 h-px w-full bg-gray-200" />
-
-              {/* dots */}
-              <div className="mt-6 flex items-center justify-center gap-2">
-                {COMPANY_LOGOS.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setActive(i)}
-                    aria-label={`Go to company ${i + 1}`}
-                    className={`h-2.5 rounded-full transition-all ${
-                      i === active
-                        ? "w-8 bg-[#5F6BF2]"
-                        : "w-2.5 bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    })()}
+    {/* Logo carousel area */}
+    <CompanyLogoCarousel />
   </div>
 </section>
+
 
 
 
