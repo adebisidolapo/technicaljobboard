@@ -496,7 +496,6 @@ const CATEGORIES = [
               ?.scrollBy({ left: -420, behavior: "smooth" })
           }
           className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
-          aria-label="Scroll left"
         >
           ←
         </button>
@@ -509,7 +508,6 @@ const CATEGORIES = [
               ?.scrollBy({ left: 420, behavior: "smooth" })
           }
           className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
-          aria-label="Scroll right"
         >
           →
         </button>
@@ -526,77 +524,26 @@ const CATEGORIES = [
         id="featured-carousel"
         className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-12"
       >
-        {[
-          {
-            title: "Senior Frontend Engineer",
-            company: "NovaTech",
-            location: "Remote",
-            type: "Full-time",
-            pay: "$120k – $160k",
-            posted: "2 days ago",
-            verified: true,
-          },
-          {
-            title: "Backend Engineer (Node/Go)",
-            company: "TechNova",
-            location: "Austin, TX",
-            type: "Full-time",
-            pay: "$130k – $175k",
-            posted: "3 days ago",
-            verified: true,
-          },
-          {
-            title: "DevOps / Platform Engineer",
-            company: "CloudSprint",
-            location: "Remote",
-            type: "Full-time",
-            pay: "$140k – $190k",
-            posted: "5 days ago",
-            verified: false,
-          },
-          {
-            title: "Product Designer",
-            company: "Launchify",
-            location: "San Francisco, CA",
-            type: "Contract",
-            pay: "$8,000 / month",
-            posted: "4 days ago",
-            verified: true,
-          },
-          {
-            title: "Data Engineer",
-            company: "SignalWorks",
-            location: "New York, NY",
-            type: "Full-time",
-            pay: "$125k – $165k",
-            posted: "1 week ago",
-            verified: false,
-          },
-        ].map((job, idx) => (
+        {[/* jobs */].map((job, idx) => (
           <div
             key={idx}
             className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
                        bg-white rounded-2xl shadow-sm hover:shadow-lg transition
                        border border-gray-200 relative overflow-hidden"
           >
-            {/* Dark accent bar (footer tone) */}
-<div className="absolute left-0 top-0 h-full w-1.5 bg-[#3017D3]" />
+            {/* Accent bar */}
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-[#5F6BF2]" />
 
             <div className="p-6 pl-8">
               {/* Top row */}
               <div className="flex items-center justify-between mb-4">
-                {job.verified ? (
-    <span
-  className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
-             bg-[#F6F2FF] text-[#3017D3] border border-[#3017D3]/25"
->
-  <span className="h-2 w-2 rounded-full bg-[#3017D3]" />
-  Featured
-</span>
-
-                ) : (
-                  <span className="text-xs text-gray-400">Featured</span>
-                )}
+                <span
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
+                             bg-[#EEF0FF] text-[#5F6BF2] border border-[#5F6BF2]/25"
+                >
+                  <span className="h-2 w-2 rounded-full bg-[#5F6BF2]" />
+                  Featured
+                </span>
 
                 <button
                   aria-label="Save job"
@@ -613,7 +560,7 @@ const CATEGORIES = [
                 </div>
 
                 <div className="min-w-0">
-                  <h3 className="text-lg font-semibold text-[#0F1426] leading-snug truncate">
+                  <h3 className="text-lg font-semibold text-[#0F1426] truncate">
                     {job.title}
                   </h3>
                   <p className="text-sm text-gray-600 truncate">
@@ -639,16 +586,16 @@ const CATEGORIES = [
               {/* Footer */}
               <div className="mt-6 flex justify-between items-center">
                 <button
-  className="
-    px-4 py-2 rounded-lg text-sm font-medium text-white
-    bg-gradient-to-b from-[#3017D3] to-[#2a12c0]
-    hover:from-[#3a22e6] hover:to-[#2a12c0]
-    shadow-[0_6px_18px_rgba(48,23,211,0.35)]
-    transition
-  "
->
-  View
-</button>
+                  className="
+                    px-4 py-2 rounded-lg text-sm font-medium text-white
+                    bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
+                    hover:from-[#6E78FF] hover:to-[#4B55D8]
+                    shadow-[0_6px_18px_rgba(95,107,242,0.35)]
+                    transition
+                  "
+                >
+                  View
+                </button>
 
                 <span className="text-xs text-gray-400">
                   Posted {job.posted}
@@ -661,6 +608,7 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
+
 
 
 
