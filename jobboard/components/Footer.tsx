@@ -7,16 +7,22 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden text-white">
-      <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
-        {/* Glows */}
-        <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
+      {/* SOLID background (no gradient) */}
+      <div className="relative bg-[#0F1426]">
+        {/* Glows (keep subtle) */}
+        <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-[#5F6BF2]/18 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-28 h-[460px] w-[460px] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-6 pt-10 pb-8">
-          {/* ===== 3 COLUMNS ===== */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-center">
-            {/* LEFT — LOGO + TAGLINE */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          {/* ===== TOP GRID ===== */}
+          {/* Logo back in the middle. Explore sits under the logo (middle column). Connect stays right but centered. */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
+            {/* LEFT — (empty spacer on desktop for balance) */}
+            <div className="hidden md:block" />
+
+            {/* MIDDLE — LOGO + EXPLORE */}
+            <div className="flex flex-col items-center text-center">
+              {/* Logo centered */}
               <img
                 src="/logo.png"
                 alt="TechnicalJobboard Logo"
@@ -30,27 +36,20 @@ export default function Footer() {
                 "
               />
 
-              {/* tight, directly under logo */}
-              <p className="mt-2 text-white/90 text-sm sm:text-base max-w-md">
-                Discover vetted{" "}
-                <span className="font-semibold text-white">Technical jobs</span>{" "}
-                and career-defining opportunities.
-              </p>
+              {/* Explore moved to “where the logo is” (same middle column, directly under) */}
+              <div className="mt-6">
+                <h3 className="font-semibold text-base mb-3">Explore</h3>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="hover:text-white cursor-pointer">All Jobs</li>
+                  <li className="hover:text-white cursor-pointer">Categories</li>
+                  <li className="hover:text-white cursor-pointer">Career Resources</li>
+                  <li className="hover:text-white cursor-pointer">Contact</li>
+                </ul>
+              </div>
             </div>
 
-            {/* MIDDLE — EXPLORE */}
-            <div className="flex flex-col items-center text-center">
-              <h3 className="font-semibold text-base mb-3">Explore</h3>
-              <ul className="space-y-2 text-white/80 text-sm">
-                <li className="hover:text-white cursor-pointer">All Jobs</li>
-                <li className="hover:text-white cursor-pointer">Categories</li>
-                <li className="hover:text-white cursor-pointer">Career Resources</li>
-                <li className="hover:text-white cursor-pointer">Contact</li>
-              </ul>
-            </div>
-
-            {/* RIGHT — CONNECT + FORM */}
-            <div className="flex flex-col items-center md:items-end text-center md:text-right">
+            {/* RIGHT — CONNECT (center it, keep it on the right column) */}
+            <div className="flex flex-col items-center md:items-center text-center">
               <h3 className="font-semibold text-base mb-3">Connect</h3>
 
               <div className="flex gap-3 mb-4">
@@ -68,7 +67,7 @@ export default function Footer() {
               </div>
 
               {/* Form under icons */}
-              <div className="w-full max-w-[360px] md:max-w-[340px] flex gap-2 justify-center md:justify-end">
+              <div className="w-full max-w-[360px] flex gap-2 justify-center">
                 <input
                   type="email"
                   placeholder="Your email"
@@ -78,8 +77,7 @@ export default function Footer() {
                 />
                 <button
                   className="px-5 py-2.5 rounded-xl font-semibold text-white
-                             bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
-                             hover:from-[#6E78FF] hover:to-[#4B55D8]
+                             bg-[#5F6BF2] hover:bg-[#4B55D8]
                              shadow-[0_6px_18px_rgba(95,107,242,0.28)]
                              transition"
                 >
@@ -90,7 +88,7 @@ export default function Footer() {
           </div>
 
           {/* Divider */}
-          <div className="mt-8 h-px bg-white/12" />
+          <div className="mt-10 h-px bg-white/12" />
 
           {/* Bottom */}
           <div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-3 text-white/65 text-xs sm:text-sm">
