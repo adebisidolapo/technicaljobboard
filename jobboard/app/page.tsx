@@ -300,7 +300,7 @@ const CATEGORIES = [
     <div className="max-w-3xl">
   
       <h1 className="text-[2.4rem] sm:text-4xl md:text-[3.1rem] font-extrabold leading-[1.12] tracking-tight text-gray-900">
-        Discover verified{" "}
+        Discover vetted{" "}
         <span className="text-[#5F6BF2]">
           Technical jobs
         </span>
@@ -872,11 +872,11 @@ const CATEGORIES = [
 {/* ============ EMPOWERING JOB SEEKERS ================= */}
 <section
   id="empowering"
-  className="relative py-28 overflow-hidden bg-gradient-to-br from-[#F6F2FF] via-white to-[#F9F7FF]"
+  className="relative py-28 overflow-hidden bg-gradient-to-br from-[#F1F3FF] via-white to-[#F7F8FF]"
 >
   {/* Decorative background accents */}
-  <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#6F00FC]/10 blur-3xl" />
-  <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#8C33FD]/10 blur-3xl" />
+  <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#5F6BF2]/10 blur-3xl" />
+  <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#4B55D8]/10 blur-3xl" />
 
   <div className="relative max-w-6xl mx-auto px-6">
     <div className="reveal flex flex-col md:flex-row items-center gap-14">
@@ -893,7 +893,7 @@ const CATEGORIES = [
 
       {/* Content */}
       <div className="md:w-1/2 w-full">
-        <span className="inline-block mb-4 text-sm font-semibold text-[#6F00FC] bg-[#F0EBFF] px-4 py-1.5 rounded-full">
+        <span className="inline-block mb-4 text-sm font-semibold text-[#5F6BF2] bg-[#EEF0FF] px-4 py-1.5 rounded-full">
           Built for Technical Careers
         </span>
 
@@ -908,15 +908,15 @@ const CATEGORIES = [
 
         <ul className="space-y-3 mb-8 text-gray-700">
           <li className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+            <span className="h-2 w-2 rounded-full bg-[#5F6BF2]" />
             Verified Technical opportunities only
           </li>
           <li className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+            <span className="h-2 w-2 rounded-full bg-[#5F6BF2]" />
             Clear expectations & salary visibility
           </li>
           <li className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-[#6F00FC]" />
+            <span className="h-2 w-2 rounded-full bg-[#5F6BF2]" />
             Roles built for growth, not churn
           </li>
         </ul>
@@ -924,8 +924,10 @@ const CATEGORIES = [
         {/* Scroll to All Jobs */}
         <button
           type="button"
-          onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
-          className="inline-flex items-center gap-3 bg-[#6F00FC] hover:bg-[#8C33FD]
+          onClick={() =>
+            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="inline-flex items-center gap-3 bg-[#5F6BF2] hover:bg-[#4B55D8]
                      text-white px-7 py-3 rounded-2xl font-semibold transition shadow-lg hover:shadow-xl"
         >
           Get Started
@@ -937,6 +939,7 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
+
 
     </main>
   );
