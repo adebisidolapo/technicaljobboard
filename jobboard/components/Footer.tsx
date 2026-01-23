@@ -9,13 +9,13 @@ export default function Footer() {
     <footer className="relative overflow-hidden text-white">
       {/* Background */}
       <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
-        {/* Glows (updated to new purple) */}
+        {/* Glows */}
         <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-        {/* Container (LESS vertical padding) */}
-        <div className="relative mx-auto max-w-7xl px-6 pt-4 pb-8">
-          {/* LOGO + TAGLINE (TIGHT) */}
+        {/* Container (TIGHTER vertical padding) */}
+        <div className="relative mx-auto max-w-7xl px-6 pt-2 pb-7">
+          {/* LOGO + TAGLINE (CLOSER) */}
           <div className="flex flex-col items-center text-center">
             <img
               src="/logo.png"
@@ -30,15 +30,16 @@ export default function Footer() {
               "
             />
 
-            <p className="mt-2 text-white/90 text-sm sm:text-base max-w-xl">
+            {/* smaller gap under logo */}
+            <p className="mt-1 text-white/90 text-sm sm:text-base max-w-xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* COLUMNS (PULLED UP HARD) */}
-          <div className="mt-4 md:mt-5 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
+          {/* COLUMNS (PULLED UP MORE) */}
+          <div className="mt-3 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
             {/* Explore */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-base mb-2">Explore</h3>
@@ -55,9 +56,6 @@ export default function Footer() {
             {/* Newsletter */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-base mb-2">Get Job Alerts</h3>
-              <p className="text-white/80 text-sm mb-2 max-w-sm">
-                Weekly updates — no spam.
-              </p>
 
               <div className="w-full max-w-sm flex gap-2">
                 <input
@@ -104,9 +102,9 @@ export default function Footer() {
           </div>
 
           {/* Divider (closer) */}
-          <div className="mt-6 h-px bg-white/12" />
+          <div className="mt-5 h-px bg-white/12" />
 
-          {/* Bottom (tight) */}
+          {/* Bottom */}
           <div className="mt-3 flex flex-col md:flex-row items-center justify-between gap-3 text-white/65 text-xs sm:text-sm">
             <p>© {year} TechnicalJobboard. All rights reserved.</p>
             <div className="flex gap-5">
