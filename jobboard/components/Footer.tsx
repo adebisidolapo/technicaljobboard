@@ -7,41 +7,43 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden text-white">
+      {/* Background */}
       <div className="relative bg-gradient-to-b from-[#1A2040] via-[#141A2F] to-[#0F1426]">
+        {/* Glows */}
+        <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-        {/* subtle glow */}
-        <div className="pointer-events-none absolute -top-16 -left-16 h-72 w-72 rounded-full bg-[#5F6BF2]/18 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-[#5F6BF2]/12 blur-3xl" />
-
-        {/* CONTAINER — NO TOP FAT */}
-        <div className="relative mx-auto max-w-7xl px-6 pt-0 pb-6">
-
-          {/* LOGO + TAGLINE — ULTRA TIGHT */}
+        <div className="relative mx-auto max-w-7xl px-6 pt-4 pb-8">
+          {/* LOGO + TAGLINE */}
           <div className="flex flex-col items-center text-center">
+            {/* Keep logo size EXACTLY as you had it */}
             <img
               src="/logo.png"
               alt="TechnicalJobboard Logo"
               className="
-                w-[180px] sm:w-[200px] md:w-[220px]
+                w-[240px]
+                sm:w-[280px]
+                md:w-[330px]
+                lg:w-[380px]
                 h-auto object-contain
+                drop-shadow-[0_0_28px_rgba(95,107,242,0.28)]
               "
             />
 
-            {/* GAP ≈ 2 */}
-            <p className="mt-1 text-white/90 text-sm sm:text-base max-w-xl">
+            {/* Pull text up into the logo’s transparent padding */}
+            <p className="-mt-8 sm:-mt-9 md:-mt-10 lg:-mt-10 text-white/90 text-sm sm:text-base max-w-xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* COLUMNS — FORCED UP */}
-          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-
+          {/* Pull the columns up as well (this is the big fix) */}
+          <div className="mt-2 md:mt-3 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
             {/* Explore */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-base mb-1">Explore</h3>
-              <ul className="space-y-1 text-white/80 text-sm">
+              <h3 className="font-semibold text-base mb-2">Explore</h3>
+              <ul className="space-y-1.5 text-white/80 text-sm">
                 <li className="hover:text-white cursor-pointer">All Jobs</li>
                 <li className="hover:text-white cursor-pointer">Categories</li>
                 <li className="hover:text-white cursor-pointer">Career Resources</li>
@@ -49,23 +51,27 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Job Alerts — NO DESCRIPTION */}
+            {/* Newsletter */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-base mb-2">Get Job Alerts</h3>
+
+              {/* removed "Weekly updates — no spam." */}
 
               <div className="w-full max-w-sm flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-4 py-2 rounded-xl bg-white/10 border border-white/20
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/10 border border-white/20
                              text-white placeholder:text-white/55 outline-none
                              focus:ring-2 focus:ring-[#5F6BF2]/55"
                 />
 
                 <button
                   className="
-                    px-5 py-2 rounded-xl font-semibold text-white
-                    bg-[#5F6BF2] hover:bg-[#4B55D8]
+                    px-5 py-2.5 rounded-xl font-semibold text-white
+                    bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
+                    hover:from-[#6E78FF] hover:to-[#4B55D8]
+                    shadow-[0_6px_18px_rgba(95,107,242,0.28)]
                     transition
                   "
                 >
@@ -78,36 +84,33 @@ export default function Footer() {
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-base mb-2">Connect</h3>
               <div className="flex gap-3">
-                {[FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub].map(
-                  (Icon, i) => (
-                    <a
-                      key={i}
-                      href="#"
-                      className="h-9 w-9 rounded-xl bg-white/10 border border-white/20
-                                 flex items-center justify-center hover:bg-white/15 transition"
-                      aria-label="Social link"
-                    >
-                      <Icon />
-                    </a>
-                  )
-                )}
+                {[FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
+                               flex items-center justify-center hover:bg-white/15 transition"
+                    aria-label="Social link"
+                  >
+                    <Icon />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="mt-4 h-px bg-white/10" />
+          <div className="mt-6 h-px bg-white/12" />
 
           {/* Bottom */}
-          <div className="mt-2 flex flex-col md:flex-row items-center justify-between gap-2 text-white/65 text-xs sm:text-sm">
+          <div className="mt-3 flex flex-col md:flex-row items-center justify-between gap-3 text-white/65 text-xs sm:text-sm">
             <p>© {year} TechnicalJobboard. All rights reserved.</p>
-            <div className="flex gap-4">
+            <div className="flex gap-5">
               <span className="hover:text-white cursor-pointer">Terms</span>
               <span className="hover:text-white cursor-pointer">Privacy</span>
               <span className="hover:text-white cursor-pointer">Support</span>
             </div>
           </div>
-
         </div>
       </div>
     </footer>
