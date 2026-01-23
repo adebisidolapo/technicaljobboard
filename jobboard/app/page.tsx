@@ -23,6 +23,67 @@ type CategoryGroup = {
 
 export default function Home() {
   const heroImageRef = useRef<HTMLDivElement | null>(null);
+type FeaturedJob = {
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  pay: string;
+  posted: string;
+};
+
+const FEATURED_JOBS: FeaturedJob[] = [
+  {
+    title: "Senior Frontend Engineer",
+    company: "NovaTech",
+    location: "Remote",
+    type: "Full-time",
+    pay: "$120k – $160k",
+    posted: "2 days ago",
+  },
+  {
+    title: "Backend Engineer (Node/Go)",
+    company: "TechNova",
+    location: "Austin, TX",
+    type: "Full-time",
+    pay: "$130k – $175k",
+    posted: "3 days ago",
+  },
+  {
+    title: "DevOps / Platform Engineer",
+    company: "CloudSprint",
+    location: "Remote",
+    type: "Full-time",
+    pay: "$140k – $190k",
+    posted: "5 days ago",
+  },
+  {
+    title: "Product Designer",
+    company: "Launchify",
+    location: "San Francisco, CA",
+    type: "Contract",
+    pay: "$8,000 / month",
+    posted: "4 days ago",
+  },
+  {
+    title: "Data Engineer",
+    company: "SignalWorks",
+    location: "New York, NY",
+    type: "Full-time",
+    pay: "$125k – $165k",
+    posted: "1 week ago",
+  },
+];
+
+type CompanyLogo = { src: string; alt: string };
+
+const COMPANY_LOGOS: CompanyLogo[] = [
+  { src: "/Architects.png", alt: "Architects" },
+  { src: "/vermot.png", alt: "Vermot" },
+  { src: "/Devops.png", alt: "Devops" },
+  { src: "/Hiredengineer.png", alt: "HiredEngineer" },
+  { src: "/redtail.png", alt: "Redtail" },
+];
 
 const CATEGORIES = [
   { label: "Healthcare IT", slug: "healthcare-it" },
@@ -297,12 +358,11 @@ const CATEGORIES = [
 
 
 
-{/* ================= COMPANIES / TRUSTED TEAMS (ONE-LOGO STYLE) ================= */}
+{/* ================= COMPANIES / TRUSTED TEAMS (ONE-LOGO CAROUSEL) ================= */}
 <section className="relative py-20 md:py-24 bg-gray-50 overflow-hidden">
   <div className="pointer-events-none absolute inset-0 bg-dots-bg opacity-35" />
 
   <div className="relative max-w-7xl mx-auto px-6">
-    {/* Header */}
     <div className="text-center mb-10 md:mb-14">
       <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
         Trusted by teams
@@ -315,34 +375,86 @@ const CATEGORIES = [
       </p>
     </div>
 
-    {/* Carousel */}
-    <div className="relative max-w-5xl mx-auto">
-      <div className="relative rounded-3xl border border-gray-200 bg-white shadow-xl overflow-hidden">
-        <div className="relative px-6 sm:px-10 py-12 sm:py-14">
-          {/* logo */}
-          <div className="mx-auto flex items-center justify-center h-32 sm:h-36 md:h-44">
-            <img
-              src="/Architects.png"
-              alt="Company logo"
-              className="max-h-20 sm:max-h-24 md:max-h-28 lg:max-h-32
-                         w-auto object-contain opacity-90"
-            />
-          </div>
+    {(() => {
+      const [active, setActive] = React.useState(0);
 
-          {/* divider */}
-          <div className="mt-10 h-px w-full bg-gray-200" />
+      const next = () => setActive((i) => (i + 1) % COMPANY_LOGOS.length);
+      const prev = () => setActive((i) => (i - 1 + COMPANY_LOGOS.length) % COMPANY_LOGOS.length);
 
-          {/* dots */}
-          <div className="mt-6 flex items-center justify-center gap-2">
-            <button className="h-2.5 w-8 rounded-full bg-[#5F6BF2]" />
-            <button className="h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-gray-400" />
-            <button className="h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-gray-400" />
+      React.useEffect(() => {
+        const t = setInterval(() => {
+          setActive((i) => (i + 1) % COMPANY_LOGOS.length);
+        }, 3200);
+        return () => clearInterval(t);
+      }, []);
+
+      return (
+        <div className="relative max-w-5xl mx-auto">
+          <div className="relative rounded-3xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+            <div className="relative px-6 sm:px-10 py-12 sm:py-14">
+              {/* arrows */}
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous company"
+                className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2
+                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
+                           text-gray-700 shadow-sm hover:bg-gray-50 transition
+                           flex items-center justify-center"
+              >
+                ←
+              </button>
+
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next company"
+                className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2
+                           h-11 w-11 rounded-2xl border border-gray-200 bg-white
+                           text-gray-700 shadow-sm hover:bg-gray-50 transition
+                           flex items-center justify-center"
+              >
+                →
+              </button>
+
+              {/* logo */}
+              <div className="mx-auto flex items-center justify-center h-32 sm:h-36 md:h-44">
+                <img
+                  key={COMPANY_LOGOS[active].src}
+                  src={COMPANY_LOGOS[active].src}
+                  alt={COMPANY_LOGOS[active].alt}
+                  className="max-h-20 sm:max-h-24 md:max-h-28 lg:max-h-32
+                             w-auto object-contain opacity-95"
+                />
+              </div>
+
+              {/* divider line (like screenshot) */}
+              <div className="mt-10 h-px w-full bg-gray-200" />
+
+              {/* dots */}
+              <div className="mt-6 flex items-center justify-center gap-2">
+                {COMPANY_LOGOS.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={`Go to company ${i + 1}`}
+                    className={`h-2.5 rounded-full transition-all ${
+                      i === active
+                        ? "w-8 bg-[#5F6BF2]"
+                        : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      );
+    })()}
   </div>
 </section>
+
 
 
 
@@ -405,16 +517,12 @@ const CATEGORIES = [
 </section>
 
 
-
-{/* ================= FEATURED JOBS (FOOTER-TONE, NO PINK) ================= */}
+{/* ================= FEATURED JOBS ================= */}
 <section className="relative py-24 border-y border-gray-200 overflow-hidden bg-[#F7F8FC]">
-
-  {/* Subtle dark glow (footer-family, not purple) */}
   <div className="pointer-events-none absolute -top-32 -left-32 w-[36rem] h-[36rem] rounded-full bg-[#1A2040]/10 blur-3xl" />
   <div className="pointer-events-none absolute -bottom-32 -right-32 w-[36rem] h-[36rem] rounded-full bg-[#0F1426]/10 blur-3xl" />
 
   <div className="relative w-full">
-    {/* Header */}
     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
       <div>
         <h2 className="text-3xl font-semibold tracking-tight text-[#0F1426]">
@@ -425,16 +533,14 @@ const CATEGORIES = [
         </p>
       </div>
 
-      {/* Carousel controls */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() =>
-            document
-              .getElementById("featured-carousel")
-              ?.scrollBy({ left: -420, behavior: "smooth" })
+            document.getElementById("featured-carousel")?.scrollBy({ left: -420, behavior: "smooth" })
           }
           className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
+          aria-label="Scroll left"
         >
           ←
         </button>
@@ -442,20 +548,17 @@ const CATEGORIES = [
         <button
           type="button"
           onClick={() =>
-            document
-              .getElementById("featured-carousel")
-              ?.scrollBy({ left: 420, behavior: "smooth" })
+            document.getElementById("featured-carousel")?.scrollBy({ left: 420, behavior: "smooth" })
           }
           className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
+          aria-label="Scroll right"
         >
           →
         </button>
       </div>
     </div>
 
-    {/* Carousel */}
     <div className="relative w-full">
-      {/* Edge fades */}
       <div className="pointer-events-none absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-[#F7F8FC] to-transparent z-10" />
       <div className="pointer-events-none absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-[#F7F8FC] to-transparent z-10" />
 
@@ -463,18 +566,16 @@ const CATEGORIES = [
         id="featured-carousel"
         className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-12"
       >
-        {[/* jobs */].map((job, idx) => (
+        {FEATURED_JOBS.map((job, idx) => (
           <div
             key={idx}
             className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
                        bg-white rounded-2xl shadow-sm hover:shadow-lg transition
                        border border-gray-200 relative overflow-hidden"
           >
-            {/* Accent bar */}
             <div className="absolute left-0 top-0 h-full w-1.5 bg-[#5F6BF2]" />
 
             <div className="p-6 pl-8">
-              {/* Top row */}
               <div className="flex items-center justify-between mb-4">
                 <span
                   className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
@@ -484,31 +585,24 @@ const CATEGORIES = [
                   Featured
                 </span>
 
-                <button
-                  aria-label="Save job"
-                  className="text-gray-400 hover:text-[#1A2040] transition"
-                >
+                <button aria-label="Save job" className="text-gray-400 hover:text-[#1A2040] transition">
                   ★
                 </button>
               </div>
 
-              {/* Title row */}
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#1A2040] text-white flex items-center justify-center font-bold shadow-sm">
                   {job.company.charAt(0)}
                 </div>
 
                 <div className="min-w-0">
-                  <h3 className="text-lg font-semibold text-[#0F1426] truncate">
-                    {job.title}
-                  </h3>
+                  <h3 className="text-lg font-semibold text-[#0F1426] truncate">{job.title}</h3>
                   <p className="text-sm text-gray-600 truncate">
                     {job.company} • {job.location}
                   </p>
                 </div>
               </div>
 
-              {/* Meta */}
               <div className="flex flex-wrap gap-2 mt-4">
                 <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
                   {job.type}
@@ -522,23 +616,18 @@ const CATEGORIES = [
                 Fast hiring teams, clear expectations, and modern workflows.
               </p>
 
-              {/* Footer */}
               <div className="mt-6 flex justify-between items-center">
                 <button
-                  className="
-                    px-4 py-2 rounded-lg text-sm font-medium text-white
-                    bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
-                    hover:from-[#6E78FF] hover:to-[#4B55D8]
-                    shadow-[0_6px_18px_rgba(95,107,242,0.35)]
-                    transition
-                  "
+                  className="px-4 py-2 rounded-lg text-sm font-medium text-white
+                             bg-gradient-to-b from-[#5F6BF2] to-[#4B55D8]
+                             hover:from-[#6E78FF] hover:to-[#4B55D8]
+                             shadow-[0_6px_18px_rgba(95,107,242,0.35)]
+                             transition"
                 >
                   View
                 </button>
 
-                <span className="text-xs text-gray-400">
-                  Posted {job.posted}
-                </span>
+                <span className="text-xs text-gray-400">Posted {job.posted}</span>
               </div>
             </div>
           </div>
@@ -547,7 +636,6 @@ const CATEGORIES = [
     </div>
   </div>
 </section>
-
 
 
 
