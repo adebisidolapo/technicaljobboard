@@ -13,49 +13,45 @@ export default function Footer() {
         <div className="pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full bg-[#5F6BF2]/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full bg-[#5F6BF2]/12 blur-3xl" />
 
-        {/* Container (TIGHTER vertical padding) */}
-        <div className="relative mx-auto max-w-7xl px-6 pt-2 pb-7">
-          {/* LOGO + TAGLINE (CLOSER) */}
+        {/* Container */}
+        <div className="relative mx-auto max-w-7xl px-6 pt-1 pb-6">
+
+          {/* LOGO + TAGLINE (TIGHT FIX) */}
           <div className="flex flex-col items-center text-center">
             <img
               src="/logo.png"
               alt="TechnicalJobboard Logo"
               className="
-                w-[240px]
-                sm:w-[280px]
-                md:w-[330px]
-                lg:w-[380px]
+                w-[200px] sm:w-[240px] md:w-[300px] lg:w-[360px]
                 h-auto object-contain
-                drop-shadow-[0_0_28px_rgba(95,107,242,0.28)]
+                drop-shadow-[0_0_22px_rgba(95,107,242,0.25)]
               "
             />
 
-            {/* smaller gap under logo */}
-            <p className="mt-1 text-white/90 text-sm sm:text-base max-w-xl">
+            <p className="mt-0.5 text-white/90 text-sm sm:text-base max-w-xl">
               Discover verified{" "}
               <span className="font-semibold text-white">Technical jobs</span>{" "}
               and career-defining opportunities.
             </p>
           </div>
 
-          {/* COLUMNS (PULLED UP MORE) */}
-          <div className="mt-3 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
+          {/* COLUMNS */}
+          <div className="mt-2 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
+            
             {/* Explore */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-base mb-2">Explore</h3>
               <ul className="space-y-1.5 text-white/80 text-sm">
                 <li className="hover:text-white cursor-pointer">All Jobs</li>
                 <li className="hover:text-white cursor-pointer">Categories</li>
-                <li className="hover:text-white cursor-pointer">
-                  Career Resources
-                </li>
+                <li className="hover:text-white cursor-pointer">Career Resources</li>
                 <li className="hover:text-white cursor-pointer">Contact</li>
               </ul>
             </div>
 
-            {/* Newsletter */}
+            {/* Newsletter (NO extra text) */}
             <div className="flex flex-col items-center">
-              <h3 className="font-semibold text-base mb-2">Get Job Alerts</h3>
+              <h3 className="font-semibold text-base mb-3">Get Job Alerts</h3>
 
               <div className="w-full max-w-sm flex gap-2">
                 <input
@@ -101,7 +97,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Divider (closer) */}
+          {/* Divider */}
           <div className="mt-5 h-px bg-white/12" />
 
           {/* Bottom */}
@@ -113,6 +109,7 @@ export default function Footer() {
               <span className="hover:text-white cursor-pointer">Support</span>
             </div>
           </div>
+
         </div>
       </div>
     </footer>
