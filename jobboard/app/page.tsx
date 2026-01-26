@@ -35,6 +35,7 @@ const CATEGORIES = [
 
 export default function Home() {
   const heroImageRef = useRef<HTMLDivElement | null>(null);
+const [categoryQuery, setCategoryQuery] = useState("");
 
   const ALL_CATEGORIES = CATEGORIES;
 
