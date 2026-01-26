@@ -332,11 +332,11 @@ const CATEGORIES = [
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-{/* ================= HERO (Clean, premium, reference-style) ================= */}
-<section className="relative overflow-hidden bg-[#F7F8FC]">
+{/* ================= HERO (Clean, premium, NO blue) ================= */}
+<section className="relative overflow-hidden bg-[#F7F8FA]">
   {/* Subtle grid + soft wash */}
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FC] to-[#EEF1FF]" />
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F5F3]" />
     <div
       className="absolute inset-0 opacity-[0.35]"
       style={{
@@ -347,76 +347,72 @@ const CATEGORIES = [
     />
   </div>
 
-  {/* Two soft glows (reduced noise) */}
-  <div className="pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#5F6BF2]/[0.10] blur-3xl" />
-  <div className="pointer-events-none absolute bottom-[-160px] right-[-120px] h-[520px] w-[520px] rounded-full bg-[#3017D3]/[0.07] blur-3xl" />
+  {/* Soft glows (emerald + charcoal, reduced noise) */}
+  <div className="pointer-events-none absolute -top-28 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-emerald-500/[0.10] blur-3xl" />
+  <div className="pointer-events-none absolute bottom-[-180px] right-[-140px] h-[560px] w-[560px] rounded-full bg-slate-900/[0.06] blur-3xl" />
 
   <div className="relative mx-auto max-w-7xl px-6">
     <div className="mx-auto max-w-3xl text-center py-20 md:py-24">
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#5F6BF2]/20 bg-white/70 px-4 py-2 text-xs font-semibold text-gray-700 shadow-sm backdrop-blur">
-        <span className="inline-block h-2 w-2 rounded-full bg-[#5F6BF2]" />
-        Vetted roles • Remote-friendly • Fast apply
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-emerald-600/20 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+        <span className="inline-block h-2 w-2 rounded-full bg-emerald-600" />
+        Curated roles • Remote-friendly • Fast apply
       </div>
 
       {/* Headline */}
-      <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-gray-900">
-        Discover vetted{" "}
-        <span className="text-[#5F6BF2]">technical jobs</span>{" "}
+      <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
+        Find{" "}
+        <span className="text-emerald-700">quality roles</span>{" "}
         built for long-term careers
       </h1>
 
       {/* Subtext */}
-      <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-gray-600">
-        Browse roles across Engineering, Infrastructure, Cloud, Security, and Data —
-        including remote options. Find your next opportunity in minutes.
+      <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
+        Browse opportunities across engineering, infrastructure, cloud, security, and data —
+        including remote options. Simple, clean, and focused on serious hiring.
       </p>
 
       {/* Search Bar (single card, consistent heights) */}
       <div className="mt-8">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-gray-200 bg-white/80 p-3 shadow-sm backdrop-blur">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Job title, keyword"
-                className="h-12 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm text-gray-900 outline-none
-                           focus:ring-2 focus:ring-[#5F6BF2]/30"
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="Job title, keyword"
+              className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                         focus:ring-2 focus:ring-emerald-600/25"
+            />
 
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Location (Remote, Lagos, New York)"
-                className="h-12 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm text-gray-900 outline-none
-                           focus:ring-2 focus:ring-[#5F6BF2]/30"
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="Location (Remote, Lagos, New York)"
+              className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                         focus:ring-2 focus:ring-emerald-600/25"
+            />
 
             <button
               className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white
-                         bg-[#5F6BF2] hover:bg-[#4B55D8]
-                         shadow-[0_10px_26px_rgba(95,107,242,0.30)]
+                         bg-slate-900 hover:bg-slate-800
+                         shadow-[0_10px_26px_rgba(2,6,23,0.22)]
                          transition"
             >
               Search Jobs
             </button>
           </div>
 
-          {/* Helper text */}
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-gray-500">
+          {/* Popular tags */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
             <span>Popular:</span>
-            <button className="rounded-full border border-gray-200 bg-white px-3 py-1 hover:border-gray-300">
+            <button className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300">
               Frontend
             </button>
-            <button className="rounded-full border border-gray-200 bg-white px-3 py-1 hover:border-gray-300">
+            <button className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300">
               DevOps
             </button>
-            <button className="rounded-full border border-gray-200 bg-white px-3 py-1 hover:border-gray-300">
+            <button className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300">
               Data
             </button>
-            <button className="rounded-full border border-gray-200 bg-white px-3 py-1 hover:border-gray-300">
+            <button className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300">
               Security
             </button>
           </div>
@@ -429,15 +425,13 @@ const CATEGORIES = [
         onClick={() =>
           document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
         }
-        className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#5F6BF2] hover:underline"
+        className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
       >
         Jump to Jobs <span aria-hidden>↓</span>
       </button>
     </div>
   </div>
 </section>
-
-
 
 
 
