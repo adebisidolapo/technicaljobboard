@@ -435,32 +435,85 @@ const CATEGORIES = [
 
 
 
-{/* ================= COMPANIES / TRUSTED TEAMS (VIRELYNX-STYLE) ================= */}
-<section className="relative py-16 md:py-20 bg-white overflow-hidden">
-  {/* optional: very light texture */}
-  <div className="pointer-events-none absolute inset-0 bg-dots-bg opacity-20" />
+// components/CompanyLogoCarousel.tsx
+import Image from "next/image";
 
-  <div className="relative max-w-7xl mx-auto px-6">
-    {/* Title like screenshot */}
-  <div className="text-center mb-10 md:mb-14">
-  <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
-    Trusted by teams
-  </p>
+type Logo = {
+  name: string;
+  src: string; // e.g. "/logos/google.svg"
+};
 
-  <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-    Popular companies we have worked with
-  </h3>
+const LOGOS: Logo[] = [
+  { name: "Google", src: "/logos/google.svg" },
+  { name: "Microsoft", src: "/logos/microsoft.svg" },
+  { name: "Amazon", src: "/logos/amazon.svg" },
+  { name: "Meta", src: "/logos/meta.svg" },
+  { name: "Netflix", src: "/logos/netflix.svg" },
+  { name: "Stripe", src: "/logos/stripe.svg" },
+  { name: "Shopify", src: "/logos/shopify.svg" },
+  { name: "Adobe", src: "/logos/adobe.svg" },
+];
 
-  <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-    A quick look at teams that trust TechnicalJobboard.
-  </p>
-</div>
+function LogoRow({ reverse = false }: { reverse?: boolean }) {
+  // Duplicate logos for seamless looping
+  const items = [...LOGOS, ...LOGOS];
 
+  return (
+    <div
+      className={[
+        "flex w-max items-center gap-10 md:gap-14 py-3",
+        reverse ? "animate-marquee-reverse" : "animate-marquee",
+      ].join(" ")}
+    >
+      {items.map((logo, idx) => (
+        <div
+          key={`${logo.name}-${idx}`}
+          className="flex items-center justify-center"
+        >
+          <div
+            className="group flex items-center justify-center h-12 md:h-14 px-4 md:px-6"
+            aria-label={logo.name}
+            title={logo.name}
+          >
+            {/* Greyed-out by default, crisp on hover */}
+            <Image
+              src={logo.src}
+              alt={logo.name}
+              width={140}
+              height={56}
+              className="h-7 md:h-8 w-auto object-contain opacity-60 grayscale
+                         transition duration-300
+                         group-hover:opacity-100 group-hover:grayscale-0"
+              priority={false}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-    {/* Logo carousel area */}
-    <CompanyLogoCarousel />
-  </div>
-</section>
+export default function CompanyLogoCarousel() {
+  return (
+    <div className="relative">
+      {/* Soft edges fade (gives that premium “carousel” look) */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent" />
+
+      {/* Container */}
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        {/* One row is usually enough; second row adds richness */}
+        <div className="px-6 py-6">
+          <LogoRow />
+          <div className="mt-2 opacity-70">
+            <LogoRow reverse />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 
 

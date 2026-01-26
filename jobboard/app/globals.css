@@ -1,297 +1,176 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* =========================
+   Base / Theme Tokens
+========================= */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-:root {
-  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji",
-    "Segoe UI Emoji";
+  --foreground: #0f172a; /* slate-900 */
+
+  /* Brand (Purple) */
+  --brand-purple: #6a6ff2;
+  --brand-purple-dark: #585de0;
+
+  /* Surfaces */
+  --soft: #f7f8fa;
+  --soft-2: #f3f4f6;
+  --border: rgba(15, 23, 42, 0.10);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optional: if you want dark mode later, keep it simple */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
-:root {
-  --brand-purple: #6A6FF2;
-  --brand-purple-dark: #585de0;
+
+/* =========================
+   Reusable UI helpers
+========================= */
+@layer components {
+  .section {
+    @apply py-16 md:py-20;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-6;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .input {
+    @apply h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm
+           text-slate-900 outline-none focus:ring-2;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm
+           font-semibold text-white transition;
+    background: #0f172a;
+  }
+  .btn-primary:hover {
+    background: #111827;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm
+           font-semibold text-white transition;
+    background: var(--brand-purple);
+    box-shadow: 0 12px 30px rgba(106, 111, 242, 0.25);
+  }
+  .btn-accent:hover {
+    background: var(--brand-purple-dark);
+  }
 }
 
+/* =========================
+   Background utilities
+========================= */
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Dotted background (kept) */
+.bg-dots-bg {
+  background-image: radial-gradient(rgba(2, 0, 13, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
+
+/* Clean hero background (purple, but subtle) */
+.hero-bg {
+  background:
+    radial-gradient(800px 400px at 15% 20%, rgba(106, 111, 242, 0.14), transparent 55%),
+    radial-gradient(700px 380px at 80% 30%, rgba(168, 102, 254, 0.10), transparent 55%),
+    linear-gradient(180deg, #f7f5ff 0%, #ffffff 70%);
+}
+
+/* Jobs section background (subtle) */
+.jobs-bg {
+  background:
+    radial-gradient(700px 320px at 10% 20%, rgba(106, 111, 242, 0.10), transparent 55%),
+    radial-gradient(700px 320px at 85% 30%, rgba(168, 102, 254, 0.08), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%);
+}
+
+/* Trusted section background (subtle) */
+.trusted-bg {
+  background:
+    radial-gradient(600px 300px at 20% 20%, rgba(106, 111, 242, 0.10), transparent 55%),
+    radial-gradient(600px 300px at 80% 30%, rgba(168, 102, 254, 0.08), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f7f5ff 100%);
+}
+
+/* If you still want an animated gradient, keep ONE clean version */
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-.bg-animated-gradient {
-  background: linear-gradient(270deg, #6F00FC, #8C33FD, #A866FE, #6F00FC);
-  background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
-}
-/* ===== Floating 3D animation ===== */
-@keyframes float3d {
-  0% {
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-  50% {
-    transform: translateY(-16px) rotateX(6deg) rotateY(-6deg);
-  }
-  100% {
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-}
-
-.float-3d {
-  animation: float3d 6s ease-in-out infinite;
-  transform-style: preserve-3d;
-}
-
-/* ===== Parallax ===== */
-.parallax {
-  will-change: transform;
-  transition: transform 0.1s linear;
-}
-
-/* ===== Glassmorphism ===== */
-.glass {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-/* ===== Perspective ===== */
-.perspective-1000 {
-  perspective: 1000px;
-}
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.9s ease-out forwards;
-}
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 35s linear infinite;
-}
-/* Animated gradient background */
 .bg-animated-gradient {
   background: linear-gradient(120deg, #6f00fc, #8c33fd, #a866fe);
   background-size: 200% 200%;
-  animation: gradientMove 10s ease infinite;
+  animation: gradientMove 12s ease infinite;
 }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-}
-
-/* Simple marquee */
+/* =========================
+   Carousel / Marquee
+========================= */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  width: max-content;
-  animation: marquee 25s linear infinite;
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
-/* Dotted background */
-.bg-dots-bg {
-  background-image: radial-gradient(rgba(2,0,13,0.08) 1px, transparent 1px);
-  background-size: 18px 18px;
+.animate-marquee {
+  animation: marquee 40s linear infinite;
 }
-.hero-bg {
-  background:
-    radial-gradient(800px 400px at 15% 20%, rgba(111,0,252,0.20), transparent 55%),
-    radial-gradient(700px 380px at 80% 30%, rgba(168,102,254,0.18), transparent 55%),
-    radial-gradient(600px 360px at 50% 90%, rgba(140,51,253,0.14), transparent 60%),
-    linear-gradient(180deg, #f6f2ff 0%, #ffffff 70%);
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 46s linear infinite;
 }
-/* Hide scrollbars nicely */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
+}
+
+/* =========================
+   Scroll helpers
+========================= */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE/Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.jobs-bg {
-  background:
-    radial-gradient(700px 320px at 10% 20%, rgba(111,0,252,0.12), transparent 55%),
-    radial-gradient(700px 320px at 85% 30%, rgba(168,102,254,0.10), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* ===== Trusted Teams V-wave animation ===== */
-@keyframes wave-move {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.wave-marquee {
-  display: flex;
-  width: max-content;
-  animation: wave-move 30s linear infinite;
-}
-
-.wave-item {
-  transform-origin: center;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.wave-item:nth-child(5n + 1) {
-  transform: translateY(20px) scale(0.92);
-}
-.wave-item:nth-child(5n + 2) {
-  transform: translateY(10px) scale(0.96);
-}
-.wave-item:nth-child(5n + 3) {
-  transform: translateY(0px) scale(1);
-}
-.wave-item:nth-child(5n + 4) {
-  transform: translateY(10px) scale(0.96);
-}
-.wave-item:nth-child(5n + 5) {
-  transform: translateY(20px) scale(0.92);
-}
-
-.wave-item:hover {
-  transform: translateY(0px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  z-index: 10;
-}
-
-/* Background for trusted teams */
-.trusted-bg {
-  background:
-    radial-gradient(600px 300px at 20% 20%, rgba(111,0,252,0.12), transparent 55%),
-    radial-gradient(600px 300px at 80% 30%, rgba(168,102,254,0.10), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #f6f2ff 100%);
-}
-/* ================= HERO FLOATING CARDS ================= */
-
-/* Soft floating animation */
-@keyframes floatSoft {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes floatSoftReverse {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(8px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/* Animation utility classes */
-.float-1 {
-  animation: floatSoft 5s ease-in-out infinite;
-}
-
-.float-2 {
-  animation: floatSoftReverse 6s ease-in-out infinite;
-}
-
-.float-3 {
-  animation: floatSoft 7s ease-in-out infinite;
-}
-
-.float-4 {
-  animation: floatSoftReverse 8s ease-in-out infinite;
-}
-
-/* Improve glass cards a bit */
-.glass {
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-/* Slight hover lift for desktop */
-@media (hover: hover) {
-  .glass:hover {
-    transform: translateY(-2px) scale(1.02);
-    transition: transform 0.25s ease;
-  }
-}
-.category-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.category-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
-}
-/* ================= BROWSE JOBS BACKGROUND ================= */
-.browse-bg {
-  background:
-    radial-gradient(800px 400px at 20% 10%, rgba(111, 0, 252, 0.10), transparent 60%),
-    radial-gradient(700px 380px at 80% 20%, rgba(0, 153, 255, 0.10), transparent 55%),
-    radial-gradient(650px 420px at 50% 100%, rgba(16, 185, 129, 0.10), transparent 60%),
-    linear-gradient(180deg, #f8fafc 0%, #ffffff 55%, #f9fafb 100%);
-}
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Simple reveal-on-scroll animation */
+/* =========================
+   Reveal animation
+========================= */
 .reveal {
   opacity: 0;
   transform: translateY(12px);
