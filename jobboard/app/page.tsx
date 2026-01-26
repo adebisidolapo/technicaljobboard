@@ -1,4 +1,17 @@
+"use client"; 
+import Link from "next/link"; 
+import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
+export default function Page() {
+  return (
+    <main className="p-10">
+      <h1 className="text-2xl font-bold">Test</h1>
+      <div className="mt-8">
+        <CompanyLogoCarousel />
+      </div>
+    </main>
+  );
+}
 
 import {
   FaTwitter,
