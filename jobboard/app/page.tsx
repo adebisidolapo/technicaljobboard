@@ -1,79 +1,9 @@
-"use client"; 
-import Link from "next/link"; 
+"use client";
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
-
-export default function Page() {
-  return (
-    <main className="p-10">
-      <h1 className="text-2xl font-bold">Test</h1>
-      <div className="mt-8">
-        <CompanyLogoCarousel />
-      </div>
-    </main>
-  );
-}
-
-import {
-  FaTwitter,
-  FaLinkedinIn,
-  FaFacebookF,
-  FaGithub,
-} from "react-icons/fa";
-
-type CategoryItem = {
-  label: string;
-  slug: string;
-  icon: string;
-};
-
-type CategoryGroup = {
-  title: string;
-  items: CategoryItem[];
-};
-
-export default function Home() {
-  const heroImageRef = useRef<HTMLDivElement | null>(null);
-    function CompanyLogoCarousel() {
-    const [active, setActive] = React.useState(0);
-
-    React.useEffect(() => {
-      const t = setInterval(() => {
-        setActive((i) => (i + 1) % COMPANY_LOGOS.length);
-      }, 2600);
-      return () => clearInterval(t);
-    }, []);
-
-    const logo = COMPANY_LOGOS[active];
-
-    return (
-      <div className="mt-10 md:mt-12">
-        <div className="flex items-center justify-center">
-          <img
-            key={logo.src}
-            src={logo.src}
-            alt={logo.alt}
-            className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain opacity-60 grayscale"
-          />
-        </div>
-
-        <div className="mt-10 h-px w-full bg-gray-200" />
-
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {COMPANY_LOGOS.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Go to company ${i + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                i === active ? "w-8 bg-gray-400" : "w-2 bg-gray-200 hover:bg-gray-300"
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }
+import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
 type FeaturedJob = {
   title: string;
@@ -85,56 +15,11 @@ type FeaturedJob = {
 };
 
 const FEATURED_JOBS: FeaturedJob[] = [
-  {
-    title: "Senior Frontend Engineer",
-    company: "NovaTech",
-    location: "Remote",
-    type: "Full-time",
-    pay: "$120k – $160k",
-    posted: "2 days ago",
-  },
-  {
-    title: "Backend Engineer (Node/Go)",
-    company: "TechNova",
-    location: "Austin, TX",
-    type: "Full-time",
-    pay: "$130k – $175k",
-    posted: "3 days ago",
-  },
-  {
-    title: "DevOps / Platform Engineer",
-    company: "CloudSprint",
-    location: "Remote",
-    type: "Full-time",
-    pay: "$140k – $190k",
-    posted: "5 days ago",
-  },
-  {
-    title: "Product Designer",
-    company: "Launchify",
-    location: "San Francisco, CA",
-    type: "Contract",
-    pay: "$8,000 / month",
-    posted: "4 days ago",
-  },
-  {
-    title: "Data Engineer",
-    company: "SignalWorks",
-    location: "New York, NY",
-    type: "Full-time",
-    pay: "$125k – $165k",
-    posted: "1 week ago",
-  },
-];
-
-type CompanyLogo = { src: string; alt: string };
-
-const COMPANY_LOGOS: CompanyLogo[] = [
-  { src: "/Architects.png", alt: "Architects" },
-  { src: "/vermot.png", alt: "Vermot" },
-  { src: "/Devops.png", alt: "Devops" },
-  { src: "/Hiredengineer.png", alt: "HiredEngineer" },
-  { src: "/redtail.png", alt: "Redtail" },
+  { title: "Senior Frontend Engineer", company: "NovaTech", location: "Remote", type: "Full-time", pay: "$120k – $160k", posted: "2 days ago" },
+  { title: "Backend Engineer (Node/Go)", company: "TechNova", location: "Austin, TX", type: "Full-time", pay: "$130k – $175k", posted: "3 days ago" },
+  { title: "DevOps / Platform Engineer", company: "CloudSprint", location: "Remote", type: "Full-time", pay: "$140k – $190k", posted: "5 days ago" },
+  { title: "Product Designer", company: "Launchify", location: "San Francisco, CA", type: "Contract", pay: "$8,000 / month", posted: "4 days ago" },
+  { title: "Data Engineer", company: "SignalWorks", location: "New York, NY", type: "Full-time", pay: "$125k – $165k", posted: "1 week ago" },
 ];
 
 const CATEGORIES = [
@@ -149,12 +34,11 @@ const CATEGORIES = [
   { label: "Maintenance / Reliability", slug: "maintenance-reliability" },
 ];
 
+export default function Home() {
+  const heroImageRef = useRef<HTMLDivElement | null>(null);
 
-  // Flatten categories for easy lookup
- const ALL_CATEGORIES = CATEGORIES;
+  const ALL_CATEGORIES = CATEGORIES;
 
-
-  // ===== Filter state shared by Categories + Browse Jobs =====
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
@@ -162,8 +46,6 @@ const CATEGORIES = [
   const [experience, setExperience] = useState("");
   const [quickFilters, setQuickFilters] = useState<string[]>([]);
 
-  // ✅ Safe URL read (avoids prerender error)
-  // Reads /?category=aerospace-defense
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -172,21 +54,20 @@ const CATEGORIES = [
   }, []);
 
   useEffect(() => {
-  const els = Array.from(document.querySelectorAll(".reveal"));
+    const els = Array.from(document.querySelectorAll(".reveal"));
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("is-visible");
-      });
-    },
-    { threshold: 0.15 }
-  );
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      },
+      { threshold: 0.15 }
+    );
 
-  els.forEach((el) => io.observe(el));
-
-  return () => io.disconnect();
-}, []);
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   const resetFilters = () => {
     setSelectedCategory("");
@@ -203,7 +84,6 @@ const CATEGORIES = [
     );
   };
 
-  // ===== Sample jobs (add/edit freely) =====
   const jobs = [
     {
       title: "Maintenance Technician",
@@ -229,85 +109,11 @@ const CATEGORIES = [
       posted: "4 days ago",
       description: "Power systems design, documentation, testing, and field coordination.",
     },
-    {
-      title: "Automation & Controls Engineer (PLC)",
-      company: "AutoForge",
-      location: "Chicago, IL",
-      type: "Full-time",
-      experience: "Senior",
-      salary: "$130k–$175k",
-      category: "automation-controls",
-      tags: ["Full-time", "Senior"],
-      posted: "1 week ago",
-      description: "PLC programming, commissioning support, and process improvement.",
-    },
-    {
-      title: "Quality Inspector",
-      company: "PrecisionCo",
-      location: "Austin, TX",
-      type: "Contract",
-      experience: "Junior",
-      salary: "$22–$28/hr",
-      category: "quality-compliance",
-      tags: ["Contract"],
-      posted: "3 days ago",
-      description: "Inspection, reporting, and compliance checks with documented standards.",
-    },
-    {
-      title: "Healthcare Technical Project Coordinator",
-      company: "CareOps",
-      location: "New York, NY",
-      type: "Full-time",
-      experience: "Mid",
-      salary: "$85k–$110k",
-      category: "healthcare-technical",
-      tags: ["Full-time"],
-      posted: "5 days ago",
-      description: "Coordinate technical projects across clinical operations and vendor teams.",
-    },
-    {
-      title: "Aerospace Quality Engineer",
-      company: "AeroShield",
-      location: "On-site",
-      type: "Full-time",
-      experience: "Senior",
-      salary: "$140k–$190k",
-      category: "aerospace-defense",
-      tags: ["Full-time", "Senior"],
-      posted: "6 days ago",
-      description: "Quality systems, audits, supplier validation, and compliance documentation.",
-    },
-    {
-      title: "Architectural Technician",
-      company: "BuildStudio",
-      location: "San Francisco, CA",
-      type: "Full-time",
-      experience: "Mid",
-      salary: "$75k–$95k",
-      category: "architecture",
-      tags: ["Full-time"],
-      posted: "2 days ago",
-      description: "Drafting, coordination, and documentation for building design systems.",
-    },
-    {
-      title: "Field Service Technician",
-      company: "InstallPro",
-      location: "Remote",
-      type: "Contract",
-      experience: "Mid",
-      salary: "$35–$55/hr",
-      category: "field-service",
-      tags: ["Remote", "Contract"],
-      posted: "1 week ago",
-      description: "Installation, troubleshooting, and commissioning support for client sites.",
-    },
   ];
 
-  // ===== Filtering logic =====
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const matchesCategory =
-        selectedCategory === "" || job.category === selectedCategory;
+      const matchesCategory = selectedCategory === "" || job.category === selectedCategory;
 
       const matchesKeyword =
         keyword.trim() === "" ||
@@ -315,17 +121,14 @@ const CATEGORIES = [
         job.company.toLowerCase().includes(keyword.toLowerCase());
 
       const matchesLocation =
-        location.trim() === "" ||
-        job.location.toLowerCase().includes(location.toLowerCase());
+        location.trim() === "" || job.location.toLowerCase().includes(location.toLowerCase());
 
       const matchesType = jobType === "" || job.type === jobType;
 
-      const matchesExperience =
-        experience === "" || job.experience === experience;
+      const matchesExperience = experience === "" || job.experience === experience;
 
       const matchesQuick =
-        quickFilters.length === 0 ||
-        quickFilters.every((f) => job.tags.includes(f));
+        quickFilters.length === 0 || quickFilters.every((f) => job.tags.includes(f));
 
       return (
         matchesCategory &&
@@ -340,6 +143,7 @@ const CATEGORIES = [
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
+
 
 
 {/* ================= HERO (Clean, premium, NO blue) ================= */}
@@ -444,6 +248,20 @@ const CATEGORIES = [
 </section>
 
 
+      {/* COMPANIES */}
+      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10 md:mb-14">
+            <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
+              Trusted by teams
+            </p>
+            <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+              Popular companies we have worked with
+            </h3>
+            <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+              A quick look at teams that trust TechnicalJobboard.
+            </p>
+          </div>
 
 // components/CompanyLogoCarousel.tsx
 import Image from "next/image";
