@@ -1,8 +1,4 @@
-"use client";
 
-import Link from "next/link";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
 import {
   FaTwitter,

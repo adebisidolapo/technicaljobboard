@@ -1,4 +1,5 @@
 // components/CompanyLogoCarousel.tsx
+import Image from "next/image";
 
 type Logo = { name: string; src: string };
 
@@ -26,13 +27,14 @@ function LogoRow({ reverse = false }: { reverse?: boolean }) {
       {items.map((logo, idx) => (
         <div key={`${logo.name}-${idx}`} className="flex items-center justify-center">
           <div className="group flex h-12 md:h-14 items-center justify-center px-4 md:px-6">
-            <img
+            <Image
               src={logo.src}
               alt={logo.name}
+              width={140}
+              height={56}
               className="h-7 md:h-8 w-auto object-contain opacity-60 grayscale
                          transition duration-300
                          group-hover:opacity-100 group-hover:grayscale-0"
-              loading="lazy"
             />
           </div>
         </div>
