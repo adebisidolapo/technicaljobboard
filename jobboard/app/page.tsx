@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import Link from "next/link";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
@@ -13,7 +14,6 @@ type FeaturedJob = {
   pay: string;
   posted: string;
 };
-const [categoryQuery, setCategoryQuery] = useState("");
 const FEATURED_JOBS: FeaturedJob[] = [
   { title: "Senior Frontend Engineer", company: "NovaTech", location: "Remote", type: "Full-time", pay: "$120k – $160k", posted: "2 days ago" },
   { title: "Backend Engineer (Node/Go)", company: "TechNova", location: "Austin, TX", type: "Full-time", pay: "$130k – $175k", posted: "3 days ago" },
@@ -176,7 +176,7 @@ export default function Home() {
       {/* Headline */}
       <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
         Find{" "}
-        <span className="text-emerald-700">quality roles</span>{" "}
+        <span className="text-emerald-700">Quality Roles</span>{" "}
         built for long-term careers
       </h1>
 
@@ -256,7 +256,7 @@ export default function Home() {
               Trusted by teams
             </p>
             <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-              Popular companies we have worked with
+              Popular Companies We Have Worked With
             </h3>
             <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
               A quick look at teams that trust TechnicalJobboard.
