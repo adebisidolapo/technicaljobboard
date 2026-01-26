@@ -32,7 +32,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optional: if you want dark mode later, keep it simple */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -85,14 +84,11 @@ body {
 /* =========================
    Background utilities
 ========================= */
-
-/* Dotted background (kept) */
 .bg-dots-bg {
   background-image: radial-gradient(rgba(2, 0, 13, 0.08) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
-/* Clean hero background (purple, but subtle) */
 .hero-bg {
   background:
     radial-gradient(800px 400px at 15% 20%, rgba(106, 111, 242, 0.14), transparent 55%),
@@ -100,7 +96,6 @@ body {
     linear-gradient(180deg, #f7f5ff 0%, #ffffff 70%);
 }
 
-/* Jobs section background (subtle) */
 .jobs-bg {
   background:
     radial-gradient(700px 320px at 10% 20%, rgba(106, 111, 242, 0.10), transparent 55%),
@@ -108,7 +103,6 @@ body {
     linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%);
 }
 
-/* Trusted section background (subtle) */
 .trusted-bg {
   background:
     radial-gradient(600px 300px at 20% 20%, rgba(106, 111, 242, 0.10), transparent 55%),
@@ -116,7 +110,6 @@ body {
     linear-gradient(180deg, #ffffff 0%, #f7f5ff 100%);
 }
 
-/* If you still want an animated gradient, keep ONE clean version */
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -181,14 +174,3 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-.animate-marquee { animation: marquee 40s linear infinite; }
-.animate-marquee-reverse { animation: marquee-reverse 46s linear infinite; }
