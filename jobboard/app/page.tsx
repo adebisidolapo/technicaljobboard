@@ -13,7 +13,7 @@ type FeaturedJob = {
   pay: string;
   posted: string;
 };
-
+const [categoryQuery, setCategoryQuery] = useState("");
 const FEATURED_JOBS: FeaturedJob[] = [
   { title: "Senior Frontend Engineer", company: "NovaTech", location: "Remote", type: "Full-time", pay: "$120k – $160k", posted: "2 days ago" },
   { title: "Backend Engineer (Node/Go)", company: "TechNova", location: "Austin, TX", type: "Full-time", pay: "$130k – $175k", posted: "3 days ago" },
@@ -267,64 +267,120 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* ================= CATEGORIES ================= */}
+{/* ================= CATEGORIES (Cleaner + searchable) ================= */}
 <section className="py-20 bg-white">
   <div className="max-w-7xl mx-auto px-6">
-    <div className="mb-10">
-  <h2 className="text-3xl font-semibold text-gray-900">
-    Available Categories
-  </h2>
-  <p className="text-gray-600 mt-2">
-    Tap a category to filter jobs below.
-  </p>
-</div>
+    <div className="rounded-3xl border border-slate-200 bg-[#FBFBFD] p-6 md:p-10">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+        <div>
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
+            Browse
+          </p>
+          <h2 className="mt-2 text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight">
+            Explore categories
+          </h2>
+          <p className="text-slate-600 mt-2">
+            Pick a category to filter jobs instantly.
+          </p>
+        </div>
 
-
-    {/* Selected pill */}
-    {selectedCategory && (
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <span className="text-sm text-gray-600">Selected:</span>
-        <span className="px-3 py-1.5 rounded-full bg-[#F6F2FF] border border-[#6F00FC]/20 text-[#6F00FC] text-sm font-semibold">
-          {ALL_CATEGORIES.find((c) => c.slug === selectedCategory)?.label ?? "Category"}
-        </span>
-        <button
-          type="button"
-          onClick={() => setSelectedCategory("")}
-          className="text-sm font-semibold text-gray-700 hover:text-gray-900 px-3 py-1.5 rounded-xl hover:bg-gray-100 transition"
-        >
-          Clear
-        </button>
+        {/* Category search */}
+        <div className="w-full md:w-[360px]">
+          <input
+            value={categoryQuery}
+            onChange={(e) => setCategoryQuery(e.target.value)}
+            type="text"
+            placeholder="Search categories…"
+            className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                       focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+          />
+        </div>
       </div>
-    )}
 
-    {/* Simple pill buttons */}
-    <div className="flex flex-wrap gap-3">
-      {ALL_CATEGORIES.map((cat) => {
-        const isActive = selectedCategory === cat.slug;
+      {/* Selected pill */}
+      {selectedCategory && (
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <span className="text-sm text-slate-600">Selected:</span>
 
-        return (
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
+                           bg-white border border-slate-200 text-slate-900 text-sm font-semibold">
+            <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+            {ALL_CATEGORIES.find((c) => c.slug === selectedCategory)?.label ?? "Category"}
+          </span>
+
           <button
-            key={cat.slug}
             type="button"
-            onClick={() => {
-              setSelectedCategory(cat.slug);
-              document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className={`px-4 py-2 rounded-full border text-sm transition
-              ${
-                isActive
-                  ? "bg-[#6F00FC] text-white border-[#6F00FC]"
-                  : "border-gray-200 bg-gray-50 text-gray-800 hover:border-[#6F00FC] hover:bg-[#F6F2FF]"
-              }`}
+            onClick={() => setSelectedCategory("")}
+            className="text-sm font-semibold text-slate-600 hover:text-slate-900
+                       px-3 py-1.5 rounded-xl hover:bg-white transition border border-transparent hover:border-slate-200"
           >
-            {cat.label}
+            Clear
           </button>
-        );
-      })}
+        </div>
+      )}
+
+      {/* Category chips */}
+      <div className="flex flex-wrap gap-3">
+        {ALL_CATEGORIES
+          .filter((cat) =>
+            cat.label.toLowerCase().includes(categoryQuery.toLowerCase())
+          )
+          .map((cat) => {
+            const isActive = selectedCategory === cat.slug;
+
+            return (
+              <button
+                key={cat.slug}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(cat.slug);
+                  document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className={[
+                  "group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition",
+                  isActive
+                    ? "bg-slate-900 text-white border-slate-900"
+                    : "border-slate-200 bg-white text-slate-800 hover:border-slate-300",
+                ].join(" ")}
+              >
+                {/* small accent dot (purple) */}
+                <span
+                  className={[
+                    "h-2 w-2 rounded-full transition",
+                    isActive ? "bg-white" : "bg-[var(--brand-purple)]",
+                  ].join(" ")}
+                />
+
+                <span className="font-medium">{cat.label}</span>
+
+                {/* subtle arrow on hover */}
+                <span
+                  className={[
+                    "ml-1 text-xs transition",
+                    isActive ? "opacity-80" : "opacity-0 group-hover:opacity-70",
+                  ].join(" ")}
+                  aria-hidden
+                >
+                  →
+                </span>
+              </button>
+            );
+          })}
+      </div>
+
+      {/* Empty state */}
+      {ALL_CATEGORIES.filter((cat) =>
+        cat.label.toLowerCase().includes(categoryQuery.toLowerCase())
+      ).length === 0 && (
+        <div className="mt-6 text-sm text-slate-600">
+          No categories match “{categoryQuery}”.
+        </div>
+      )}
     </div>
   </div>
 </section>
+
 
 
 {/* ================= FEATURED JOBS ================= */}
