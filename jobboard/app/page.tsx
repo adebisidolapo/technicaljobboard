@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import Link from "next/link";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
