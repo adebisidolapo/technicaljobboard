@@ -4,13 +4,14 @@ import React, { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import type {} from "react/jsx-runtime";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
-type FeatauredJob = {
+type FeaturedJob = {
   title: string;
   company: string;
   location: string;
   type: string;
   pay: string;
   posted: string;
+  description: string;
 };
 
 type Job = {
