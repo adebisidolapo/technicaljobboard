@@ -1,17 +1,29 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import type {} from "react/jsx-runtime";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
-import { FaTwitter, FaLinkedinIn, FaFacebookF, FaGithub } from "react-icons/fa";
 
-type FeaturedJob = {
+type FeatauredJob = {
   title: string;
   company: string;
   location: string;
   type: string;
   pay: string;
   posted: string;
+};
+
+type Job = {
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  experience: string;
+  salary: string;
+  category: string;
+  tags: string[];
+  posted: string;
+  description: string;
 };
 const FEATURED_JOBS: FeaturedJob[] = [
   { title: "Senior Frontend Engineer", company: "NovaTech", location: "Remote", type: "Full-time", pay: "$120k – $160k", posted: "2 days ago" },
@@ -21,7 +33,12 @@ const FEATURED_JOBS: FeaturedJob[] = [
   { title: "Data Engineer", company: "SignalWorks", location: "New York, NY", type: "Full-time", pay: "$125k – $165k", posted: "1 week ago" },
 ];
 
-const CATEGORIES = [
+type Category = {
+  label: string;
+  slug: string;
+};
+
+const CATEGORIES: Category[] = [
   { label: "Healthcare IT", slug: "healthcare-it" },
   { label: "Aerospace / Defense", slug: "aerospace-defense" },
   { label: "Architecture", slug: "architecture" },
@@ -34,8 +51,7 @@ const CATEGORIES = [
 ];
 
 export default function Home() {
-  const heroImageRef = useRef<HTMLDivElement | null>(null);
-const [categoryQuery, setCategoryQuery] = useState("");
+  const [categoryQuery, setCategoryQuery] = useState("");
 
   const ALL_CATEGORIES = CATEGORIES;
 
@@ -84,7 +100,7 @@ const [categoryQuery, setCategoryQuery] = useState("");
     );
   };
 
-  const jobs = [
+  const jobs: Job[] = [
     {
       title: "Maintenance Technician",
       company: "PlantWorks",
@@ -323,10 +339,10 @@ const [categoryQuery, setCategoryQuery] = useState("");
       {/* Category chips */}
       <div className="flex flex-wrap gap-3">
         {ALL_CATEGORIES
-          .filter((cat) =>
+          .filter((cat: Category) =>
             cat.label.toLowerCase().includes(categoryQuery.toLowerCase())
           )
-          .map((cat) => {
+          .map((cat: Category) => {
             const isActive = selectedCategory === cat.slug;
 
             return (
@@ -432,7 +448,7 @@ const [categoryQuery, setCategoryQuery] = useState("");
         id="featured-carousel"
         className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-12"
       >
-        {FEATURED_JOBS.map((job, idx) => (
+        {FEATURED_JOBS.map((job: FeaturedJob, idx: number) => (
           <div
             key={idx}
             className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
@@ -636,7 +652,7 @@ const [categoryQuery, setCategoryQuery] = useState("");
           {/* Quick Filters */}
           <p className="text-sm font-medium text-gray-700 mb-3">Quick Filters</p>
           <div className="flex flex-wrap gap-2 mb-6">
-            {["Remote", "Full-time", "Senior", "Contract"].map((tag) => (
+            {["Remote", "Full-time", "Senior", "Contract"].map((tag: string) => (
               <button
                 key={tag}
                 type="button"
@@ -678,7 +694,7 @@ const [categoryQuery, setCategoryQuery] = useState("");
             </button>
           </div>
         ) : (
-          filteredJobs.map((job, idx) => (
+          filteredJobs.map((job: Job, idx: number) => (
             <div
               key={idx}
               className="bg-white rounded-3xl p-5 md:p-6 shadow-sm hover:shadow-lg transition
@@ -703,7 +719,7 @@ const [categoryQuery, setCategoryQuery] = useState("");
                   </p>
 
                   <div className="flex flex-wrap gap-2 mt-4">
-                    {job.tags.map((pill) => (
+                    {job.tags.map((pill: string) => (
                       <span
                         key={pill}
                         className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-700"
