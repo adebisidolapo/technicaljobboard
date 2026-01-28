@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { Job } from "../../types/job";
-import { JOBS } from "../../data/jobs";
+import type { Job } from "../../jobboard/types/job"; // only if your types live in jobboard
+import { JOBS } from "../../jobboard/data/jobs";     // only if your data live in jobboard
 import JobCard from "./JobCard";
 
-  const [datePosted, setDatePosted] = useState("");
+export default function JobsSection() {
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     const applyFromUrl = () => {
