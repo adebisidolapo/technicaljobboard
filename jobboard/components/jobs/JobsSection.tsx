@@ -5,20 +5,22 @@ import type { Job } from "../../types/job";
 import { JOBS } from "../../data/jobs";
 import JobCard from "./JobCard";
 
-useEffect(() => {
-  const applyFromUrl = () => {
-    const params = new URLSearchParams(window.location.search);
-    const q = params.get("q") ?? "";
-    const loc = params.get("loc") ?? "";
+  const [datePosted, setDatePosted] = useState("");
 
-    setKeyword(q);
-    setLocation(loc);
-  };
+  useEffect(() => {
+    const applyFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q") ?? "";
+      const loc = params.get("loc") ?? "";
 
-  applyFromUrl();
-  window.addEventListener("popstate", applyFromUrl);
-  return () => window.removeEventListener("popstate", applyFromUrl);
-}, []);
+      setKeyword(q);
+      setLocation(loc);
+    };
+
+    applyFromUrl();
+    window.addEventListener("popstate", applyFromUrl);
+    return () => window.removeEventListener("popstate", applyFromUrl);
+  }, []);
 
 
 // If you already have categories elsewhere, keep them.
