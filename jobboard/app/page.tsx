@@ -529,15 +529,15 @@ export default function Home() {
           </div>
         </div>
       </section>
-import JobsSection from "../components/jobs/JobsSection";
 
+
+      
+import JobsSection from "../components/jobs/JobsSection";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* keep your header + hero etc */}
       <JobsSection />
-      {/* keep other sections */}
     </main>
   );
 }
