@@ -4,6 +4,23 @@ import { useMemo, useState } from "react";
 import type { Job } from "../../types/job";
 import { JOBS } from "../../data/jobs";
 import JobCard from "./JobCard";
+import { useEffect, useMemo, useState } from "react";
+
+useEffect(() => {
+  const applyFromUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q") ?? "";
+    const loc = params.get("loc") ?? "";
+
+    setKeyword(q);
+    setLocation(loc);
+  };
+
+  applyFromUrl();
+  window.addEventListener("popstate", applyFromUrl);
+  return () => window.removeEventListener("popstate", applyFromUrl);
+}, []);
+
 
 // If you already have categories elsewhere, keep them.
 // This file will still work even if you remove category UI.

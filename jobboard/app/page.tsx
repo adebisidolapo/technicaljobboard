@@ -15,6 +15,8 @@ type FeaturedJob = {
 };
 
 type Category = { label: string; slug: string };
+const [heroKeyword, setHeroKeyword] = useState("");
+const [heroLocation, setHeroLocation] = useState("");
 
 const FEATURED_JOBS: FeaturedJob[] = [
   {
@@ -90,6 +92,8 @@ export default function Home() {
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
+
+      
       {/* ================= HERO (Clean, premium) ================= */}
       <section className="relative overflow-hidden bg-[#F7F8FA]">
         <div className="pointer-events-none absolute inset-0">
@@ -124,15 +128,86 @@ export default function Home() {
               including remote options. Simple, clean, and focused on serious hiring.
             </p>
 
-            <button
-              type="button"
-              onClick={() =>
-                document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-purple)] hover:underline"
-            >
-              Jump to Jobs <span aria-hidden>↓</span>
-            </button>
+<div className="mt-8">
+  <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
+    <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
+      <input
+        value={heroKeyword}
+        onChange={(e) => setHeroKeyword(e.target.value)}
+        type="text"
+        placeholder="Job title, keyword"
+        className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                   focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+      />
+
+      <input
+        value={heroLocation}
+        onChange={(e) => setHeroLocation(e.target.value)}
+        type="text"
+        placeholder="Location (Remote, Lagos, New York)"
+        className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                   focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+      />
+
+      <button
+        type="button"
+        onClick={() => {
+          const params = new URLSearchParams(window.location.search);
+
+          if (heroKeyword.trim()) params.set("q", heroKeyword.trim());
+          else params.delete("q");
+
+          if (heroLocation.trim()) params.set("loc", heroLocation.trim());
+          else params.delete("loc");
+
+          window.history.replaceState(null, "", `?${params.toString()}`);
+
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
+
+          // let JobsSection pick up URL changes
+          window.dispatchEvent(new Event("popstate"));
+        }}
+        className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white
+                   bg-slate-900 hover:bg-slate-800
+                   shadow-[0_10px_26px_rgba(2,6,23,0.22)]
+                   transition"
+      >
+        Search Jobs
+      </button>
+    </div>
+
+    <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
+      <span>Popular:</span>
+
+      {["Frontend", "DevOps", "Data", "Security"].map((tag) => (
+        <button
+          key={tag}
+          type="button"
+          onClick={() => {
+            setHeroKeyword(tag);
+            const params = new URLSearchParams(window.location.search);
+            params.set("q", tag);
+            window.history.replaceState(null, "", `?${params.toString()}`);
+            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
+            window.dispatchEvent(new Event("popstate"));
+          }}
+          className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300"
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<button
+  type="button"
+  onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
+  className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-purple)] hover:underline"
+>
+  Jump to Jobs <span aria-hidden>↓</span>
+</button>
+
           </div>
         </div>
       </section>
