@@ -1,10 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Job } from "../../types/job";
 import { JOBS } from "../../data/jobs";
 import JobCard from "./JobCard";
-import { useEffect, useMemo, useState } from "react";
 
 useEffect(() => {
   const applyFromUrl = () => {
