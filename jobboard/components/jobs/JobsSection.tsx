@@ -1,32 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { Job } from "../../jobboard/types/job"; // only if your types live in jobboard
-import { JOBS } from "../../jobboard/data/jobs";     // only if your data live in jobboard
+import type { Job } from "../../types/job";
+import { JOBS } from "../../data/jobs";
 import JobCard from "./JobCard";
 
-export default function JobsSection() {
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
-
-  useEffect(() => {
-    const applyFromUrl = () => {
-      const params = new URLSearchParams(window.location.search);
-      const q = params.get("q") ?? "";
-      const loc = params.get("loc") ?? "";
-
-      setKeyword(q);
-      setLocation(loc);
-    };
-
-    applyFromUrl();
-    window.addEventListener("popstate", applyFromUrl);
-    return () => window.removeEventListener("popstate", applyFromUrl);
-  }, []);
-
-
-// If you already have categories elsewhere, keep them.
-// This file will still work even if you remove category UI.
+// Optional category pills (kept)
 const ALL_CATEGORIES = [
   { slug: "frontend", label: "Frontend" },
   { slug: "backend", label: "Backend" },
@@ -35,7 +14,7 @@ const ALL_CATEGORIES = [
 ];
 
 export default function JobsSection() {
-  // your existing states
+  // main filters
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
   const [jobType, setJobType] = useState("");
@@ -43,12 +22,27 @@ export default function JobsSection() {
   const [quickFilters, setQuickFilters] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  // new states you requested
+  // requested filters
   const [salaryRange, setSalaryRange] = useState("");
   const [level, setLevel] = useState("");
   const [maxDistanceKm, setMaxDistanceKm] = useState("");
   const [workMode, setWorkMode] = useState("");
   const [datePosted, setDatePosted] = useState("");
+
+  // ✅ read hero search query params (?q=...&loc=...) INSIDE component
+  useEffect(() => {
+    const applyFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q") ?? "";
+      const loc = params.get("loc") ?? "";
+      setKeyword(q);
+      setLocation(loc);
+    };
+
+    applyFromUrl();
+    window.addEventListener("popstate", applyFromUrl);
+    return () => window.removeEventListener("popstate", applyFromUrl);
+  }, []);
 
   const resetFilters = () => {
     setKeyword("");
@@ -94,7 +88,10 @@ export default function JobsSection() {
   const withinDatePosted = (postedAt?: string, rule?: string) => {
     if (!rule) return true;
     if (!postedAt) return true;
+
     const posted = new Date(postedAt);
+    if (Number.isNaN(posted.getTime())) return true;
+
     const now = new Date();
     const diffMs = now.getTime() - posted.getTime();
     const diffHours = diffMs / (1000 * 60 * 60);
@@ -123,8 +120,7 @@ export default function JobsSection() {
 
       const matchesJobType = !jobType || (job.jobType ?? "") === jobType;
 
-      // keeping your old Experience dropdown behavior,
-      // but mapping it to job.level if present
+      // keep old experience dropdown but map to job.level if present
       const matchesExperience =
         !experience ||
         (job.level ? job.level.toLowerCase() === experience.toLowerCase() : true);
@@ -138,9 +134,10 @@ export default function JobsSection() {
         maxD == null || (typeof job.distanceKm === "number" ? job.distanceKm <= maxD : true);
 
       const matchesWorkMode =
-        !workMode || (job.workMode ? job.workMode === workMode : job.location.includes(workMode));
+        !workMode ||
+        (job.workMode ? job.workMode === workMode : job.location.toLowerCase().includes(workMode.toLowerCase()));
 
-      const matchesDatePosted = withinDatePosted(job.postedAt, datePosted);
+      const matchesDate = withinDatePosted(job.postedAt, datePosted);
 
       const matchesQuick =
         quickFilters.length === 0 ||
@@ -157,6 +154,7 @@ export default function JobsSection() {
           );
         });
 
+      // category = match tags OR you can change to job.category later
       const matchesCategory =
         !selectedCategory ||
         (job.tags ?? []).some((t) => t.toLowerCase() === selectedCategory.toLowerCase());
@@ -170,7 +168,7 @@ export default function JobsSection() {
         matchesLevel &&
         matchesDistance &&
         matchesWorkMode &&
-        matchesDatePosted &&
+        matchesDate &&
         matchesQuick &&
         matchesCategory
       );
@@ -201,7 +199,7 @@ export default function JobsSection() {
               Explore Technical opportunities
             </h2>
             <p className="text-gray-600 mt-2 max-w-2xl">
-              Filter by keyword, location, job type, and experience — then explore what matches.
+              Filter by keyword, salary, level, distance, work mode, and date posted.
             </p>
           </div>
 
@@ -253,13 +251,12 @@ export default function JobsSection() {
                 </button>
               </div>
 
-              {/* ✅ UPDATED FILTERS (without removing your existing ones) */}
               <label className="block text-sm font-medium text-gray-700 mb-2">Key word</label>
               <input
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 type="text"
-                placeholder="e.g. React, DevOps, SQL, Security"
+                placeholder="e.g. React, DevOps, SQL"
                 className="w-full border border-gray-200 rounded-2xl px-4 py-3 mb-5
                            focus:ring-2 focus:ring-[rgba(106,111,242,0.25)] outline-none text-sm bg-white"
               />
@@ -292,7 +289,9 @@ export default function JobsSection() {
                 <option>Lead</option>
               </select>
 
-              <label className="block text-sm font-medium text-gray-700 mb-2">Distance from location (km)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Distance from location (km)
+              </label>
               <input
                 value={maxDistanceKm}
                 onChange={(e) => setMaxDistanceKm(e.target.value)}
@@ -302,7 +301,9 @@ export default function JobsSection() {
                            focus:ring-2 focus:ring-[rgba(106,111,242,0.25)] outline-none text-sm bg-white"
               />
 
-              <label className="block text-sm font-medium text-gray-700 mb-2">Remote / Hybrid / Onsite</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Work mode
+              </label>
               <select
                 value={workMode}
                 onChange={(e) => setWorkMode(e.target.value)}
@@ -326,7 +327,7 @@ export default function JobsSection() {
                 <option value="30d">Last 30 days</option>
               </select>
 
-              {/* ✅ KEEP EXISTING FILTERS */}
+              {/* Keep your existing filters */}
               <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
               <input
                 value={location}
@@ -364,7 +365,7 @@ export default function JobsSection() {
 
               <p className="text-sm font-medium text-gray-700 mb-3">Quick Filters</p>
               <div className="flex flex-wrap gap-2 mb-6">
-                {["Remote", "Hybrid", "Onsite", "Full-time", "Senior", "Contract"].map((tag: string) => (
+                {["Remote", "Hybrid", "Onsite", "Full-time", "Senior", "Contract"].map((tag) => (
                   <button
                     key={tag}
                     type="button"
