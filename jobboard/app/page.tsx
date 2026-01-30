@@ -93,57 +93,85 @@ export default function Home() {
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
-      {/* ================= HERO (match screenshot, NO search bar, minimal green) ================= */}
-      <section className="relative overflow-hidden bg-[#F7F8FA]">
-        {/* background */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F5F3]" />
-          <div
-            className="absolute inset-0 opacity-[0.35]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
-              backgroundSize: "28px 28px",
-            }}
+
+
+     {/* ================= HERO (green only behind the highlighted words + stronger Jump button) ================= */}
+<section className="relative overflow-hidden bg-[#F7F8FA]">
+  {/* background */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F5F3]" />
+    <div
+      className="absolute inset-0 opacity-[0.35]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
+        backgroundSize: "28px 28px",
+      }}
+    />
+  </div>
+
+  <div className="relative mx-auto max-w-7xl px-6">
+    <div className="mx-auto max-w-3xl text-center py-16 sm:py-18 md:py-24">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+        Curated roles • Remote-friendly • Fast apply
+      </div>
+
+      <h1 className="mt-6 text-[2.05rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.08] tracking-tight text-slate-900">
+        Find{" "}
+        {/* ✅ green ONLY as a “highlight smear” behind the text */}
+        <span className="relative inline-block px-2">
+          <span
+            aria-hidden
+            className="absolute left-[-6px] right-[-6px] top-[58%] -translate-y-1/2 h-[0.85em]
+                       rounded-[999px] bg-emerald-300/35 blur-[1px]"
           />
-        </div>
+          <span className="relative text-slate-900">Technical Jobs</span>
+        </span>{" "}
+        built for long-term careers
+      </h1>
 
-        {/* subtle green glow (reduced) */}
-        <div className="pointer-events-none absolute -top-40 left-[-180px] h-[420px] w-[420px] rounded-full bg-emerald-400/12 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-[-260px] right-[-220px] h-[520px] w-[520px] rounded-full bg-emerald-400/8 blur-3xl" />
+      <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
+        Browse opportunities across engineering, infrastructure, cloud, security, and data —
+        including remote options. Simple, clean, and focused on serious hiring.
+      </p>
 
-        <div className="relative mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-3xl text-center py-16 sm:py-18 md:py-24">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              Curated roles • Remote-friendly • Fast apply
-            </div>
+      {/* ✅ “Jump to Jobs” made more unique + visible */}
+      <div className="mt-10 flex justify-center">
+        <button
+          type="button"
+          onClick={() =>
+            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="group inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/80 px-6 py-3
+                     text-sm font-semibold text-slate-900 shadow-sm backdrop-blur
+                     hover:shadow-md hover:bg-white transition"
+        >
+          <span
+            className="inline-flex h-9 w-9 items-center justify-center rounded-xl
+                       bg-[rgba(106,111,242,0.12)] border border-[rgba(106,111,242,0.22)]
+                       group-hover:bg-[rgba(106,111,242,0.18)] transition"
+            aria-hidden
+          >
+            ↓
+          </span>
+          Jump to Jobs
+          <span
+            className="text-slate-400 group-hover:text-slate-700 transition"
+            aria-hidden
+          >
+            →
+          </span>
+        </button>
+      </div>
 
-            <h1 className="mt-6 text-[2.05rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.08] tracking-tight text-slate-900">
-              Find <span className="text-emerald-600">Technical Jobs</span> built
-              for long-term careers
-            </h1>
+      <p className="mt-3 text-xs text-slate-500">
+        Scroll straight to the full job list
+      </p>
+    </div>
+  </div>
+</section>
 
-            <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
-              Browse opportunities across engineering, infrastructure, cloud,
-              security, and data — including remote options. Simple, clean, and
-              focused on serious hiring.
-            </p>
-
-            <button
-              type="button"
-              onClick={() =>
-                document.getElementById("jobs")?.scrollIntoView({
-                  behavior: "smooth",
-                })
-              }
-              className="mt-10 inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-700 hover:underline"
-            >
-              Jump to Jobs <span aria-hidden>↓</span>
-            </button>
-          </div>
-        </div>
-      </section>
 
       {/* ================= COMPANIES (reverted to BEFORE) ================= */}
       <section className="relative py-16 md:py-20 bg-white overflow-hidden">
