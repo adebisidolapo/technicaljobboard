@@ -110,20 +110,21 @@ export default function Home() {
   </div>
 
   <div className="relative mx-auto max-w-7xl px-6">
-    <div className="mx-auto max-w-3xl text-center py-20 md:py-28">
+    <div className="mx-auto max-w-3xl text-center py-16 sm:py-20 md:py-28">
+      {/* Headline */}
       <h1 className="text-[2.1rem] sm:text-[2.7rem] md:text-[3.2rem] font-extrabold leading-tight tracking-tight text-[#0F172A]">
         Find{" "}
         <span className="relative inline-block">
-          {/* very light, wide green wash */}
+          {/* soft, wide green wash (very light) */}
           <span
             aria-hidden
-            className="absolute -inset-x-12 -inset-y-8
-                       bg-emerald-400/8 blur-3xl rounded-full"
+            className="absolute -inset-x-14 -inset-y-10
+                       bg-emerald-400/6 blur-[60px] rounded-full"
           />
           <span
             aria-hidden
-            className="absolute -inset-x-6 -inset-y-4
-                       bg-emerald-400/10 blur-2xl rounded-full"
+            className="absolute -inset-x-8 -inset-y-6
+                       bg-emerald-400/8 blur-[36px] rounded-full"
           />
           <span className="relative text-emerald-600">
             Technical Jobs
@@ -132,24 +133,59 @@ export default function Home() {
         built for long-term careers
       </h1>
 
+      {/* Description */}
       <p className="mt-5 text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
         Browse opportunities across engineering, infrastructure, cloud, security,
         and data — including remote options. Simple, clean, and focused on serious hiring.
       </p>
 
-      <button
-        type="button"
-        onClick={() =>
-          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="mt-10 inline-flex items-center gap-2 text-sm font-semibold
-                   text-emerald-700 hover:text-emerald-800 transition"
-      >
-        Jump to Jobs <span aria-hidden>↓</span>
-      </button>
+      {/* Jump to Jobs */}
+      <div className="mt-10 flex justify-center">
+        <button
+          type="button"
+          onClick={() =>
+            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="
+            group inline-flex items-center justify-center gap-3
+            w-full sm:w-auto
+            rounded-2xl px-6 py-3.5
+            bg-white/80 backdrop-blur
+            border border-slate-200
+            shadow-sm hover:shadow-md transition
+            text-sm font-semibold text-slate-900
+          "
+        >
+          <span
+            className="
+              inline-flex h-10 w-10 items-center justify-center rounded-xl
+              bg-emerald-500/10 text-emerald-700
+              group-hover:bg-emerald-500/15 transition
+            "
+            aria-hidden
+          >
+            ↓
+          </span>
+
+          <span className="leading-none text-left">
+            Jump to Jobs
+            <span className="block text-xs font-medium text-slate-500 mt-0.5">
+              See all available roles
+            </span>
+          </span>
+
+          <span
+            className="ml-1 text-slate-400 group-hover:text-slate-700 transition"
+            aria-hidden
+          >
+            →
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
+
 
 
 
