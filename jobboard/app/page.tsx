@@ -94,34 +94,65 @@ export default function Home() {
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
-
 {/* ================= HERO ================= */}
-<section className="relative bg-[#F3F8F6]">
-  <div className="mx-auto max-w-7xl px-6">
+<section className="relative overflow-hidden bg-[#F7F8FA]">
+  {/* faint purple-tinted background */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
+    <div
+      className="absolute inset-0 opacity-[0.25]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
+        backgroundSize: "28px 28px",
+      }}
+    />
+  </div>
+
+  <div className="relative mx-auto max-w-7xl px-6">
     <div className="mx-auto max-w-3xl text-center py-20 md:py-28">
-      
-      {/* headline */}
       <h1 className="text-[2.1rem] sm:text-[2.7rem] md:text-[3.2rem] font-extrabold leading-tight tracking-tight text-[#0F172A]">
         Find{" "}
-        <span className="text-emerald-600">Technical Jobs</span>{" "}
+        {/* ✅ green text with a soft “spread” glow into the background */}
+        <span className="relative inline-block">
+          {/* the spread (localized, not full bg) */}
+          <span
+            aria-hidden
+            className="absolute -inset-x-6 -inset-y-4 rounded-[999px]
+                       bg-emerald-400/20 blur-2xl"
+          />
+          {/* tiny darker core so it feels like a real spread */}
+          <span
+            aria-hidden
+            className="absolute -inset-x-3 -inset-y-2 rounded-[999px]
+                       bg-emerald-400/18 blur-lg"
+          />
+          {/* text */}
+          <span className="relative text-emerald-600">Technical Jobs</span>
+        </span>{" "}
         built for long-term careers
       </h1>
 
-      {/* description */}
       <p className="mt-5 text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
         Browse opportunities across engineering, infrastructure, cloud, security,
         and data — including remote options. Simple, clean, and focused on serious hiring.
       </p>
 
-      {/* Jump to jobs */}
+      {/* more visible but still simple */}
       <button
         type="button"
         onClick={() =>
           document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
         }
-        className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
+        className="mt-10 inline-flex items-center gap-3 rounded-full
+                   bg-white/70 px-6 py-3 text-sm font-semibold text-emerald-700
+                   shadow-sm border border-slate-200 backdrop-blur
+                   hover:bg-white hover:shadow-md transition"
       >
-        Jump to Jobs <span aria-hidden>↓</span>
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/10">
+          ↓
+        </span>
+        Jump to Jobs
       </button>
     </div>
   </div>
