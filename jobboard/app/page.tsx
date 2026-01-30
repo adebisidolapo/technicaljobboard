@@ -95,13 +95,13 @@ export default function Home() {
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
 
-    {/* ================= HERO (faint purple background + green “smear” ONLY behind the text) ================= */}
+{/* ================= HERO ================= */}
 <section className="relative overflow-hidden bg-[#F7F8FA]">
-  {/* background (keep faint purple tint like before) */}
+  {/* faint purple-tinted background */}
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
     <div
-      className="absolute inset-0 opacity-[0.35]"
+      className="absolute inset-0 opacity-[0.25]"
       style={{
         backgroundImage:
           "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
@@ -110,63 +110,43 @@ export default function Home() {
     />
   </div>
 
-  {/* ✅ NO big green glows — green only exists behind the highlighted words */}
   <div className="relative mx-auto max-w-7xl px-6">
-    <div className="mx-auto max-w-3xl text-center py-16 sm:py-18 md:py-24">
+    <div className="mx-auto max-w-3xl text-center py-16 sm:py-20 md:py-24">
+      {/* top pill */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         Curated roles • Remote-friendly • Fast apply
       </div>
 
-      <h1 className="mt-6 text-[2.05rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.08] tracking-tight text-slate-900">
+      {/* headline with CORRECT green spread */}
+      <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
         Find{" "}
-        {/* ✅ green spread/smear behind text (like screenshot), not everywhere */}
-        <span className="relative inline-block">
-          <span
-            aria-hidden
-            className="absolute left-[-10px] right-[-10px] top-[58%] -translate-y-1/2 h-[0.95em]
-                       bg-emerald-400/25 blur-[6px] rounded-[999px] rotate-[-2deg]"
-          />
-          <span
-            aria-hidden
-            className="absolute left-[-6px] right-[-6px] top-[58%] -translate-y-1/2 h-[0.70em]
-                       bg-emerald-300/35 rounded-[999px] rotate-[1deg]"
-          />
-          <span className="relative text-emerald-700">Technical Jobs</span>
+        <span
+          className="inline-block px-1
+                     bg-[linear-gradient(transparent_62%,rgba(16,185,129,0.35)_62%)]
+                     rounded-sm"
+        >
+          Technical Jobs
         </span>{" "}
         built for long-term careers
       </h1>
 
+      {/* description */}
       <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
         Browse opportunities across engineering, infrastructure, cloud, security, and data —
         including remote options. Simple, clean, and focused on serious hiring.
       </p>
 
-      {/* ✅ more visible, unique “Jump to Jobs” */}
-      <div className="mt-10 flex justify-center">
-        <button
-          type="button"
-          onClick={() =>
-            document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-          }
-          className="group inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/80 px-6 py-3
-                     text-sm font-semibold text-emerald-700 shadow-sm backdrop-blur
-                     hover:bg-white hover:shadow-md transition"
-        >
-          <span
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl
-                       bg-emerald-500/10 border border-emerald-500/20
-                       group-hover:bg-emerald-500/15 transition"
-            aria-hidden
-          >
-            ↓
-          </span>
-          Jump to Jobs
-          <span className="text-emerald-700/60 group-hover:text-emerald-700 transition" aria-hidden>
-            →
-          </span>
-        </button>
-      </div>
+      {/* Jump to Jobs */}
+      <button
+        type="button"
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition"
+      >
+        Jump to Jobs <span aria-hidden>↓</span>
+      </button>
     </div>
   </div>
 </section>
