@@ -5,6 +5,72 @@ import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
 type Category = { label: string; slug: string };
 
+const FEATURED_JOBS = [
+  {
+    company: "NovaTech",
+    location: "Remote",
+    posted: "2 days ago",
+    roles: [
+      {
+        title: "Senior Frontend Engineer",
+        stack: "React • Next.js • TypeScript",
+        pay: "$120k – $160k",
+        posted: "2d ago",
+      },
+      {
+        title: "DevOps Engineer",
+        stack: "AWS • Terraform • CI/CD",
+        pay: "$130k – $175k",
+        posted: "3d ago",
+      },
+      {
+        title: "Security Engineer",
+        stack: "Cloud • AppSec • SOC2",
+        pay: "$140k – $185k",
+        posted: "5d ago",
+      },
+    ],
+  },
+  {
+    company: "CloudSprint",
+    location: "Remote",
+    posted: "4 days ago",
+    roles: [
+      {
+        title: "Backend Engineer (Node / Go)",
+        stack: "Node.js • Go • Postgres",
+        pay: "$130k – $175k",
+        posted: "4d ago",
+      },
+      {
+        title: "Platform Engineer",
+        stack: "Kubernetes • Helm • Observability",
+        pay: "$140k – $190k",
+        posted: "6d ago",
+      },
+    ],
+  },
+  {
+    company: "Launchify",
+    location: "San Francisco, CA",
+    posted: "1 week ago",
+    roles: [
+      {
+        title: "Data Engineer",
+        stack: "Python • Airflow • BigQuery",
+        pay: "$125k – $170k",
+        posted: "1w ago",
+      },
+      {
+        title: "QA Automation Engineer",
+        stack: "Playwright • CI",
+        pay: "$95k – $130k",
+        posted: "5d ago",
+      },
+    ],
+  },
+];
+
 const CATEGORIES: Category[] = [
   { label: "Healthcare IT", slug: "healthcare-it" },
   { label: "Aerospace / Defense", slug: "aerospace-defense" },
@@ -44,7 +110,6 @@ export default function Home() {
   // 🔁 REDIRECT SEARCH TO ALL JOBS PAGE
   const runHeroSearch = () => {
     const params = new URLSearchParams();
-
     if (heroQ.trim()) params.set("q", heroQ.trim());
     if (heroLoc.trim()) params.set("loc", heroLoc.trim());
 
@@ -138,9 +203,6 @@ export default function Home() {
         </div>
       </section>
 
-
-
-
       {/* ================= COMPANIES (reverted to BEFORE) ================= */}
       <section className="relative py-16 md:py-20 bg-white overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6">
@@ -160,7 +222,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= CATEGORIES (purple accents + nicer container) ================= */}
+      {/* ================= CATEGORIES ================= */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="rounded-3xl border border-[rgba(106,111,242,0.18)] bg-gradient-to-b from-[#FBFBFD] to-white p-6 md:p-10 shadow-sm">
@@ -221,10 +283,11 @@ export default function Home() {
                     key={cat.slug}
                     type="button"
                     onClick={() => {
+                      // 👇 now that jobs moved, go to /all-jobs with category
                       setSelectedCategory(cat.slug);
-                      document
-                        .getElementById("jobs")
-                        ?.scrollIntoView({ behavior: "smooth" });
+                      const params = new URLSearchParams();
+                      params.set("cat", cat.slug);
+                      window.location.href = `/all-jobs?${params.toString()}`;
                     }}
                     className={[
                       "group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition",
@@ -264,97 +327,84 @@ export default function Home() {
       </section>
 
       {/* ================= FEATURED JOBS ================= */}
-<section
-  id="featured"
-  className="relative py-24 border-y border-gray-200 bg-[#F7F8FC]"
->
-  <div className="max-w-7xl mx-auto px-6">
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
-      <div>
-        <h2 className="text-3xl font-semibold tracking-tight text-[#0F1426]">
-          Featured Technical Jobs
-        </h2>
-        <p className="text-gray-600 mt-2 max-w-2xl">
-          Hand-picked engineering, DevOps, cloud, and data roles from trusted teams.
-        </p>
-      </div>
-    </div>
-
-    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {FEATURED_JOBS.map((company, idx) => (
-        <div
-          key={idx}
-          className="bg-white rounded-2xl border border-[rgba(106,111,242,0.25)]
-                     shadow-sm hover:shadow-lg transition p-6"
-        >
-          {/* Company header */}
-          <div className="flex items-center gap-4 mb-5">
-            {/* green profile */}
-            <div className="w-12 h-12 rounded-xl bg-emerald-500 text-white
-                            flex items-center justify-center font-bold">
-              {company.company.charAt(0)}
-            </div>
-
-            <div className="min-w-0">
-              <h3 className="text-lg font-semibold text-[#0F1426] truncate">
-                {company.company}
-              </h3>
-              <p className="text-sm text-gray-600 truncate">
-                {company.location}
+      <section id="featured" className="relative py-24 border-y border-gray-200 bg-[#F7F8FC]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight text-[#0F1426]">
+                Featured Technical Jobs
+              </h2>
+              <p className="text-gray-600 mt-2 max-w-2xl">
+                Hand-picked engineering, DevOps, cloud, and data roles from trusted teams.
               </p>
             </div>
           </div>
 
-          {/* Roles (2–3 per company) */}
-          <div className="space-y-3">
-            {company.roles.map((role, i) => (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {FEATURED_JOBS.map((company, idx) => (
               <div
-                key={i}
-                className="rounded-xl border border-slate-200 bg-[#FBFBFF] p-4"
+                key={idx}
+                className="bg-white rounded-2xl border border-[rgba(106,111,242,0.25)]
+                           shadow-sm hover:shadow-lg transition p-6"
               >
-                <p className="font-semibold text-slate-900 truncate">
-                  {role.title}
-                </p>
-                <p className="text-xs text-slate-600 mt-1 truncate">
-                  {role.stack}
-                </p>
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold">
+                    {company.company.charAt(0)}
+                  </div>
 
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="text-xs font-medium text-slate-900">
-                    {role.pay}
-                  </span>
-                  <span className="text-[11px] text-slate-500">
-                    {role.posted}
-                  </span>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-[#0F1426] truncate">
+                      {company.company}
+                    </h3>
+                    <p className="text-sm text-gray-600 truncate">{company.location}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {company.roles.map((role, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl border border-slate-200 bg-[#FBFBFF] p-4"
+                    >
+                      <p className="font-semibold text-slate-900 truncate">
+                        {role.title}
+                      </p>
+                      <p className="text-xs text-slate-600 mt-1 truncate">
+                        {role.stack}
+                      </p>
+
+                      <div className="mt-2 flex items-center justify-between">
+                        <span className="text-xs font-medium text-slate-900">
+                          {role.pay}
+                        </span>
+                        <span className="text-[11px] text-slate-500">
+                          {role.posted}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex items-center justify-between">
+                  <button
+                    onClick={() => (window.location.href = "/all-jobs")}
+                    className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
+                               bg-[var(--brand-purple)]
+                               hover:bg-[var(--brand-purple-dark)]
+                               transition shadow-[0_8px_20px_rgba(106,111,242,0.25)]"
+                  >
+                    View
+                  </button>
+
+                  <span className="text-xs text-gray-400">Updated {company.posted}</span>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Footer */}
-          <div className="mt-6 flex items-center justify-between">
-            {/* purple view button */}
-            <button
-              className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
-                         bg-[var(--brand-purple)]
-                         hover:bg-[var(--brand-purple-dark)]
-                         transition shadow-[0_8px_20px_rgba(106,111,242,0.25)]"
-            >
-              View
-            </button>
-
-            <span className="text-xs text-gray-400">
-              Updated {company.posted}
-            </span>
-          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
-
-      {/* ================= EMPOWERING (unchanged from your code) ================= */}
+      {/* ================= EMPOWERING ================= */}
       <section id="empowering" className="relative py-28 overflow-hidden bg-[#F6F7FB]">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#F6F7FB] to-[#F2F4FF]" />
 
@@ -373,7 +423,7 @@ export default function Home() {
             <div className="md:w-1/2 w-full">
               <span
                 className="inline-block mb-4 text-sm font-semibold text-[var(--brand-purple)]
-                               bg-[rgba(106,111,242,0.10)] px-4 py-1.5 rounded-full"
+                           bg-[rgba(106,111,242,0.10)] px-4 py-1.5 rounded-full"
               >
                 Built for Technical Careers
               </span>
@@ -383,8 +433,8 @@ export default function Home() {
               </h2>
 
               <p className="text-gray-700 mb-6 leading-relaxed max-w-xl">
-                Discover vetted Technical roles, transparent salary ranges, and trusted employers — all in one place
-                designed to support long-term career growth.
+                Discover vetted Technical roles, transparent salary ranges, and trusted employers —
+                all in one place designed to support long-term career growth.
               </p>
 
               <ul className="space-y-3 mb-8 text-gray-700">
@@ -404,9 +454,7 @@ export default function Home() {
 
               <button
                 type="button"
-                onClick={() =>
-                  document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-                }
+                onClick={() => (window.location.href = "/all-jobs")}
                 className="inline-flex items-center gap-3 bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
                            text-white px-7 py-3 rounded-2xl font-semibold transition shadow-lg"
               >
