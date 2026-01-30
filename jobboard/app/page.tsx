@@ -2,75 +2,8 @@
 
 import { useEffect, useState } from "react";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
-import JobsSection from "../components/jobs/JobsSection";
 
 type Category = { label: string; slug: string };
-
-const FEATURED_JOBS = [
-  {
-    company: "NovaTech",
-    location: "Remote",
-    posted: "2 days ago",
-    roles: [
-      {
-        title: "Senior Frontend Engineer",
-        stack: "React • Next.js • TypeScript",
-        pay: "$120k – $160k",
-        posted: "2d ago",
-      },
-      {
-        title: "DevOps Engineer",
-        stack: "AWS • Terraform • CI/CD",
-        pay: "$130k – $175k",
-        posted: "3d ago",
-      },
-      {
-        title: "Security Engineer",
-        stack: "Cloud • AppSec • SOC2",
-        pay: "$140k – $185k",
-        posted: "5d ago",
-      },
-    ],
-  },
-  {
-    company: "CloudSprint",
-    location: "Remote",
-    posted: "4 days ago",
-    roles: [
-      {
-        title: "Backend Engineer (Node / Go)",
-        stack: "Node.js • Go • Postgres",
-        pay: "$130k – $175k",
-        posted: "4d ago",
-      },
-      {
-        title: "Platform Engineer",
-        stack: "Kubernetes • Helm • Observability",
-        pay: "$140k – $190k",
-        posted: "6d ago",
-      },
-    ],
-  },
-  {
-    company: "Launchify",
-    location: "San Francisco, CA",
-    posted: "1 week ago",
-    roles: [
-      {
-        title: "Data Engineer",
-        stack: "Python • Airflow • BigQuery",
-        pay: "$125k – $170k",
-        posted: "1w ago",
-      },
-      {
-        title: "QA Automation Engineer",
-        stack: "Playwright • CI",
-        pay: "$95k – $130k",
-        posted: "5d ago",
-      },
-    ],
-  },
-];
 
 const CATEGORIES: Category[] = [
   { label: "Healthcare IT", slug: "healthcare-it" },
@@ -89,7 +22,7 @@ export default function Home() {
   const [categoryQuery, setCategoryQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  // ✅ ADD THESE FOR HERO SEARCH BAR
+  // HERO SEARCH STATE
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
 
@@ -108,23 +41,15 @@ export default function Home() {
     return () => io.disconnect();
   }, []);
 
-  // ✅ ADD THIS FOR HERO SEARCH BAR
+  // 🔁 REDIRECT SEARCH TO ALL JOBS PAGE
   const runHeroSearch = () => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams();
 
     if (heroQ.trim()) params.set("q", heroQ.trim());
-    else params.delete("q");
-
     if (heroLoc.trim()) params.set("loc", heroLoc.trim());
-    else params.delete("loc");
 
     const qs = params.toString();
-    const nextUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
-
-    window.history.pushState({}, "", nextUrl);
-
-    document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
-    window.dispatchEvent(new PopStateEvent("popstate"));
+    window.location.href = qs ? `/all-jobs?${qs}` : "/all-jobs";
   };
 
   const filteredCategories = CATEGORIES.filter((cat) =>
@@ -135,7 +60,6 @@ export default function Home() {
     <main className="font-sans bg-gray-100 text-[#02000D]">
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden bg-[#F7F8FA]">
-        {/* faint purple-tinted background */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
           <div
@@ -150,11 +74,9 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-3xl text-center py-16 sm:py-20 md:py-28">
-            {/* Headline */}
             <h1 className="text-[2.1rem] sm:text-[2.7rem] md:text-[3.2rem] font-extrabold leading-tight tracking-tight text-[#0F172A]">
               Find{" "}
               <span className="relative inline-block">
-                {/* soft, wide green wash (very light) */}
                 <span
                   aria-hidden
                   className="absolute -inset-x-14 -inset-y-10 bg-emerald-400/6 blur-[60px] rounded-full"
@@ -168,14 +90,12 @@ export default function Home() {
               built for long-term careers
             </h1>
 
-            {/* Description */}
             <p className="mt-5 text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
               Browse opportunities across engineering, infrastructure, cloud,
-              security, and data — including remote options. Simple, clean, and
-              focused on serious hiring.
+              security, and data — including remote options.
             </p>
 
-            {/* ✅ HERO SEARCH BAR */}
+            {/* SEARCH BAR */}
             <div className="mt-8">
               <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
@@ -184,8 +104,7 @@ export default function Home() {
                     onChange={(e) => setHeroQ(e.target.value)}
                     type="text"
                     placeholder="Job title, keyword"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
-                               focus:ring-2 focus:ring-emerald-200"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
                   />
 
                   <input
@@ -193,47 +112,24 @@ export default function Home() {
                     onChange={(e) => setHeroLoc(e.target.value)}
                     type="text"
                     placeholder="Location (Remote, Lagos, New York)"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
-                               focus:ring-2 focus:ring-emerald-200"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
                   />
 
                   <button
                     type="button"
                     onClick={runHeroSearch}
-                    className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white
-                               bg-slate-900 hover:bg-slate-800
-                               shadow-[0_10px_26px_rgba(2,6,23,0.22)]
-                               transition"
+                    className="h-12 rounded-xl px-6 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition"
                   >
                     Search Jobs
                   </button>
                 </div>
-
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
-                  <span>Popular:</span>
-                  {["Frontend", "DevOps", "Data", "Security"].map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => {
-                        setHeroQ(t);
-                        setTimeout(runHeroSearch, 0);
-                      }}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300"
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
 
-            {/* Jump to Jobs (old simple style) */}
+            {/* JUMP TO ALL JOBS */}
             <button
               type="button"
-              onClick={() =>
-                document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => (window.location.href = "/all-jobs")}
               className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
             >
               Jump to Jobs <span aria-hidden>↓</span>
@@ -457,9 +353,6 @@ export default function Home() {
   </div>
 </section>
 
-
-      {/* ================= ALL JOBS ================= */}
-      <JobsSection />
 
       {/* ================= EMPOWERING (unchanged from your code) ================= */}
       <section id="empowering" className="relative py-28 overflow-hidden bg-[#F6F7FB]">
