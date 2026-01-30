@@ -100,7 +100,7 @@ export default function Home() {
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
     <div
-      className="absolute inset-0 opacity-[0.25]"
+      className="absolute inset-0 opacity-[0.22]"
       style={{
         backgroundImage:
           "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
@@ -113,22 +113,21 @@ export default function Home() {
     <div className="mx-auto max-w-3xl text-center py-20 md:py-28">
       <h1 className="text-[2.1rem] sm:text-[2.7rem] md:text-[3.2rem] font-extrabold leading-tight tracking-tight text-[#0F172A]">
         Find{" "}
-        {/* ✅ green text with a soft “spread” glow into the background */}
         <span className="relative inline-block">
-          {/* the spread (localized, not full bg) */}
+          {/* very light, wide green wash */}
           <span
             aria-hidden
-            className="absolute -inset-x-6 -inset-y-4 rounded-[999px]
-                       bg-emerald-400/20 blur-2xl"
+            className="absolute -inset-x-12 -inset-y-8
+                       bg-emerald-400/8 blur-3xl rounded-full"
           />
-          {/* tiny darker core so it feels like a real spread */}
           <span
             aria-hidden
-            className="absolute -inset-x-3 -inset-y-2 rounded-[999px]
-                       bg-emerald-400/18 blur-lg"
+            className="absolute -inset-x-6 -inset-y-4
+                       bg-emerald-400/10 blur-2xl rounded-full"
           />
-          {/* text */}
-          <span className="relative text-emerald-600">Technical Jobs</span>
+          <span className="relative text-emerald-600">
+            Technical Jobs
+          </span>
         </span>{" "}
         built for long-term careers
       </h1>
@@ -138,25 +137,20 @@ export default function Home() {
         and data — including remote options. Simple, clean, and focused on serious hiring.
       </p>
 
-      {/* more visible but still simple */}
       <button
         type="button"
         onClick={() =>
           document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
         }
-        className="mt-10 inline-flex items-center gap-3 rounded-full
-                   bg-white/70 px-6 py-3 text-sm font-semibold text-emerald-700
-                   shadow-sm border border-slate-200 backdrop-blur
-                   hover:bg-white hover:shadow-md transition"
+        className="mt-10 inline-flex items-center gap-2 text-sm font-semibold
+                   text-emerald-700 hover:text-emerald-800 transition"
       >
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/10">
-          ↓
-        </span>
-        Jump to Jobs
+        Jump to Jobs <span aria-hidden>↓</span>
       </button>
     </div>
   </div>
 </section>
+
 
 
 
