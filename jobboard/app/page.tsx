@@ -16,26 +16,6 @@ type FeaturedJob = {
 
 type Category = { label: string; slug: string };
 
-const [heroQ, setHeroQ] = useState("");
-const [heroLoc, setHeroLoc] = useState("");
-
-const runHeroSearch = () => {
-  const params = new URLSearchParams(window.location.search);
-
-  if (heroQ.trim()) params.set("q", heroQ.trim());
-  else params.delete("q");
-
-  if (heroLoc.trim()) params.set("loc", heroLoc.trim());
-  else params.delete("loc");
-
-  const nextUrl = `${window.location.pathname}?${params.toString()}`;
-  window.history.pushState({}, "", nextUrl);
-
-  document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" });
-  window.dispatchEvent(new PopStateEvent("popstate"));
-};
-
-
 const FEATURED_JOBS = [
   {
     company: "NovaTech",
