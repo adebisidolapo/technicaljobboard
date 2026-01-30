@@ -113,106 +113,113 @@ export default function Home() {
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
-      {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-[#F7F8FA]">
-        {/* background */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F5F3]" />
-          <div
-            className="absolute inset-0 opacity-[0.35]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
-              backgroundSize: "28px 28px",
-            }}
-          />
+
+      
+{/* ================= HERO ================= */}
+<section className="relative overflow-hidden bg-[#F7F8FA]">
+  {/* background */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F2FF]" />
+    <div
+      className="absolute inset-0 opacity-[0.35]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
+        backgroundSize: "28px 28px",
+      }}
+    />
+  </div>
+
+  {/* subtle purple glow (not bold / not everywhere) */}
+  <div className="pointer-events-none absolute -top-32 left-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.18)] blur-3xl" />
+  <div className="pointer-events-none absolute bottom-[-220px] right-[-180px] h-[620px] w-[620px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+
+  <div className="relative mx-auto max-w-7xl px-6">
+    <div className="grid md:grid-cols-2 gap-10 items-center py-18 md:py-24">
+      {/* LEFT */}
+      <div className="max-w-xl">
+        <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+          <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+          Curated roles • Remote-friendly • Fast apply
         </div>
 
-        {/* green-ish glow like your old look */}
-        <div className="pointer-events-none absolute -top-32 left-[-120px] h-[520px] w-[520px] rounded-full bg-emerald-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-[-200px] right-[-160px] h-[600px] w-[600px] rounded-full bg-emerald-400/10 blur-3xl" />
+        <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
+          Find{" "}
+          <span className="text-[var(--brand-purple)]">Quality Roles</span>{" "}
+          built for long-term careers
+        </h1>
 
-        <div className="relative mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-3xl text-center py-20 md:py-24">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              Curated roles • Remote-friendly • Fast apply
-            </div>
+        <p className="mt-4 max-w-xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
+          Browse opportunities across engineering, infrastructure, cloud, security, and data —
+          including remote options. Simple, clean, and focused on serious hiring.
+        </p>
 
-            <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
-              Find{" "}
-              <span className="text-emerald-600">Quality Roles</span>{" "}
-              built for long-term careers
-            </h1>
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
+            className="inline-flex items-center gap-3 bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
+                       text-white px-7 py-3 rounded-2xl font-semibold transition shadow-lg"
+          >
+            Browse Jobs
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">→</span>
+          </button>
 
-            <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
-              Browse opportunities across engineering, infrastructure, cloud, security, and data —
-              including remote options. Simple, clean, and focused on serious hiring.
-            </p>
+          <button
+            type="button"
+            onClick={() => document.getElementById("featured")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-6 py-3 rounded-2xl font-semibold border border-slate-200 bg-white/70 hover:bg-white transition text-slate-900"
+          >
+            View Featured
+          </button>
+        </div>
+      </div>
 
-            {/* ✅ HERO SEARCH BAR */}
-            <div className="mt-8">
-              <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
-                  <input
-                    value={heroQ}
-                    onChange={(e) => setHeroQ(e.target.value)}
-                    type="text"
-                    placeholder="Job title, keyword"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
-                               focus:ring-2 focus:ring-emerald-200"
-                  />
+      {/* RIGHT (simple supporting panel) */}
+      <div className="w-full">
+        <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur p-6 shadow-sm">
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
+            What you get
+          </p>
 
-                  <input
-                    value={heroLoc}
-                    onChange={(e) => setHeroLoc(e.target.value)}
-                    type="text"
-                    placeholder="Location (Remote, Lagos, New York)"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
-                               focus:ring-2 focus:ring-emerald-200"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={runHeroSearch}
-                    className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white
-                               bg-slate-900 hover:bg-slate-800
-                               shadow-[0_10px_26px_rgba(2,6,23,0.22)]
-                               transition"
-                  >
-                    Search Jobs
-                  </button>
-                </div>
-
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
-                  <span>Popular:</span>
-                  {["Frontend", "DevOps", "Data", "Security"].map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => {
-                        setHeroQ(t);
-                        setTimeout(runHeroSearch, 0);
-                      }}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300"
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
+          <div className="mt-5 space-y-3 text-sm text-slate-700">
+            <div className="flex items-start gap-3">
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--brand-purple)]" />
+              <div>
+                <p className="font-semibold text-slate-900">Vetted listings</p>
+                <p className="text-slate-600">Cleaner roles, clearer expectations.</p>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
-              className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
-            >
-              Jump to Jobs <span aria-hidden>↓</span>
-            </button>
+            <div className="flex items-start gap-3">
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--brand-purple)]" />
+              <div>
+                <p className="font-semibold text-slate-900">Remote-friendly</p>
+                <p className="text-slate-600">Filter fast, apply faster.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--brand-purple)]" />
+              <div>
+                <p className="font-semibold text-slate-900">Serious employers</p>
+                <p className="text-slate-600">Teams hiring for the long term.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-[rgba(106,111,242,0.25)] bg-[rgba(106,111,242,0.06)] p-4">
+            <p className="text-sm font-semibold text-slate-900">
+              Tip:
+              <span className="font-normal text-slate-700"> Use categories below to narrow down instantly.</span>
+            </p>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* COMPANIES */}
       <section className="relative py-16 md:py-20 bg-white overflow-hidden">
