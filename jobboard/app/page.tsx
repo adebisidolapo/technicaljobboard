@@ -16,44 +16,73 @@ type FeaturedJob = {
 
 type Category = { label: string; slug: string };
 
-const FEATURED_JOBS: FeaturedJob[] = [
+const FEATURED_JOBS = [
   {
-    title: "Senior Frontend Engineer",
     company: "NovaTech",
     location: "Remote",
-    type: "Full-time",
-    pay: "$120k – $160k",
     posted: "2 days ago",
-    description: "Lead frontend development using React and modern UI patterns.",
+    roles: [
+      {
+        title: "Senior Frontend Engineer",
+        stack: "React • Next.js • TypeScript",
+        pay: "$120k – $160k",
+        posted: "2d ago",
+      },
+      {
+        title: "DevOps Engineer",
+        stack: "AWS • Terraform • CI/CD",
+        pay: "$130k – $175k",
+        posted: "3d ago",
+      },
+      {
+        title: "Security Engineer",
+        stack: "Cloud • AppSec • SOC2",
+        pay: "$140k – $185k",
+        posted: "5d ago",
+      },
+    ],
   },
   {
-    title: "Backend Engineer (Node/Go)",
-    company: "TechNova",
-    location: "Austin, TX",
-    type: "Full-time",
-    pay: "$130k – $175k",
-    posted: "3 days ago",
-    description: "Build and scale backend services with Node.js and Go.",
-  },
-  {
-    title: "DevOps / Platform Engineer",
     company: "CloudSprint",
     location: "Remote",
-    type: "Full-time",
-    pay: "$140k – $190k",
-    posted: "5 days ago",
-    description: "Own CI/CD pipelines, infrastructure, and cloud reliability.",
+    posted: "4 days ago",
+    roles: [
+      {
+        title: "Backend Engineer (Node / Go)",
+        stack: "Node.js • Go • Postgres",
+        pay: "$130k – $175k",
+        posted: "4d ago",
+      },
+      {
+        title: "Platform Engineer",
+        stack: "Kubernetes • Helm • Observability",
+        pay: "$140k – $190k",
+        posted: "6d ago",
+      },
+    ],
   },
   {
-    title: "Product Designer",
     company: "Launchify",
     location: "San Francisco, CA",
-    type: "Contract",
-    pay: "$8,000 / month",
-    posted: "4 days ago",
-    description: "Design product experiences and collaborate closely with engineering.",
+    posted: "1 week ago",
+    roles: [
+      {
+        title: "Data Engineer",
+        stack: "Python • Airflow • BigQuery",
+        pay: "$125k – $170k",
+        posted: "1w ago",
+      },
+      {
+        title: "QA Automation Engineer",
+        stack: "Playwright • CI",
+        pay: "$95k – $130k",
+        posted: "5d ago",
+      },
+    ],
   },
 ];
+
+
 
 const CATEGORIES: Category[] = [
   { label: "Healthcare IT", slug: "healthcare-it" },
@@ -312,132 +341,96 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FEATURED JOBS (remove green spread: neutral + keep existing) ================= */}
-      <section
-        id="featured"
-        className="relative py-24 border-y border-gray-200 overflow-hidden bg-[#F7F8FC]"
-      >
-        {/* toned down glows */}
-        <div className="pointer-events-none absolute -top-32 -left-32 w-[36rem] h-[36rem] rounded-full bg-slate-900/5 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -right-32 w-[36rem] h-[36rem] rounded-full bg-slate-900/5 blur-3xl" />
+      {/* ================= FEATURED JOBS ================= */}
+<section
+  id="featured"
+  className="relative py-24 border-y border-gray-200 bg-[#F7F8FC]"
+>
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
+      <div>
+        <h2 className="text-3xl font-semibold tracking-tight text-[#0F1426]">
+          Featured Technical Jobs
+        </h2>
+        <p className="text-gray-600 mt-2 max-w-2xl">
+          Hand-picked engineering, DevOps, cloud, and data roles from trusted teams.
+        </p>
+      </div>
+    </div>
 
-        <div className="relative w-full">
-          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
-            <div>
-              <h2 className="text-3xl font-semibold tracking-tight text-[#0F1426]">
-                Featured Jobs
-              </h2>
-              <p className="text-gray-600 mt-2 max-w-2xl">
-                A curated selection of standout roles from trusted teams.
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {FEATURED_JOBS.map((company, idx) => (
+        <div
+          key={idx}
+          className="bg-white rounded-2xl border border-[rgba(106,111,242,0.25)]
+                     shadow-sm hover:shadow-lg transition p-6"
+        >
+          {/* Company header */}
+          <div className="flex items-center gap-4 mb-5">
+            {/* green profile */}
+            <div className="w-12 h-12 rounded-xl bg-emerald-500 text-white
+                            flex items-center justify-center font-bold">
+              {company.company.charAt(0)}
+            </div>
+
+            <div className="min-w-0">
+              <h3 className="text-lg font-semibold text-[#0F1426] truncate">
+                {company.company}
+              </h3>
+              <p className="text-sm text-gray-600 truncate">
+                {company.location}
               </p>
             </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() =>
-                  document
-                    .getElementById("featured-carousel")
-                    ?.scrollBy({ left: -420, behavior: "smooth" })
-                }
-                className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
-                aria-label="Scroll left"
-              >
-                ←
-              </button>
-
-              <button
-                type="button"
-                onClick={() =>
-                  document
-                    .getElementById("featured-carousel")
-                    ?.scrollBy({ left: 420, behavior: "smooth" })
-                }
-                className="px-4 py-3 rounded-xl bg-white border border-gray-300 shadow-sm hover:shadow-md transition"
-                aria-label="Scroll right"
-              >
-                →
-              </button>
-            </div>
           </div>
 
-          <div className="relative w-full">
-            <div className="pointer-events-none absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-[#F7F8FC] to-transparent z-10" />
-            <div className="pointer-events-none absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-[#F7F8FC] to-transparent z-10" />
+          {/* Roles (2–3 per company) */}
+          <div className="space-y-3">
+            {company.roles.map((role, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-slate-200 bg-[#FBFBFF] p-4"
+              >
+                <p className="font-semibold text-slate-900 truncate">
+                  {role.title}
+                </p>
+                <p className="text-xs text-slate-600 mt-1 truncate">
+                  {role.stack}
+                </p>
 
-            <div
-              id="featured-carousel"
-              className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-12"
-            >
-              {FEATURED_JOBS.map((job, idx) => (
-                <div
-                  key={idx}
-                  className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
-                             bg-white rounded-2xl shadow-sm hover:shadow-lg transition
-                             border border-gray-200 relative overflow-hidden"
-                >
-                  {/* removed green stripe */}
-
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200">
-                        <span className="h-2 w-2 rounded-full bg-gray-500" />
-                        Featured
-                      </span>
-
-                      <button
-                        aria-label="Save job"
-                        className="text-gray-400 hover:text-[#1A2040] transition"
-                      >
-                        ★
-                      </button>
-                    </div>
-
-                    <div className="flex gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-[#1A2040] text-white flex items-center justify-center font-bold shadow-sm">
-                        {job.company.charAt(0)}
-                      </div>
-
-                      <div className="min-w-0">
-                        <h3 className="text-lg font-semibold text-[#0F1426] truncate">
-                          {job.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 truncate">
-                          {job.company} • {job.location}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
-                        {job.type}
-                      </span>
-                      <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
-                        {job.pay}
-                      </span>
-                    </div>
-
-                    <p className="text-sm text-gray-600 mt-4">
-                      {job.description ??
-                        "Fast hiring teams, clear expectations, and modern workflows."}
-                    </p>
-
-                    <div className="mt-6 flex justify-between items-center">
-                      <button className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 transition">
-                        View
-                      </button>
-
-                      <span className="text-xs text-gray-400">
-                        Posted {job.posted}
-                      </span>
-                    </div>
-                  </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-xs font-medium text-slate-900">
+                    {role.pay}
+                  </span>
+                  <span className="text-[11px] text-slate-500">
+                    {role.posted}
+                  </span>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div className="mt-6 flex items-center justify-between">
+            {/* purple view button */}
+            <button
+              className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
+                         bg-[var(--brand-purple)]
+                         hover:bg-[var(--brand-purple-dark)]
+                         transition shadow-[0_8px_20px_rgba(106,111,242,0.25)]"
+            >
+              View
+            </button>
+
+            <span className="text-xs text-gray-400">
+              Updated {company.posted}
+            </span>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* ================= ALL JOBS ================= */}
       <JobsSection />
