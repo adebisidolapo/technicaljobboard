@@ -114,12 +114,12 @@ export default function Home() {
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
 
-      
-{/* ================= HERO ================= */}
+
+{/* ================= HERO (match screenshot, no search) ================= */}
 <section className="relative overflow-hidden bg-[#F7F8FA]">
   {/* background */}
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F2FF]" />
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F1F5F3]" />
     <div
       className="absolute inset-0 opacity-[0.35]"
       style={{
@@ -130,115 +130,97 @@ export default function Home() {
     />
   </div>
 
-  {/* subtle purple glow (not bold / not everywhere) */}
-  <div className="pointer-events-none absolute -top-32 left-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.18)] blur-3xl" />
-  <div className="pointer-events-none absolute bottom-[-220px] right-[-180px] h-[620px] w-[620px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+  {/* subtle green glow (like screenshot) */}
+  <div className="pointer-events-none absolute -top-32 left-[-120px] h-[520px] w-[520px] rounded-full bg-emerald-400/20 blur-3xl" />
+  <div className="pointer-events-none absolute bottom-[-200px] right-[-160px] h-[600px] w-[600px] rounded-full bg-emerald-400/10 blur-3xl" />
 
   <div className="relative mx-auto max-w-7xl px-6">
-    <div className="grid md:grid-cols-2 gap-10 items-center py-18 md:py-24">
-      {/* LEFT */}
-      <div className="max-w-xl">
-        <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
-          <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-          Curated roles • Remote-friendly • Fast apply
-        </div>
-
-        <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
-          Find{" "}
-          <span className="text-[var(--brand-purple)]">Quality Roles</span>{" "}
-          built for long-term careers
-        </h1>
-
-        <p className="mt-4 max-w-xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
-          Browse opportunities across engineering, infrastructure, cloud, security, and data —
-          including remote options. Simple, clean, and focused on serious hiring.
-        </p>
-
-        <div className="mt-7 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={() => document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })}
-            className="inline-flex items-center gap-3 bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
-                       text-white px-7 py-3 rounded-2xl font-semibold transition shadow-lg"
-          >
-            Browse Jobs
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">→</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => document.getElementById("featured")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-6 py-3 rounded-2xl font-semibold border border-slate-200 bg-white/70 hover:bg-white transition text-slate-900"
-          >
-            View Featured
-          </button>
-        </div>
+    {/* centered + responsive spacing */}
+    <div className="mx-auto max-w-3xl text-center py-16 sm:py-18 md:py-24">
+      {/* top pill */}
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+        Curated roles • Remote-friendly • Fast apply
       </div>
 
-      {/* RIGHT (simple supporting panel) */}
-      <div className="w-full">
-        <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur p-6 shadow-sm">
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
-            What you get
-          </p>
+      {/* headline */}
+      <h1 className="mt-6 text-[2.05rem] sm:text-[2.7rem] md:text-[3.1rem] font-extrabold leading-[1.08] tracking-tight text-slate-900">
+        Find{" "}
+        <span className="text-emerald-600">quality roles</span>{" "}
+        built for long-term careers
+      </h1>
 
-          <div className="mt-5 space-y-3 text-sm text-slate-700">
-            <div className="flex items-start gap-3">
-              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--brand-purple)]" />
-              <div>
-                <p className="font-semibold text-slate-900">Vetted listings</p>
-                <p className="text-slate-600">Cleaner roles, clearer expectations.</p>
-              </div>
-            </div>
+      {/* paragraph */}
+      <p className="mx-auto mt-4 max-w-2xl text-[14.5px] md:text-[15.5px] leading-relaxed text-slate-600">
+        Browse opportunities across engineering, infrastructure, cloud, security, and data —
+        including remote options. Simple, clean, and focused on serious hiring.
+      </p>
 
-            <div className="flex items-start gap-3">
-              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--brand-purple)]" />
-              <div>
-                <p className="font-semibold text-slate-900">Remote-friendly</p>
-                <p className="text-slate-600">Filter fast, apply faster.</p>
-              </div>
-            </div>
+      {/* ✅ no search bar here */}
 
-            <div className="flex items-start gap-3">
-              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--brand-purple)]" />
-              <div>
-                <p className="font-semibold text-slate-900">Serious employers</p>
-                <p className="text-slate-600">Teams hiring for the long term.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 rounded-2xl border border-[rgba(106,111,242,0.25)] bg-[rgba(106,111,242,0.06)] p-4">
-            <p className="text-sm font-semibold text-slate-900">
-              Tip:
-              <span className="font-normal text-slate-700"> Use categories below to narrow down instantly.</span>
-            </p>
-          </div>
-        </div>
-      </div>
+      {/* Jump to jobs */}
+      <button
+        type="button"
+        onClick={() =>
+          document.getElementById("jobs")?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="mt-10 inline-flex items-center justify-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
+      >
+        Jump to Jobs <span aria-hidden>↓</span>
+      </button>
     </div>
   </div>
 </section>
 
 
-      {/* COMPANIES */}
-      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10 md:mb-14">
-            <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
-              Trusted by teams
-            </p>
-            <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-              Popular Companies We Have Worked With
-            </h3>
-            <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-              A quick look at teams that trust TechnicalJobboard.
-            </p>
-          </div>
 
-          <CompanyLogoCarousel />
-        </div>
-      </section>
+
+     {/* COMPANIES */}
+<section className="relative py-16 md:py-22 bg-white overflow-hidden">
+  {/* subtle purple ambience */}
+  <div className="pointer-events-none absolute -top-28 left-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.14)] blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-32 right-[-180px] h-[560px] w-[560px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+
+  <div className="relative max-w-7xl mx-auto px-6">
+    <div className="text-center mb-10 md:mb-14">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm">
+        <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+        Trusted by teams
+      </div>
+
+      <h3 className="mt-5 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+        Popular companies hiring on{" "}
+        <span className="text-[var(--brand-purple)]">TechnicalJobBoard</span>
+      </h3>
+
+      <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+        A quick look at teams that trust us to share high-quality roles — built for long-term careers.
+      </p>
+    </div>
+
+    {/* framed carousel */}
+    <div className="rounded-3xl border border-[rgba(106,111,242,0.18)] bg-gradient-to-b from-white to-[#FBFBFF] p-6 md:p-8 shadow-sm">
+      <CompanyLogoCarousel />
+
+      {/* small trust line */}
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
+        <span className="inline-flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+          Verified companies
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+          Remote-friendly teams
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+          Transparent hiring
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* CATEGORIES */}
       <section className="py-20 bg-white">
