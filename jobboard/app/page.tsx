@@ -485,9 +485,9 @@ export default function Home() {
   </div>
 </section>
 
-{/* ================= COMPANIES (upgraded) ================= */}
+{/* ================= COMPANIES ================= */}
 <section className="relative py-16 md:py-20 bg-white overflow-hidden">
-  {/* subtle background treatment */}
+  {/* subtle background */}
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#FBFBFF]" />
     <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
@@ -507,46 +507,44 @@ export default function Home() {
       </h3>
 
       <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-        A quick look at teams that trust TechnicalJobboard — across engineering, construction, healthcare, CAD/BIM, and more.
+        A quick look at teams that trust TechnicalJobboard across engineering,
+        construction, healthcare, CAD/BIM, and more.
       </p>
     </div>
 
-    {/* carousel container */}
-<div className="relative w-full h-[90px] sm:h-[110px] md:h-[130px] flex items-center justify-center overflow-hidden">
-  {[
-    "/logos/company1.png",
-    "/logos/company2.png",
-    "/logos/company3.png",
-    "/logos/company4.png",
-    "/logos/company5.png",
-  ].map((src, index) => (
-    <img
-      key={src}
-      src={src}
-      alt="Company logo"
-      className={`
-        absolute
-        h-14 sm:h-16 md:h-20
-        w-auto
-        transition-all duration-700 ease-out
-        ${index === activeLogo
-          ? "opacity-100 scale-100 translate-y-0"
-          : "opacity-0 scale-95 translate-y-4"}
-      `}
-    />
-  ))}
-</div>
-
-      <CompanyLogoCarousel />
+    {/* one logo at a time */}
+    <div className="relative w-full h-[90px] sm:h-[110px] md:h-[130px] flex items-center justify-center overflow-hidden">
+      {[
+        "/logos/company1.png",
+        "/logos/company2.png",
+        "/logos/company3.png",
+        "/logos/company4.png",
+        "/logos/company5.png",
+      ].map((src, index) => (
+        <img
+          key={src}
+          src={src}
+          alt="Company logo"
+          className={`
+            absolute
+            h-14 sm:h-16 md:h-20
+            w-auto
+            transition-all duration-700 ease-out
+            ${index === activeLogo
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 translate-y-4"}
+          `}
+        />
+      ))}
     </div>
 
-    {/* small footer note */}
     <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
       <span className="inline-block h-1.5 w-1.5 rounded-full bg-[rgba(106,111,242,0.40)]" />
-      Logos shown are examples of companies and teams we’ve featured.
+      Logos shown are examples of companies and teams we have featured.
     </div>
   </div>
 </section>
+
 
 
       {/* ================= EMPOWERING ================= */}
