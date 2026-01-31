@@ -7,33 +7,52 @@ type Category = { label: string; slug: string };
 
 const FEATURED_JOBS = [
   {
-    company: "Your Company 1",
-    location: "Remote",
+    title: "Senior Frontend Engineer",
+    company: "NovaTech",
+    location: "Remote (US)",
+    type: "Full-time",
+    pay: "$120k – $160k",
     posted: "2 days ago",
-    roles: [
-      { title: "Frontend Engineer", stack: "React • Next.js • TS", pay: "$120k – $160k", posted: "2d ago" },
-      { title: "DevOps Engineer", stack: "AWS • Terraform • CI/CD", pay: "$130k – $175k", posted: "3d ago" },
-    ],
+    stack: "React • Next.js • TypeScript",
   },
   {
-    company: "Your Company 2",
-    location: "Lagos, NG",
-    posted: "4 days ago",
-    roles: [
-      { title: "Backend Engineer", stack: "Node • Go • Postgres", pay: "$110k – $150k", posted: "4d ago" },
-      { title: "Cloud Engineer", stack: "K8s • Helm • Observability", pay: "$125k – $170k", posted: "6d ago" },
-    ],
+    title: "Backend Engineer (Node/Go)",
+    company: "CloudSprint",
+    location: "Austin, TX",
+    type: "Full-time",
+    pay: "$130k – $175k",
+    posted: "3 days ago",
+    stack: "Node.js • Go • Postgres",
   },
   {
-    company: "Your Company 3",
-    location: "Hybrid",
+    title: "DevOps / Platform Engineer",
+    company: "InfraScale",
+    location: "Seattle, WA",
+    type: "Full-time",
+    pay: "$140k – $190k",
+    posted: "5 days ago",
+    stack: "AWS • Terraform • Kubernetes",
+  },
+  {
+    title: "Security Engineer",
+    company: "SecureStack",
+    location: "New York, NY",
+    type: "Full-time",
+    pay: "$145k – $200k",
     posted: "1 week ago",
-    roles: [
-      { title: "Security Engineer", stack: "AppSec • Cloud • SOC2", pay: "$140k – $185k", posted: "5d ago" },
-      { title: "Data Engineer", stack: "Python • Airflow • BigQuery", pay: "$125k – $170k", posted: "1w ago" },
-    ],
+    stack: "AppSec • Cloud • SOC2",
+  },
+  {
+    title: "Data Engineer",
+    company: "DataForge",
+    location: "San Francisco, CA",
+    type: "Full-time",
+    pay: "$130k – $180k",
+    posted: "4 days ago",
+    stack: "Python • Airflow • BigQuery",
   },
 ];
+
 
 
 const CATEGORIES: Category[] = [
@@ -291,7 +310,7 @@ export default function Home() {
         </div>
       </section>
 
-{/* ================= FEATURED JOBS (CAROUSEL, 2 ROLES PER CARD) ================= */}
+{/* ================= FEATURED JOBS (CAROUSEL, SINGLE JOB PER CARD, PURPLE SIDE STRIPE) ================= */}
 <section
   id="featured"
   className="relative py-24 border-y border-gray-200 overflow-hidden bg-[#F7F8FC]"
@@ -307,7 +326,7 @@ export default function Home() {
           Featured Technical Jobs
         </h2>
         <p className="text-gray-600 mt-2 max-w-2xl">
-          A curated selection of standout technical roles from trusted teams.
+          Curated technical roles from teams hiring across the United States.
         </p>
       </div>
 
@@ -351,72 +370,81 @@ export default function Home() {
         id="featured-carousel"
         className="no-scrollbar flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory px-6 md:px-12"
       >
-        {FEATURED_JOBS.map((company, idx) => (
+        {FEATURED_JOBS.map((job, idx) => (
           <div
             key={idx}
-            className="snap-start flex-none w-[320px] sm:w-[380px] md:w-[420px]
+            className="snap-start flex-none w-[320px] sm:w-[360px] md:w-[400px]
                        bg-white rounded-2xl shadow-sm hover:shadow-lg transition
-                       border border-[rgba(106,111,242,0.25)] overflow-hidden"
+                       border border-slate-200 relative overflow-hidden"
           >
-            <div className="p-6">
-              {/* company header */}
-              <div className="flex items-center gap-4 mb-5">
-                {/* green profile */}
+            {/* ✅ PURPLE SIDE STRIPE */}
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+
+            <div className="p-6 pl-8">
+              {/* tag + save */}
+              <div className="flex items-center justify-between mb-4">
+                <span
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
+                             bg-[rgba(106,111,242,0.10)] text-[var(--brand-purple)]
+                             border border-[rgba(106,111,242,0.22)]"
+                >
+                  <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+                  Featured
+                </span>
+
+                <button
+                  aria-label="Save job"
+                  className="text-gray-400 hover:text-[#1A2040] transition"
+                >
+                  ★
+                </button>
+              </div>
+
+              {/* header */}
+              <div className="flex gap-4">
+                {/* green profile badge (kept small only) */}
                 <div className="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold shadow-sm">
-                  {company.company?.charAt(0) ?? "T"}
+                  {job.company.charAt(0)}
                 </div>
 
                 <div className="min-w-0">
                   <h3 className="text-lg font-semibold text-[#0F1426] truncate">
-                    {company.company}
+                    {job.title}
                   </h3>
                   <p className="text-sm text-gray-600 truncate">
-                    {company.location}
+                    {job.company} • {job.location}
                   </p>
                 </div>
               </div>
 
-              {/* 2 roles only (no overlap, clean spacing) */}
-              <div className="space-y-3">
-                {company.roles.slice(0, 2).map((role, i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border border-slate-200 bg-[#FBFBFF] p-4"
-                  >
-                    <p className="font-semibold text-slate-900 truncate">
-                      {role.title}
-                    </p>
-                    <p className="text-xs text-slate-600 mt-1 truncate">
-                      {role.stack}
-                    </p>
+              {/* stack */}
+              <p className="mt-3 text-xs text-slate-600 truncate">
+                {job.stack}
+              </p>
 
-                    <div className="mt-2 flex items-center justify-between">
-                      <span className="text-xs font-medium text-slate-900">
-                        {role.pay}
-                      </span>
-                      <span className="text-[11px] text-slate-500">
-                        {role.posted}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+              {/* pills */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {job.type}
+                </span>
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {job.pay}
+                </span>
               </div>
 
               {/* footer */}
-              <div className="mt-6 flex items-center justify-between">
-                {/* purple view */}
+              <div className="mt-6 flex justify-between items-center">
                 <button
                   onClick={() => (window.location.href = "/all-jobs")}
-                  className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
+                  className="px-4 py-2 rounded-lg text-sm font-semibold text-white
                              bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
-                             transition shadow-[0_8px_20px_rgba(106,111,242,0.25)]"
+                             shadow-[0_8px_20px_rgba(106,111,242,0.22)]
+                             transition"
                 >
                   View
                 </button>
 
-                <span className="text-xs text-gray-400">
-                  Updated {company.posted}
-                </span>
+                <span className="text-xs text-gray-400">Posted {job.posted}</span>
               </div>
             </div>
           </div>
