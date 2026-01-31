@@ -3,6 +3,17 @@
 import { useEffect, useState } from "react";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
+const [activeLogo, setActiveLogo] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setActiveLogo((i) => (i + 1) % 5);
+  }, 2800);
+
+  return () => clearInterval(interval);
+}, []);
+
+
 type Category = { label: string; slug: string };
 
 const FEATURED_JOBS = [
@@ -501,14 +512,31 @@ export default function Home() {
     </div>
 
     {/* carousel container */}
-    <div
-      className="
-        rounded-3xl border border-[rgba(106,111,242,0.18)]
-        bg-gradient-to-b from-white to-[#FBFBFF]
-        shadow-sm
-        px-4 py-6 md:px-8 md:py-8
-      "
-    >
+<div className="relative w-full h-[90px] sm:h-[110px] md:h-[130px] flex items-center justify-center overflow-hidden">
+  {[
+    "/logos/company1.png",
+    "/logos/company2.png",
+    "/logos/company3.png",
+    "/logos/company4.png",
+    "/logos/company5.png",
+  ].map((src, index) => (
+    <img
+      key={src}
+      src={src}
+      alt="Company logo"
+      className={`
+        absolute
+        h-14 sm:h-16 md:h-20
+        w-auto
+        transition-all duration-700 ease-out
+        ${index === activeLogo
+          ? "opacity-100 scale-100 translate-y-0"
+          : "opacity-0 scale-95 translate-y-4"}
+      `}
+    />
+  ))}
+</div>
+
       <CompanyLogoCarousel />
     </div>
 
