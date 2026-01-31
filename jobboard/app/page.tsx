@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // If you truly don't have this component, REMOVE this import:
 // import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
@@ -13,6 +13,7 @@ type FeaturedJob = {
   type: string;
   pay: string;
   posted: string;
+  stack?: string;
   description?: string;
 };
 
@@ -24,6 +25,7 @@ const FEATURED_JOBS: FeaturedJob[] = [
     type: "Full-time",
     pay: "$75k – $95k",
     posted: "2 days ago",
+    stack: "Revit, CD sets, Consultant coordination",
     description: "Produce CD sets, coordinate consultants, and support permitting in Revit.",
   },
   {
@@ -33,6 +35,7 @@ const FEATURED_JOBS: FeaturedJob[] = [
     type: "Full-time",
     pay: "$85k – $115k",
     posted: "1 week ago",
+    stack: "BIM 360, Clash Detection, MEP",
     description: "Own clash detection workflows and model coordination across trades.",
   },
   {
@@ -42,6 +45,7 @@ const FEATURED_JOBS: FeaturedJob[] = [
     type: "Full-time",
     pay: "$70k – $95k",
     posted: "5 days ago",
+    stack: "RFIs, Scheduling, Submittals",
     description: "Manage RFIs/submittals, track schedules, and support field delivery.",
   },
   {
@@ -51,18 +55,19 @@ const FEATURED_JOBS: FeaturedJob[] = [
     type: "Full-time",
     pay: "$85k – $115k",
     posted: "3 days ago",
+    stack: "EHR, Integrations, HIPAA",
     description: "Support clinical systems, workflows, and integrations (HIPAA focused).",
   },
 ];
 
 
-// ✅ Put your real logo paths here (must exist in /public)
+// ✅ Use existing public images for logos
 const COMPANY_LOGOS = [
-  { src: "/logos/company1.png", alt: "Company 1" },
-  { src: "/logos/company2.png", alt: "Company 2" },
-  { src: "/logos/company3.png", alt: "Company 3" },
-  { src: "/logos/company4.png", alt: "Company 4" },
-  { src: "/logos/company5.png", alt: "Company 5" },
+  { src: "/Hiredengineer.png", alt: "Hired Engineer" },
+  { src: "/Devops.png", alt: "DevOps Team" },
+  { src: "/Architects.png", alt: "Architects" },
+  { src: "/logo.png", alt: "Technical Job Board" },
+  { src: "/logo-removebg-preview.png", alt: "Brand Logo" },
 ];
 
 const CATEGORIES: Category[] = [
@@ -87,11 +92,11 @@ export default function Home() {
   const [heroLoc, setHeroLoc] = useState("");
 
   // ✅ Company logo index (MUST be inside Home)
-  const [activeLogo, setActiveLogo] = useState(0);
+  const [activeLogo, setActiveLogo] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveLogo((i) => (i + 1) % COMPANY_LOGOS.length);
+      setActiveLogo((i: number) => (i + 1) % COMPANY_LOGOS.length);
     }, 2800);
 
     return () => clearInterval(interval);
@@ -178,7 +183,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
                   <input
                     value={heroQ}
-                    onChange={(e) => setHeroQ(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroQ(e.target.value)}
                     type="text"
                     placeholder="Job title, keyword"
                     className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
@@ -186,7 +191,7 @@ export default function Home() {
 
                   <input
                     value={heroLoc}
-                    onChange={(e) => setHeroLoc(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroLoc(e.target.value)}
                     type="text"
                     placeholder="Location (Remote, New York, Austin)"
                     className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
@@ -301,7 +306,7 @@ export default function Home() {
               <div className="w-full md:w-[360px]">
                 <input
                   value={categoryQuery}
-                  onChange={(e) => setCategoryQuery(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCategoryQuery(e.target.value)}
                   type="text"
                   placeholder="Search categories…"
                   className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
@@ -477,9 +482,11 @@ export default function Home() {
               </div>
 
               {/* stack */}
-              <p className="mt-3 text-xs text-slate-600 truncate">
-                {job.stack}
-              </p>
+              {job.stack && (
+                <p className="mt-3 text-xs text-slate-600 truncate">
+                  {job.stack}
+                </p>
+              )}
 
               {/* pills */}
               <div className="flex flex-wrap gap-2 mt-4">
@@ -513,65 +520,7 @@ export default function Home() {
   </div>
 </section>
 
-{/* ================= COMPANIES ================= */}
-<section className="relative py-16 md:py-20 bg-white overflow-hidden">
-  {/* subtle background */}
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#FBFBFF]" />
-    <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
-    <div className="absolute -bottom-44 right-[-120px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.06)] blur-3xl" />
-  </div>
-
-  <div className="relative max-w-7xl mx-auto px-6">
-    {/* header */}
-    <div className="text-center mb-10 md:mb-14">
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[rgba(106,111,242,0.18)] bg-[rgba(106,111,242,0.08)] px-4 py-2 text-xs font-semibold text-[var(--brand-purple)]">
-        <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-        Trusted by teams across the US
-      </div>
-
-      <h3 className="mt-5 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-        Popular companies hiring technical talent
-      </h3>
-
-      <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-        A quick look at teams that trust TechnicalJobboard across engineering,
-        construction, healthcare, CAD/BIM, and more.
-      </p>
-    </div>
-
-    {/* one logo at a time */}
-    <div className="relative w-full h-[90px] sm:h-[110px] md:h-[130px] flex items-center justify-center overflow-hidden">
-      {[
-        "/logos/company1.png",
-        "/logos/company2.png",
-        "/logos/company3.png",
-        "/logos/company4.png",
-        "/logos/company5.png",
-      ].map((src, index) => (
-        <img
-          key={src}
-          src={src}
-          alt="Company logo"
-          className={`
-            absolute
-            h-14 sm:h-16 md:h-20
-            w-auto
-            transition-all duration-700 ease-out
-            ${index === activeLogo
-              ? "opacity-100 scale-100 translate-y-0"
-              : "opacity-0 scale-95 translate-y-4"}
-          `}
-        />
-      ))}
-    </div>
-
-    <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[rgba(106,111,242,0.40)]" />
-      Logos shown are examples of companies and teams we have featured.
-    </div>
-  </div>
-</section>
+{/* Duplicate companies section removed — logos already displayed earlier */}
 
 
 

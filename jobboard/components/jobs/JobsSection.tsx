@@ -31,16 +31,16 @@ type Job = {
 
 const JOBS: Job[] = [
   { id: "1", title: "Architectural Designer (Revit)", company: "Stonebridge Studio", location: "Denver, CO", category: "Architecture", type: "Full-time", experience: "Mid", pay: "$75k – $95k", posted: "2 days ago", tags: ["Revit", "CD Sets", "Permitting"] },
-  { id: "2", title: "Project Architect", company: "Northline Architects", location: "Chicago, IL", category: "Architecture", type: "Full-time", experience: "Senior", pay: "$95k – $125k", posted: "4 days ago", tags: ["Design Dev", "CA", "Revit"] },
+  { id: "2", title: "Project Architect", company: "Northline Architects", location: "Chicago, IL", category: "Architecture", type: "Full-time", experience: "Senior", pay: "$95k – $125k", posted: "4 days ago", tags: ["CA", "Design Dev", "Revit"] },
 
   { id: "3", title: "CAD Drafter (AutoCAD)", company: "Precision Drafting Co.", location: "Phoenix, AZ", category: "CAD / BIM", type: "Full-time", experience: "Entry", pay: "$55k – $75k", posted: "3 days ago", tags: ["AutoCAD", "Shop Drawings", "As-builts"] },
-  { id: "4", title: "BIM Coordinator", company: "MEPWorks", location: "Dallas, TX", category: "CAD / BIM", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "1 week ago", tags: ["Revit", "Navisworks", "Clash Detection"] },
+  { id: "4", title: "BIM Coordinator (MEP)", company: "MEPWorks", location: "Dallas, TX", category: "CAD / BIM", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "1 week ago", tags: ["Revit", "Navisworks", "Clash Detection"] },
 
   { id: "5", title: "Construction Project Engineer", company: "Summit Build Group", location: "Austin, TX", category: "Construction", type: "Full-time", experience: "Mid", pay: "$70k – $95k", posted: "5 days ago", tags: ["RFI", "Submittals", "Scheduling"] },
   { id: "6", title: "MEP Coordinator", company: "PrimeConstruct", location: "Atlanta, GA", category: "Construction", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "6 days ago", tags: ["MEP", "Coordination", "Field"] },
   { id: "7", title: "Estimator (Commercial)", company: "Bluebeam Estimating", location: "Orlando, FL", category: "Construction", type: "Full-time", experience: "Mid", pay: "$80k – $110k", posted: "3 days ago", tags: ["Bluebeam", "Takeoffs", "Bid Packages"] },
 
-  { id: "8", title: "Healthcare IT Analyst", company: "CareStack Systems", location: "Remote (US)", category: "Healthcare", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "2 days ago", tags: ["EHR", "HIPAA", "Support"] },
+  { id: "8", title: "Healthcare IT Analyst (EHR)", company: "CareStack Systems", location: "Remote (US)", category: "Healthcare", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "2 days ago", tags: ["EHR", "HIPAA", "Support"] },
   { id: "9", title: "Clinical Systems Specialist", company: "MedOps", location: "Boston, MA", category: "Healthcare", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "1 week ago", tags: ["Clinical", "Training", "EHR"] },
 
   { id: "10", title: "Manufacturing Engineer", company: "Titan Manufacturing", location: "Detroit, MI", category: "Manufacturing", type: "Full-time", experience: "Senior", pay: "$95k – $130k", posted: "4 days ago", tags: ["Lean", "Process", "Root Cause"] },
@@ -53,7 +53,7 @@ const JOBS: Job[] = [
   { id: "15", title: "Quality Engineer", company: "QC Dynamics", location: "San Diego, CA", category: "Quality / Compliance", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "4 days ago", tags: ["ISO", "Audits", "CAPA"] },
   { id: "16", title: "Reliability Engineer", company: "PlantWorks", location: "Nashville, TN", category: "Maintenance / Reliability", type: "Full-time", experience: "Senior", pay: "$95k – $135k", posted: "6 days ago", tags: ["CMMS", "RCM", "PM"] },
   { id: "17", title: "Mechanical Engineer (HVAC)", company: "ThermoDesign", location: "Charlotte, NC", category: "Engineering (Non-Software)", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "2 days ago", tags: ["HVAC", "MEP", "Loads"] },
-  { id: "18", title: "Systems Engineer (Defense)", company: "AeroShield", location: "Arlington, VA", category: "Aerospace / Defense", type: "Full-time", experience: "Senior", pay: "$120k – $170k", posted: "1 week ago", tags: ["Systems", "Requirements", "Docs"] },
+  { id: "18", title: "Systems Engineer (Defense)", company: "AeroShield", location: "Arlington, VA", category: "Aerospace / Defense", type: "Full-time", experience: "Senior", pay: "$120k – $170k", posted: "1 week ago", tags: ["Requirements", "Docs", "Systems"] },
 ];
 
 const JOB_TYPES: Array<JobType | "Any"> = ["Any", "Full-time", "Part-time", "Contract"];
@@ -218,80 +218,12 @@ export default function JobsSection() {
     setVisibleCount((v) => Math.min(v + STEP, filtered.length));
   };
 
-  const LoadMoreDesktop = (
-    <button
-      type="button"
-      onClick={loadMoreTop}
-      className="
-        group inline-flex items-center gap-2
-        rounded-full px-4 py-2
-        bg-white/80 backdrop-blur
-        border border-[rgba(106,111,242,0.25)]
-        text-sm font-semibold text-slate-900
-        shadow-sm hover:shadow-md transition
-      "
-    >
-      <span
-        className="
-          inline-flex h-8 w-8 items-center justify-center rounded-full
-          bg-[rgba(106,111,242,0.12)]
-          text-[var(--brand-purple)]
-          group-hover:bg-[rgba(106,111,242,0.18)] transition
-        "
-        aria-hidden
-      >
-        +
-      </span>
-      Load more
-      <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
-        →
-      </span>
-    </button>
-  );
-
-  const LoadMoreMobile = (
-    <button
-      type="button"
-      onClick={loadMoreTop}
-      className="
-        group w-full sm:w-auto
-        inline-flex items-center justify-center gap-3
-        rounded-2xl px-6 py-3.5
-        bg-white/90 backdrop-blur
-        border border-[rgba(106,111,242,0.25)]
-        text-sm font-semibold text-slate-900
-        shadow-sm hover:shadow-md transition
-      "
-    >
-      <span
-        className="
-          inline-flex h-10 w-10 items-center justify-center rounded-xl
-          bg-[rgba(106,111,242,0.12)]
-          text-[var(--brand-purple)]
-          group-hover:bg-[rgba(106,111,242,0.18)] transition
-        "
-        aria-hidden
-      >
-        +
-      </span>
-
-      <span className="leading-none text-left">
-        Load more jobs
-        <span className="block text-xs font-medium text-slate-500 mt-0.5">Show more results</span>
-      </span>
-
-      <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
-        →
-      </span>
-    </button>
-  );
-
   const FilterPanel = (
-    <div className="rounded-3xl border border-slate-200 bg-white shadow-sm p-5">
+    <div className="rounded-3xl border border-slate-200 bg-white/85 backdrop-blur shadow-sm p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-xl font-extrabold text-slate-900">Filters</h3>
-          <p className="text-sm text-slate-500 mt-1">Refine your results.</p>
+          <h3 className="text-lg font-extrabold text-slate-900">Filters</h3>
+          <p className="text-xs text-slate-500 mt-1">Refine results (US only).</p>
         </div>
 
         <button
@@ -303,14 +235,14 @@ export default function JobsSection() {
         </button>
       </div>
 
-      <div className="mt-6 space-y-5">
+      <div className="mt-5 space-y-4">
         <div>
-          <label className="text-sm font-semibold text-slate-900">Title / Keyword</label>
+          <label className="text-sm font-semibold text-slate-900">Keyword</label>
           <input
             value={draftQ}
             onChange={(e) => setDraftQ(e.target.value)}
-            placeholder="e.g. Maintenance, PLC, Quality"
-            className="mt-2 h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
+            placeholder="e.g. Revit, HVAC, Quality"
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
                        focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
           />
         </div>
@@ -321,45 +253,47 @@ export default function JobsSection() {
             value={draftLoc}
             onChange={(e) => setDraftLoc(e.target.value)}
             placeholder="e.g. Remote, New York, Austin"
-            className="mt-2 h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
                        focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
           />
         </div>
 
-        <div>
-          <label className="text-sm font-semibold text-slate-900">Job Type</label>
-          <select
-            value={draftType}
-            onChange={(e) => setDraftType(e.target.value as any)}
-            className="mt-2 h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
-                       focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
-          >
-            {JOB_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+        <div className="grid grid-cols-1 gap-3">
+          <div>
+            <label className="text-sm font-semibold text-slate-900">Job Type</label>
+            <select
+              value={draftType}
+              onChange={(e) => setDraftType(e.target.value as any)}
+              className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
+                         focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+            >
+              {JOB_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-semibold text-slate-900">Experience</label>
+            <select
+              value={draftExp}
+              onChange={(e) => setDraftExp(e.target.value as any)}
+              className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
+                         focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+            >
+              {EXPERIENCES.map((x) => (
+                <option key={x} value={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div>
-          <label className="text-sm font-semibold text-slate-900">Experience</label>
-          <select
-            value={draftExp}
-            onChange={(e) => setDraftExp(e.target.value as any)}
-            className="mt-2 h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none
-                       focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
-          >
-            {EXPERIENCES.map((x) => (
-              <option key={x} value={x}>
-                {x}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold text-slate-900">Quick Filters</p>
+          <p className="text-sm font-semibold text-slate-900">Quick filters</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {[
               { label: "Remote", active: quickRemote, toggle: () => setQuickRemote((v) => !v) },
@@ -387,20 +321,27 @@ export default function JobsSection() {
         <button
           type="button"
           onClick={applyFilters}
-          className="w-full h-12 rounded-2xl text-base font-semibold text-white
+          className="w-full h-11 rounded-2xl text-sm font-semibold text-white
                      bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
-                     shadow-[0_10px_28px_rgba(106,111,242,0.20)] transition"
+                     shadow-[0_10px_26px_rgba(106,111,242,0.20)] transition"
         >
-          Apply Filters
+          Apply
         </button>
       </div>
     </div>
   );
 
   return (
-    <section className="py-10">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Mobile top row */}
+    <section className="relative">
+      {/* Mature background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FA] via-[#F7F8FC] to-[#F2F4FF]" />
+        <div className="absolute -top-44 left-[-120px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+        <div className="absolute -bottom-44 right-[-140px] h-[560px] w-[560px] rounded-full bg-slate-900/5 blur-3xl" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 py-10">
+        {/* Mobile header row */}
         <div className="mb-5 flex items-center justify-between lg:hidden">
           <p className="text-sm text-slate-600">
             Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs
@@ -415,97 +356,128 @@ export default function JobsSection() {
           </button>
         </div>
 
-        {/* Desktop header row (Load more top right) */}
+        {/* Desktop header row */}
         <div className="hidden lg:flex items-center justify-between mb-6">
           <p className="text-sm text-slate-600">
             Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs (US only)
           </p>
 
-          <div className="flex items-center gap-3">{canLoadMore ? LoadMoreDesktop : null}</div>
+          {canLoadMore ? (
+            <button
+              type="button"
+              onClick={loadMoreTop}
+              className="group inline-flex items-center gap-2 rounded-full px-4 py-2 bg-white/85 backdrop-blur
+                         border border-[rgba(106,111,242,0.25)] text-sm font-semibold text-slate-900
+                         shadow-sm hover:shadow-md transition"
+            >
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]">
+                +
+              </span>
+              Load more
+              <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
+                →
+              </span>
+            </button>
+          ) : null}
         </div>
 
         {/* Layout */}
-        <div className="grid gap-7 lg:grid-cols-[360px_1fr]">
-          {/* LEFT FILTERS (desktop) */}
+        <div className="grid gap-7 lg:grid-cols-[300px_1fr]">
+          {/* left filter (narrow) */}
           <aside className="hidden lg:block">
             <div className="sticky top-28">{FilterPanel}</div>
           </aside>
 
-          {/* JOBS */}
-          <div>
-            <div className="grid gap-5 md:grid-cols-2">
-              {visibleJobs.map((job) => (
-                <article
-                  key={job.id}
-                  className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition p-5"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <h3 className="text-lg font-semibold text-slate-900 truncate">
-                        {job.title}
-                      </h3>
-                      <p className="text-sm text-slate-600 truncate">
-                        {job.company} • {job.location}
-                      </p>
-                    </div>
-
-                    <span className="shrink-0 text-xs font-semibold px-3 py-1 rounded-full bg-[rgba(106,111,242,0.10)] text-[var(--brand-purple)] border border-[rgba(106,111,242,0.20)]">
-                      {job.category}
-                    </span>
+          {/* JOB LIST (single column list) */}
+          <div className="space-y-4">
+            {visibleJobs.map((job) => (
+              <article
+                key={job.id}
+                className="bg-white/90 backdrop-blur rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition
+                           px-5 py-5"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-slate-900 truncate">
+                      {job.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-slate-600 truncate">
+                      {job.company} • {job.location}
+                    </p>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">
-                      {job.type}
-                    </span>
-                    <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">
-                      {job.experience}
-                    </span>
-                    <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">
-                      {job.pay}
-                    </span>
-                  </div>
+                  <span className="shrink-0 text-xs font-semibold px-3 py-1 rounded-full bg-[rgba(106,111,242,0.10)]
+                                   text-[var(--brand-purple)] border border-[rgba(106,111,242,0.20)]">
+                    {job.category}
+                  </span>
+                </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {job.tags.slice(0, 4).map((t) => (
-                      <span
-                        key={t}
-                        className="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 bg-white"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">{job.type}</span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">{job.experience}</span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">{job.pay}</span>
+                </div>
 
-                  <div className="mt-5 flex items-center justify-between">
-                    <button
-                      className="px-4 py-2 rounded-xl text-sm font-semibold text-white
-                                 bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] transition"
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {job.tags.slice(0, 5).map((t) => (
+                    <span
+                      key={t}
+                      className="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 bg-white"
                     >
-                      View
-                    </button>
+                      {t}
+                    </span>
+                  ))}
+                </div>
 
-                    <span className="text-xs text-slate-400">Posted {job.posted}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
+                <div className="mt-5 flex items-center justify-between">
+                  <button
+                    className="px-4 py-2 rounded-xl text-sm font-semibold text-white
+                               bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] transition"
+                  >
+                    View
+                  </button>
 
-            {/* Mobile: friendly load more below list */}
-            <div className="mt-8 flex justify-center lg:hidden">
+                  <span className="text-xs text-slate-400">Posted {job.posted}</span>
+                </div>
+              </article>
+            ))}
+
+            {/* Bottom load more (mobile + end-state) */}
+            <div className="pt-4 lg:hidden flex justify-center">
               {filtered.length === 0 ? (
                 <div className="text-sm text-slate-600">No jobs match your filters.</div>
               ) : canLoadMore ? (
-                LoadMoreMobile
+                <button
+                  type="button"
+                  onClick={loadMoreTop}
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-2xl px-6 py-3.5
+                             bg-white/90 backdrop-blur border border-[rgba(106,111,242,0.25)]
+                             text-sm font-semibold text-slate-900 shadow-sm hover:shadow-md transition"
+                >
+                  <span
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl
+                               bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
+                    aria-hidden
+                  >
+                    +
+                  </span>
+                  <span className="leading-none text-left">
+                    Load more jobs
+                    <span className="block text-xs font-medium text-slate-500 mt-0.5">Show more results</span>
+                  </span>
+                  <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
+                    →
+                  </span>
+                </button>
               ) : (
-                <div className="text-sm text-slate-500">You’ve reached the end.</div>
+                <div className="text-sm text-slate-500">You have reached the end.</div>
               )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* MOBILE FILTER DRAWER (left slide-over, no job overlap) */}
+      {/* MOBILE FILTER DRAWER (left, never overlaps list) */}
       {filtersOpen && (
         <div className="lg:hidden">
           <button
@@ -515,7 +487,7 @@ export default function JobsSection() {
             onClick={() => setFiltersOpen(false)}
           />
 
-          <div className="fixed z-50 top-0 left-0 h-full w-[86%] max-w-[380px] bg-white border-r border-slate-200 shadow-2xl">
+          <div className="fixed z-50 top-0 left-0 h-full w-[86%] max-w-[360px] bg-white border-r border-slate-200 shadow-2xl">
             <div className="h-full overflow-auto p-4">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-semibold text-slate-900">Filters</p>
