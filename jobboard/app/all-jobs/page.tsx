@@ -10,7 +10,7 @@ export default function AllJobsPage() {
             All Jobs
           </h1>
           <p className="mt-2 text-slate-600">
-            Browse roles across Architecture, Healthcare, Construction, CAD/BIM, and more (US only).
+            Browse roles across Architecture, Healthcare, Construction, CAD/BIM, Manufacturing, and more.
           </p>
         </div>
       </section>

@@ -9,7 +9,7 @@ type Job = {
   id: string;
   title: string;
   company: string;
-  location: string; // US only
+  location: string;
   category:
     | "Architecture"
     | "Construction"
@@ -30,30 +30,27 @@ type Job = {
 };
 
 const JOBS: Job[] = [
-  { id: "1", title: "Architectural Designer (Revit)", company: "Stonebridge Studio", location: "Denver, CO", category: "Architecture", type: "Full-time", experience: "Mid", pay: "$75k – $95k", posted: "2 days ago", tags: ["Revit", "CD Sets", "Permitting"] },
-  { id: "2", title: "Project Architect", company: "Northline Architects", location: "Chicago, IL", category: "Architecture", type: "Full-time", experience: "Senior", pay: "$95k – $125k", posted: "4 days ago", tags: ["CA", "Design Dev", "Revit"] },
+  { id: "1", title: "Architectural Designer (Revit)", company: "Stonebridge Studio", location: "Denver, CO", category: "Architecture", type: "Full-time", experience: "Mid", pay: "$75k – $95k", posted: "2d", tags: ["Revit", "CD Sets", "Permitting"] },
+  { id: "2", title: "Project Architect", company: "Northline Architects", location: "Chicago, IL", category: "Architecture", type: "Full-time", experience: "Senior", pay: "$95k – $125k", posted: "4d", tags: ["CA", "Revit", "Docs"] },
 
-  { id: "3", title: "CAD Drafter (AutoCAD)", company: "Precision Drafting Co.", location: "Phoenix, AZ", category: "CAD / BIM", type: "Full-time", experience: "Entry", pay: "$55k – $75k", posted: "3 days ago", tags: ["AutoCAD", "Shop Drawings", "As-builts"] },
-  { id: "4", title: "BIM Coordinator (MEP)", company: "MEPWorks", location: "Dallas, TX", category: "CAD / BIM", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "1 week ago", tags: ["Revit", "Navisworks", "Clash Detection"] },
+  { id: "3", title: "CAD Drafter (AutoCAD)", company: "Precision Drafting Co.", location: "Phoenix, AZ", category: "CAD / BIM", type: "Full-time", experience: "Entry", pay: "$55k – $75k", posted: "3d", tags: ["AutoCAD", "Shop Drawings", "As-builts"] },
+  { id: "4", title: "BIM Coordinator (MEP)", company: "MEPWorks", location: "Dallas, TX", category: "CAD / BIM", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "1w", tags: ["Navisworks", "Revit", "Clash"] },
 
-  { id: "5", title: "Construction Project Engineer", company: "Summit Build Group", location: "Austin, TX", category: "Construction", type: "Full-time", experience: "Mid", pay: "$70k – $95k", posted: "5 days ago", tags: ["RFI", "Submittals", "Scheduling"] },
-  { id: "6", title: "MEP Coordinator", company: "PrimeConstruct", location: "Atlanta, GA", category: "Construction", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "6 days ago", tags: ["MEP", "Coordination", "Field"] },
-  { id: "7", title: "Estimator (Commercial)", company: "Bluebeam Estimating", location: "Orlando, FL", category: "Construction", type: "Full-time", experience: "Mid", pay: "$80k – $110k", posted: "3 days ago", tags: ["Bluebeam", "Takeoffs", "Bid Packages"] },
+  { id: "5", title: "Construction Project Engineer", company: "Summit Build Group", location: "Austin, TX", category: "Construction", type: "Full-time", experience: "Mid", pay: "$70k – $95k", posted: "5d", tags: ["RFI", "Submittals", "Schedule"] },
+  { id: "6", title: "Estimator (Commercial)", company: "Bluebeam Estimating", location: "Orlando, FL", category: "Construction", type: "Full-time", experience: "Mid", pay: "$80k – $110k", posted: "3d", tags: ["Bluebeam", "Takeoffs", "Bids"] },
 
-  { id: "8", title: "Healthcare IT Analyst (EHR)", company: "CareStack Systems", location: "Remote (US)", category: "Healthcare", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "2 days ago", tags: ["EHR", "HIPAA", "Support"] },
-  { id: "9", title: "Clinical Systems Specialist", company: "MedOps", location: "Boston, MA", category: "Healthcare", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "1 week ago", tags: ["Clinical", "Training", "EHR"] },
+  { id: "7", title: "Healthcare IT Analyst (EHR)", company: "CareStack Systems", location: "Remote", category: "Healthcare", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "2d", tags: ["EHR", "HIPAA", "Support"] },
+  { id: "8", title: "Clinical Systems Specialist", company: "MedOps", location: "Boston, MA", category: "Healthcare", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "1w", tags: ["Clinical", "Training", "EHR"] },
 
-  { id: "10", title: "Manufacturing Engineer", company: "Titan Manufacturing", location: "Detroit, MI", category: "Manufacturing", type: "Full-time", experience: "Senior", pay: "$95k – $130k", posted: "4 days ago", tags: ["Lean", "Process", "Root Cause"] },
-  { id: "11", title: "Production Supervisor", company: "ForgeLine", location: "Columbus, OH", category: "Manufacturing", type: "Full-time", experience: "Mid", pay: "$70k – $95k", posted: "6 days ago", tags: ["Safety", "KPIs", "Shift"] },
+  { id: "9", title: "Manufacturing Engineer", company: "Titan Manufacturing", location: "Detroit, MI", category: "Manufacturing", type: "Full-time", experience: "Senior", pay: "$95k – $130k", posted: "4d", tags: ["Lean", "Process", "RCA"] },
+  { id: "10", title: "Field Service Engineer (Electrical)", company: "ServiceGrid", location: "Houston, TX", category: "Field Service", type: "Full-time", experience: "Mid", pay: "$80k – $115k", posted: "3d", tags: ["Commissioning", "Troubleshooting", "Travel"] },
 
-  { id: "12", title: "Field Service Engineer (Electrical)", company: "ServiceGrid", location: "Houston, TX", category: "Field Service", type: "Full-time", experience: "Mid", pay: "$80k – $115k", posted: "3 days ago", tags: ["Commissioning", "Troubleshooting", "Travel"] },
-  { id: "13", title: "Commissioning Technician", company: "StartUp Labs", location: "Remote (US)", category: "Field Service", type: "Contract", experience: "Mid", pay: "$45 – $65/hr", posted: "5 days ago", tags: ["Controls", "Startup", "Travel"] },
+  { id: "11", title: "Project Manager (Facilities)", company: "FacilityPro", location: "Seattle, WA", category: "Project Management", type: "Full-time", experience: "Senior", pay: "$100k – $140k", posted: "1w", tags: ["Budget", "Vendors", "Stakeholders"] },
+  { id: "12", title: "Quality Engineer", company: "QC Dynamics", location: "San Diego, CA", category: "Quality / Compliance", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "4d", tags: ["ISO", "Audits", "CAPA"] },
 
-  { id: "14", title: "Project Manager (Facilities)", company: "FacilityPro", location: "Seattle, WA", category: "Project Management", type: "Full-time", experience: "Senior", pay: "$100k – $140k", posted: "1 week ago", tags: ["Budget", "Vendors", "Stakeholders"] },
-  { id: "15", title: "Quality Engineer", company: "QC Dynamics", location: "San Diego, CA", category: "Quality / Compliance", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "4 days ago", tags: ["ISO", "Audits", "CAPA"] },
-  { id: "16", title: "Reliability Engineer", company: "PlantWorks", location: "Nashville, TN", category: "Maintenance / Reliability", type: "Full-time", experience: "Senior", pay: "$95k – $135k", posted: "6 days ago", tags: ["CMMS", "RCM", "PM"] },
-  { id: "17", title: "Mechanical Engineer (HVAC)", company: "ThermoDesign", location: "Charlotte, NC", category: "Engineering (Non-Software)", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "2 days ago", tags: ["HVAC", "MEP", "Loads"] },
-  { id: "18", title: "Systems Engineer (Defense)", company: "AeroShield", location: "Arlington, VA", category: "Aerospace / Defense", type: "Full-time", experience: "Senior", pay: "$120k – $170k", posted: "1 week ago", tags: ["Requirements", "Docs", "Systems"] },
+  { id: "13", title: "Reliability Engineer", company: "PlantWorks", location: "Nashville, TN", category: "Maintenance / Reliability", type: "Full-time", experience: "Senior", pay: "$95k – $135k", posted: "6d", tags: ["CMMS", "RCM", "PM"] },
+  { id: "14", title: "Mechanical Engineer (HVAC)", company: "ThermoDesign", location: "Charlotte, NC", category: "Engineering (Non-Software)", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "2d", tags: ["HVAC", "MEP", "Loads"] },
+  { id: "15", title: "Systems Engineer (Defense)", company: "AeroShield", location: "Arlington, VA", category: "Aerospace / Defense", type: "Full-time", experience: "Senior", pay: "$120k – $170k", posted: "1w", tags: ["Requirements", "Docs", "Systems"] },
 ];
 
 const JOB_TYPES: Array<JobType | "Any"> = ["Any", "Full-time", "Part-time", "Contract"];
@@ -64,34 +61,22 @@ function cx(...classes: Array<string | false | undefined | null>) {
 }
 
 export default function JobsSection() {
-  // draft inputs
+  // Draft filters
   const [draftQ, setDraftQ] = useState("");
   const [draftLoc, setDraftLoc] = useState("");
   const [draftType, setDraftType] = useState<(typeof JOB_TYPES)[number]>("Any");
   const [draftExp, setDraftExp] = useState<(typeof EXPERIENCES)[number]>("Any");
 
-  const [quickRemote, setQuickRemote] = useState(false);
-  const [quickFullTime, setQuickFullTime] = useState(false);
-  const [quickSenior, setQuickSenior] = useState(false);
-  const [quickContract, setQuickContract] = useState(false);
-
-  // applied filters
+  // Applied filters
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
   const [type, setType] = useState<(typeof JOB_TYPES)[number]>("Any");
   const [exp, setExp] = useState<(typeof EXPERIENCES)[number]>("Any");
 
-  const [apRemote, setApRemote] = useState(false);
-  const [apFullTime, setApFullTime] = useState(false);
-  const [apSenior, setApSenior] = useState(false);
-  const [apContract, setApContract] = useState(false);
-
-  // load more
   const INITIAL_COUNT = 8;
   const STEP = 6;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
-  // mobile drawer
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
@@ -104,33 +89,20 @@ export default function JobsSection() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-
     const qp = params.get("q") ?? "";
     const lp = params.get("loc") ?? "";
     const tp = params.get("type") ?? "Any";
     const ex = params.get("exp") ?? "Any";
-    const remote = params.get("remote") === "1";
-    const ft = params.get("ft") === "1";
-    const senior = params.get("senior") === "1";
-    const contract = params.get("contract") === "1";
 
     setDraftQ(qp);
     setDraftLoc(lp);
     setDraftType((JOB_TYPES.includes(tp as any) ? tp : "Any") as any);
     setDraftExp((EXPERIENCES.includes(ex as any) ? ex : "Any") as any);
-    setQuickRemote(remote);
-    setQuickFullTime(ft);
-    setQuickSenior(senior);
-    setQuickContract(contract);
 
     setQ(qp);
     setLoc(lp);
     setType((JOB_TYPES.includes(tp as any) ? tp : "Any") as any);
     setExp((EXPERIENCES.includes(ex as any) ? ex : "Any") as any);
-    setApRemote(remote);
-    setApFullTime(ft);
-    setApSenior(senior);
-    setApContract(contract);
   }, []);
 
   const filtered = useMemo(() => {
@@ -146,18 +118,12 @@ export default function JobsSection() {
         job.category.toLowerCase().includes(text);
 
       const matchLoc = !locationText || job.location.toLowerCase().includes(locationText);
-
       const matchType = type === "Any" || job.type === type;
       const matchExp = exp === "Any" || job.experience === exp;
 
-      const matchRemote = !apRemote || job.location.toLowerCase().includes("remote");
-      const matchFT = !apFullTime || job.type === "Full-time";
-      const matchSenior = !apSenior || job.experience === "Senior";
-      const matchContract = !apContract || job.type === "Contract";
-
-      return matchQ && matchLoc && matchType && matchExp && matchRemote && matchFT && matchSenior && matchContract;
+      return matchQ && matchLoc && matchType && matchExp;
     });
-  }, [q, loc, type, exp, apRemote, apFullTime, apSenior, apContract]);
+  }, [q, loc, type, exp]);
 
   const visibleJobs = filtered.slice(0, visibleCount);
   const canLoadMore = visibleCount < filtered.length;
@@ -168,21 +134,11 @@ export default function JobsSection() {
     setType(draftType);
     setExp(draftExp);
 
-    setApRemote(quickRemote);
-    setApFullTime(quickFullTime);
-    setApSenior(quickSenior);
-    setApContract(quickContract);
-
     const params = new URLSearchParams();
     if (draftQ.trim()) params.set("q", draftQ.trim());
     if (draftLoc.trim()) params.set("loc", draftLoc.trim());
     if (draftType !== "Any") params.set("type", draftType);
     if (draftExp !== "Any") params.set("exp", draftExp);
-
-    if (quickRemote) params.set("remote", "1");
-    if (quickFullTime) params.set("ft", "1");
-    if (quickSenior) params.set("senior", "1");
-    if (quickContract) params.set("contract", "1");
 
     const qs = params.toString();
     window.history.pushState({}, "", qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
@@ -196,34 +152,24 @@ export default function JobsSection() {
     setDraftLoc("");
     setDraftType("Any");
     setDraftExp("Any");
-    setQuickRemote(false);
-    setQuickFullTime(false);
-    setQuickSenior(false);
-    setQuickContract(false);
 
     setQ("");
     setLoc("");
     setType("Any");
     setExp("Any");
-    setApRemote(false);
-    setApFullTime(false);
-    setApSenior(false);
-    setApContract(false);
 
     window.history.pushState({}, "", window.location.pathname);
     setVisibleCount(INITIAL_COUNT);
   };
 
-  const loadMoreTop = () => {
-    setVisibleCount((v) => Math.min(v + STEP, filtered.length));
-  };
+  const loadMore = () => setVisibleCount((v) => Math.min(v + STEP, filtered.length));
 
   const FilterPanel = (
-    <div className="rounded-3xl border border-slate-200 bg-white/85 backdrop-blur shadow-sm p-5">
+    <div className="rounded-3xl border border-slate-200 bg-white/90 backdrop-blur shadow-sm p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-lg font-extrabold text-slate-900">Filters</h3>
-          <p className="text-xs text-slate-500 mt-1">Refine results (US only).</p>
+          <p className="text-xs text-slate-500 mt-1">Refine your search.</p>
         </div>
 
         <button
@@ -237,7 +183,7 @@ export default function JobsSection() {
 
       <div className="mt-5 space-y-4">
         <div>
-          <label className="text-sm font-semibold text-slate-900">Keyword</label>
+          <label className="text-sm font-semibold text-slate-900">Title / Keyword</label>
           <input
             value={draftQ}
             onChange={(e) => setDraftQ(e.target.value)}
@@ -292,32 +238,6 @@ export default function JobsSection() {
           </div>
         </div>
 
-        <div>
-          <p className="text-sm font-semibold text-slate-900">Quick filters</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {[
-              { label: "Remote", active: quickRemote, toggle: () => setQuickRemote((v) => !v) },
-              { label: "Full-time", active: quickFullTime, toggle: () => setQuickFullTime((v) => !v) },
-              { label: "Senior", active: quickSenior, toggle: () => setQuickSenior((v) => !v) },
-              { label: "Contract", active: quickContract, toggle: () => setQuickContract((v) => !v) },
-            ].map((chip) => (
-              <button
-                key={chip.label}
-                type="button"
-                onClick={chip.toggle}
-                className={cx(
-                  "px-4 py-2 rounded-full text-sm border transition",
-                  chip.active
-                    ? "bg-[rgba(106,111,242,0.12)] border-[rgba(106,111,242,0.25)] text-[var(--brand-purple)]"
-                    : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                )}
-              >
-                {chip.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <button
           type="button"
           onClick={applyFilters}
@@ -325,7 +245,7 @@ export default function JobsSection() {
                      bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
                      shadow-[0_10px_26px_rgba(106,111,242,0.20)] transition"
         >
-          Apply
+          Apply Filters
         </button>
       </div>
     </div>
@@ -333,7 +253,7 @@ export default function JobsSection() {
 
   return (
     <section className="relative">
-      {/* Mature background */}
+      {/* classy background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FA] via-[#F7F8FC] to-[#F2F4FF]" />
         <div className="absolute -top-44 left-[-120px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
@@ -341,133 +261,124 @@ export default function JobsSection() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 py-10">
-        {/* Mobile header row */}
-        <div className="mb-5 flex items-center justify-between lg:hidden">
-          <p className="text-sm text-slate-600">
-            Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs
-          </p>
+        {/* top row: title + load more on right (like before) */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl md:text-2xl font-extrabold text-slate-900">Latest jobs</h2>
+            <p className="mt-1 text-sm text-slate-600">
+              Showing <span className="font-semibold text-slate-900">{filtered.length}</span> results
+            </p>
+          </div>
 
+          {canLoadMore ? (
+            <button
+              type="button"
+              onClick={loadMore}
+              className="hidden sm:inline-flex items-center gap-2 rounded-xl px-4 py-2
+                         bg-white/90 border border-slate-200 shadow-sm hover:shadow-md transition
+                         text-sm font-semibold text-slate-900"
+            >
+              Load more <span aria-hidden>→</span>
+            </button>
+          ) : null}
+
+          {/* mobile filter button */}
           <button
             type="button"
             onClick={() => setFiltersOpen(true)}
-            className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 transition"
+            className="sm:hidden inline-flex items-center gap-2 rounded-xl px-4 py-2
+                       bg-white/90 border border-slate-200 shadow-sm hover:bg-slate-50 transition
+                       text-sm font-semibold text-slate-900"
           >
             Filters
           </button>
         </div>
 
-        {/* Desktop header row */}
-        <div className="hidden lg:flex items-center justify-between mb-6">
-          <p className="text-sm text-slate-600">
-            Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs (US only)
-          </p>
-
-          {canLoadMore ? (
-            <button
-              type="button"
-              onClick={loadMoreTop}
-              className="group inline-flex items-center gap-2 rounded-full px-4 py-2 bg-white/85 backdrop-blur
-                         border border-[rgba(106,111,242,0.25)] text-sm font-semibold text-slate-900
-                         shadow-sm hover:shadow-md transition"
-            >
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]">
-                +
-              </span>
-              Load more
-              <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
-                →
-              </span>
-            </button>
-          ) : null}
-        </div>
-
-        {/* Layout */}
-        <div className="grid gap-7 lg:grid-cols-[300px_1fr]">
-          {/* left filter (narrow) */}
+        <div className="grid gap-7 lg:grid-cols-[290px_1fr]">
+          {/* left filter */}
           <aside className="hidden lg:block">
             <div className="sticky top-28">{FilterPanel}</div>
           </aside>
 
-          {/* JOB LIST (single column list) */}
-          <div className="space-y-4">
-            {visibleJobs.map((job) => (
-              <article
+          {/* LIST like your screenshot */}
+          <div className="space-y-3">
+            {visibleJobs.map((job, index) => (
+              <div
                 key={job.id}
-                className="bg-white/90 backdrop-blur rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition
-                           px-5 py-5"
+                className={cx(
+                  "relative flex items-center justify-between gap-4",
+                  "rounded-2xl border bg-white/90 backdrop-blur shadow-sm hover:shadow-md transition",
+                  "px-4 sm:px-5 py-4",
+                  index === 0
+                    ? "border-[rgba(106,111,242,0.30)] bg-[rgba(106,111,242,0.06)]"
+                    : "border-slate-200"
+                )}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <h3 className="text-lg font-semibold text-slate-900 truncate">
-                      {job.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-slate-600 truncate">
-                      {job.company} • {job.location}
-                    </p>
+                {/* left icon + info */}
+                <div className="flex items-start gap-4 min-w-0">
+                  {/* icon circle */}
+                  <div
+                    className={cx(
+                      "h-11 w-11 rounded-xl flex items-center justify-center font-extrabold text-white shrink-0",
+                      index === 0 ? "bg-[var(--brand-purple)]" : "bg-slate-900"
+                    )}
+                    aria-hidden
+                  >
+                    {job.company.charAt(0)}
                   </div>
 
-                  <span className="shrink-0 text-xs font-semibold px-3 py-1 rounded-full bg-[rgba(106,111,242,0.10)]
-                                   text-[var(--brand-purple)] border border-[rgba(106,111,242,0.20)]">
-                    {job.category}
-                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[15px] sm:text-[16px] font-semibold text-slate-900 truncate">
+                      {job.title}
+                    </p>
+
+                    <p className="mt-1 text-xs sm:text-sm text-slate-600 truncate">
+                      {job.company} • {job.location}
+                    </p>
+
+                    {/* small meta pills */}
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <span className="text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+                        {job.type}
+                      </span>
+                      <span className="text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+                        {job.experience}
+                      </span>
+                      <span className="text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+                        {job.pay}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">{job.type}</span>
-                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">{job.experience}</span>
-                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700">{job.pay}</span>
-                </div>
+                {/* right side: posted + apply */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="hidden sm:inline text-xs text-slate-400">{job.posted}</span>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {job.tags.slice(0, 5).map((t) => (
-                    <span
-                      key={t}
-                      className="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 bg-white"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex items-center justify-between">
                   <button
-                    className="px-4 py-2 rounded-xl text-sm font-semibold text-white
+                    type="button"
+                    className="rounded-xl px-4 py-2 text-sm font-semibold text-white
                                bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] transition"
                   >
-                    View
+                    Apply now
                   </button>
-
-                  <span className="text-xs text-slate-400">Posted {job.posted}</span>
                 </div>
-              </article>
+              </div>
             ))}
 
-            {/* Bottom load more (mobile + end-state) */}
-            <div className="pt-4 lg:hidden flex justify-center">
+            {/* bottom controls */}
+            <div className="pt-4 flex items-center justify-center sm:justify-end">
               {filtered.length === 0 ? (
                 <div className="text-sm text-slate-600">No jobs match your filters.</div>
               ) : canLoadMore ? (
                 <button
                   type="button"
-                  onClick={loadMoreTop}
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-2xl px-6 py-3.5
-                             bg-white/90 backdrop-blur border border-[rgba(106,111,242,0.25)]
-                             text-sm font-semibold text-slate-900 shadow-sm hover:shadow-md transition"
+                  onClick={loadMore}
+                  className="sm:hidden w-full inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5
+                             bg-white/90 border border-slate-200 shadow-sm hover:shadow-md transition
+                             text-sm font-semibold text-slate-900"
                 >
-                  <span
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl
-                               bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
-                    aria-hidden
-                  >
-                    +
-                  </span>
-                  <span className="leading-none text-left">
-                    Load more jobs
-                    <span className="block text-xs font-medium text-slate-500 mt-0.5">Show more results</span>
-                  </span>
-                  <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
-                    →
-                  </span>
+                  Load more <span aria-hidden>→</span>
                 </button>
               ) : (
                 <div className="text-sm text-slate-500">You have reached the end.</div>
@@ -477,7 +388,7 @@ export default function JobsSection() {
         </div>
       </div>
 
-      {/* MOBILE FILTER DRAWER (left, never overlaps list) */}
+      {/* MOBILE FILTER DRAWER */}
       {filtersOpen && (
         <div className="lg:hidden">
           <button
