@@ -107,104 +107,124 @@ export default function Home() {
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
+
+
       {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-[#F7F8FA]">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
-          <div
-            className="absolute inset-0 opacity-[0.22]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
-              backgroundSize: "28px 28px",
-            }}
+<section className="relative overflow-hidden bg-[#F7F8FA]">
+  {/* faint purple-tinted background */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
+    <div
+      className="absolute inset-0 opacity-[0.20]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
+        backgroundSize: "28px 28px",
+      }}
+    />
+  </div>
+
+  <div className="relative mx-auto max-w-7xl px-6">
+    <div className="mx-auto max-w-3xl text-center py-14 sm:py-18 md:py-24">
+      {/* ✅ small pill / badge ABOVE headline (returned) */}
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] sm:text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+        Curated technical roles • US-only • Fast apply
+      </div>
+
+      {/* Headline (slightly smaller) */}
+      <h1 className="mt-6 text-[1.9rem] sm:text-[2.35rem] md:text-[2.85rem] font-extrabold leading-[1.12] tracking-tight text-[#0F172A]">
+        Find{" "}
+        <span className="relative inline-block">
+          {/* ✅ green wash: softer + shifted slightly left/top (not centered) */}
+          <span
+            aria-hidden
+            className="absolute -left-10 -top-8 w-[220px] h-[120px]
+                       bg-emerald-400/8 blur-[55px] rounded-full"
           />
-        </div>
+          <span
+            aria-hidden
+            className="absolute -left-6 -top-6 w-[190px] h-[105px]
+                       bg-emerald-400/10 blur-[40px] rounded-full"
+          />
+          <span className="relative text-emerald-600">Technical Jobs</span>
+        </span>{" "}
+        built for long-term careers
+      </h1>
 
-        <div className="relative mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-3xl text-center py-16 sm:py-20 md:py-28">
-            <h1 className="text-[2.1rem] sm:text-[2.7rem] md:text-[3.2rem] font-extrabold leading-tight tracking-tight text-[#0F172A]">
-              Find{" "}
-              <span className="relative inline-block">
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-14 -inset-y-10 bg-emerald-400/6 blur-[60px] rounded-full"
-                />
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-8 -inset-y-6 bg-emerald-400/8 blur-[36px] rounded-full"
-                />
-                <span className="relative text-emerald-600">Technical Jobs</span>
-              </span>{" "}
-              built for long-term careers
-            </h1>
+      {/* Description */}
+      <p className="mt-4 text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
+        Browse opportunities across engineering, infrastructure, cloud, security,
+        and data — including remote options. Simple, clean, and focused on serious hiring.
+      </p>
 
-            <p className="mt-5 text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
-              Browse opportunities across engineering, infrastructure, cloud,
-              security, and data — including remote options.
-            </p>
+      {/* ✅ Search bar (narrower) */}
+      <div className="mt-7">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
+            <input
+              value={heroQ}
+              onChange={(e) => setHeroQ(e.target.value)}
+              type="text"
+              placeholder="Job title, keyword"
+              className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                         focus:ring-2 focus:ring-emerald-200"
+            />
 
-            {/* SEARCH BAR */}
-            <div className="mt-8">
-              <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
-                  <input
-                    value={heroQ}
-                    onChange={(e) => setHeroQ(e.target.value)}
-                    type="text"
-                    placeholder="Job title, keyword"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
-                  />
+            <input
+              value={heroLoc}
+              onChange={(e) => setHeroLoc(e.target.value)}
+              type="text"
+              placeholder="Location (Remote, Austin, New York)"
+              className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
+                         focus:ring-2 focus:ring-emerald-200"
+            />
 
-                  <input
-                    value={heroLoc}
-                    onChange={(e) => setHeroLoc(e.target.value)}
-                    type="text"
-                    placeholder="Location (Remote, Lagos, New York)"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={runHeroSearch}
-                    className="h-12 rounded-xl px-6 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition"
-                  >
-                    Search Jobs
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* JUMP TO ALL JOBS */}
             <button
               type="button"
-              onClick={() => (window.location.href = "/all-jobs")}
-              className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
+              onClick={runHeroSearch}
+              className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white
+                         bg-slate-900 hover:bg-slate-800
+                         shadow-[0_10px_26px_rgba(2,6,23,0.20)]
+                         transition"
             >
-              Jump to Jobs <span aria-hidden>↓</span>
+              Search Jobs
             </button>
           </div>
-        </div>
-      </section>
 
-      {/* ================= COMPANIES (reverted to BEFORE) ================= */}
-      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10 md:mb-14">
-            <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
-              Trusted by teams
-            </p>
-            <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-              Popular Companies We Have Worked With
-            </h3>
-            <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-              A quick look at teams that trust TechnicalJobboard.
-            </p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
+            <span>Popular:</span>
+            {["Frontend", "DevOps", "Data", "Security"].map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => {
+                  setHeroQ(t);
+                  setTimeout(runHeroSearch, 0);
+                }}
+                className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300"
+              >
+                {t}
+              </button>
+            ))}
           </div>
-
-          <CompanyLogoCarousel />
         </div>
-      </section>
+      </div>
+
+      {/* Jump to Jobs */}
+      <button
+        type="button"
+        onClick={() => (window.location.href = "/all-jobs")}
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
+      >
+        Jump to Jobs <span aria-hidden>↓</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+     
 
       {/* ================= CATEGORIES ================= */}
       <section className="py-20 bg-white">
@@ -454,6 +474,24 @@ export default function Home() {
   </div>
 </section>
 
+ {/* ================= COMPANIES (reverted to BEFORE) ================= */}
+      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10 md:mb-14">
+            <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
+              Trusted by teams
+            </p>
+            <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+              Popular Companies We Have Worked With
+            </h3>
+            <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+              A quick look at teams that trust TechnicalJobboard.
+            </p>
+          </div>
+
+          <CompanyLogoCarousel />
+        </div>
+      </section>
 
       {/* ================= EMPOWERING ================= */}
       <section id="empowering" className="relative py-28 overflow-hidden bg-[#F6F7FB]">
