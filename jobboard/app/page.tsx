@@ -6,6 +6,56 @@ import { useEffect, useState } from "react";
 
 type Category = { label: string; slug: string };
 
+type FeaturedJob = {
+  title: string;
+  company: string;
+  location: string; // US only
+  type: string;
+  pay: string;
+  posted: string;
+  description?: string;
+};
+
+const FEATURED_JOBS: FeaturedJob[] = [
+  {
+    title: "Architectural Designer (Revit)",
+    company: "Stonebridge Studio",
+    location: "Denver, CO",
+    type: "Full-time",
+    pay: "$75k – $95k",
+    posted: "2 days ago",
+    description: "Produce CD sets, coordinate consultants, and support permitting in Revit.",
+  },
+  {
+    title: "BIM Coordinator (MEP)",
+    company: "MEPWorks",
+    location: "Dallas, TX",
+    type: "Full-time",
+    pay: "$85k – $115k",
+    posted: "1 week ago",
+    description: "Own clash detection workflows and model coordination across trades.",
+  },
+  {
+    title: "Construction Project Engineer",
+    company: "Summit Build Group",
+    location: "Austin, TX",
+    type: "Full-time",
+    pay: "$70k – $95k",
+    posted: "5 days ago",
+    description: "Manage RFIs/submittals, track schedules, and support field delivery.",
+  },
+  {
+    title: "Healthcare IT Analyst (EHR)",
+    company: "CareStack Systems",
+    location: "Remote (US)",
+    type: "Full-time",
+    pay: "$85k – $115k",
+    posted: "3 days ago",
+    description: "Support clinical systems, workflows, and integrations (HIPAA focused).",
+  },
+];
+
+
 // ✅ Put your real logo paths here (must exist in /public)
 const COMPANY_LOGOS = [
   { src: "/logos/company1.png", alt: "Company 1" },
