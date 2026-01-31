@@ -94,7 +94,6 @@ export default function JobsSection() {
   // mobile drawer
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // prevent body scroll when drawer open (fixes overlay issues)
   useEffect(() => {
     if (!filtersOpen) return;
     document.body.style.overflow = "hidden";
@@ -103,7 +102,6 @@ export default function JobsSection() {
     };
   }, [filtersOpen]);
 
-  // load from URL params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
@@ -134,6 +132,35 @@ export default function JobsSection() {
     setApSenior(senior);
     setApContract(contract);
   }, []);
+
+  const filtered = useMemo(() => {
+    const text = q.trim().toLowerCase();
+    const locationText = loc.trim().toLowerCase();
+
+    return JOBS.filter((job) => {
+      const matchQ =
+        !text ||
+        job.title.toLowerCase().includes(text) ||
+        job.company.toLowerCase().includes(text) ||
+        job.tags.join(" ").toLowerCase().includes(text) ||
+        job.category.toLowerCase().includes(text);
+
+      const matchLoc = !locationText || job.location.toLowerCase().includes(locationText);
+
+      const matchType = type === "Any" || job.type === type;
+      const matchExp = exp === "Any" || job.experience === exp;
+
+      const matchRemote = !apRemote || job.location.toLowerCase().includes("remote");
+      const matchFT = !apFullTime || job.type === "Full-time";
+      const matchSenior = !apSenior || job.experience === "Senior";
+      const matchContract = !apContract || job.type === "Contract";
+
+      return matchQ && matchLoc && matchType && matchExp && matchRemote && matchFT && matchSenior && matchContract;
+    });
+  }, [q, loc, type, exp, apRemote, apFullTime, apSenior, apContract]);
+
+  const visibleJobs = filtered.slice(0, visibleCount);
+  const canLoadMore = visibleCount < filtered.length;
 
   const applyFilters = () => {
     setQ(draftQ);
@@ -187,38 +214,77 @@ export default function JobsSection() {
     setVisibleCount(INITIAL_COUNT);
   };
 
-  const filtered = useMemo(() => {
-    const text = q.trim().toLowerCase();
-    const locationText = loc.trim().toLowerCase();
-
-    return JOBS.filter((job) => {
-      const matchQ =
-        !text ||
-        job.title.toLowerCase().includes(text) ||
-        job.company.toLowerCase().includes(text) ||
-        job.tags.join(" ").toLowerCase().includes(text) ||
-        job.category.toLowerCase().includes(text);
-
-      const matchLoc = !locationText || job.location.toLowerCase().includes(locationText);
-
-      const matchType = type === "Any" || job.type === type;
-      const matchExp = exp === "Any" || job.experience === exp;
-
-      const matchRemote = !apRemote || job.location.toLowerCase().includes("remote");
-      const matchFT = !apFullTime || job.type === "Full-time";
-      const matchSenior = !apSenior || job.experience === "Senior";
-      const matchContract = !apContract || job.type === "Contract";
-
-      return matchQ && matchLoc && matchType && matchExp && matchRemote && matchFT && matchSenior && matchContract;
-    });
-  }, [q, loc, type, exp, apRemote, apFullTime, apSenior, apContract]);
-
-  const visibleJobs = filtered.slice(0, visibleCount);
-  const canLoadMore = visibleCount < filtered.length;
-
   const loadMoreTop = () => {
     setVisibleCount((v) => Math.min(v + STEP, filtered.length));
   };
+
+  const LoadMoreDesktop = (
+    <button
+      type="button"
+      onClick={loadMoreTop}
+      className="
+        group inline-flex items-center gap-2
+        rounded-full px-4 py-2
+        bg-white/80 backdrop-blur
+        border border-[rgba(106,111,242,0.25)]
+        text-sm font-semibold text-slate-900
+        shadow-sm hover:shadow-md transition
+      "
+    >
+      <span
+        className="
+          inline-flex h-8 w-8 items-center justify-center rounded-full
+          bg-[rgba(106,111,242,0.12)]
+          text-[var(--brand-purple)]
+          group-hover:bg-[rgba(106,111,242,0.18)] transition
+        "
+        aria-hidden
+      >
+        +
+      </span>
+      Load more
+      <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
+        →
+      </span>
+    </button>
+  );
+
+  const LoadMoreMobile = (
+    <button
+      type="button"
+      onClick={loadMoreTop}
+      className="
+        group w-full sm:w-auto
+        inline-flex items-center justify-center gap-3
+        rounded-2xl px-6 py-3.5
+        bg-white/90 backdrop-blur
+        border border-[rgba(106,111,242,0.25)]
+        text-sm font-semibold text-slate-900
+        shadow-sm hover:shadow-md transition
+      "
+    >
+      <span
+        className="
+          inline-flex h-10 w-10 items-center justify-center rounded-xl
+          bg-[rgba(106,111,242,0.12)]
+          text-[var(--brand-purple)]
+          group-hover:bg-[rgba(106,111,242,0.18)] transition
+        "
+        aria-hidden
+      >
+        +
+      </span>
+
+      <span className="leading-none text-left">
+        Load more jobs
+        <span className="block text-xs font-medium text-slate-500 mt-0.5">Show more results</span>
+      </span>
+
+      <span className="text-slate-400 group-hover:text-slate-700 transition" aria-hidden>
+        →
+      </span>
+    </button>
+  );
 
   const FilterPanel = (
     <div className="rounded-3xl border border-slate-200 bg-white shadow-sm p-5">
@@ -349,23 +415,13 @@ export default function JobsSection() {
           </button>
         </div>
 
-        {/* Desktop header row (Load more on top right) */}
+        {/* Desktop header row (Load more top right) */}
         <div className="hidden lg:flex items-center justify-between mb-6">
           <p className="text-sm text-slate-600">
             Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs (US only)
           </p>
 
-          <div className="flex items-center gap-3">
-            {canLoadMore && (
-              <button
-                type="button"
-                onClick={loadMoreTop}
-                className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-900 bg-white border border-slate-200 hover:bg-slate-50 transition shadow-sm"
-              >
-                Load more
-              </button>
-            )}
-          </div>
+          <div className="flex items-center gap-3">{canLoadMore ? LoadMoreDesktop : null}</div>
         </div>
 
         {/* Layout */}
@@ -377,7 +433,6 @@ export default function JobsSection() {
 
           {/* JOBS */}
           <div>
-            {/* modern grid */}
             <div className="grid gap-5 md:grid-cols-2">
               {visibleJobs.map((job) => (
                 <article
@@ -436,18 +491,12 @@ export default function JobsSection() {
               ))}
             </div>
 
-            {/* Mobile: load more stays below list (clean) */}
+            {/* Mobile: friendly load more below list */}
             <div className="mt-8 flex justify-center lg:hidden">
               {filtered.length === 0 ? (
                 <div className="text-sm text-slate-600">No jobs match your filters.</div>
               ) : canLoadMore ? (
-                <button
-                  type="button"
-                  onClick={loadMoreTop}
-                  className="px-6 py-3 rounded-2xl text-sm font-semibold text-slate-900 bg-white border border-slate-200 hover:bg-slate-50 transition shadow-sm"
-                >
-                  Load more
-                </button>
+                LoadMoreMobile
               ) : (
                 <div className="text-sm text-slate-500">You’ve reached the end.</div>
               )}
@@ -456,10 +505,9 @@ export default function JobsSection() {
         </div>
       </div>
 
-      {/* ✅ MOBILE FILTER DRAWER (LEFT slide-over, does NOT cover jobs area scroll) */}
+      {/* MOBILE FILTER DRAWER (left slide-over, no job overlap) */}
       {filtersOpen && (
         <div className="lg:hidden">
-          {/* backdrop */}
           <button
             type="button"
             className="fixed inset-0 z-40 bg-black/30"
@@ -467,7 +515,6 @@ export default function JobsSection() {
             onClick={() => setFiltersOpen(false)}
           />
 
-          {/* drawer */}
           <div className="fixed z-50 top-0 left-0 h-full w-[86%] max-w-[380px] bg-white border-r border-slate-200 shadow-2xl">
             <div className="h-full overflow-auto p-4">
               <div className="flex items-center justify-between mb-3">
