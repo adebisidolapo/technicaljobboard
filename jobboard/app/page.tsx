@@ -474,24 +474,52 @@ export default function Home() {
   </div>
 </section>
 
- {/* ================= COMPANIES (reverted to BEFORE) ================= */}
-      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10 md:mb-14">
-            <p className="text-sm font-semibold tracking-[0.22em] text-gray-500 uppercase">
-              Trusted by teams
-            </p>
-            <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-              Popular Companies We Have Worked With
-            </h3>
-            <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-              A quick look at teams that trust TechnicalJobboard.
-            </p>
-          </div>
+{/* ================= COMPANIES (upgraded) ================= */}
+<section className="relative py-16 md:py-20 bg-white overflow-hidden">
+  {/* subtle background treatment */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#FBFBFF]" />
+    <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+    <div className="absolute -bottom-44 right-[-120px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.06)] blur-3xl" />
+  </div>
 
-          <CompanyLogoCarousel />
-        </div>
-      </section>
+  <div className="relative max-w-7xl mx-auto px-6">
+    {/* header */}
+    <div className="text-center mb-10 md:mb-14">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[rgba(106,111,242,0.18)] bg-[rgba(106,111,242,0.08)] px-4 py-2 text-xs font-semibold text-[var(--brand-purple)]">
+        <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+        Trusted by teams across the US
+      </div>
+
+      <h3 className="mt-5 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+        Popular companies hiring technical talent
+      </h3>
+
+      <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+        A quick look at teams that trust TechnicalJobboard — across engineering, construction, healthcare, CAD/BIM, and more.
+      </p>
+    </div>
+
+    {/* carousel container */}
+    <div
+      className="
+        rounded-3xl border border-[rgba(106,111,242,0.18)]
+        bg-gradient-to-b from-white to-[#FBFBFF]
+        shadow-sm
+        px-4 py-6 md:px-8 md:py-8
+      "
+    >
+      <CompanyLogoCarousel />
+    </div>
+
+    {/* small footer note */}
+    <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[rgba(106,111,242,0.40)]" />
+      Logos shown are examples of companies and teams we’ve featured.
+    </div>
+  </div>
+</section>
+
 
       {/* ================= EMPOWERING ================= */}
       <section id="empowering" className="relative py-28 overflow-hidden bg-[#F6F7FB]">
