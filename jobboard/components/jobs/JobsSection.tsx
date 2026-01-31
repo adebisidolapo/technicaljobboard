@@ -30,243 +30,30 @@ type Job = {
 };
 
 const JOBS: Job[] = [
-  // Architecture
-  {
-    id: "1",
-    title: "Architectural Designer (Revit)",
-    company: "Stonebridge Studio",
-    location: "Denver, CO",
-    category: "Architecture",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$75k – $95k",
-    posted: "2 days ago",
-    tags: ["Revit", "CD Sets", "Permitting"],
-  },
-  {
-    id: "2",
-    title: "Project Architect",
-    company: "Northline Architects",
-    location: "Chicago, IL",
-    category: "Architecture",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$95k – $125k",
-    posted: "4 days ago",
-    tags: ["Design Development", "CA", "Revit"],
-  },
+  { id: "1", title: "Architectural Designer (Revit)", company: "Stonebridge Studio", location: "Denver, CO", category: "Architecture", type: "Full-time", experience: "Mid", pay: "$75k – $95k", posted: "2 days ago", tags: ["Revit", "CD Sets", "Permitting"] },
+  { id: "2", title: "Project Architect", company: "Northline Architects", location: "Chicago, IL", category: "Architecture", type: "Full-time", experience: "Senior", pay: "$95k – $125k", posted: "4 days ago", tags: ["Design Dev", "CA", "Revit"] },
 
-  // CAD / BIM
-  {
-    id: "3",
-    title: "CAD Drafter (AutoCAD)",
-    company: "Precision Drafting Co.",
-    location: "Phoenix, AZ",
-    category: "CAD / BIM",
-    type: "Full-time",
-    experience: "Entry",
-    pay: "$55k – $75k",
-    posted: "3 days ago",
-    tags: ["AutoCAD", "Shop Drawings", "As-builts"],
-  },
-  {
-    id: "4",
-    title: "BIM Coordinator",
-    company: "MEPWorks",
-    location: "Dallas, TX",
-    category: "CAD / BIM",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$85k – $115k",
-    posted: "1 week ago",
-    tags: ["Revit", "Navisworks", "Clash Detection"],
-  },
+  { id: "3", title: "CAD Drafter (AutoCAD)", company: "Precision Drafting Co.", location: "Phoenix, AZ", category: "CAD / BIM", type: "Full-time", experience: "Entry", pay: "$55k – $75k", posted: "3 days ago", tags: ["AutoCAD", "Shop Drawings", "As-builts"] },
+  { id: "4", title: "BIM Coordinator", company: "MEPWorks", location: "Dallas, TX", category: "CAD / BIM", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "1 week ago", tags: ["Revit", "Navisworks", "Clash Detection"] },
 
-  // Construction
-  {
-    id: "5",
-    title: "Construction Project Engineer",
-    company: "Summit Build Group",
-    location: "Austin, TX",
-    category: "Construction",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$70k – $95k",
-    posted: "5 days ago",
-    tags: ["RFI", "Submittals", "Scheduling"],
-  },
-  {
-    id: "6",
-    title: "MEP Coordinator",
-    company: "PrimeConstruct",
-    location: "Atlanta, GA",
-    category: "Construction",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$90k – $120k",
-    posted: "6 days ago",
-    tags: ["MEP", "Coordination", "Field"],
-  },
-  {
-    id: "7",
-    title: "Estimator (Commercial)",
-    company: "Bluebeam Estimating",
-    location: "Orlando, FL",
-    category: "Construction",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$80k – $110k",
-    posted: "3 days ago",
-    tags: ["Bluebeam", "Takeoffs", "Bid Packages"],
-  },
+  { id: "5", title: "Construction Project Engineer", company: "Summit Build Group", location: "Austin, TX", category: "Construction", type: "Full-time", experience: "Mid", pay: "$70k – $95k", posted: "5 days ago", tags: ["RFI", "Submittals", "Scheduling"] },
+  { id: "6", title: "MEP Coordinator", company: "PrimeConstruct", location: "Atlanta, GA", category: "Construction", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "6 days ago", tags: ["MEP", "Coordination", "Field"] },
+  { id: "7", title: "Estimator (Commercial)", company: "Bluebeam Estimating", location: "Orlando, FL", category: "Construction", type: "Full-time", experience: "Mid", pay: "$80k – $110k", posted: "3 days ago", tags: ["Bluebeam", "Takeoffs", "Bid Packages"] },
 
-  // Healthcare / Medical
-  {
-    id: "8",
-    title: "Healthcare IT Analyst",
-    company: "CareStack Systems",
-    location: "Remote (US)",
-    category: "Healthcare",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$85k – $115k",
-    posted: "2 days ago",
-    tags: ["EHR", "HIPAA", "Support"],
-  },
-  {
-    id: "9",
-    title: "Clinical Systems Specialist",
-    company: "MedOps",
-    location: "Boston, MA",
-    category: "Healthcare",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$90k – $120k",
-    posted: "1 week ago",
-    tags: ["Clinical Workflows", "Training", "EHR"],
-  },
+  { id: "8", title: "Healthcare IT Analyst", company: "CareStack Systems", location: "Remote (US)", category: "Healthcare", type: "Full-time", experience: "Mid", pay: "$85k – $115k", posted: "2 days ago", tags: ["EHR", "HIPAA", "Support"] },
+  { id: "9", title: "Clinical Systems Specialist", company: "MedOps", location: "Boston, MA", category: "Healthcare", type: "Full-time", experience: "Senior", pay: "$90k – $120k", posted: "1 week ago", tags: ["Clinical", "Training", "EHR"] },
 
-  // Manufacturing
-  {
-    id: "10",
-    title: "Manufacturing Engineer",
-    company: "Titan Manufacturing",
-    location: "Detroit, MI",
-    category: "Manufacturing",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$95k – $130k",
-    posted: "4 days ago",
-    tags: ["Lean", "Process Improvement", "Root Cause"],
-  },
-  {
-    id: "11",
-    title: "Production Supervisor",
-    company: "ForgeLine",
-    location: "Columbus, OH",
-    category: "Manufacturing",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$70k – $95k",
-    posted: "6 days ago",
-    tags: ["Shift Lead", "Safety", "KPIs"],
-  },
+  { id: "10", title: "Manufacturing Engineer", company: "Titan Manufacturing", location: "Detroit, MI", category: "Manufacturing", type: "Full-time", experience: "Senior", pay: "$95k – $130k", posted: "4 days ago", tags: ["Lean", "Process", "Root Cause"] },
+  { id: "11", title: "Production Supervisor", company: "ForgeLine", location: "Columbus, OH", category: "Manufacturing", type: "Full-time", experience: "Mid", pay: "$70k – $95k", posted: "6 days ago", tags: ["Safety", "KPIs", "Shift"] },
 
-  // Field Service
-  {
-    id: "12",
-    title: "Field Service Engineer (Electrical)",
-    company: "ServiceGrid",
-    location: "Houston, TX",
-    category: "Field Service",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$80k – $115k",
-    posted: "3 days ago",
-    tags: ["Commissioning", "Troubleshooting", "Travel"],
-  },
-  {
-    id: "13",
-    title: "Commissioning Technician",
-    company: "StartUp Labs",
-    location: "Remote (US)",
-    category: "Field Service",
-    type: "Contract",
-    experience: "Mid",
-    pay: "$45 – $65/hr",
-    posted: "5 days ago",
-    tags: ["Startup", "Controls", "Travel"],
-  },
+  { id: "12", title: "Field Service Engineer (Electrical)", company: "ServiceGrid", location: "Houston, TX", category: "Field Service", type: "Full-time", experience: "Mid", pay: "$80k – $115k", posted: "3 days ago", tags: ["Commissioning", "Troubleshooting", "Travel"] },
+  { id: "13", title: "Commissioning Technician", company: "StartUp Labs", location: "Remote (US)", category: "Field Service", type: "Contract", experience: "Mid", pay: "$45 – $65/hr", posted: "5 days ago", tags: ["Controls", "Startup", "Travel"] },
 
-  // Project Management
-  {
-    id: "14",
-    title: "Project Manager (Facilities)",
-    company: "FacilityPro",
-    location: "Seattle, WA",
-    category: "Project Management",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$100k – $140k",
-    posted: "1 week ago",
-    tags: ["Stakeholders", "Budget", "Vendors"],
-  },
-
-  // Quality / Compliance
-  {
-    id: "15",
-    title: "Quality Engineer",
-    company: "QC Dynamics",
-    location: "San Diego, CA",
-    category: "Quality / Compliance",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$90k – $125k",
-    posted: "4 days ago",
-    tags: ["ISO", "Audits", "CAPA"],
-  },
-
-  // Maintenance / Reliability
-  {
-    id: "16",
-    title: "Reliability Engineer",
-    company: "PlantWorks",
-    location: "Nashville, TN",
-    category: "Maintenance / Reliability",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$95k – $135k",
-    posted: "6 days ago",
-    tags: ["CMMS", "RCM", "Preventive Maintenance"],
-  },
-
-  // Engineering (Non-Software)
-  {
-    id: "17",
-    title: "Mechanical Engineer (HVAC)",
-    company: "ThermoDesign",
-    location: "Charlotte, NC",
-    category: "Engineering (Non-Software)",
-    type: "Full-time",
-    experience: "Mid",
-    pay: "$90k – $125k",
-    posted: "2 days ago",
-    tags: ["HVAC", "MEP", "Load Calculations"],
-  },
-
-  // Aerospace / Defense
-  {
-    id: "18",
-    title: "Systems Engineer (Defense)",
-    company: "AeroShield",
-    location: "Arlington, VA",
-    category: "Aerospace / Defense",
-    type: "Full-time",
-    experience: "Senior",
-    pay: "$120k – $170k",
-    posted: "1 week ago",
-    tags: ["Requirements", "Systems", "Documentation"],
-  },
+  { id: "14", title: "Project Manager (Facilities)", company: "FacilityPro", location: "Seattle, WA", category: "Project Management", type: "Full-time", experience: "Senior", pay: "$100k – $140k", posted: "1 week ago", tags: ["Budget", "Vendors", "Stakeholders"] },
+  { id: "15", title: "Quality Engineer", company: "QC Dynamics", location: "San Diego, CA", category: "Quality / Compliance", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "4 days ago", tags: ["ISO", "Audits", "CAPA"] },
+  { id: "16", title: "Reliability Engineer", company: "PlantWorks", location: "Nashville, TN", category: "Maintenance / Reliability", type: "Full-time", experience: "Senior", pay: "$95k – $135k", posted: "6 days ago", tags: ["CMMS", "RCM", "PM"] },
+  { id: "17", title: "Mechanical Engineer (HVAC)", company: "ThermoDesign", location: "Charlotte, NC", category: "Engineering (Non-Software)", type: "Full-time", experience: "Mid", pay: "$90k – $125k", posted: "2 days ago", tags: ["HVAC", "MEP", "Loads"] },
+  { id: "18", title: "Systems Engineer (Defense)", company: "AeroShield", location: "Arlington, VA", category: "Aerospace / Defense", type: "Full-time", experience: "Senior", pay: "$120k – $170k", posted: "1 week ago", tags: ["Systems", "Requirements", "Docs"] },
 ];
 
 const JOB_TYPES: Array<JobType | "Any"> = ["Any", "Full-time", "Part-time", "Contract"];
@@ -277,7 +64,7 @@ function cx(...classes: Array<string | false | undefined | null>) {
 }
 
 export default function JobsSection() {
-  // draft (what user is typing)
+  // draft inputs
   const [draftQ, setDraftQ] = useState("");
   const [draftLoc, setDraftLoc] = useState("");
   const [draftType, setDraftType] = useState<(typeof JOB_TYPES)[number]>("Any");
@@ -288,7 +75,7 @@ export default function JobsSection() {
   const [quickSenior, setQuickSenior] = useState(false);
   const [quickContract, setQuickContract] = useState(false);
 
-  // applied (what actually filters results)
+  // applied filters
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
   const [type, setType] = useState<(typeof JOB_TYPES)[number]>("Any");
@@ -299,14 +86,24 @@ export default function JobsSection() {
   const [apSenior, setApSenior] = useState(false);
   const [apContract, setApContract] = useState(false);
 
+  // load more
   const INITIAL_COUNT = 8;
   const STEP = 6;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
-  // mobile filter drawer
+  // mobile drawer
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // read URL params (hero search -> /all-jobs?q=...&loc=...)
+  // prevent body scroll when drawer open (fixes overlay issues)
+  useEffect(() => {
+    if (!filtersOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [filtersOpen]);
+
+  // load from URL params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
@@ -319,7 +116,6 @@ export default function JobsSection() {
     const senior = params.get("senior") === "1";
     const contract = params.get("contract") === "1";
 
-    // set both draft + applied so page loads filtered correctly
     setDraftQ(qp);
     setDraftLoc(lp);
     setDraftType((JOB_TYPES.includes(tp as any) ? tp : "Any") as any);
@@ -350,7 +146,6 @@ export default function JobsSection() {
     setApSenior(quickSenior);
     setApContract(quickContract);
 
-    // update URL
     const params = new URLSearchParams();
     if (draftQ.trim()) params.set("q", draftQ.trim());
     if (draftLoc.trim()) params.set("loc", draftLoc.trim());
@@ -363,8 +158,7 @@ export default function JobsSection() {
     if (quickContract) params.set("contract", "1");
 
     const qs = params.toString();
-    const nextUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
-    window.history.pushState({}, "", nextUrl);
+    window.history.pushState({}, "", qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
 
     setVisibleCount(INITIAL_COUNT);
     setFiltersOpen(false);
@@ -421,6 +215,10 @@ export default function JobsSection() {
 
   const visibleJobs = filtered.slice(0, visibleCount);
   const canLoadMore = visibleCount < filtered.length;
+
+  const loadMoreTop = () => {
+    setVisibleCount((v) => Math.min(v + STEP, filtered.length));
+  };
 
   const FilterPanel = (
     <div className="rounded-3xl border border-slate-200 bg-white shadow-sm p-5">
@@ -497,57 +295,26 @@ export default function JobsSection() {
         <div>
           <p className="text-sm font-semibold text-slate-900">Quick Filters</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setQuickRemote((v) => !v)}
-              className={cx(
-                "px-4 py-2 rounded-full text-sm border transition",
-                quickRemote
-                  ? "bg-[rgba(106,111,242,0.12)] border-[rgba(106,111,242,0.25)] text-[var(--brand-purple)]"
-                  : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-              )}
-            >
-              Remote
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setQuickFullTime((v) => !v)}
-              className={cx(
-                "px-4 py-2 rounded-full text-sm border transition",
-                quickFullTime
-                  ? "bg-[rgba(106,111,242,0.12)] border-[rgba(106,111,242,0.25)] text-[var(--brand-purple)]"
-                  : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-              )}
-            >
-              Full-time
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setQuickSenior((v) => !v)}
-              className={cx(
-                "px-4 py-2 rounded-full text-sm border transition",
-                quickSenior
-                  ? "bg-[rgba(106,111,242,0.12)] border-[rgba(106,111,242,0.25)] text-[var(--brand-purple)]"
-                  : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-              )}
-            >
-              Senior
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setQuickContract((v) => !v)}
-              className={cx(
-                "px-4 py-2 rounded-full text-sm border transition",
-                quickContract
-                  ? "bg-[rgba(106,111,242,0.12)] border-[rgba(106,111,242,0.25)] text-[var(--brand-purple)]"
-                  : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-              )}
-            >
-              Contract
-            </button>
+            {[
+              { label: "Remote", active: quickRemote, toggle: () => setQuickRemote((v) => !v) },
+              { label: "Full-time", active: quickFullTime, toggle: () => setQuickFullTime((v) => !v) },
+              { label: "Senior", active: quickSenior, toggle: () => setQuickSenior((v) => !v) },
+              { label: "Contract", active: quickContract, toggle: () => setQuickContract((v) => !v) },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                type="button"
+                onClick={chip.toggle}
+                className={cx(
+                  "px-4 py-2 rounded-full text-sm border transition",
+                  chip.active
+                    ? "bg-[rgba(106,111,242,0.12)] border-[rgba(106,111,242,0.25)] text-[var(--brand-purple)]"
+                    : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                )}
+              >
+                {chip.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -556,7 +323,7 @@ export default function JobsSection() {
           onClick={applyFilters}
           className="w-full h-12 rounded-2xl text-base font-semibold text-white
                      bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
-                     shadow-sm transition"
+                     shadow-[0_10px_28px_rgba(106,111,242,0.20)] transition"
         >
           Apply Filters
         </button>
@@ -567,7 +334,7 @@ export default function JobsSection() {
   return (
     <section className="py-10">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Mobile "open filters" */}
+        {/* Mobile top row */}
         <div className="mb-5 flex items-center justify-between lg:hidden">
           <p className="text-sm text-slate-600">
             Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs
@@ -582,27 +349,40 @@ export default function JobsSection() {
           </button>
         </div>
 
-        {/* Layout: LEFT filters + RIGHT jobs */}
+        {/* Desktop header row (Load more on top right) */}
+        <div className="hidden lg:flex items-center justify-between mb-6">
+          <p className="text-sm text-slate-600">
+            Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs (US only)
+          </p>
+
+          <div className="flex items-center gap-3">
+            {canLoadMore && (
+              <button
+                type="button"
+                onClick={loadMoreTop}
+                className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-900 bg-white border border-slate-200 hover:bg-slate-50 transition shadow-sm"
+              >
+                Load more
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Layout */}
         <div className="grid gap-7 lg:grid-cols-[360px_1fr]">
           {/* LEFT FILTERS (desktop) */}
           <aside className="hidden lg:block">
             <div className="sticky top-28">{FilterPanel}</div>
           </aside>
 
-          {/* JOB LIST */}
+          {/* JOBS */}
           <div>
-            {/* desktop count */}
-            <div className="hidden lg:flex items-center justify-between mb-5">
-              <p className="text-sm text-slate-600">
-                Showing <span className="font-semibold text-slate-900">{filtered.length}</span> jobs (US only)
-              </p>
-            </div>
-
+            {/* modern grid */}
             <div className="grid gap-5 md:grid-cols-2">
               {visibleJobs.map((job) => (
                 <article
                   key={job.id}
-                  className="bg-white rounded-2xl border border-[rgba(106,111,242,0.18)] shadow-sm hover:shadow-md transition p-5"
+                  className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition p-5"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
@@ -649,20 +429,21 @@ export default function JobsSection() {
                     >
                       View
                     </button>
+
                     <span className="text-xs text-slate-400">Posted {job.posted}</span>
                   </div>
                 </article>
               ))}
             </div>
 
-            {/* Load more */}
-            <div className="mt-10 flex justify-center">
+            {/* Mobile: load more stays below list (clean) */}
+            <div className="mt-8 flex justify-center lg:hidden">
               {filtered.length === 0 ? (
                 <div className="text-sm text-slate-600">No jobs match your filters.</div>
               ) : canLoadMore ? (
                 <button
                   type="button"
-                  onClick={() => setVisibleCount((v) => Math.min(v + STEP, filtered.length))}
+                  onClick={loadMoreTop}
                   className="px-6 py-3 rounded-2xl text-sm font-semibold text-slate-900 bg-white border border-slate-200 hover:bg-slate-50 transition shadow-sm"
                 >
                   Load more
@@ -675,17 +456,33 @@ export default function JobsSection() {
         </div>
       </div>
 
-      {/* MOBILE FILTER DRAWER */}
+      {/* ✅ MOBILE FILTER DRAWER (LEFT slide-over, does NOT cover jobs area scroll) */}
       {filtersOpen && (
         <div className="lg:hidden">
+          {/* backdrop */}
           <button
             type="button"
             className="fixed inset-0 z-40 bg-black/30"
             aria-label="Close filters"
             onClick={() => setFiltersOpen(false)}
           />
-          <div className="fixed z-50 left-0 right-0 bottom-0 top-20 px-4 pb-6 overflow-auto">
-            <div className="max-w-xl mx-auto">{FilterPanel}</div>
+
+          {/* drawer */}
+          <div className="fixed z-50 top-0 left-0 h-full w-[86%] max-w-[380px] bg-white border-r border-slate-200 shadow-2xl">
+            <div className="h-full overflow-auto p-4">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-slate-900">Filters</p>
+                <button
+                  type="button"
+                  onClick={() => setFiltersOpen(false)}
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
+                >
+                  Close
+                </button>
+              </div>
+
+              {FilterPanel}
+            </div>
           </div>
         </div>
       )}
