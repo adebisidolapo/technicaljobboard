@@ -1,70 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
-
-const [activeLogo, setActiveLogo] = useState(0);
-
-useEffect(() => {
-  const interval = setInterval(() => {
-    setActiveLogo((i) => (i + 1) % 5);
-  }, 2800);
-
-  return () => clearInterval(interval);
-}, []);
-
+// If you truly don't have this component, REMOVE this import:
+// import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 
 type Category = { label: string; slug: string };
 
-const FEATURED_JOBS = [
-  {
-    title: "Senior Frontend Engineer",
-    company: "NovaTech",
-    location: "Remote (US)",
-    type: "Full-time",
-    pay: "$120k – $160k",
-    posted: "2 days ago",
-    stack: "React • Next.js • TypeScript",
-  },
-  {
-    title: "Backend Engineer (Node/Go)",
-    company: "CloudSprint",
-    location: "Austin, TX",
-    type: "Full-time",
-    pay: "$130k – $175k",
-    posted: "3 days ago",
-    stack: "Node.js • Go • Postgres",
-  },
-  {
-    title: "DevOps / Platform Engineer",
-    company: "InfraScale",
-    location: "Seattle, WA",
-    type: "Full-time",
-    pay: "$140k – $190k",
-    posted: "5 days ago",
-    stack: "AWS • Terraform • Kubernetes",
-  },
-  {
-    title: "Security Engineer",
-    company: "SecureStack",
-    location: "New York, NY",
-    type: "Full-time",
-    pay: "$145k – $200k",
-    posted: "1 week ago",
-    stack: "AppSec • Cloud • SOC2",
-  },
-  {
-    title: "Data Engineer",
-    company: "DataForge",
-    location: "San Francisco, CA",
-    type: "Full-time",
-    pay: "$130k – $180k",
-    posted: "4 days ago",
-    stack: "Python • Airflow • BigQuery",
-  },
+// ✅ Put your real logo paths here (must exist in /public)
+const COMPANY_LOGOS = [
+  { src: "/logos/company1.png", alt: "Company 1" },
+  { src: "/logos/company2.png", alt: "Company 2" },
+  { src: "/logos/company3.png", alt: "Company 3" },
+  { src: "/logos/company4.png", alt: "Company 4" },
+  { src: "/logos/company5.png", alt: "Company 5" },
 ];
-
-
 
 const CATEGORIES: Category[] = [
   { label: "Healthcare IT", slug: "healthcare-it" },
@@ -87,6 +36,18 @@ export default function Home() {
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
 
+  // ✅ Company logo index (MUST be inside Home)
+  const [activeLogo, setActiveLogo] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveLogo((i) => (i + 1) % COMPANY_LOGOS.length);
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // scroll reveal (optional)
   useEffect(() => {
     const els = Array.from(document.querySelectorAll(".reveal"));
     const io = new IntersectionObserver(
@@ -102,7 +63,7 @@ export default function Home() {
     return () => io.disconnect();
   }, []);
 
-  // 🔁 REDIRECT SEARCH TO ALL JOBS PAGE
+  // Redirect search to all jobs page
   const runHeroSearch = () => {
     const params = new URLSearchParams();
     if (heroQ.trim()) params.set("q", heroQ.trim());
@@ -118,126 +79,161 @@ export default function Home() {
 
   return (
     <main className="font-sans bg-gray-100 text-[#02000D]">
-
-
       {/* ================= HERO ================= */}
-<section className="relative overflow-hidden bg-[#F7F8FA]">
-  {/* faint purple-tinted background */}
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
-    <div
-      className="absolute inset-0 opacity-[0.20]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
-        backgroundSize: "28px 28px",
-      }}
-    />
-  </div>
-
-  <div className="relative mx-auto max-w-7xl px-6">
-    <div className="mx-auto max-w-3xl text-center py-14 sm:py-18 md:py-24">
-      {/* ✅ small pill / badge ABOVE headline (returned) */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] sm:text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
-        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        Curated technical roles • US-only • Fast apply
-      </div>
-
-      {/* Headline (slightly smaller) */}
-      <h1 className="mt-6 text-[1.9rem] sm:text-[2.35rem] md:text-[2.85rem] font-extrabold leading-[1.12] tracking-tight text-[#0F172A]">
-        Find{" "}
-        <span className="relative inline-block">
-          {/* ✅ green wash: softer + shifted slightly left/top (not centered) */}
-          <span
-            aria-hidden
-            className="absolute -left-10 -top-8 w-[220px] h-[120px]
-                       bg-emerald-400/8 blur-[55px] rounded-full"
+      <section className="relative overflow-hidden bg-[#F7F8FA]">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F7F8FA] to-[#F2F4FF]" />
+          <div
+            className="absolute inset-0 opacity-[0.22]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, rgba(17,24,39,0.08) 1px, transparent 0)",
+              backgroundSize: "28px 28px",
+            }}
           />
-          <span
-            aria-hidden
-            className="absolute -left-6 -top-6 w-[190px] h-[105px]
-                       bg-emerald-400/10 blur-[40px] rounded-full"
-          />
-          <span className="relative text-emerald-600">Technical Jobs</span>
-        </span>{" "}
-        built for long-term careers
-      </h1>
+        </div>
 
-      {/* Description */}
-      <p className="mt-4 text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
-        Browse opportunities across engineering, infrastructure, cloud, security,
-        and data — including remote options. Simple, clean, and focused on serious hiring.
-      </p>
+        <div className="relative mx-auto max-w-7xl px-6">
+          <div className="mx-auto max-w-3xl text-center py-16 sm:py-20 md:py-28">
+            {/* small pill above title */}
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+              Curated roles • US-only • Fast apply
+            </div>
 
-      {/* ✅ Search bar (narrower) */}
-      <div className="mt-7">
-        <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
-            <input
-              value={heroQ}
-              onChange={(e) => setHeroQ(e.target.value)}
-              type="text"
-              placeholder="Job title, keyword"
-              className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
-                         focus:ring-2 focus:ring-emerald-200"
-            />
+            <h1 className="mt-6 text-[2.1rem] sm:text-[2.7rem] md:text-[3.2rem] font-extrabold leading-tight tracking-tight text-[#0F172A]">
+              Find{" "}
+              <span className="relative inline-block">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-14 -inset-y-10 bg-emerald-400/6 blur-[60px] rounded-full"
+                />
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-8 -inset-y-6 bg-emerald-400/8 blur-[36px] rounded-full"
+                />
+                <span className="relative text-emerald-600">Technical Jobs</span>
+              </span>{" "}
+              built for long-term careers
+            </h1>
 
-            <input
-              value={heroLoc}
-              onChange={(e) => setHeroLoc(e.target.value)}
-              type="text"
-              placeholder="Location (Remote, Austin, New York)"
-              className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none
-                         focus:ring-2 focus:ring-emerald-200"
-            />
+            <p className="mt-5 text-[15px] md:text-[16px] leading-relaxed text-slate-600 max-w-2xl mx-auto">
+              Browse opportunities across engineering, construction, CAD/BIM, healthcare systems, manufacturing, and more —
+              including remote options. Simple, clean, and focused on serious hiring.
+            </p>
 
+            {/* HERO SEARCH BAR */}
+            <div className="mt-8">
+              <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
+                  <input
+                    value={heroQ}
+                    onChange={(e) => setHeroQ(e.target.value)}
+                    type="text"
+                    placeholder="Job title, keyword"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
+                  />
+
+                  <input
+                    value={heroLoc}
+                    onChange={(e) => setHeroLoc(e.target.value)}
+                    type="text"
+                    placeholder="Location (Remote, New York, Austin)"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={runHeroSearch}
+                    className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition shadow-[0_10px_26px_rgba(2,6,23,0.22)]"
+                  >
+                    Search Jobs
+                  </button>
+                </div>
+
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
+                  <span>Popular:</span>
+                  {["Architecture", "CAD", "Construction", "Healthcare"].map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => {
+                        setHeroQ(t);
+                        setTimeout(runHeroSearch, 0);
+                      }}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300"
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Jump to jobs (old simple) */}
             <button
               type="button"
-              onClick={runHeroSearch}
-              className="h-12 w-full md:w-auto rounded-xl px-6 text-sm font-semibold text-white
-                         bg-slate-900 hover:bg-slate-800
-                         shadow-[0_10px_26px_rgba(2,6,23,0.20)]
-                         transition"
+              onClick={() => (window.location.href = "/all-jobs")}
+              className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
             >
-              Search Jobs
+              Jump to Jobs <span aria-hidden>↓</span>
             </button>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
-            <span>Popular:</span>
-            {["Frontend", "DevOps", "Data", "Security"].map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => {
-                  setHeroQ(t);
-                  setTimeout(runHeroSearch, 0);
-                }}
-                className="rounded-full border border-slate-200 bg-white px-3 py-1 hover:border-slate-300"
-              >
-                {t}
-              </button>
-            ))}
+      {/* ================= COMPANIES (no box, one at a time) ================= */}
+      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#FBFBFF]" />
+          <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+          <div className="absolute -bottom-44 right-[-120px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.06)] blur-3xl" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10 md:mb-14">
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[rgba(106,111,242,0.18)] bg-[rgba(106,111,242,0.08)] px-4 py-2 text-xs font-semibold text-[var(--brand-purple)]">
+              <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+              Trusted by teams across the US
+            </div>
+
+            <h3 className="mt-5 text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+              Popular companies hiring technical talent
+            </h3>
+
+            <p className="mt-3 text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+              A quick look at teams that trust TechnicalJobboard across engineering, construction, healthcare, CAD/BIM, and more.
+            </p>
+          </div>
+
+          {/* One logo at a time */}
+          <div className="relative w-full h-[90px] sm:h-[110px] md:h-[130px] flex items-center justify-center overflow-hidden">
+            {COMPANY_LOGOS.map((logo, index) => {
+              const isActive = index === activeLogo;
+              return (
+                <img
+                  key={logo.src}
+                  src={logo.src}
+                  alt={logo.alt}
+                  className={[
+                    "absolute w-auto",
+                    "h-14 sm:h-16 md:h-20",
+                    "transition-all duration-700 ease-out",
+                    isActive ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-4",
+                  ].join(" ")}
+                />
+              );
+            })}
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[rgba(106,111,242,0.40)]" />
+            Logos shown are examples of companies and teams we have featured.
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Jump to Jobs */}
-      <button
-        type="button"
-        onClick={() => (window.location.href = "/all-jobs")}
-        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
-      >
-        Jump to Jobs <span aria-hidden>↓</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-
-     
-
-      {/* ================= CATEGORIES ================= */}
+      {/* ================= CATEGORIES (your existing) ================= */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="rounded-3xl border border-[rgba(106,111,242,0.18)] bg-gradient-to-b from-[#FBFBFD] to-white p-6 md:p-10 shadow-sm">
@@ -249,9 +245,7 @@ export default function Home() {
                 <h2 className="mt-2 text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight">
                   Explore categories
                 </h2>
-                <p className="text-slate-600 mt-2">
-                  Pick a category to filter jobs instantly.
-                </p>
+                <p className="text-slate-600 mt-2">Pick a category to filter jobs instantly.</p>
               </div>
 
               <div className="w-full md:w-[360px]">
@@ -272,8 +266,7 @@ export default function Home() {
 
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-900 text-sm font-semibold">
                   <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-                  {CATEGORIES.find((c) => c.slug === selectedCategory)?.label ??
-                    "Category"}
+                  {CATEGORIES.find((c) => c.slug === selectedCategory)?.label ?? "Category"}
                 </span>
 
                 <button
@@ -297,13 +290,7 @@ export default function Home() {
                   <button
                     key={cat.slug}
                     type="button"
-                    onClick={() => {
-                      // 👇 now that jobs moved, go to /all-jobs with category
-                      setSelectedCategory(cat.slug);
-                      const params = new URLSearchParams();
-                      params.set("cat", cat.slug);
-                      window.location.href = `/all-jobs?${params.toString()}`;
-                    }}
+                    onClick={() => setSelectedCategory(cat.slug)}
                     className={[
                       "group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition",
                       isActive
@@ -318,29 +305,20 @@ export default function Home() {
                       ].join(" ")}
                     />
                     <span className="font-medium">{cat.label}</span>
-                    <span
-                      className={[
-                        "ml-1 text-xs transition",
-                        isActive ? "opacity-80" : "opacity-0 group-hover:opacity-70",
-                      ].join(" ")}
-                      aria-hidden
-                    >
-                      →
-                    </span>
                   </button>
                 );
               })}
             </div>
 
             {filteredCategories.length === 0 && (
-              <div className="mt-6 text-sm text-slate-600">
-                No categories match “{categoryQuery}”.
-              </div>
+              <div className="mt-6 text-sm text-slate-600">No categories match "{categoryQuery}".</div>
             )}
           </div>
         </div>
       </section>
 
+
+     
 {/* ================= FEATURED JOBS (CAROUSEL, SINGLE JOB PER CARD, PURPLE SIDE STRIPE) ================= */}
 <section
   id="featured"
