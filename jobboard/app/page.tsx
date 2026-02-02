@@ -352,20 +352,11 @@ const filteredCategories = CATEGORIES.filter((c) =>
   </div>
 </section>
 
-{/* ================= CATEGORIES (Option 1: chips bar + search) ================= */}
-<section className="relative overflow-hidden py-16 bg-[#F7F8FC]">
-  {/* subtle background accents (different from company/featured) */}
+{/* ================= CATEGORIES (chips + clean bg) ================= */}
+<section className="relative overflow-hidden py-16 bg-[#F4F6FB]">
+  {/* clean background only */}
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute -top-40 left-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(16,185,129,0.09)] blur-3xl" />
-    <div className="absolute -bottom-40 right-[-160px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.12)] blur-3xl" />
-    <div
-      className="absolute inset-0 opacity-[0.10]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
-        backgroundSize: "30px 30px",
-      }}
-    />
+    <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
   </div>
 
   <div className="relative max-w-7xl mx-auto px-6">
@@ -382,7 +373,6 @@ const filteredCategories = CATEGORIES.filter((c) =>
         </p>
       </div>
 
-      {/* search input */}
       <div className="w-full md:w-[380px]">
         <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
           <span className="text-slate-400">⌕</span>
@@ -414,16 +404,8 @@ const filteredCategories = CATEGORIES.filter((c) =>
     </div>
 
     {/* chips bar */}
-    <div className="mt-10 relative">
-      {/* fades on edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[#F7F8FC] to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#F7F8FC] to-transparent z-10" />
-
-      <div
-        id="category-chips"
-        className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-10"
-      >
-        {/* “All” chip */}
+    <div className="mt-10">
+      <div id="category-chips" className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2">
         <button
           type="button"
           onClick={() => {
@@ -471,10 +453,7 @@ const filteredCategories = CATEGORIES.filter((c) =>
       </div>
     </div>
 
-    {/* optional helper text */}
-    <div className="mt-5 text-xs text-slate-500">
-      Tip: swipe sideways to see more categories.
-    </div>
+    <div className="mt-5 text-xs text-slate-500">Tip: swipe sideways to see more categories.</div>
 
     {filteredCategories.length === 0 && (
       <div className="mt-6 text-sm text-slate-600">
@@ -486,9 +465,11 @@ const filteredCategories = CATEGORIES.filter((c) =>
 
 
 
+
 {/* ================= FEATURED JOBS (grey bg + shorter cards + purple stripe) ================= */}
 <section id="featured" className="relative overflow-hidden py-16 bg-[#F2F4F8]">
-  <div className="max-w-7xl mx-auto px-6">
+<<div className="w-full px-6">
+  <div className="max-w-7xl mx-auto">
     <div className="flex items-start justify-between gap-6">
       <div>
         <h2 className="text-2xl md:text-3xl font-extrabold text-[#0B1222]">
@@ -532,13 +513,13 @@ const filteredCategories = CATEGORIES.filter((c) =>
     {/* carousel */}
     <div className="relative mt-10">
       {/* edge fades */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-14 bg-gradient-to-r from-[#F2F4F8] to-transparent z-10" />
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-14 bg-gradient-to-l from-[#F2F4F8] to-transparent z-10" />
-
+      
       <div
-        id="featured-carousel"
-        className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory"
-      >
+  id="featured-carousel"
+  className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory w-full"
+  className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory w-full pr-6"
+>
+
         {FEATURED_JOBS.map((job, idx) => (
           <article
             key={idx}
