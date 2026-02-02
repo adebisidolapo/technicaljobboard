@@ -239,38 +239,75 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= TRUSTED BY TEAMS (grid like screenshot) ================= */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <p className="text-[11px] tracking-[0.28em] text-slate-400 font-semibold uppercase">
-              Trusted by teams
-            </p>
-            <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-900">
-              Popular companies we have worked with
-            </h2>
-            <p className="mt-2 text-sm text-slate-500">
-              A quick look at teams that trust TechnicalJobboard.
-            </p>
-          </div>
+     {/* ================= TRUSTED BY TEAMS (NO BOX, bigger logos) ================= */}
+<section className="bg-white py-20">
+  <div className="max-w-7xl mx-auto px-6">
+    {/* header */}
+    <div className="text-center">
+      <p className="text-[11px] tracking-[0.40em] text-slate-500 font-semibold uppercase">
+        TRUSTED BY TEAMS
+      </p>
 
-          <div className="mt-10 border-t border-slate-100 pt-10">
-            <div className="mx-auto max-w-5xl">
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-y-8 gap-x-10 items-center justify-items-center opacity-70">
-                {logoGrid.map((logo, idx) => (
-                  <img
-                    key={`${logo.src}-${idx}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="h-7 w-auto grayscale"
-                    loading="lazy"
-                  />
-                ))}
-              </div>
+      <h2 className="mt-4 text-3xl md:text-5xl font-extrabold text-[#0B1222] tracking-tight">
+        Popular Companies We Have Worked With
+      </h2>
+
+      <p className="mt-4 text-sm md:text-base text-slate-600">
+        A quick look at teams that trust TechnicalJobboard.
+      </p>
+    </div>
+
+    {/* marquee area (no border/box) */}
+    <div className="mt-14 relative overflow-hidden">
+      {/* edge fades */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
+
+      {/* Row 1 */}
+      <div className="overflow-hidden">
+        <div className="flex w-max items-center animate-marquee">
+          {COMPANY_LOGOS.concat(COMPANY_LOGOS).concat(COMPANY_LOGOS).map((logo, idx) => (
+            <div
+              key={`r1-${logo.src}-${idx}`}
+              className="mx-12 flex items-center justify-center"
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="h-10 md:h-12 w-[150px] object-contain grayscale opacity-85"
+                loading="lazy"
+              />
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+
+      {/* Row 2 */}
+      <div className="overflow-hidden mt-10">
+        <div className="flex w-max items-center animate-marquee-reverse">
+          {COMPANY_LOGOS.slice()
+            .reverse()
+            .concat(COMPANY_LOGOS.slice().reverse())
+            .concat(COMPANY_LOGOS.slice().reverse())
+            .map((logo, idx) => (
+              <div
+                key={`r2-${logo.src}-${idx}`}
+                className="mx-12 flex items-center justify-center"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="h-10 md:h-12 w-[150px] object-contain grayscale opacity-80"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* ================= CATEGORIES (simple like screenshot) ================= */}
       <section className="bg-white py-12">
