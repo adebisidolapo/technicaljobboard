@@ -286,20 +286,21 @@ const filteredCategories = CATEGORIES.filter((c) =>
      {/* ================= TRUSTED BY TEAMS (NO BOX, bigger logos) ================= */}
 <section className="bg-white py-20">
   <div className="max-w-7xl mx-auto px-6">
-    {/* header */}
-    <div className="text-center">
-      <p className="text-[11px] tracking-[0.40em] text-slate-500 font-semibold uppercase">
-        TRUSTED BY TEAMS
-      </p>
+ {/* header */}
+<div className="text-center">
+  <p className="text-[10px] tracking-[0.34em] text-slate-400 font-semibold uppercase">
+    Trusted by teams
+  </p>
 
-      <h2 className="mt-4 text-3xl md:text-5xl font-extrabold text-[#0B1222] tracking-tight">
-        Popular Companies We Have Worked With
-      </h2>
+  <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-[#0B1222] tracking-tight">
+    Popular Companies We Have Worked With
+  </h2>
 
-      <p className="mt-4 text-sm md:text-base text-slate-600">
-        A quick look at teams that trust TechnicalJobboard.
-      </p>
-    </div>
+  <p className="mt-3 text-sm text-slate-500 max-w-2xl mx-auto">
+    Teams across the US trust TechnicalJobboard to hire technical talent.
+  </p>
+</div>
+
 
     {/* marquee area (no border/box) */}
     <div className="mt-14 relative overflow-hidden">
@@ -600,66 +601,69 @@ const filteredCategories = CATEGORIES.filter((c) =>
 
 
 
-      {/* ================= EMPOWERING (purple blobs + same vibe) ================= */}
-      <section className="relative py-20 overflow-hidden bg-[#F3F4FA]">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.18)] blur-3xl" />
-          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.16)] blur-3xl" />
+ {/* ================= EMPOWERING (tighter + more consistent) ================= */}
+<section className="relative py-16 md:py-18 overflow-hidden bg-[#F3F4FA]">
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.16)] blur-3xl" />
+    <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.14)] blur-3xl" />
+  </div>
+
+  <div className="relative max-w-7xl mx-auto px-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      {/* image card (smaller + less heavy) */}
+      <div className="flex justify-center md:justify-start">
+        <div className="rounded-2xl bg-white p-3 shadow-[0_12px_28px_rgba(15,23,42,0.10)]">
+          <img
+            src="/empower-platform.png"
+            alt="Job platform dashboard illustration"
+            className="rounded-xl w-[440px] max-w-full"
+          />
         </div>
+      </div>
 
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="rounded-3xl bg-white p-4 shadow-md">
-              <img
-                src="/empower-platform.png"
-                alt="Job platform dashboard illustration"
-                className="rounded-2xl w-full"
-              />
-            </div>
+      <div>
+        <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
+          Built for Technical Careers
+        </span>
 
-            <div>
-              <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
-                Built for Technical Careers
-              </span>
+        <h3 className="mt-4 text-2xl md:text-3xl font-extrabold text-slate-900">
+          Empowering Job Seekers
+        </h3>
 
-              <h3 className="mt-4 text-2xl md:text-3xl font-extrabold text-slate-900">
-                Empowering Job Seekers
-              </h3>
+        <p className="mt-3 text-sm text-slate-600 leading-relaxed max-w-xl">
+          Discover vetted Technical roles, transparent salary ranges, and trusted employers — all in one place
+          designed to support long-term career growth.
+        </p>
 
-              <p className="mt-3 text-sm text-slate-600 leading-relaxed max-w-xl">
-                Discover vetted Technical roles, transparent salary ranges, and trusted employers — all in one place
-                designed to support long-term career growth.
-              </p>
+        <ul className="mt-6 space-y-3 text-sm text-slate-700">
+          <li className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+            Verified Technical opportunities only
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+            Clear expectations & salary visibility
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+            Roles built for growth, not churn
+          </li>
+        </ul>
 
-              <ul className="mt-6 space-y-3 text-sm text-slate-700">
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Verified Technical opportunities only
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Clear expectations & salary visibility
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Roles built for growth, not churn
-                </li>
-              </ul>
-
-              <button
-                type="button"
-                onClick={() => (window.location.href = "/all-jobs")}
-                className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-sm font-semibold shadow-md transition"
-              >
-                Get Started
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-                  →
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+        <button
+          type="button"
+          onClick={() => (window.location.href = "/all-jobs")}
+          className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-sm font-semibold shadow-md transition"
+        >
+          Get Started
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+            →
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
       
     </main>
