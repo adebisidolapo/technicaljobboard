@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import Footer from "@/components/Footer";
 
 type FeaturedJob = {
   title: string;
@@ -317,8 +318,7 @@ export default function Home() {
       </section>
 
       {/* ================= CATEGORIES ================= */}
-      <section id="categories" className="relative overflow-hidden py-16 bg-[#F4F6FB]">
-      <section className="relative overflow-hidden py-16 bg-[#F4F6FB]">
+<section id="categories" className="relative overflow-hidden py-16 bg-[#F4F6FB]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
         </div>
