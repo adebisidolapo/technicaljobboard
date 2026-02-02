@@ -164,6 +164,7 @@ export default function Home() {
 
   return (
     <main className="font-sans text-[#0F172A] bg-[#F3F6FB]">
+
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden bg-[#EEF6F2]">
         <div className="pointer-events-none absolute inset-0">
@@ -316,6 +317,7 @@ export default function Home() {
       </section>
 
       {/* ================= CATEGORIES ================= */}
+      <section id="categories" className="relative overflow-hidden py-16 bg-[#F4F6FB]">
       <section className="relative overflow-hidden py-16 bg-[#F4F6FB]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
