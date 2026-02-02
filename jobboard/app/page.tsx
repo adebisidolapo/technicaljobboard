@@ -588,48 +588,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FOOTER (dark like screenshot) ================= */}
-      <footer className="bg-[#0B1222] text-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-14">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
-            <div className="text-white font-semibold text-lg">TechnicalJobBoard</div>
-
-            <div className="text-sm text-slate-300 space-y-2">
-              <div className="font-semibold text-slate-200">Explore</div>
-              <div className="space-y-1">
-                <div className="hover:text-white cursor-pointer" onClick={() => (window.location.href = "/all-jobs")}>
-                  All Jobs
-                </div>
-                <div className="hover:text-white cursor-pointer">Categories</div>
-                <div className="hover:text-white cursor-pointer">Career Resources</div>
-                <div className="hover:text-white cursor-pointer">Contact</div>
-              </div>
-            </div>
-
-            <div className="text-sm text-slate-300">
-              <div className="font-semibold text-slate-200 mb-3">Connect</div>
-              <div className="flex items-center gap-2">
-                <input
-                  placeholder="Your email"
-                  className="h-10 w-full rounded-xl bg-[#0F1930] border border-white/10 px-3 text-sm outline-none focus:ring-2 focus:ring-indigo-300"
-                />
-                <button className="h-10 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold">
-                  Join
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 border-t border-white/10 pt-6 text-xs text-slate-400 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>© {new Date().getFullYear()} TechnicalJobboard. All rights reserved.</div>
-            <div className="flex gap-6">
-              <span className="hover:text-white cursor-pointer">Terms</span>
-              <span className="hover:text-white cursor-pointer">Privacy</span>
-              <span className="hover:text-white cursor-pointer">Support</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      
     </main>
   );
 }
