@@ -115,6 +115,14 @@ export default function Home() {
     window.location.href = qs ? `/all-jobs?${qs}` : "/all-jobs";
   };
 
+const [categoryQuery, setCategoryQuery] = useState("");
+const [selectedCategory, setSelectedCategory] = useState("");
+
+const filteredCategories = CATEGORIES.filter((c) =>
+  c.toLowerCase().includes(categoryQuery.toLowerCase())
+);
+
+
   const logoGrid = useMemo(() => {
     // screenshot shows a “grid of many” — repeat to fill
     const items = [];
@@ -308,27 +316,140 @@ export default function Home() {
   </div>
 </section>
 
+{/* ================= CATEGORIES (unique + searchable + new bg) ================= */}
+<section className="relative overflow-hidden py-20 bg-[#F6F7FF]">
+  {/* background accents */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(106,111,242,0.14)] blur-3xl" />
+    <div className="absolute -bottom-44 right-[-160px] h-[520px] w-[520px] rounded-full bg-[rgba(16,185,129,0.08)] blur-3xl" />
+    <div
+      className="absolute inset-0 opacity-[0.12]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
+        backgroundSize: "28px 28px",
+      }}
+    />
+  </div>
 
-      {/* ================= CATEGORIES (simple like screenshot) ================= */}
-      <section className="bg-white py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <h3 className="text-sm font-semibold text-slate-900">Available Categories</h3>
-          <p className="mt-1 text-xs text-slate-500">Tap a category to filter jobs below.</p>
-
-          <div className="mt-5 flex flex-wrap gap-2">
-            {CATEGORIES.map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() => (window.location.href = `/all-jobs?cat=${encodeURIComponent(c)}`)}
-                className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs text-slate-700 hover:border-slate-300 transition"
-              >
-                {c}
-              </button>
-            ))}
-          </div>
+  <div className="relative max-w-7xl mx-auto px-6">
+    <div className="mx-auto max-w-5xl">
+      {/* header row */}
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <p className="text-[11px] tracking-[0.32em] uppercase text-slate-500 font-semibold">
+            Categories
+          </p>
+          <h3 className="mt-3 text-2xl md:text-4xl font-extrabold text-[#0B1222] tracking-tight">
+            Explore by role type
+          </h3>
+          <p className="mt-3 text-sm md:text-base text-slate-600 max-w-2xl">
+            Search and pick a category to jump straight into relevant opportunities.
+          </p>
         </div>
-      </section>
+
+        {/* search */}
+        <div className="w-full md:w-[380px]">
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+            <span className="text-slate-400">⌕</span>
+            <input
+              value={categoryQuery}
+              onChange={(e) => setCategoryQuery(e.target.value)}
+              placeholder="Search categories…"
+              className="w-full bg-transparent outline-none text-sm text-slate-700"
+            />
+          </div>
+
+          {selectedCategory && (
+            <div className="mt-2 text-xs text-slate-500">
+              Selected:{" "}
+              <span className="font-semibold text-slate-700">{selectedCategory}</span>{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory("");
+                  setCategoryQuery("");
+                }}
+                className="ml-2 text-[var(--brand-purple)] hover:underline font-semibold"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* cards grid */}
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {filteredCategories.map((cat) => {
+          const active = selectedCategory === cat;
+
+          return (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => {
+                setSelectedCategory(cat);
+                // optional: go straight to jobs page filtered
+                window.location.href = `/all-jobs?cat=${encodeURIComponent(cat)}`;
+              }}
+              className={[
+                "group text-left rounded-2xl border p-5 transition shadow-sm",
+                "bg-white/90 hover:bg-white",
+                active
+                  ? "border-[var(--brand-purple)] ring-2 ring-[rgba(106,111,242,0.18)]"
+                  : "border-slate-200 hover:border-slate-300",
+              ].join(" ")}
+            >
+              {/* top row */}
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-sm font-extrabold text-[#0B1222]">
+                    {cat}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-500">
+                    Tap to browse roles
+                  </div>
+                </div>
+
+                {/* little badge */}
+                <span
+                  className={[
+                    "inline-flex items-center justify-center rounded-xl px-3 py-1 text-[11px] font-semibold border",
+                    active
+                      ? "bg-indigo-50 text-indigo-700 border-indigo-100"
+                      : "bg-slate-50 text-slate-600 border-slate-200",
+                  ].join(" ")}
+                >
+                  View →
+                </span>
+              </div>
+
+              {/* bottom accent bar */}
+              <div className="mt-5 h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={[
+                    "h-full rounded-full transition-all duration-300",
+                    active
+                      ? "w-full bg-[var(--brand-purple)]"
+                      : "w-2/3 bg-emerald-400/70 group-hover:w-full",
+                  ].join(" ")}
+                />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {filteredCategories.length === 0 && (
+        <div className="mt-8 text-sm text-slate-600">
+          No categories match <span className="font-semibold">“{categoryQuery}”</span>.
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
 
       {/* ================= FEATURED (carousel + arrows like screenshot) ================= */}
       <section id="featured" className="bg-[#F4F6FB] py-16">
@@ -389,7 +510,9 @@ export default function Home() {
                     <div className="min-w-0">
                       <h4 className="text-sm font-semibold text-slate-900 truncate">{job.title}</h4>
                       <p className="text-xs text-slate-500 truncate">
-                        {job.company} • {job.location}
+                        {job.company}
+
+      • {job.location}
                       </p>
                     </div>
                   </div>
