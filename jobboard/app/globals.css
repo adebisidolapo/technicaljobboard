@@ -54,3 +54,13 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee, .animate-marquee-reverse { animation: none !important; }
 }
+:root{
+  --brand-purple: #6A6FF2;
+  --brand-purple-dark: #585EEB;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+:root{
+  --brand-purple: #6A6FF2;
+  --brand-purple-dark: #585EEB;
+}
