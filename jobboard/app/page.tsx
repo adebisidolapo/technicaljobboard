@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import Footer from "@/components/Footer";
+
 
 type FeaturedJob = {
   title: string;
@@ -581,7 +581,6 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }
