@@ -450,241 +450,171 @@ const filteredCategories = CATEGORIES.filter((c) =>
 
 
 
-      {/* ================= FEATURED (carousel + arrows like screenshot) ================= */}
-      <section id="featured" className="bg-[#F4F6FB] py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-slate-900">Featured Jobs</h3>
-              <p className="mt-1 text-xs text-slate-500">
-                A curated selection of standout roles from trusted teams.
-              </p>
-            </div>
+{/* ================= FEATURED JOBS (unique bg + apply + purple/green/blue accents) ================= */}
+<section
+  id="featured"
+  className="relative overflow-hidden py-20 md:py-24 bg-[#EEF3FF]"
+>
+  {/* distinct background (blue outer + purple/green glow) */}
+  <div className="pointer-events-none absolute inset-0">
+    {/* blue-ish base gradient */}
+    <div className="absolute inset-0 bg-gradient-to-b from-[#EAF1FF] via-[#EEF3FF] to-[#F6F7FB]" />
 
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => featuredRef.current?.scrollBy({ left: -520, behavior: "smooth" })}
-                className="h-9 w-9 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
-                aria-label="Previous"
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                onClick={() => featuredRef.current?.scrollBy({ left: 520, behavior: "smooth" })}
-                className="h-9 w-9 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
-                aria-label="Next"
-              >
-                ›
-              </button>
-            </div>
-          </div>
+    {/* purple ambience */}
+    <div className="absolute -top-44 left-1/2 h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-[rgba(106,111,242,0.16)] blur-3xl" />
+    {/* green ambience */}
+    <div className="absolute -bottom-48 right-[-180px] h-[640px] w-[640px] rounded-full bg-[rgba(16,185,129,0.12)] blur-3xl" />
+    {/* subtle dots */}
+    <div
+      className="absolute inset-0 opacity-[0.10]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
+        backgroundSize: "30px 30px",
+      }}
+    />
+  </div>
 
-          <div
-            ref={featuredRef}
-            className="mt-8 flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory no-scrollbar"
+  <div className="relative max-w-7xl mx-auto px-6">
+    {/* header */}
+    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div>
+        <p className="text-[11px] tracking-[0.34em] uppercase text-slate-500 font-semibold">
+          Featured
+        </p>
+        <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-[#0B1222] tracking-tight">
+          Featured Technical Jobs
+        </h2>
+        <p className="mt-3 text-sm md:text-base text-slate-600 max-w-2xl">
+          High-signal roles from teams hiring right now — curated for clarity, pay visibility, and growth.
+        </p>
+      </div>
+
+      {/* arrows */}
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() =>
+            document.getElementById("featured-carousel")?.scrollBy({ left: -520, behavior: "smooth" })
+          }
+          className="h-12 w-12 rounded-xl bg-white/90 border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
+          aria-label="Scroll left"
+        >
+          ←
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            document.getElementById("featured-carousel")?.scrollBy({ left: 520, behavior: "smooth" })
+          }
+          className="h-12 w-12 rounded-xl bg-white/90 border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
+          aria-label="Scroll right"
+        >
+          →
+        </button>
+      </div>
+    </div>
+
+    {/* carousel */}
+    <div className="relative mt-12">
+      {/* edge fades: blue-ish outer parts like you requested */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-[#EEF3FF] to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-[#EEF3FF] to-transparent z-10" />
+
+      <div
+        id="featured-carousel"
+        className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory"
+      >
+        {FEATURED_JOBS.map((job, idx) => (
+          <article
+            key={idx}
+            className="snap-start flex-none w-[360px] sm:w-[380px] bg-white/95 backdrop-blur
+                       rounded-2xl shadow-sm hover:shadow-lg transition
+                       border border-[rgba(106,111,242,0.22)] relative overflow-hidden"
           >
-            {FEATURED_JOBS.map((job, idx) => (
-              <article
-                key={idx}
-                className="snap-start flex-none w-[320px] sm:w-[360px] bg-white rounded-2xl border border-slate-200 shadow-sm"
-              >
-                <div className="p-5">
-                  <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 text-[11px] font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
-                      {/* little blue dot detail like screenshot */}
-                      <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                      Featured
-                    </span>
-                    <button className="text-slate-300 hover:text-slate-500" aria-label="Close">
-                      ×
-                    </button>
-                  </div>
+            {/* purple side stripe */}
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
 
-                  <div className="mt-4 flex items-start gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm">
-                      {job.company.charAt(0)}
-                    </div>
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900 truncate">{job.title}</h4>
-                      <p className="text-xs text-slate-500 truncate">
-                        {job.company}
+            {/* tiny green accent dot on top edge (subtle interest) */}
+            <div className="absolute top-5 left-5 h-2 w-2 rounded-full bg-emerald-400/90" />
 
-      • {job.location}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="mt-3 text-xs text-slate-500 line-clamp-2">{job.description}</p>
-
-                  <div className="mt-4 flex gap-2">
-                    <span className="text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">
-                      {job.type}
-                    </span>
-                    <span className="text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">
-                      {job.pay}
-                    </span>
-                  </div>
-
-                  <div className="mt-5 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => (window.location.href = "/all-jobs")}
-                      className="px-3.5 py-2 rounded-lg text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition"
-                    >
-                      View
-                    </button>
-                    <span className="text-[11px] text-slate-400">Posted {job.posted}</span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= ALL JOBS PREVIEW (the section you showed in screenshot) ================= */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-[11px] font-semibold tracking-[0.22em] text-indigo-500 uppercase">
-            All Jobs
-          </p>
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h3 className="mt-2 text-2xl font-extrabold text-slate-900">
-                Explore Technical opportunities
-              </h3>
-              <p className="mt-2 text-sm text-slate-500 max-w-2xl">
-                Filter by keyword, location, job type, and experience — then explore what matches.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => (window.location.href = "/all-jobs")}
-              className="text-sm font-semibold text-indigo-600 hover:underline"
-            >
-              Load More Jobs →
-            </button>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-8 items-start">
-            {/* filters */}
-            <aside className="rounded-2xl border border-slate-200 bg-white shadow-sm p-5">
+            <div className="p-6 pl-8">
+              {/* pill + star */}
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-semibold text-slate-900">Filters</h4>
-                <button className="text-xs text-slate-500 hover:text-slate-700">Reset</button>
-              </div>
-
-              <div className="mt-4 space-y-4">
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Keyword</label>
-                  <input
-                    placeholder="e.g. Maintenance, PLC, Quality"
-                    className="mt-2 h-10 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:ring-2 focus:ring-indigo-200"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Location</label>
-                  <input
-                    placeholder="Remote, New York, Austin"
-                    className="mt-2 h-10 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:ring-2 focus:ring-indigo-200"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Job Type</label>
-                  <select className="mt-2 h-10 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:ring-2 focus:ring-indigo-200">
-                    <option>Any</option>
-                    <option>Full-time</option>
-                    <option>Contract</option>
-                    <option>Part-time</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Experience</label>
-                  <select className="mt-2 h-10 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:ring-2 focus:ring-indigo-200">
-                    <option>Any</option>
-                    <option>Junior</option>
-                    <option>Mid</option>
-                    <option>Senior</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Quick Filters</label>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {["Remote", "Full-time", "Senior", "Contract"].map((t) => (
-                      <span
-                        key={t}
-                        className="text-[11px] px-3 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <span
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full
+                             bg-[rgba(106,111,242,0.10)] text-[var(--brand-purple)]
+                             border border-[rgba(106,111,242,0.22)]"
+                >
+                  <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+                  Featured
+                </span>
 
                 <button
                   type="button"
-                  onClick={() => (window.location.href = "/all-jobs")}
-                  className="w-full mt-2 h-11 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition"
+                  aria-label="Save job"
+                  className="text-slate-300 hover:text-slate-600 transition"
                 >
-                  Apply Filters
+                  ★
                 </button>
               </div>
-            </aside>
 
-            {/* job list */}
-            <div className="space-y-4">
-              {LIST_JOBS.map((j, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-2xl border border-slate-200 bg-white shadow-sm p-5 flex items-center justify-between gap-4"
-                >
-                  <div className="flex items-start gap-4 min-w-0">
-                    <div className="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
-                      {j.company.charAt(0)}
-                    </div>
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900 truncate">{j.title}</h4>
-                      <p className="text-xs text-slate-500 truncate">
-                        {j.company} • {j.location}
-                      </p>
-
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {j.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-right shrink-0">
-                    <div className="text-xs font-semibold text-indigo-600">{j.pay}</div>
-                    <button
-                      type="button"
-                      onClick={() => (window.location.href = "/all-jobs")}
-                      className="mt-3 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition"
-                    >
-                      View
-                    </button>
-                    <div className="mt-2 text-[11px] text-slate-400">Posted {j.posted}</div>
-                  </div>
+              {/* header */}
+              <div className="mt-5 flex items-center gap-4">
+                {/* profile badge: darker + premium */}
+                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[#0B1222] to-[#1C2A52] text-white flex items-center justify-center font-extrabold shadow-sm">
+                  {job.company.charAt(0)}
                 </div>
-              ))}
+
+                <div className="min-w-0">
+                  <h3 className="text-lg font-extrabold text-[#0B1222] truncate">
+                    {job.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 truncate">
+                    {job.company} • {job.location}
+                  </p>
+                </div>
+              </div>
+
+              {/* description */}
+              <p className="mt-4 text-sm text-slate-600 line-clamp-2">
+                {job.description}
+              </p>
+
+              {/* pills */}
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                  {job.type}
+                </span>
+                <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                  {job.pay}
+                </span>
+              </div>
+
+              {/* footer */}
+              <div className="mt-8 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => (window.location.href = "/all-jobs")}
+                  className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
+                             bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
+                             shadow-[0_14px_26px_rgba(106,111,242,0.24)]
+                             transition"
+                >
+                  Apply
+                </button>
+
+                <span className="text-xs text-slate-400">Posted {job.posted}</span>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* ================= EMPOWERING (purple blobs + same vibe) ================= */}
       <section className="relative py-20 overflow-hidden bg-[#F3F4FA]">
