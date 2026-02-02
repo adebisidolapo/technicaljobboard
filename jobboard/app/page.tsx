@@ -468,141 +468,136 @@ const filteredCategories = CATEGORIES.filter((c) =>
 
 {/* ================= FEATURED JOBS (grey bg + shorter cards + purple stripe) ================= */}
 <section id="featured" className="relative overflow-hidden py-16 bg-[#F2F4F8]">
-<<div className="w-full px-6">
-  <div className="max-w-7xl mx-auto">
-    <div className="flex items-start justify-between gap-6">
-      <div>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-[#0B1222]">
-          Featured Jobs
-        </h2>
-        <p className="mt-2 text-sm text-slate-600">
-          A curated selection of standout roles from trusted teams.
-        </p>
-      </div>
+  {/* full width outer padding */}
+  <div className="w-full px-6">
+    {/* keep content centered */}
+    <div className="max-w-7xl mx-auto">
+      <div className="flex items-start justify-between gap-6">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[#0B1222]">
+            Featured Jobs
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            A curated selection of standout roles from trusted teams.
+          </p>
+        </div>
 
-      {/* arrows */}
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() =>
-            document
-              .getElementById("featured-carousel")
-              ?.scrollBy({ left: -520, behavior: "smooth" })
-          }
-          className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
-          aria-label="Scroll left"
-        >
-          ←
-        </button>
-
-        <button
-          type="button"
-          onClick={() =>
-            document
-              .getElementById("featured-carousel")
-              ?.scrollBy({ left: 520, behavior: "smooth" })
-          }
-          className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
-          aria-label="Scroll right"
-        >
-          →
-        </button>
-      </div>
-    </div>
-
-    {/* carousel */}
-    <div className="relative mt-10">
-      {/* edge fades */}
-      
-      <div
-  id="featured-carousel"
-  className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory w-full"
-  className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory w-full pr-6"
->
-
-        {FEATURED_JOBS.map((job, idx) => (
-          <article
-            key={idx}
-            className="snap-start flex-none w-[340px] sm:w-[360px]
-                       bg-white rounded-2xl border border-slate-200 shadow-sm
-                       hover:shadow-lg transition relative overflow-hidden"
+        {/* arrows */}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() =>
+              document
+                .getElementById("featured-carousel")
+                ?.scrollBy({ left: -520, behavior: "smooth" })
+            }
+            className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
+            aria-label="Scroll left"
           >
-            {/* ✅ purple side stripe */}
-            <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+            ←
+          </button>
 
-            <div className="p-5 pl-8">
-              {/* top row */}
-              <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Featured
-                </span>
+          <button
+            type="button"
+            onClick={() =>
+              document
+                .getElementById("featured-carousel")
+                ?.scrollBy({ left: 520, behavior: "smooth" })
+            }
+            className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
+            aria-label="Scroll right"
+          >
+            →
+          </button>
+        </div>
+      </div>
 
-                {/* star */}
-                <button
-                  type="button"
-                  aria-label="Save job"
-                  className="text-slate-300 hover:text-slate-600 transition"
-                >
-                  ★
-                </button>
-              </div>
+      {/* carousel */}
+      <div className="relative mt-10">
+        {/* NO fades (removed) */}
 
-              {/* header */}
-              <div className="mt-4 flex items-center gap-4">
-                {/* profile badge (compact) */}
-                <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shadow-sm">
-                  {job.company.charAt(0)}
+        <div
+          id="featured-carousel"
+          className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory w-full pr-6"
+        >
+          {FEATURED_JOBS.map((job, idx) => (
+            <article
+              key={idx}
+              className="snap-start flex-none w-[340px] sm:w-[360px]
+                         bg-white rounded-2xl border border-slate-200 shadow-sm
+                         hover:shadow-lg transition relative overflow-hidden"
+            >
+              {/* ✅ purple side stripe */}
+              <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+
+              <div className="p-5 pl-8">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
+                    <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                    Featured
+                  </span>
+
+                  <button
+                    type="button"
+                    aria-label="Save job"
+                    className="text-slate-300 hover:text-slate-600 transition"
+                  >
+                    ★
+                  </button>
                 </div>
 
-                <div className="min-w-0">
-                  <h3 className="text-base font-extrabold text-[#0B1222] truncate">
-                    {job.title}
-                  </h3>
-                  <p className="text-sm text-slate-500 truncate">
-                    {job.company} • {job.location}
-                  </p>
+                <div className="mt-4 flex items-center gap-4">
+                  <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shadow-sm">
+                    {job.company.charAt(0)}
+                  </div>
+
+                  <div className="min-w-0">
+                    <h3 className="text-base font-extrabold text-[#0B1222] truncate">
+                      {job.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 truncate">
+                      {job.company} • {job.location}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mt-3 text-sm text-slate-600 truncate">
+                  {job.description}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                    {job.type}
+                  </span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                    {job.pay}
+                  </span>
+                </div>
+
+                <div className="mt-6 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => (window.location.href = "/all-jobs")}
+                    className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
+                               bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
+                               shadow-[0_14px_26px_rgba(106,111,242,0.22)] transition"
+                  >
+                    Apply
+                  </button>
+
+                  <span className="text-xs text-slate-400">
+                    Posted {job.posted}
+                  </span>
                 </div>
               </div>
-
-              {/* small description (keeps cards short) */}
-              <p className="mt-3 text-sm text-slate-600 truncate">
-                {job.description}
-              </p>
-
-              {/* pills */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
-                  {job.type}
-                </span>
-                <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
-                  {job.pay}
-                </span>
-              </div>
-
-              {/* footer */}
-              <div className="mt-6 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => (window.location.href = "/all-jobs")}
-                  className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
-                             bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
-                             shadow-[0_14px_26px_rgba(106,111,242,0.22)] transition"
-                >
-                  Apply
-                </button>
-
-                <span className="text-xs text-slate-400">
-                  Posted {job.posted}
-                </span>
-              </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </section>
+
 
 
       {/* ================= EMPOWERING (purple blobs + same vibe) ================= */}
