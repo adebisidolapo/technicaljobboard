@@ -13,23 +13,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           {/* BRAND */}
           <div className="md:col-span-4">
-            <div className="flex items-center gap-3">
-              <img
-                src="/logo.png"
-                alt="TechnicalJobboard Logo"
-                className="h-10 w-auto object-contain"
-              />
-              <span className="text-lg font-extrabold tracking-tight">
-                TechnicalJobboard
-              </span>
-            </div>
+            <img
+              src="/logo.png"
+              alt="TechnicalJobboard Logo"
+              className="h-10 w-auto object-contain"
+            />
 
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
               Curated technical roles from trusted teams. Clean listings, fast
               apply, and a focus on long-term careers.
             </p>
 
-            {/* SOCIALS (no typing issues) */}
+            {/* SOCIAL ICONS */}
             <div className="mt-6 flex gap-3">
               <a
                 href="#"
@@ -73,54 +68,53 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* LINKS 1 */}
+          {/* LINKS */}
           <div className="md:col-span-2">
             <h3 className="mb-4 text-sm font-semibold">Explore</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link className="hover:text-white transition" href="/all-jobs">
+                <Link href="/all-jobs" className="hover:text-white transition">
                   All Jobs
                 </Link>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#categories">
+                <a href="#categories" className="hover:text-white transition">
                   Categories
                 </a>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a href="#" className="hover:text-white transition">
                   Career Resources
                 </a>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a href="#" className="hover:text-white transition">
                   Contact
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* LINKS 2 */}
           <div className="md:col-span-2">
             <h3 className="mb-4 text-sm font-semibold">Company</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a href="#" className="hover:text-white transition">
                   About
                 </a>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a href="#" className="hover:text-white transition">
                   Partnerships
                 </a>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a href="#" className="hover:text-white transition">
                   Terms
                 </a>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a href="#" className="hover:text-white transition">
                   Privacy
                 </a>
               </li>
@@ -129,10 +123,7 @@ export default function Footer() {
 
           {/* NEWSLETTER */}
           <div className="md:col-span-4">
-            <h3 className="mb-4 text-sm font-semibold">Get job alerts</h3>
-            <p className="mb-5 text-sm text-white/70">
-              Weekly curated roles. No spam — unsubscribe anytime.
-            </p>
+            <h3 className="mb-4 text-sm font-semibold">Stay connected</h3>
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <input
@@ -151,10 +142,6 @@ export default function Footer() {
                 Join
               </button>
             </div>
-
-            <div className="mt-4 text-xs text-white/55">
-              By subscribing, you agree to receive emails from TechnicalJobboard.
-            </div>
           </div>
         </div>
 
@@ -165,7 +152,7 @@ export default function Footer() {
         <div className="mt-6 flex flex-col items-center justify-between gap-4 text-xs text-white/60 md:flex-row">
           <p>© {year} TechnicalJobboard. All rights reserved.</p>
 
-          <div className="flex flex-wrap items-center gap-5">
+          <div className="flex gap-5">
             <a href="#" className="hover:text-white transition">
               Terms
             </a>
