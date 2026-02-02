@@ -542,7 +542,9 @@ export default function Home() {
                 Built for Technical Careers
               </span>
 
-              <h3 className="mt-4 text-2xl md:text-3xl font-extrabold text-slate-900">Empowering Job Seekers</h3>
+              <h3 className="mt-4 text-2xl md:text-3xl font-extrabold text-slate-900">
+                Empowering Job Seekers
+              </h3>
 
               <p className="mt-3 text-sm text-slate-600 leading-relaxed max-w-xl">
                 Discover vetted Technical roles, transparent salary ranges, and trusted employers — all in one place
@@ -570,13 +572,17 @@ export default function Home() {
                 className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-sm font-semibold shadow-md transition"
               >
                 Get Started
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">→</span>
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                  →
+                </span>
               </button>
             </div>
           </div>
         </div>
       </section>
 
+      <Footer />
     </main>
   );
 }
+
