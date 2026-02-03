@@ -13,12 +13,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           {/* BRAND */}
           <div className="md:col-span-4">
-            <img
-              src="/logo.png"
-              alt="TechnicalJobboard Logo"
-              className="h-10 w-auto object-contain filter brightness-0 invert opacity-95"
-            />
-
+          <img
+  src="/logo.png"
+  alt="TechnicalJobboard Logo"
+  className="
+    h-14 md:h-16 lg:h-[72px]
+    w-auto object-contain
+   filter brightness-0 invert opacity-90
+    hover:opacity-100 transition
+  "
+/>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
               Curated technical roles from trusted teams. Clean listings, fast apply,
               and a focus on long-term careers.
