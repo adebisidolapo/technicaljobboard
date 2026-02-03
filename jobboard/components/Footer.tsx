@@ -11,20 +11,20 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         {/* TOP GRID */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
-          
-          {/* BRAND */}
+          {/* BRAND (TEXT ONLY) */}
           <div className="md:col-span-4">
-            <div className="mb-6">
-              <img
-                src="/logo.png"
-                alt="TechnicalJobboard Logo"
-                className="h-16 md:h-20 w-auto object-contain"
-              />
+            <div className="flex items-center gap-2">
+              <span className="text-xl md:text-2xl font-extrabold tracking-tight">
+                TechnicalJobBoard
+              </span>
+              <span className="text-[var(--brand-purple)] font-extrabold text-xl md:text-2xl">
+                ]
+              </span>
             </div>
 
-            <p className="max-w-sm text-sm leading-relaxed text-white/75">
-              Curated technical roles from trusted teams. Clean listings, fast
-              apply, and a focus on long-term careers.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/75">
+              Curated technical roles from trusted teams. Clean listings, fast apply,
+              and a focus on long-term careers.
             </p>
           </div>
 
@@ -82,45 +82,64 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* CONNECT */}
+          {/* STAY CONNECTED */}
           <div className="md:col-span-4">
-            <h3 className="mb-4 text-sm font-semibold text-white">Connect</h3>
+            <h3 className="mb-4 text-sm font-semibold text-white">Stay connected</h3>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <input
+                type="email"
+                placeholder="Your email"
+                className="h-11 flex-1 rounded-xl border border-white/15 bg-white/10
+                           px-4 text-sm text-white placeholder:text-white/50 outline-none
+                           focus:ring-2 focus:ring-[rgba(106,111,242,0.55)]"
+              />
+              <button
+                type="button"
+                className="h-11 rounded-xl px-5 text-sm font-semibold text-white
+                           bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
+                           transition shadow-[0_10px_22px_rgba(106,111,242,0.25)]"
+              >
+                Join
+              </button>
+            </div>
+
+            {/* SOCIALS (MOVED UNDER FORM) */}
+            <div className="mt-5 flex items-center gap-3">
               <a
                 href="#"
                 aria-label="Twitter"
-                className="h-11 w-11 rounded-xl bg-white/10 border border-white/20
+                className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
                            flex items-center justify-center hover:bg-white/20 transition"
               >
-                <FaTwitter size={20} />
+                <FaTwitter size={18} />
               </a>
 
               <a
                 href="#"
                 aria-label="LinkedIn"
-                className="h-11 w-11 rounded-xl bg-white/10 border border-white/20
+                className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
                            flex items-center justify-center hover:bg-white/20 transition"
               >
-                <FaLinkedinIn size={20} />
+                <FaLinkedinIn size={18} />
               </a>
 
               <a
                 href="#"
                 aria-label="Facebook"
-                className="h-11 w-11 rounded-xl bg-white/10 border border-white/20
+                className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
                            flex items-center justify-center hover:bg-white/20 transition"
               >
-                <FaFacebookF size={20} />
+                <FaFacebookF size={18} />
               </a>
 
               <a
                 href="#"
                 aria-label="GitHub"
-                className="h-11 w-11 rounded-xl bg-white/10 border border-white/20
+                className="h-10 w-10 rounded-xl bg-white/10 border border-white/20
                            flex items-center justify-center hover:bg-white/20 transition"
               >
-                <FaGithub size={20} />
+                <FaGithub size={18} />
               </a>
             </div>
           </div>
@@ -131,7 +150,7 @@ export default function Footer() {
 
         {/* BOTTOM BAR */}
         <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/60">
-          <p>© {year} TechnicalJobboard. All rights reserved.</p>
+          <p>© {year} TechnicalJobBoard. All rights reserved.</p>
 
           <div className="flex gap-5">
             <a href="#" className="hover:text-white transition">
