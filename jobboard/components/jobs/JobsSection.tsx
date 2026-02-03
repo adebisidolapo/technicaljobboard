@@ -90,7 +90,7 @@ function normalize(s: string) {
   return s.toLowerCase().trim();
 }
 
-// match if ANY keyword appears in ANY field
+// ✅ match if ANY keyword appears in ANY field
 function matchesKeywords(job: Job, rawQuery: string) {
   const q = normalize(rawQuery);
   if (!q) return true;
@@ -108,25 +108,23 @@ function matchesKeywords(job: Job, rawQuery: string) {
     ].join(" ")
   );
 
-  // split into keywords, match any
   const keywords = q.split(/\s+/).filter(Boolean);
   return keywords.some((kw) => haystack.includes(kw));
 }
 
-export default function AllJobsPage() {
-  // querystring support (from your hero search)
+export default function JobsSection() {
+  // querystring support (from hero search)
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
 
-  // filters
   const [type, setType] = useState<string>("All");
-  const [minPay, setMinPay] = useState<string>(""); // simple input, optional
+  const [minPay, setMinPay] = useState<string>("");
   const [sort, setSort] = useState<"newest" | "payHigh">("newest");
 
   // pop animation trigger
   const [popKey, setPopKey] = useState(0);
 
-  // load query params (?q=...&loc=...)
+  // ✅ Load query params (?q=...&loc=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const qq = params.get("q") ?? "";
@@ -138,21 +136,17 @@ export default function AllJobsPage() {
   const filtered = useMemo(() => {
     let list = JOBS.slice();
 
-    // keyword match
     list = list.filter((job) => matchesKeywords(job, q));
 
-    // location match (keyword-ish, not strict)
     if (loc && normalize(loc) !== "all") {
       const locQ = normalize(loc);
       list = list.filter((job) => normalize(job.location).includes(locQ));
     }
 
-    // type filter
     if (type !== "All") {
       list = list.filter((job) => job.type === type);
     }
 
-    // min pay (very rough parser: grabs first number)
     if (minPay.trim()) {
       const min = Number(minPay.replace(/[^\d]/g, ""));
       if (!Number.isNaN(min) && min > 0) {
@@ -163,7 +157,6 @@ export default function AllJobsPage() {
       }
     }
 
-    // sort
     if (sort === "payHigh") {
       list.sort((a, b) => {
         const aNum = Number((a.pay.match(/\d+/)?.[0] ?? "0"));
@@ -175,7 +168,6 @@ export default function AllJobsPage() {
     return list;
   }, [q, loc, type, minPay, sort]);
 
-  // pop on results change
   useEffect(() => {
     setPopKey((k) => k + 1);
   }, [q, loc, type, minPay, sort]);
@@ -190,153 +182,137 @@ export default function AllJobsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F4F6FB] text-[#0B1222]">
-      {/* HEADER */}
-      <section className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-10">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <p className="text-[11px] tracking-[0.32em] uppercase text-slate-500 font-semibold">
-                All Jobs
-              </p>
-              <h1 className="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">
-                Browse technical roles
-              </h1>
-              <p className="mt-3 text-sm md:text-base text-slate-600 max-w-2xl">
-                Search by keyword, filter by type & location, and discover roles that match your skills.
-              </p>
+    <section className="bg-[#F4F6FB]">
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        {/* FILTER BAR */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <div className="text-sm text-slate-600">
+              <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
+              result{filtered.length === 1 ? "" : "s"}
+              <span className="ml-2 text-xs text-slate-500">
+                (matches title, company, location, tags, description)
+              </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={clearAll}
-                className="h-11 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
+            <button
+              type="button"
+              onClick={clearAll}
+              className="h-10 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
+            >
+              Clear filters
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+            {/* Keyword */}
+            <div className="md:col-span-5">
+              <label className="text-xs font-semibold text-slate-600">Keyword</label>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Title, company, skill (React, AWS, BIM)…"
+                className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none
+                           focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+              />
+            </div>
+
+            {/* Location */}
+            <div className="md:col-span-3">
+              <label className="text-xs font-semibold text-slate-600">Location</label>
+              <select
+                value={loc || "All"}
+                onChange={(e) => setLoc(e.target.value === "All" ? "" : e.target.value)}
+                className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none
+                           focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
               >
-                Clear filters
-              </button>
-              <span className="text-sm text-slate-500">
-                {filtered.length} result{filtered.length === 1 ? "" : "s"}
-              </span>
+                {LOCATIONS.map((l) => (
+                  <option key={l} value={l}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Type */}
+            <div className="md:col-span-2">
+              <label className="text-xs font-semibold text-slate-600">Type</label>
+              <select
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none
+                           focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+              >
+                {TYPES.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Min Pay */}
+            <div className="md:col-span-2">
+              <label className="text-xs font-semibold text-slate-600">Min pay</label>
+              <input
+                value={minPay}
+                onChange={(e) => setMinPay(e.target.value)}
+                placeholder="120000"
+                className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none
+                           focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
+              />
             </div>
           </div>
 
-          {/* FILTER BAR */}
-          <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-              {/* Keyword */}
-              <div className="md:col-span-5">
-                <label className="text-xs font-semibold text-slate-600">
-                  Keyword
-                </label>
-                <input
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="Title, company, skill (e.g. React, AWS, BIM)…"
-                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
-                />
-              </div>
-
-              {/* Location */}
-              <div className="md:col-span-3">
-                <label className="text-xs font-semibold text-slate-600">
-                  Location
-                </label>
-                <select
-                  value={loc || "All"}
-                  onChange={(e) => setLoc(e.target.value === "All" ? "" : e.target.value)}
-                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
-                >
-                  {LOCATIONS.map((l) => (
-                    <option key={l} value={l}>
-                      {l}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Type */}
-              <div className="md:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">
-                  Type
-                </label>
-                <select
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
-                >
-                  {TYPES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Min Pay */}
-              <div className="md:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">
-                  Min pay (optional)
-                </label>
-                <input
-                  value={minPay}
-                  onChange={(e) => setMinPay(e.target.value)}
-                  placeholder="120000"
-                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.25)]"
-                />
-              </div>
+          {/* Sort row */}
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="text-xs text-slate-500">
+              Tip: typing <span className="font-semibold">“aws”</span> or{" "}
+              <span className="font-semibold">“remote”</span> will instantly match jobs.
             </div>
 
-            {/* sort row */}
-            <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="text-xs text-slate-500">
-                Tip: keywords match even a single word in title, tags, company, or description.
-              </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-600">Sort</span>
 
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-slate-600">Sort</span>
-                <button
-                  type="button"
-                  onClick={() => setSort("newest")}
-                  className={[
-                    "h-9 px-3 rounded-xl text-xs font-semibold border transition",
-                    sort === "newest"
-                      ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)] border-[rgba(106,111,242,0.25)]"
-                      : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
-                  ].join(" ")}
-                >
-                  Newest
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSort("payHigh")}
-                  className={[
-                    "h-9 px-3 rounded-xl text-xs font-semibold border transition",
-                    sort === "payHigh"
-                      ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)] border-[rgba(106,111,242,0.25)]"
-                      : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
-                  ].join(" ")}
-                >
-                  Pay (high)
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setSort("newest")}
+                className={[
+                  "h-9 px-3 rounded-xl text-xs font-semibold border transition",
+                  sort === "newest"
+                    ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)] border-[rgba(106,111,242,0.25)]"
+                    : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
+                ].join(" ")}
+              >
+                Newest
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSort("payHigh")}
+                className={[
+                  "h-9 px-3 rounded-xl text-xs font-semibold border transition",
+                  sort === "payHigh"
+                    ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)] border-[rgba(106,111,242,0.25)]"
+                    : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
+                ].join(" ")}
+              >
+                Pay (high)
+              </button>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* RESULTS */}
-      <section className="max-w-7xl mx-auto px-6 py-10">
+        {/* RESULTS */}
         <div
           key={popKey}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-[pop_220ms_ease-out]"
+          className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-[pop_220ms_ease-out]"
         >
           {filtered.map((job) => (
             <article
               key={job.id}
               className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg transition"
             >
-              {/* purple stripe */}
               <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
 
               <div className="p-6 pl-8">
@@ -364,7 +340,6 @@ export default function AllJobsPage() {
                   {job.description}
                 </p>
 
-                {/* tags */}
                 <div className="mt-4 flex flex-wrap gap-2">
                   {job.tags.slice(0, 3).map((t) => (
                     <span
@@ -420,15 +395,15 @@ export default function AllJobsPage() {
             </button>
           </div>
         )}
-      </section>
+      </div>
 
-      {/* local keyframes (simple + safe) */}
+      {/* keyframes */}
       <style jsx global>{`
         @keyframes pop {
           from { transform: scale(0.985); opacity: 0.6; }
           to { transform: scale(1); opacity: 1; }
         }
       `}</style>
-    </main>
+    </section>
   );
 }
