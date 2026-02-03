@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 
-
 type FeaturedJob = {
   title: string;
   company: string;
