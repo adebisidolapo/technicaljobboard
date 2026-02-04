@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-/* Tokens */
+/* =========================
+   Design tokens
+========================= */
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -10,7 +12,15 @@
   --brand-purple-dark: #585de0;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   min-height: 100vh;
@@ -21,46 +31,76 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dots bg */
+/* =========================
+   Utilities
+========================= */
+
+/* Dots background helper */
 .bg-dots-bg {
   background-image: radial-gradient(rgba(2, 0, 13, 0.08) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
 /* Hide scrollbars */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-/* Reveal */
+/* Reveal animation helper */
 .reveal {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 700ms ease, transform 700ms ease;
 }
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* Marquee */
+/* =========================
+   Marquee animations
+========================= */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
+
 @keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
-.animate-marquee { animation: marquee 40s linear infinite; }
-.animate-marquee-reverse { animation: marquee-reverse 46s linear infinite; }
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 46s linear infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee, .animate-marquee-reverse { animation: none !important; }
-}
-:root{
-  --brand-purple: #6A6FF2;
-  --brand-purple-dark: #585EEB;
-}
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-:root{
-  --brand-purple: #6A6FF2;
-  --brand-purple-dark: #585EEB;
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    transition: none
+  }
 }

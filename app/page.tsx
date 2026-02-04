@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
+
 
 type FeaturedJob = {
   title: string;
@@ -126,6 +129,8 @@ const FEATURED_JOBS: FeaturedJob[] = [
 ];
 
 export default function Home() {
+  const router = useRouter();
+
   // hero inputs
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
@@ -134,8 +139,15 @@ export default function Home() {
   const [categoryQuery, setCategoryQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  const inputBase =
+    "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200";
+
+  const chipBase =
+    "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition";
+
   const filteredCategories = useMemo(() => {
-    return CATEGORIES.filter((c) => c.toLowerCase().includes(categoryQuery.toLowerCase()));
+    const q = categoryQuery.toLowerCase().trim();
+    return CATEGORIES.filter((c) => c.toLowerCase().includes(q));
   }, [categoryQuery]);
 
   const runHeroSearch = () => {
@@ -143,28 +155,32 @@ export default function Home() {
     if (heroQ.trim()) params.set("q", heroQ.trim());
     if (heroLoc.trim()) params.set("loc", heroLoc.trim());
     const qs = params.toString();
-    window.location.href = qs ? `/all-jobs?${qs}` : "/all-jobs";
+    router.push(qs ? `/all-jobs?${qs}` : "/all-jobs");
   };
 
-  // duplicate logos for marquee loop
   const marqueeLogos = useMemo(() => {
     return COMPANY_LOGOS.concat(COMPANY_LOGOS).concat(COMPANY_LOGOS);
   }, []);
 
-  // reveal (optional)
   useEffect(() => {
-    const els = Array.from(document.querySelectorAll(".reveal"));
+    const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+    if (!els.length) return;
+
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) (e.target as HTMLElement).classList.add("is-visible");
+        });
+      },
       { threshold: 0.15 }
     );
+
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 
   return (
     <main className="font-sans text-[#0F172A] bg-[#F3F6FB]">
-
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden bg-[#EEF6F2]">
         <div className="pointer-events-none absolute inset-0">
@@ -215,14 +231,14 @@ export default function Home() {
                     onChange={(e) => setHeroQ(e.target.value)}
                     type="text"
                     placeholder="Job title, keyword"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
+                    className={inputBase}
                   />
                   <input
                     value={heroLoc}
                     onChange={(e) => setHeroLoc(e.target.value)}
                     type="text"
                     placeholder="Location (Remote, Lagos, New York)"
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
+                    className={inputBase}
                   />
                   <button
                     type="button"
@@ -264,60 +280,11 @@ export default function Home() {
       </section>
 
       {/* ================= TRUSTED BY TEAMS ================= */}
-      <section className="bg-white py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <p className="text-[10px] tracking-[0.34em] text-slate-400 font-semibold uppercase">Trusted by teams</p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-[#0B1222] tracking-tight">
-              Popular Companies We Have Worked With
-            </h2>
-            <p className="mt-3 text-sm text-slate-500 max-w-2xl mx-auto">
-              Teams across the US trust TechnicalJobboard to hire technical talent.
-            </p>
-          </div>
+<CompanyLogoCarousel />
 
-          <div className="mt-14 relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
-
-            <div className="overflow-hidden">
-              <div className="flex w-max items-center animate-marquee">
-                {marqueeLogos.map((logo, idx) => (
-                  <div key={`r1-${logo.src}-${idx}`} className="mx-12 flex items-center justify-center">
-                    <img
-                      src={logo.src}
-                      alt={logo.alt}
-                      className="h-10 md:h-12 w-[150px] object-contain grayscale opacity-85"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="overflow-hidden mt-10">
-              <div className="flex w-max items-center animate-marquee-reverse">
-                {marqueeLogos
-                  .slice()
-                  .reverse()
-                  .map((logo, idx) => (
-                    <div key={`r2-${logo.src}-${idx}`} className="mx-12 flex items-center justify-center">
-                      <img
-                        src={logo.src}
-                        alt={logo.alt}
-                        className="h-10 md:h-12 w-[150px] object-contain grayscale opacity-80"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ================= CATEGORIES ================= */}
-<section id="categories" className="relative overflow-hidden py-16 bg-[#F4F6FB]">
+      <section id="categories" className="relative overflow-hidden py-16 bg-[#F4F6FB]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
         </div>
@@ -370,10 +337,10 @@ export default function Home() {
                 onClick={() => {
                   setSelectedCategory("");
                   setCategoryQuery("");
-                  window.location.href = "/all-jobs";
+                  router.push("/all-jobs");
                 }}
                 className={[
-                  "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition",
+                  chipBase,
                   !selectedCategory
                     ? "bg-[#0B1222] text-white border-[#0B1222]"
                     : "bg-white border-slate-200 text-slate-700 hover:border-slate-300",
@@ -390,10 +357,10 @@ export default function Home() {
                     type="button"
                     onClick={() => {
                       setSelectedCategory(cat);
-                      window.location.href = `/all-jobs?cat=${encodeURIComponent(cat)}`;
+                      router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
                     }}
                     className={[
-                      "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition",
+                      chipBase,
                       active
                         ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)] border-[rgba(106,111,242,0.25)]"
                         : "bg-white border-slate-200 text-slate-700 hover:border-slate-300",
@@ -428,13 +395,17 @@ export default function Home() {
           <div className="flex items-start justify-between gap-6">
             <div>
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#0B1222]">Featured Jobs</h2>
-              <p className="mt-2 text-sm text-slate-600">A curated selection of standout roles from trusted teams.</p>
+              <p className="mt-2 text-sm text-slate-600">
+                A curated selection of standout roles from trusted teams.
+              </p>
             </div>
 
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={() => document.getElementById("featured-carousel")?.scrollBy({ left: -520, behavior: "smooth" })}
+                onClick={() =>
+                  document.getElementById("featured-carousel")?.scrollBy({ left: -520, behavior: "smooth" })
+                }
                 className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
                 aria-label="Scroll left"
               >
@@ -442,7 +413,9 @@ export default function Home() {
               </button>
               <button
                 type="button"
-                onClick={() => document.getElementById("featured-carousel")?.scrollBy({ left: 520, behavior: "smooth" })}
+                onClick={() =>
+                  document.getElementById("featured-carousel")?.scrollBy({ left: 520, behavior: "smooth" })
+                }
                 className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
                 aria-label="Scroll right"
               >
@@ -459,9 +432,7 @@ export default function Home() {
               {FEATURED_JOBS.map((job, idx) => (
                 <article
                   key={idx}
-                  className="snap-start flex-none w-[340px] sm:w-[360px]
-                             bg-white rounded-2xl border border-slate-200 shadow-sm
-                             hover:shadow-lg transition relative overflow-hidden"
+                  className="snap-start flex-none w-[340px] sm:w-[360px] bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition relative overflow-hidden"
                 >
                   <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
 
@@ -472,7 +443,11 @@ export default function Home() {
                         Featured
                       </span>
 
-                      <button type="button" aria-label="Save job" className="text-slate-300 hover:text-slate-600 transition">
+                      <button
+                        type="button"
+                        aria-label="Save job"
+                        className="text-slate-300 hover:text-slate-600 transition"
+                      >
                         ★
                       </button>
                     </div>
@@ -500,10 +475,8 @@ export default function Home() {
                     <div className="mt-6 flex items-center justify-between">
                       <button
                         type="button"
-                        onClick={() => (window.location.href = "/all-jobs")}
-                        className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
-                                   bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]
-                                   shadow-[0_14px_26px_rgba(106,111,242,0.22)] transition"
+                        onClick={() => router.push("/all-jobs")}
+                        className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] shadow-[0_14px_26px_rgba(106,111,242,0.22)] transition"
                       >
                         Apply
                       </button>
@@ -567,7 +540,7 @@ export default function Home() {
 
               <button
                 type="button"
-                onClick={() => (window.location.href = "/all-jobs")}
+                onClick={() => router.push("/all-jobs")}
                 className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-sm font-semibold shadow-md transition"
               >
                 Get Started
@@ -579,8 +552,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
     </main>
   );
 }
-

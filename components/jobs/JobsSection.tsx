@@ -79,6 +79,7 @@ function normalize(s: string) {
   return s.toLowerCase().trim();
 }
 
+// ✅ match if ANY keyword appears in ANY field
 function matchesKeywords(job: Job, rawQuery: string) {
   const q = normalize(rawQuery);
   if (!q) return true;
@@ -100,9 +101,24 @@ function matchesKeywords(job: Job, rawQuery: string) {
   return keywords.some((kw) => haystack.includes(kw));
 }
 
+// ✅ category filter (simple keyword match against job fields)
+function matchesCategory(job: Job, rawCat: string) {
+  const c = normalize(rawCat);
+  if (!c) return true;
+
+  const haystack = normalize(
+    [job.title, job.description, job.tags.join(" "), job.company].join(" ")
+  );
+
+  // Example: "Healthcare IT" → matches if "healthcare" or "it" appears
+  const parts = c.split(/\s+/).filter(Boolean);
+  return parts.some((p) => haystack.includes(p));
+}
+
 export default function JobsSection() {
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
+  const [cat, setCat] = useState("");
 
   const [type, setType] = useState<string>("All");
   const [minPay, setMinPay] = useState<string>("");
@@ -110,28 +126,35 @@ export default function JobsSection() {
 
   const [popKey, setPopKey] = useState(0);
 
+  // ✅ Load query params (?q=...&loc=...&cat=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const qq = params.get("q") ?? "";
-    const ll = params.get("loc") ?? "";
-    setQ(qq);
-    setLoc(ll);
+    setQ(params.get("q") ?? "");
+    setLoc(params.get("loc") ?? "");
+    setCat(params.get("cat") ?? "");
   }, []);
 
   const filtered = useMemo(() => {
     let list = JOBS.slice();
 
+    // keyword search
     list = list.filter((job) => matchesKeywords(job, q));
 
+    // category search
+    list = list.filter((job) => matchesCategory(job, cat));
+
+    // location filter
     if (loc && normalize(loc) !== "all") {
       const locQ = normalize(loc);
       list = list.filter((job) => normalize(job.location).includes(locQ));
     }
 
+    // type filter
     if (type !== "All") {
       list = list.filter((job) => job.type === type);
     }
 
+    // min pay filter
     if (minPay.trim()) {
       const min = Number(minPay.replace(/[^\d]/g, ""));
       if (!Number.isNaN(min) && min > 0) {
@@ -142,6 +165,7 @@ export default function JobsSection() {
       }
     }
 
+    // sort
     if (sort === "payHigh") {
       list.sort((a, b) => {
         const aNum = Number(a.pay.match(/\d+/)?.[0] ?? "0");
@@ -151,15 +175,16 @@ export default function JobsSection() {
     }
 
     return list;
-  }, [q, loc, type, minPay, sort]);
+  }, [q, loc, cat, type, minPay, sort]);
 
   useEffect(() => {
     setPopKey((k) => k + 1);
-  }, [q, loc, type, minPay, sort]);
+  }, [q, loc, cat, type, minPay, sort]);
 
   const clearAll = () => {
     setQ("");
     setLoc("");
+    setCat("");
     setType("All");
     setMinPay("");
     setSort("newest");
@@ -182,6 +207,11 @@ export default function JobsSection() {
               <span className="ml-2 text-xs text-slate-500">
                 (matches title, company, location, tags, description)
               </span>
+              {cat.trim() && (
+                <span className="ml-2 text-xs text-slate-500">
+                  • Category: <span className="font-semibold">{cat}</span>
+                </span>
+              )}
             </div>
 
             <button
@@ -194,6 +224,7 @@ export default function JobsSection() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+            {/* Keyword */}
             <div className="md:col-span-5">
               <label className="text-xs font-semibold text-slate-600">
                 Keyword
@@ -206,6 +237,7 @@ export default function JobsSection() {
               />
             </div>
 
+            {/* Location */}
             <div className="md:col-span-3">
               <label className="text-xs font-semibold text-slate-600">
                 Location
@@ -225,6 +257,7 @@ export default function JobsSection() {
               </select>
             </div>
 
+            {/* Type */}
             <div className="md:col-span-2">
               <label className="text-xs font-semibold text-slate-600">Type</label>
               <select
@@ -240,6 +273,7 @@ export default function JobsSection() {
               </select>
             </div>
 
+            {/* Min Pay */}
             <div className="md:col-span-2">
               <label className="text-xs font-semibold text-slate-600">
                 Min pay
@@ -253,6 +287,7 @@ export default function JobsSection() {
             </div>
           </div>
 
+          {/* Sort row */}
           <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="text-xs text-slate-500">
               Tip: typing <span className="font-semibold">“aws”</span> or{" "}
@@ -292,6 +327,7 @@ export default function JobsSection() {
           </div>
         </div>
 
+        {/* RESULTS */}
         <div
           key={popKey}
           className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-[pop_220ms_ease-out]"
@@ -318,6 +354,7 @@ export default function JobsSection() {
         )}
       </div>
 
+      {/* keyframes */}
       <style jsx global>{`
         @keyframes pop {
           from {
