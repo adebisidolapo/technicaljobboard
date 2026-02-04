@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const mobileMenuId = useId();
 
   // Close on ESC
   useEffect(() => {
@@ -17,7 +15,7 @@ export default function SiteHeader() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  // Lock body scroll when menu is open
+  // Lock scroll when mobile menu is open
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -27,43 +25,37 @@ export default function SiteHeader() {
     };
   }, [open]);
 
-  const close = () => setOpen(false);
-
-  const navLink =
-    "hover:text-[var(--brand-purple)] transition text-gray-900";
-  const mobileLink =
-    "py-3 px-3 rounded-xl hover:bg-gray-50 text-gray-900 font-medium";
-
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/85 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center" aria-label="Go to home">
-          <Image
+        {/* LOGO */}
+        <Link href="/" className="flex items-center">
+          <img
             src="/Technicaljoblogo-removebg-preview.png"
             alt="TechnicalJobboard"
-            width={220}
-            height={80}
-            className="h-14 sm:h-16 w-auto object-contain"
-            priority
+            className="h-20 sm:h-24 md:h-28 w-auto object-contain"
           />
         </Link>
 
-        {/* DESKTOP */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link href="/all-jobs" className={navLink}>
+        {/* DESKTOP NAV */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-900">
+          <Link href="/" className="hover:text-[var(--brand-purple)] transition">
+            Home
+          </Link>
+
+          <Link href="/all-jobs" className="hover:text-[var(--brand-purple)] transition">
             All Jobs
           </Link>
 
-          <Link href="/#categories" className={navLink}>
+          <Link href="/#categories" className="hover:text-[var(--brand-purple)] transition">
             Categories
           </Link>
 
-          <Link href="#" className={navLink}>
+          <Link href="#" className="hover:text-[var(--brand-purple)] transition">
             Jobseeker
           </Link>
 
-          <Link href="#" className={navLink}>
+          <Link href="#" className="hover:text-[var(--brand-purple)] transition">
             Employer
           </Link>
 
@@ -79,51 +71,48 @@ export default function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls={mobileMenuId}
-          aria-label={open ? "Close menu" : "Open menu"}
-          className="md:hidden inline-flex items-center justify-center rounded-xl border border-[var(--brand-purple)]/25 bg-white px-3 py-2 text-[var(--brand-purple)] shadow-sm hover:bg-[#EEF0FF] focus:outline-none focus:ring-2 focus:ring-[var(--brand-purple)]/40 transition"
+          aria-label="Toggle menu"
+          className="md:hidden inline-flex items-center justify-center rounded-xl border border-[var(--brand-purple)]/30 bg-white px-3 py-2 text-[var(--brand-purple)] shadow-sm hover:bg-[#EEF0FF] transition"
         >
-          {open ? "✕" : "☰"}
+          ☰
         </button>
       </div>
 
       {/* MOBILE MENU */}
       {open && (
         <div className="md:hidden">
-          {/* Overlay */}
           <button
             type="button"
             className="fixed inset-0 z-40 bg-black/30"
-            aria-label="Close menu overlay"
-            onClick={close}
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
           />
 
-          {/* Panel */}
-          <div
-            id={mobileMenuId}
-            className="relative z-50 border-t border-gray-200 bg-white"
-          >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-2">
-              <Link href="/all-jobs" onClick={close} className={mobileLink}>
+          <div className="relative z-50 border-t border-gray-200 bg-white">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-3">
+              <Link href="/" onClick={() => setOpen(false)} className="py-3 px-3 rounded-xl hover:bg-gray-50">
+                Home
+              </Link>
+
+              <Link href="/all-jobs" onClick={() => setOpen(false)} className="py-3 px-3 rounded-xl hover:bg-gray-50">
                 All Jobs
               </Link>
 
-              <Link href="/#categories" onClick={close} className={mobileLink}>
+              <Link href="/#categories" onClick={() => setOpen(false)} className="py-3 px-3 rounded-xl hover:bg-gray-50">
                 Categories
               </Link>
 
-              <Link href="#" onClick={close} className={mobileLink}>
+              <Link href="#" onClick={() => setOpen(false)} className="py-3 px-3 rounded-xl hover:bg-gray-50">
                 Jobseeker
               </Link>
 
-              <Link href="#" onClick={close} className={mobileLink}>
+              <Link href="#" onClick={() => setOpen(false)} className="py-3 px-3 rounded-xl hover:bg-gray-50">
                 Employer
               </Link>
 
               <Link
                 href="#"
-                onClick={close}
+                onClick={() => setOpen(false)}
                 className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] text-white font-semibold shadow-sm transition"
               >
                 Post Job

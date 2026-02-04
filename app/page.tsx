@@ -280,7 +280,27 @@ export default function Home() {
       </section>
 
       {/* ================= TRUSTED BY TEAMS ================= */}
-<CompanyLogoCarousel />
+<section className="bg-white py-16 md:py-20">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-center">
+      <p className="text-[10px] tracking-[0.34em] text-slate-400 font-semibold uppercase">
+        Trusted by teams
+      </p>
+      <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-[#0B1222] tracking-tight">
+        Popular Companies We Have Worked With
+      </h2>
+      <p className="mt-3 text-sm text-slate-500 max-w-2xl mx-auto">
+        Teams across the US trust TechnicalJobboard to hire technical talent.
+      </p>
+    </div>
+
+    <div className="mt-14">
+      {/* Company logo carousel */}
+      <CompanyLogoCarousel />
+    </div>
+  </div>
+</section>
+
 
 
       {/* ================= CATEGORIES ================= */}
