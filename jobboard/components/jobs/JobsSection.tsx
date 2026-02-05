@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Job = {
@@ -14,11 +14,6 @@ type Job = {
   tags: string[];
   description: string;
 };
-const [page, setPage] = useState(1);
-const [saved, setSaved] = useState<string[]>(() => {
-  if (typeof window === "undefined") return [];
-  return JSON.parse(localStorage.getItem("savedJobs") || "[]");
-});
 
 const JOBS: Job[] = [
   {
@@ -100,22 +95,48 @@ const SALARY_RANGES = [
 function norm(s: string) {
   return s.toLowerCase().trim();
 }
+
 function initials(name: string) {
   const parts = name.split(" ").filter(Boolean);
   return ((parts[0]?.[0] ?? "C") + (parts[1]?.[0] ?? "")).toUpperCase();
 }
+
 function parseMinPay(pay: string) {
-  // "$120k – $160k" -> 120000
   const m = pay.replace(/,/g, "").match(/(\d+)\s*k/i);
   if (!m) return 0;
   return Number(m[1]) * 1000;
 }
+
 function toggle(arr: string[], v: string) {
   return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v];
 }
 
-export default function AllJobsPage() {
+export default function JobsSection() {
   const router = useRouter();
+
+  // ✅ hooks INSIDE component (fixes invalid hook call)
+  const [page, setPage] = useState(1);
+
+  const [saved, setSaved] = useState<string[]>([]);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("savedJobs") || "[]";
+      const parsed = JSON.parse(raw);
+      setSaved(Array.isArray(parsed) ? parsed : []);
+    } catch {
+      setSaved([]);
+    }
+  }, []);
+
+  const toggleSave = (id: string) => {
+    setSaved((prev) => {
+      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
+      try {
+        localStorage.setItem("savedJobs", JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
 
   // Filters
   const [q, setQ] = useState("");
@@ -134,14 +155,7 @@ export default function AllJobsPage() {
 
     return JOBS.filter((job) => {
       const hay = norm(
-        [
-          job.title,
-          job.company,
-          job.location,
-          job.type,
-          job.tags.join(" "),
-          job.description,
-        ].join(" ")
+        [job.title, job.company, job.location, job.type, job.tags.join(" "), job.description].join(" ")
       );
 
       // Narrowed search: ALL words must match
@@ -165,37 +179,58 @@ export default function AllJobsPage() {
     setRemoteOnly(false);
     setSalaryMin(null);
     setLocation("Anywhere");
+    setPage(1);
   };
 
   return (
     <main className="bg-[#F6F7FB] text-[#0B1222]">
-    {/* ================= HERO ================= */}
-<section className="relative overflow-hidden bg-white border-b border-slate-200/70">
-  {/* subtle background only (no loud blobs) */}
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_18%_0%,rgba(99,102,241,0.10),transparent_60%)]" />
-    <div className="absolute inset-0 bg-[radial-gradient(900px_320px_at_85%_-10%,rgba(34,197,94,0.08),transparent_55%)]" />
-  </div>
+      {/* ================= HERO ================= */}
+      <section className="relative overflow-hidden bg-white border-b border-slate-200/70">
+        {/* keep your bg (subtle) */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_18%_0%,rgba(99,102,241,0.10),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(900px_320px_at_85%_-10%,rgba(34,197,94,0.08),transparent_55%)]" />
+        </div>
 
-  {/* keep YOUR text/content below exactly how you had it */}
-  <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-8 md:pt-10 md:pb-10">
-    <div className="max-w-3xl">
-      <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
-        Browse verified technical roles
-      </span>
+        {/* more engaging content (no startup wording) */}
+        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-8 md:pt-10 md:pb-10">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
+              Browse verified technical jobs
+            </span>
 
-      <h1 className="mt-4 text-3xl md:text-4xl font-extrabold text-[#0B1222] leading-tight">
-        Find your next technical role — faster, cleaner, and transparent.
-      </h1>
+            <h1 className="mt-4 text-3xl md:text-4xl font-extrabold text-[#0B1222] leading-tight">
+              Search technical roles by skill, location, and salary — then apply fast.
+            </h1>
 
-      <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
-        A technical job site built for developers, engineers, data, cloud, security, and product teams.
-        Filter by role type, location, and salary range — then apply in one click.
-      </p>
-    </div>
-  </div>
-</section>
+            <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
+              Built for developers, DevOps, data, cloud, security, and product teams. Use filters to narrow
+              down results and open the full job page to apply.
+            </p>
 
+            {/* quick search bar (engaging + useful) */}
+            <div className="mt-5 flex flex-col sm:flex-row gap-3 max-w-2xl">
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Search: react, aws, remote, devops..."
+                className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
+                className="h-12 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition"
+              >
+                Search jobs
+              </button>
+            </div>
+
+            <div className="mt-3 text-xs text-slate-500">
+              Tip: search matches <span className="font-semibold">ALL</span> keywords (more accurate filtering).
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ================= RESULTS + FILTER ================= */}
       <section id="latest" className="max-w-7xl mx-auto px-6 py-8 md:py-10">
@@ -208,87 +243,14 @@ export default function AllJobsPage() {
           </div>
 
           <div className="text-xs text-slate-500">
-            Showing{" "}
-            <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
-            roles
+            Showing <span className="font-semibold text-slate-900">{filtered.length}</span> roles
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Jobs list */}
-          <div className="lg:col-span-8">
-            <div className="space-y-3">
-              {filtered.map((job) => (
-                <div
-                  key={job.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow transition px-5 py-5"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-4 min-w-0">
-                      <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
-                        {initials(job.company)}
-                      </div>
-
-                      <div className="min-w-0">
-                        <div className="text-sm font-extrabold truncate">
-                          {job.title}
-                        </div>
-
-                        <div className="mt-1 text-xs text-slate-500 truncate">
-                          {job.company} • {job.location} • {job.pay}
-                        </div>
-
-                        <div className="mt-2 flex flex-wrap items-center gap-2">
-                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-700">
-                            {job.type}
-                          </span>
-                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
-                            {job.posted}
-                          </span>
-                          {job.tags.slice(0, 3).map((t) => (
-                            <span
-                              key={t}
-                              className="text-[11px] px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => router.push(`/jobs/${job.id}`)}
-                      className="h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition shrink-0"
-                    >
-                      Apply →
-                    </button>
-                  </div>
-                </div>
-              ))}
-
-              {filtered.length === 0 && (
-                <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center">
-                  <div className="text-lg font-extrabold">No matches found</div>
-                  <div className="mt-2 text-sm text-slate-600">
-                    Try fewer keywords or reset filters.
-                  </div>
-                  <button
-                    type="button"
-                    onClick={clearFilters}
-                    className="mt-5 h-11 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
-                  >
-                    Reset filters
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Filters */}
-          <aside className="lg:col-span-4">
-            <div className="rounded-2xl bg-white border border-slate-200/80 shadow-sm p-5 sticky top-6">
+          {/* ✅ Filters FIRST on mobile, but sidebar on desktop */}
+          <aside className="lg:col-span-4 order-1 lg:order-2">
+            <div className="rounded-2xl bg-white border border-slate-200/80 shadow-sm p-5 lg:sticky lg:top-6">
               <div className="flex items-center justify-between">
                 <div className="text-sm font-extrabold">Filter jobs</div>
                 <button
@@ -300,20 +262,16 @@ export default function AllJobsPage() {
                 </button>
               </div>
 
-              {/* Search */}
+              {/* Keywords */}
               <div className="mt-4">
-                <div className="text-xs font-semibold text-slate-600">
-                  Keywords
-                </div>
+                <div className="text-xs font-semibold text-slate-600">Keywords</div>
                 <input
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                   placeholder="e.g. react remote aws"
                   className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
                 />
-                <div className="mt-2 text-[11px] text-slate-500">
-                  Tip: all words must match to show a job.
-                </div>
+                <div className="mt-2 text-[11px] text-slate-500">All words must match.</div>
               </div>
 
               {/* Job Type */}
@@ -321,10 +279,7 @@ export default function AllJobsPage() {
                 <div className="text-xs font-semibold text-slate-600">Job type</div>
                 <div className="mt-3 space-y-2">
                   {JOB_TYPES.map((t) => (
-                    <label
-                      key={t}
-                      className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer"
-                    >
+                    <label key={t} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={types.includes(t)}
@@ -337,7 +292,7 @@ export default function AllJobsPage() {
                 </div>
               </div>
 
-              {/* Remote Only */}
+              {/* Remote */}
               <div className="mt-5">
                 <div className="text-xs font-semibold text-slate-600">Remote</div>
                 <button
@@ -360,10 +315,7 @@ export default function AllJobsPage() {
                 <div className="text-xs font-semibold text-slate-600">Salary</div>
                 <div className="mt-3 space-y-2">
                   {SALARY_RANGES.map((r) => (
-                    <label
-                      key={r.label}
-                      className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer"
-                    >
+                    <label key={r.label} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
                       <input
                         type="radio"
                         name="salary"
@@ -400,18 +352,96 @@ export default function AllJobsPage() {
                 </select>
               </div>
 
-              {/* CTA */}
               <button
                 type="button"
-                onClick={() =>
-                  document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })
-                }
+                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
                 className="mt-6 h-11 w-full rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
               >
                 Search jobs
               </button>
             </div>
           </aside>
+
+          {/* Jobs list */}
+          <div className="lg:col-span-8 order-2 lg:order-1">
+            <div className="space-y-3">
+              {filtered.map((job) => (
+                <div
+                  key={job.id}
+                  className="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow transition px-5 py-5"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-4 min-w-0">
+                      <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
+                        {initials(job.company)}
+                      </div>
+
+                      <div className="min-w-0">
+                        <div className="text-sm font-extrabold truncate">{job.title}</div>
+
+                        <div className="mt-1 text-xs text-slate-500 truncate">
+                          {job.company} • {job.location} • {job.pay}
+                        </div>
+
+                        <div className="mt-2 flex flex-wrap items-center gap-2">
+                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-700">
+                            {job.type}
+                          </span>
+                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+                            {job.posted}
+                          </span>
+                          {job.tags.slice(0, 3).map((t) => (
+                            <span
+                              key={t}
+                              className="text-[11px] px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* save */}
+                        <div className="mt-3">
+                          <button
+                            type="button"
+                            onClick={() => toggleSave(job.id)}
+                            className={[
+                              "text-xs font-semibold underline underline-offset-4",
+                              saved.includes(job.id) ? "text-emerald-700" : "text-slate-500 hover:text-slate-700",
+                            ].join(" ")}
+                          >
+                            {saved.includes(job.id) ? "Saved" : "Save job"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/jobs/${job.id}`)}
+                      className="h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition shrink-0"
+                    >
+                      Apply →
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              {filtered.length === 0 && (
+                <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center">
+                  <div className="text-lg font-extrabold">No matches found</div>
+                  <div className="mt-2 text-sm text-slate-600">Try fewer keywords or reset filters.</div>
+                  <button
+                    type="button"
+                    onClick={clearFilters}
+                    className="mt-5 h-11 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
+                  >
+                    Reset filters
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </section>
     </main>
