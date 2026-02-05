@@ -77,7 +77,6 @@ const JOBS: Job[] = [
 const TYPE_OPTIONS = ["Full-time", "Contract", "Part-time"];
 const LOCATION_OPTIONS = ["Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
 
-// keep filter narrow
 const PAY_BUCKETS = [
   { label: "$100k+", min: 100000 },
   { label: "$120k+", min: 120000 },
@@ -94,7 +93,6 @@ function splitWords(s: string) {
 }
 
 function payLowerBound(raw: string): number {
-  // supports "$120k – $160k", "$120,000", "120000", "120k"
   const t = norm(raw).replace(/,/g, "");
   const m = t.match(/(\d+(\.\d+)?)(k)?/);
   if (!m) return 0;
@@ -131,17 +129,13 @@ function initials(name: string) {
 export default function JobsSection() {
   const router = useRouter();
 
-  // search
   const [q, setQ] = useState("");
-
-  // narrowed filters (checkbox + buckets)
   const [types, setTypes] = useState<string[]>([]);
   const [locs, setLocs] = useState<string[]>([]);
   const [payMin, setPayMin] = useState<number | null>(null);
-
   const [sort, setSort] = useState<"relevance" | "payHigh">("relevance");
 
-  // read query params (?q=...&loc=...&cat=...) — keep q + loc only
+  // Load query params (?q=...&loc=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const q0 = params.get("q") ?? "";
@@ -156,7 +150,7 @@ export default function JobsSection() {
     let list = JOBS.filter((job) => {
       const h = jobHaystack(job);
 
-      // Narrow keyword: ALL words must match
+      // keyword: ALL words must match
       if (words.length && !words.every((w) => h.includes(w))) return false;
 
       if (types.length && !types.includes(job.type)) return false;
@@ -191,7 +185,7 @@ export default function JobsSection() {
     return list;
   }, [q, types, locs, payMin, sort]);
 
-  const clearAll = () => {
+  const resetFilters = () => {
     setQ("");
     setTypes([]);
     setLocs([]);
@@ -202,6 +196,16 @@ export default function JobsSection() {
 
   const hasFilters = q.trim() || types.length || locs.length || payMin != null;
 
+  // “Search” button: just updates URL (so it feels like action), does NOT clear anything
+  const applySearch = () => {
+    const params = new URLSearchParams();
+    if (q.trim()) params.set("q", q.trim());
+    if (locs.length === 1) params.set("loc", locs[0]);
+    const qs = params.toString();
+    const nextUrl = qs ? `/all-jobs?${qs}` : "/all-jobs";
+    window.history.replaceState({}, "", nextUrl);
+  };
+
   return (
     <section className="bg-[#F4F6FB]">
       <div className="max-w-7xl mx-auto px-6 py-10">
@@ -210,7 +214,8 @@ export default function JobsSection() {
           <div>
             <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">All Jobs</h1>
             <p className="mt-2 text-sm text-slate-600">
-              {filtered.length} result{filtered.length === 1 ? "" : "s"} found
+              <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
+              result{filtered.length === 1 ? "" : "s"} found
             </p>
           </div>
 
@@ -221,16 +226,16 @@ export default function JobsSection() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Search title, company, skill…"
-                className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300"
+                className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
               />
             </div>
 
             <button
               type="button"
-              onClick={clearAll}
-              className="h-11 px-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
+              onClick={applySearch}
+              className="h-11 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-sm font-semibold shadow-sm"
             >
-              Clear
+              Search
             </button>
           </div>
         </div>
@@ -245,8 +250,8 @@ export default function JobsSection() {
                 {hasFilters ? (
                   <button
                     type="button"
-                    onClick={clearAll}
-                    className="text-xs font-semibold text-indigo-700 hover:text-indigo-800"
+                    onClick={resetFilters}
+                    className="text-xs font-semibold text-emerald-700 hover:text-emerald-800"
                   >
                     Reset
                   </button>
@@ -263,7 +268,7 @@ export default function JobsSection() {
                         type="checkbox"
                         checked={types.includes(t)}
                         onChange={() => setTypes((x) => toggle(x, t))}
-                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-200"
+                        className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-200"
                       />
                       {t}
                     </label>
@@ -281,7 +286,7 @@ export default function JobsSection() {
                         type="checkbox"
                         checked={locs.includes(l)}
                         onChange={() => setLocs((x) => toggle(x, l))}
-                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-200"
+                        className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-200"
                       />
                       {l}
                     </label>
@@ -303,7 +308,7 @@ export default function JobsSection() {
                         className={[
                           "h-10 rounded-xl border text-xs font-semibold transition",
                           active
-                            ? "bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700"
+                            ? "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700"
                             : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
                         ].join(" ")}
                       >
@@ -320,7 +325,7 @@ export default function JobsSection() {
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as any)}
-                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300"
+                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
                 >
                   <option value="relevance">Relevance</option>
                   <option value="payHigh">Pay (high)</option>
@@ -329,51 +334,45 @@ export default function JobsSection() {
 
               <button
                 type="button"
-                onClick={clearAll}
-                className="mt-6 h-11 w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold shadow-sm transition"
+                onClick={resetFilters}
+                className="mt-6 h-11 w-full rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-900 text-sm font-semibold transition"
               >
-                Clear all
+                Clear filters
               </button>
             </div>
           </aside>
 
           {/* Results */}
           <div className="lg:col-span-8">
-            {/* Results toolbar */}
+            {/* Results toolbar (kept as small clean bar) */}
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm flex items-center justify-between">
               <div className="text-sm text-slate-700">
                 <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
                 result{filtered.length === 1 ? "" : "s"}
               </div>
-              {hasFilters ? (
-                <div className="text-xs text-slate-500 hidden sm:block">
-                  Filters applied — results narrowed
-                </div>
-              ) : (
-                <div className="text-xs text-slate-500 hidden sm:block">
-                  Use filters to narrow results
-                </div>
-              )}
+              <div className="text-xs text-slate-500 hidden sm:block">
+                {hasFilters ? "Filtered results" : "Use filters to narrow results"}
+              </div>
             </div>
 
-            {/* List rows (horizontal) */}
-            <div className="mt-4 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+            {/* JOBS LIST — no “card wrapper”, just clean rows */}
+            <div className="mt-4">
               {filtered.map((job) => (
-                <button
+                <div
                   key={job.id}
-                  type="button"
-                  onClick={() => router.push(`/jobs/${job.id}`)}
-                  className="w-full text-left px-5 py-4 hover:bg-slate-50 transition border-b border-slate-100 last:border-b-0"
+                  className="group flex flex-col sm:flex-row sm:items-center gap-4 py-5 border-b border-slate-200/70 last:border-b-0"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold">
+                  <div className="flex items-start gap-4 min-w-0 flex-1">
+                    <div className="h-12 w-12 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
                       {initials(job.company)}
                     </div>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="min-w-0">
-                          <div className="text-sm font-extrabold text-slate-900 truncate">{job.title}</div>
+                          <div className="text-sm font-extrabold text-slate-900 truncate">
+                            {job.title}
+                          </div>
                           <div className="mt-1 text-sm text-slate-600 truncate">
                             {job.company} • {job.location} • {job.type}
                           </div>
@@ -396,24 +395,28 @@ export default function JobsSection() {
                         ))}
                       </div>
                     </div>
-
-                    <div className="hidden sm:flex shrink-0">
-                      <span className="inline-flex items-center justify-center h-10 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-                        View
-                      </span>
-                    </div>
                   </div>
-                </button>
+
+                  <div className="flex items-center justify-end">
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/jobs/${job.id}`)}
+                      className="inline-flex items-center justify-center h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition shadow-sm"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
               ))}
 
               {filtered.length === 0 && (
-                <div className="p-10 text-center">
+                <div className="py-16 text-center">
                   <h3 className="text-lg font-extrabold text-slate-900">No results</h3>
                   <p className="mt-2 text-sm text-slate-600">Try removing some filters.</p>
                   <button
                     type="button"
-                    onClick={clearAll}
-                    className="mt-5 h-11 px-5 rounded-2xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition"
+                    onClick={resetFilters}
+                    className="mt-5 h-11 px-5 rounded-2xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition"
                   >
                     Clear filters
                   </button>
