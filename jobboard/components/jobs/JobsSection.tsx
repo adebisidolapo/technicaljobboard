@@ -184,53 +184,46 @@ export default function JobsSection() {
 
   return (
     <main className="bg-[#F6F7FB] text-[#0B1222]">
-      {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-200/70">
-        {/* keep your bg (subtle) */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_18%_0%,rgba(99,102,241,0.10),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(900px_320px_at_85%_-10%,rgba(34,197,94,0.08),transparent_55%)]" />
-        </div>
 
-        {/* more engaging content (no startup wording) */}
-        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-8 md:pt-10 md:pb-10">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
-              Browse verified technical jobs
-            </span>
+{/* ================= HERO ================= */}
+<section className="relative overflow-hidden bg-white border-b border-slate-200/70">
+  {/* subtle background */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_18%_0%,rgba(99,102,241,0.10),transparent_60%)]" />
+    <div className="absolute inset-0 bg-[radial-gradient(900px_320px_at_85%_-10%,rgba(34,197,94,0.08),transparent_55%)]" />
+  </div>
 
-            <h1 className="mt-4 text-3xl md:text-4xl font-extrabold text-[#0B1222] leading-tight">
-              Search technical roles by skill, location, and salary — then apply fast.
-            </h1>
+  <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-8 md:pt-10 md:pb-10">
+    <div className="max-w-3xl">
+      <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
+        Browse verified technical roles
+      </span>
 
-            <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
-              Built for developers, DevOps, data, cloud, security, and product teams. Use filters to narrow
-              down results and open the full job page to apply.
-            </p>
+      <h1 className="mt-4 text-3xl md:text-4xl font-extrabold text-[#0B1222] leading-tight">
+        Browse technical jobs built for engineers and builders.
+      </h1>
 
-            {/* quick search bar (engaging + useful) */}
-            <div className="mt-5 flex flex-col sm:flex-row gap-3 max-w-2xl">
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search: react, aws, remote, devops..."
-                className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
-              />
-              <button
-                type="button"
-                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
-                className="h-12 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition"
-              >
-                Search jobs
-              </button>
-            </div>
+      <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
+        Explore roles across software engineering, DevOps, data, cloud, cybersecurity, and product.
+        Use the filters to narrow down results and apply from the job page.
+      </p>
 
-            <div className="mt-3 text-xs text-slate-500">
-              Tip: search matches <span className="font-semibold">ALL</span> keywords (more accurate filtering).
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* little stats row (replaces search bar) */}
+      <div className="mt-6 flex flex-wrap gap-3 text-xs">
+        <span className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-slate-700">
+          ✅ Verified listings
+        </span>
+        <span className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-slate-700">
+          ⚡ Fast filtering
+        </span>
+        <span className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-slate-700">
+          🎯 Technical roles only
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* ================= RESULTS + FILTER ================= */}
       <section id="latest" className="max-w-7xl mx-auto px-6 py-8 md:py-10">
@@ -301,7 +294,7 @@ export default function JobsSection() {
                   className={[
                     "mt-2 h-10 w-full rounded-xl border text-sm font-semibold transition flex items-center justify-between px-4",
                     remoteOnly
-                      ? "bg-emerald-600 text-white border-emerald-600"
+                      ? "bg-indigo-600 text-white border-indigo-600"
                       : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
                   ].join(" ")}
                 >
@@ -321,7 +314,8 @@ export default function JobsSection() {
                         name="salary"
                         checked={salaryMin === r.min}
                         onChange={() => setSalaryMin(r.min)}
-                        className="h-4 w-4 border-slate-300 text-emerald-600 focus:ring-emerald-200"
+                        className="h-4 w-4 border-slate-300 text-indigo-600 focus:ring-indigo-200
+"
                       />
                       {r.label}
                     </label>
@@ -342,7 +336,8 @@ export default function JobsSection() {
                 <select
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
+                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300
+"
                 >
                   {locations.map((l) => (
                     <option key={l} value={l}>
@@ -355,7 +350,8 @@ export default function JobsSection() {
               <button
                 type="button"
                 onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
-                className="mt-6 h-11 w-full rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
+                className="mt-6 h-11 w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700
+ text-white font-semibold transition"
               >
                 Search jobs
               </button>
