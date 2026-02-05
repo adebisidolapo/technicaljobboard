@@ -493,13 +493,14 @@ export default function Home() {
                     </div>
 
                     <div className="mt-6 flex items-center justify-between">
-                      <button
-                        type="button"
-                        onClick={() => router.push("/all-jobs")}
-                        className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] shadow-[0_14px_26px_rgba(106,111,242,0.22)] transition"
-                      >
-                        Apply
-                      </button>
+                     <button
+  type="button"
+  onClick={() => router.push("/all-jobs")}
+  className="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md"
+>
+  Apply
+</button>
+
                       <span className="text-xs text-slate-400">Posted {job.posted}</span>
                     </div>
                   </div>
@@ -558,16 +559,17 @@ export default function Home() {
                 </li>
               </ul>
 
-              <button
-                type="button"
-                onClick={() => router.push("/all-jobs")}
-                className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-sm font-semibold shadow-md transition"
-              >
-                Get Started
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-                  →
-                </span>
-              </button>
+          <button
+  type="button"
+  onClick={() => router.push("/all-jobs")}
+  className="btn-primary mt-8 inline-flex items-center gap-3 rounded-2xl px-6 py-3 text-sm font-semibold shadow-md"
+>
+  Get Started
+  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+    →
+  </span>
+</button>
+
             </div>
           </div>
         </div>

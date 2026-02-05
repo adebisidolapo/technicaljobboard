@@ -104,3 +104,15 @@ body {
     transition: none
   }
 }
+/* =========================
+   Primary Indigo Button
+========================= */
+.btn-primary {
+  background-color: #4f46e5; /* indigo-600 */
+  color: #ffffff;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca; /* indigo-700 */
+}
