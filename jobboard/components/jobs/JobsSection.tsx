@@ -1,8 +1,19 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Job } from "@/components/jobs/JobCard";
+
+type Job = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  pay: string;
+  posted: string;
+  tags: string[];
+  description: string;
+};
 
 const JOBS: Job[] = [
   {
@@ -73,9 +84,8 @@ const JOBS: Job[] = [
   },
 ];
 
-const TYPE_OPTIONS = ["Full-time", "Contract", "Part-time"];
-const LOCATION_OPTIONS = ["Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
-const PAY_BUCKETS = [
+const JOB_TYPES = ["Full-time", "Contract", "Part-time", "Internship"];
+const SALARY_RANGES = [
   { label: "$100k+", min: 100000 },
   { label: "$120k+", min: 120000 },
   { label: "$140k+", min: 140000 },
@@ -85,173 +95,224 @@ const PAY_BUCKETS = [
 function norm(s: string) {
   return s.toLowerCase().trim();
 }
-function splitWords(s: string) {
-  return norm(s).split(/\s+/).filter(Boolean);
+function initials(name: string) {
+  const parts = name.split(" ").filter(Boolean);
+  return ((parts[0]?.[0] ?? "C") + (parts[1]?.[0] ?? "")).toUpperCase();
 }
-function payLowerBound(raw: string): number {
-  const t = norm(raw).replace(/,/g, "");
-  const m = t.match(/(\d+(\.\d+)?)(k)?/);
+function parseMinPay(pay: string) {
+  // "$120k – $160k" -> 120000
+  const m = pay.replace(/,/g, "").match(/(\d+)\s*k/i);
   if (!m) return 0;
-  const base = Number(m[1]);
-  if (Number.isNaN(base)) return 0;
-  return m[3] ? Math.round(base * 1000) : Math.round(base);
-}
-function jobHaystack(job: Job) {
-  return norm(
-    [
-      job.title,
-      job.company,
-      job.location,
-      job.type,
-      job.pay,
-      job.tags?.join(" ") ?? "",
-      job.description ?? "",
-    ].join(" ")
-  );
+  return Number(m[1]) * 1000;
 }
 function toggle(arr: string[], v: string) {
   return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v];
 }
-function initials(name: string) {
-  const parts = name.split(" ").filter(Boolean);
-  const a = parts[0]?.[0] ?? "C";
-  const b = parts[1]?.[0] ?? "";
-  return (a + b).toUpperCase();
-}
 
-export default function JobsSection() {
+export default function AllJobsPage() {
   const router = useRouter();
 
+  // Filters
   const [q, setQ] = useState("");
   const [types, setTypes] = useState<string[]>([]);
-  const [locs, setLocs] = useState<string[]>([]);
-  const [payMin, setPayMin] = useState<number | null>(null);
-  const [sort, setSort] = useState<"relevance" | "payHigh">("relevance");
+  const [remoteOnly, setRemoteOnly] = useState(false);
+  const [salaryMin, setSalaryMin] = useState<number | null>(null);
+  const [location, setLocation] = useState<string>("Anywhere");
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const q0 = params.get("q") ?? "";
-    const loc0 = params.get("loc");
-    setQ(q0);
-    if (loc0 && loc0.trim() && loc0 !== "All") setLocs([loc0]);
+  const locations = useMemo(() => {
+    const unique = Array.from(new Set(JOBS.map((j) => j.location)));
+    return ["Anywhere", ...unique];
   }, []);
 
   const filtered = useMemo(() => {
-    const words = splitWords(q);
+    const words = norm(q).split(/\s+/).filter(Boolean);
 
-    let list = JOBS.filter((job) => {
-      const h = jobHaystack(job);
+    return JOBS.filter((job) => {
+      const hay = norm(
+        [job.title, job.company, job.location, job.type, job.tags.join(" "), job.description].join(" ")
+      );
 
-      // keyword: ALL words must match (feels more “narrow”)
-      if (words.length && !words.every((w) => h.includes(w))) return false;
+      // Narrowed search: ALL words must match
+      if (words.length && !words.every((w) => hay.includes(w))) return false;
 
       if (types.length && !types.includes(job.type)) return false;
 
-      if (locs.length) {
-        const jl = norm(job.location);
-        const ok = locs.some((l) => jl.includes(norm(l)));
-        if (!ok) return false;
-      }
+      if (remoteOnly && !norm(job.location).includes("remote")) return false;
 
-      if (payMin != null) {
-        if (payLowerBound(job.pay) < payMin) return false;
-      }
+      if (salaryMin != null && parseMinPay(job.pay) < salaryMin) return false;
+
+      if (location !== "Anywhere" && job.location !== location) return false;
 
       return true;
     });
+  }, [q, types, remoteOnly, salaryMin, location]);
 
-    if (sort === "payHigh") {
-      list = list.slice().sort((a, b) => payLowerBound(b.pay) - payLowerBound(a.pay));
-    } else {
-      const score = (job: Job) => {
-        const h = jobHaystack(job);
-        let s = 0;
-        for (const w of words) if (h.includes(w)) s += 3;
-        if (norm(job.location).includes("remote")) s += 1;
-        return s;
-      };
-      list = list.slice().sort((a, b) => score(b) - score(a));
-    }
-
-    return list;
-  }, [q, types, locs, payMin, sort]);
-
-  const hasFilters = q.trim() || types.length || locs.length || payMin != null;
-
-  const resetFilters = () => {
+  const clearFilters = () => {
     setQ("");
     setTypes([]);
-    setLocs([]);
-    setPayMin(null);
-    setSort("relevance");
-    window.history.replaceState({}, "", "/all-jobs");
-  };
-
-  const applySearch = () => {
-    const params = new URLSearchParams();
-    if (q.trim()) params.set("q", q.trim());
-    if (locs.length === 1) params.set("loc", locs[0]);
-    const qs = params.toString();
-    window.history.replaceState({}, "", qs ? `/all-jobs?${qs}` : "/all-jobs");
+    setRemoteOnly(false);
+    setSalaryMin(null);
+    setLocation("Anywhere");
   };
 
   return (
-    <section className="relative">
-      {/* subtle background */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 -left-24 h-[360px] w-[360px] rounded-full bg-emerald-200/30 blur-3xl" />
-        <div className="absolute -bottom-28 right-[-120px] h-[420px] w-[420px] rounded-full bg-indigo-200/20 blur-3xl" />
-      </div>
+    <main className="bg-[#F5F7FB] text-[#0B1222]">
+      {/* ================= HERO (like screenshot) ================= */}
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-200/70 via-sky-200/60 to-emerald-200/60 blur-3xl" />
+          <div className="absolute -bottom-40 -left-36 h-[520px] w-[520px] rounded-full bg-indigo-200/40 blur-3xl" />
+          <div className="absolute -bottom-44 right-[-160px] h-[560px] w-[560px] rounded-full bg-emerald-200/30 blur-3xl" />
+        </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* Top search line (clean) */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
-            <div className="text-sm font-semibold text-slate-700">Browse opportunities</div>
-            <div className="mt-1 text-sm text-slate-500">
-              Filter by type, location, salary — then apply in one click.
+        <div className="relative max-w-7xl mx-auto px-6 pt-16 pb-10">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+              Join the best tech startups in the{" "}
+              <span className="text-indigo-600">industry</span>
+            </h1>
+            <p className="mt-4 text-sm md:text-base text-slate-600 leading-relaxed">
+              Discover vetted technical roles, transparent salary ranges, and trusted employers — all in one place.
+            </p>
+
+            <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
+              <button
+                type="button"
+                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
+                className="h-12 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-sm transition"
+              >
+                Browse jobs
+              </button>
+
+              <div className="flex items-center gap-3 text-xs text-slate-500">
+                <div className="flex -space-x-2">
+                  <div className="h-8 w-8 rounded-full bg-white border border-slate-200 shadow-sm" />
+                  <div className="h-8 w-8 rounded-full bg-white border border-slate-200 shadow-sm" />
+                  <div className="h-8 w-8 rounded-full bg-white border border-slate-200 shadow-sm" />
+                </div>
+                Reach 100k+ professionals
+              </div>
             </div>
           </div>
 
-          <div className="flex w-full md:w-[560px] gap-2">
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search by title, company, skill…"
-              className="h-11 flex-1 rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300 shadow-sm"
-            />
-            <button
-              type="button"
-              onClick={applySearch}
-              className="h-11 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-sm font-semibold shadow-sm"
-            >
-              Search
-            </button>
+          {/* Trusted by row */}
+          <div className="mt-10 border-t border-slate-200/70 pt-6">
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-3 text-slate-400 text-sm">
+              <span className="text-xs font-semibold text-slate-500">Trusted by</span>
+              <span>facebook</span>
+              <span>tinder</span>
+              <span>airbnb</span>
+              <span>HubSpot</span>
+              <span>amazon</span>
+              <span>VISA</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= LATEST JOBS + FILTER (side by side) ================= */}
+      <section id="latest" className="max-w-7xl mx-auto px-6 pb-16">
+        <div className="flex items-center justify-between mt-2 mb-4">
+          <h2 className="text-lg md:text-xl font-extrabold">Latest jobs</h2>
+          <div className="text-xs text-slate-500">
+            Showing <span className="font-semibold text-slate-900">{filtered.length}</span> results
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Filters */}
-          <aside className="lg:col-span-4">
-            <div className="lg:sticky lg:top-6 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur p-5 shadow-sm">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-extrabold text-slate-900">Refine results</h2>
-                {hasFilters ? (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Jobs list */}
+          <div className="lg:col-span-8">
+            <div className="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+              {filtered.map((job, idx) => (
+                <div
+                  key={job.id}
+                  className={[
+                    "flex items-center justify-between gap-4 px-5 py-5 border-b border-slate-200/70 last:border-b-0 transition",
+                    idx === 0 ? "bg-indigo-50/60" : "hover:bg-slate-50",
+                  ].join(" ")}
+                >
+                  <div className="flex items-start gap-4 min-w-0">
+                    <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
+                      {initials(job.company)}
+                    </div>
+
+                    <div className="min-w-0">
+                      <div className="text-sm font-extrabold truncate">{job.title}</div>
+                      <div className="mt-1 text-xs text-slate-500 truncate">
+                        {job.company} • {job.pay}
+                      </div>
+
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+                          {job.type}
+                        </span>
+                        <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+                          {job.location}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 shrink-0">
+                    <span className="hidden sm:inline text-xs text-slate-400">{job.posted}</span>
+
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/jobs/${job.id}`)}
+                      className="h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition"
+                    >
+                      Apply now →
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              {filtered.length === 0 && (
+                <div className="p-10 text-center">
+                  <div className="text-lg font-extrabold">No results</div>
+                  <div className="mt-2 text-sm text-slate-600">Try removing filters or changing keywords.</div>
                   <button
                     type="button"
-                    onClick={resetFilters}
-                    className="text-xs font-semibold text-emerald-700 hover:text-emerald-800"
+                    onClick={clearFilters}
+                    className="mt-5 h-11 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
                   >
-                    Reset
+                    Reset filters
                   </button>
-                ) : null}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Filters */}
+          <aside className="lg:col-span-4">
+            <div className="rounded-2xl bg-white border border-slate-200 shadow-sm p-5">
+              <div className="flex items-center justify-between">
+                <div className="text-sm font-extrabold">Filters</div>
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                >
+                  Clear
+                </button>
               </div>
 
-              {/* Type */}
+              {/* Search */}
+              <div className="mt-4">
+                <div className="text-xs font-semibold text-slate-600">Search</div>
+                <input
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Title, company, skill…"
+                  className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
+                />
+              </div>
+
+              {/* Job Type */}
               <div className="mt-5">
-                <div className="text-xs font-semibold text-slate-700">Job type</div>
+                <div className="text-xs font-semibold text-slate-600">Job Type</div>
                 <div className="mt-3 space-y-2">
-                  {TYPE_OPTIONS.map((t) => (
+                  {JOB_TYPES.map((t) => (
                     <label key={t} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
                       <input
                         type="checkbox"
@@ -265,166 +326,78 @@ export default function JobsSection() {
                 </div>
               </div>
 
-              {/* Location */}
-              <div className="mt-6">
-                <div className="text-xs font-semibold text-slate-700">Location</div>
+              {/* Remote Only */}
+              <div className="mt-5">
+                <div className="text-xs font-semibold text-slate-600">Remote Only</div>
+                <button
+                  type="button"
+                  onClick={() => setRemoteOnly((v) => !v)}
+                  className={[
+                    "mt-2 h-10 w-full rounded-xl border text-sm font-semibold transition flex items-center justify-between px-4",
+                    remoteOnly
+                      ? "bg-emerald-600 text-white border-emerald-600"
+                      : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
+                  ].join(" ")}
+                >
+                  <span>{remoteOnly ? "Enabled" : "Disabled"}</span>
+                  <span className="text-xs opacity-90">{remoteOnly ? "ON" : "OFF"}</span>
+                </button>
+              </div>
+
+              {/* Salary */}
+              <div className="mt-5">
+                <div className="text-xs font-semibold text-slate-600">Salary Range</div>
                 <div className="mt-3 space-y-2">
-                  {LOCATION_OPTIONS.map((l) => (
-                    <label key={l} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
+                  {SALARY_RANGES.map((r) => (
+                    <label key={r.label} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
                       <input
-                        type="checkbox"
-                        checked={locs.includes(l)}
-                        onChange={() => setLocs((x) => toggle(x, l))}
-                        className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-200"
+                        type="radio"
+                        name="salary"
+                        checked={salaryMin === r.min}
+                        onChange={() => setSalaryMin(r.min)}
+                        className="h-4 w-4 border-slate-300 text-emerald-600 focus:ring-emerald-200"
                       />
-                      {l}
+                      {r.label}
                     </label>
                   ))}
+                  <button
+                    type="button"
+                    onClick={() => setSalaryMin(null)}
+                    className="text-xs font-semibold text-slate-500 hover:text-slate-700 mt-2"
+                  >
+                    No minimum
+                  </button>
                 </div>
               </div>
 
-              {/* Pay */}
-              <div className="mt-6">
-                <div className="text-xs font-semibold text-slate-700">Minimum pay</div>
-                <div className="mt-3 grid grid-cols-2 gap-2">
-                  {PAY_BUCKETS.map((b) => {
-                    const active = payMin === b.min;
-                    return (
-                      <button
-                        key={b.label}
-                        type="button"
-                        onClick={() => setPayMin(active ? null : b.min)}
-                        className={[
-                          "h-10 rounded-xl border text-xs font-semibold transition",
-                          active
-                            ? "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700"
-                            : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
-                        ].join(" ")}
-                      >
-                        {b.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Sort */}
-              <div className="mt-6">
-                <div className="text-xs font-semibold text-slate-700">Sort</div>
+              {/* Location */}
+              <div className="mt-5">
+                <div className="text-xs font-semibold text-slate-600">Location</div>
                 <select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as any)}
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
                   className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
                 >
-                  <option value="relevance">Relevance</option>
-                  <option value="payHigh">Pay (high)</option>
+                  {locations.map((l) => (
+                    <option key={l} value={l}>
+                      {l}
+                    </option>
+                  ))}
                 </select>
               </div>
 
+              {/* CTA */}
               <button
                 type="button"
-                onClick={resetFilters}
-                className="mt-6 h-11 w-full rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-900 text-sm font-semibold transition"
+                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
+                className="mt-6 h-11 w-full rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
               >
-                Clear filters
+                Apply filters
               </button>
             </div>
           </aside>
-
-          {/* Results */}
-          <div className="lg:col-span-8">
-            {/* Results meta bar */}
-            <div className="rounded-2xl border border-slate-200 bg-white/90 backdrop-blur p-4 shadow-sm flex items-center justify-between">
-              <div className="text-sm text-slate-700">
-                Showing{" "}
-                <span className="font-extrabold text-slate-900">{filtered.length}</span>{" "}
-                job{filtered.length === 1 ? "" : "s"}
-                {hasFilters ? <span className="text-slate-500"> • filtered</span> : null}
-              </div>
-
-              <div className="text-xs text-slate-500 hidden sm:block">
-                Tip: try “remote react” or “aws platform”
-              </div>
-            </div>
-
-            {/* Job rows (clean, not cards) */}
-            <div className="mt-3 rounded-2xl border border-slate-200 bg-white/85 backdrop-blur shadow-sm overflow-hidden">
-              {filtered.map((job) => (
-                <div
-                  key={job.id}
-                  className="group flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-5 border-b border-slate-200/70 last:border-b-0 hover:bg-slate-50/60 transition"
-                >
-                  <div className="flex items-start gap-4 min-w-0 flex-1">
-                    <div className="h-12 w-12 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
-                      {initials(job.company)}
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                        <div className="min-w-0">
-                          <div className="text-sm font-extrabold text-slate-900 truncate">
-                            {job.title}
-                          </div>
-                          <div className="mt-1 text-sm text-slate-600 truncate">
-                            {job.company} • {job.location} • {job.type}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-3 shrink-0">
-                          <div className="text-sm font-semibold text-slate-900">{job.pay}</div>
-                          <span className="text-xs text-slate-400">{job.posted}</span>
-                        </div>
-                      </div>
-
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {(job.tags ?? []).slice(0, 5).map((t) => (
-                          <span
-                            key={t}
-                            className="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-700"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-end">
-                    <button
-                      type="button"
-                      onClick={() => router.push(`/jobs/${job.id}`)}
-                      className="inline-flex items-center justify-center h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition shadow-sm"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </div>
-              ))}
-
-              {filtered.length === 0 && (
-                <div className="py-16 text-center">
-                  <h3 className="text-lg font-extrabold text-slate-900">No matches</h3>
-                  <p className="mt-2 text-sm text-slate-600">
-                    Try removing some filters or changing keywords.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={resetFilters}
-                    className="mt-5 h-11 px-5 rounded-2xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition"
-                  >
-                    Clear filters
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* small footer hint */}
-            <div className="mt-3 text-xs text-slate-500">
-              Results update instantly as you change filters.
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 }
