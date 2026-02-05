@@ -100,7 +100,6 @@ function initials(name: string) {
   return ((parts[0]?.[0] ?? "C") + (parts[1]?.[0] ?? "")).toUpperCase();
 }
 function parseMinPay(pay: string) {
-  // "$120k – $160k" -> 120000
   const m = pay.replace(/,/g, "").match(/(\d+)\s*k/i);
   if (!m) return 0;
   return Number(m[1]) * 1000;
@@ -129,7 +128,14 @@ export default function AllJobsPage() {
 
     return JOBS.filter((job) => {
       const hay = norm(
-        [job.title, job.company, job.location, job.type, job.tags.join(" "), job.description].join(" ")
+        [
+          job.title,
+          job.company,
+          job.location,
+          job.type,
+          job.tags.join(" "),
+          job.description,
+        ].join(" ")
       );
 
       // Narrowed search: ALL words must match
@@ -157,120 +163,108 @@ export default function AllJobsPage() {
 
   return (
     <main className="bg-[#F5F7FB] text-[#0B1222]">
-      {/* ================= HERO (like screenshot) ================= */}
-      <section className="relative overflow-hidden">
+      {/* ================= HERO ================= */}
+      <section className="relative overflow-hidden bg-white">
+        {/* soft background (indigo + faint green) */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-24 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-200/70 via-sky-200/60 to-emerald-200/60 blur-3xl" />
-          <div className="absolute -bottom-40 -left-36 h-[520px] w-[520px] rounded-full bg-indigo-200/40 blur-3xl" />
-          <div className="absolute -bottom-44 right-[-160px] h-[560px] w-[560px] rounded-full bg-emerald-200/30 blur-3xl" />
+          <div className="absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-[rgba(99,102,241,0.16)] blur-3xl" />
+          <div className="absolute -top-10 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(34,197,94,0.10)] blur-3xl" />
+          <div className="absolute bottom-[-180px] left-[20%] h-[520px] w-[520px] rounded-full bg-[rgba(99,102,241,0.10)] blur-3xl" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 pt-16 pb-10">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-              Join the best tech startups in the{" "}
-              <span className="text-indigo-600">industry</span>
+        {/* moved UP */}
+        <div className="relative max-w-7xl mx-auto px-6 pt-2 pb-6 md:pt-4 md:pb-8">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
+              Browse verified technical roles
+            </span>
+
+            <h1 className="mt-4 text-3xl md:text-4xl font-extrabold text-[#0B1222] leading-tight">
+              Find your next technical role — faster, cleaner, and transparent.
             </h1>
-            <p className="mt-4 text-sm md:text-base text-slate-600 leading-relaxed">
-              Discover vetted technical roles, transparent salary ranges, and trusted employers — all in one place.
+
+            <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
+              A technical job site built for developers, engineers, data, cloud,
+              security, and product teams. Filter by role type, location, and
+              salary range — then apply in one click.
             </p>
-
-            <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
-              <button
-                type="button"
-                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
-                className="h-12 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-sm transition"
-              >
-                Browse jobs
-              </button>
-
-              <div className="flex items-center gap-3 text-xs text-slate-500">
-                <div className="flex -space-x-2">
-                  <div className="h-8 w-8 rounded-full bg-white border border-slate-200 shadow-sm" />
-                  <div className="h-8 w-8 rounded-full bg-white border border-slate-200 shadow-sm" />
-                  <div className="h-8 w-8 rounded-full bg-white border border-slate-200 shadow-sm" />
-                </div>
-                Reach 100k+ professionals
-              </div>
-            </div>
-          </div>
-
-          {/* Trusted by row */}
-          <div className="mt-10 border-t border-slate-200/70 pt-6">
-            <div className="flex flex-wrap items-center gap-x-10 gap-y-3 text-slate-400 text-sm">
-              <span className="text-xs font-semibold text-slate-500">Trusted by</span>
-              <span>facebook</span>
-              <span>tinder</span>
-              <span>airbnb</span>
-              <span>HubSpot</span>
-              <span>amazon</span>
-              <span>VISA</span>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* ================= LATEST JOBS + FILTER (side by side) ================= */}
+      {/* ================= LATEST JOBS + FILTER ================= */}
       <section id="latest" className="max-w-7xl mx-auto px-6 pb-16">
-        <div className="flex items-center justify-between mt-2 mb-4">
-          <h2 className="text-lg md:text-xl font-extrabold">Latest jobs</h2>
+        <div className="flex items-center justify-between mt-3 mb-4">
+          <div>
+            <h2 className="text-lg md:text-xl font-extrabold">Latest jobs</h2>
+            <p className="mt-1 text-xs text-slate-500">
+              Search across title, company, location, tags and description.
+            </p>
+          </div>
+
           <div className="text-xs text-slate-500">
-            Showing <span className="font-semibold text-slate-900">{filtered.length}</span> results
+            Showing{" "}
+            <span className="font-semibold text-slate-900">
+              {filtered.length}
+            </span>{" "}
+            results
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Jobs list */}
           <div className="lg:col-span-8">
-            <div className="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
-              {filtered.map((job, idx) => (
+            <div className="space-y-3">
+              {filtered.map((job) => (
                 <div
                   key={job.id}
-                  className={[
-                    "flex items-center justify-between gap-4 px-5 py-5 border-b border-slate-200/70 last:border-b-0 transition",
-                    idx === 0 ? "bg-indigo-50/60" : "hover:bg-slate-50",
-                  ].join(" ")}
+                  className="bg-white/80 backdrop-blur rounded-2xl border border-slate-200/80 shadow-sm hover:shadow transition px-5 py-5"
                 >
-                  <div className="flex items-start gap-4 min-w-0">
-                    <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
-                      {initials(job.company)}
-                    </div>
-
-                    <div className="min-w-0">
-                      <div className="text-sm font-extrabold truncate">{job.title}</div>
-                      <div className="mt-1 text-xs text-slate-500 truncate">
-                        {job.company} • {job.pay}
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-start gap-4 min-w-0">
+                      <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
+                        {initials(job.company)}
                       </div>
 
-                      <div className="mt-2 flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
-                          {job.type}
-                        </span>
-                        <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
-                          {job.location}
-                        </span>
+                      <div className="min-w-0">
+                        <div className="text-sm font-extrabold truncate">
+                          {job.title}
+                        </div>
+                        <div className="mt-1 text-xs text-slate-500 truncate">
+                          {job.company} • {job.pay}
+                        </div>
+
+                        <div className="mt-2 flex flex-wrap items-center gap-2">
+                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+                            {job.type}
+                          </span>
+                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+                            {job.location}
+                          </span>
+                          <span className="text-[11px] px-2 py-1 rounded-full bg-slate-100 text-slate-500">
+                            {job.posted}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 shrink-0">
-                    <span className="hidden sm:inline text-xs text-slate-400">{job.posted}</span>
 
                     <button
                       type="button"
                       onClick={() => router.push(`/jobs/${job.id}`)}
-                      className="h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition"
+                      className="h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition shrink-0"
                     >
-                      Apply now →
+                      Apply →
                     </button>
                   </div>
                 </div>
               ))}
 
               {filtered.length === 0 && (
-                <div className="p-10 text-center">
+                <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center">
                   <div className="text-lg font-extrabold">No results</div>
-                  <div className="mt-2 text-sm text-slate-600">Try removing filters or changing keywords.</div>
+                  <div className="mt-2 text-sm text-slate-600">
+                    Try removing filters or changing keywords.
+                  </div>
                   <button
                     type="button"
                     onClick={clearFilters}
@@ -285,21 +279,23 @@ export default function AllJobsPage() {
 
           {/* Filters */}
           <aside className="lg:col-span-4">
-            <div className="rounded-2xl bg-white border border-slate-200 shadow-sm p-5">
+            <div className="rounded-2xl bg-white/80 backdrop-blur border border-slate-200/80 shadow-sm p-5">
               <div className="flex items-center justify-between">
                 <div className="text-sm font-extrabold">Filters</div>
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                  className="text-xs font-semibold text-emerald-700 hover:text-emerald-800"
                 >
-                  Clear
+                  Reset
                 </button>
               </div>
 
               {/* Search */}
               <div className="mt-4">
-                <div className="text-xs font-semibold text-slate-600">Search</div>
+                <div className="text-xs font-semibold text-slate-600">
+                  Search
+                </div>
                 <input
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
@@ -310,10 +306,15 @@ export default function AllJobsPage() {
 
               {/* Job Type */}
               <div className="mt-5">
-                <div className="text-xs font-semibold text-slate-600">Job Type</div>
+                <div className="text-xs font-semibold text-slate-600">
+                  Job Type
+                </div>
                 <div className="mt-3 space-y-2">
                   {JOB_TYPES.map((t) => (
-                    <label key={t} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
+                    <label
+                      key={t}
+                      className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer"
+                    >
                       <input
                         type="checkbox"
                         checked={types.includes(t)}
@@ -328,7 +329,9 @@ export default function AllJobsPage() {
 
               {/* Remote Only */}
               <div className="mt-5">
-                <div className="text-xs font-semibold text-slate-600">Remote Only</div>
+                <div className="text-xs font-semibold text-slate-600">
+                  Remote Only
+                </div>
                 <button
                   type="button"
                   onClick={() => setRemoteOnly((v) => !v)}
@@ -340,16 +343,23 @@ export default function AllJobsPage() {
                   ].join(" ")}
                 >
                   <span>{remoteOnly ? "Enabled" : "Disabled"}</span>
-                  <span className="text-xs opacity-90">{remoteOnly ? "ON" : "OFF"}</span>
+                  <span className="text-xs opacity-90">
+                    {remoteOnly ? "ON" : "OFF"}
+                  </span>
                 </button>
               </div>
 
               {/* Salary */}
               <div className="mt-5">
-                <div className="text-xs font-semibold text-slate-600">Salary Range</div>
+                <div className="text-xs font-semibold text-slate-600">
+                  Salary Range
+                </div>
                 <div className="mt-3 space-y-2">
                   {SALARY_RANGES.map((r) => (
-                    <label key={r.label} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
+                    <label
+                      key={r.label}
+                      className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer"
+                    >
                       <input
                         type="radio"
                         name="salary"
@@ -372,7 +382,9 @@ export default function AllJobsPage() {
 
               {/* Location */}
               <div className="mt-5">
-                <div className="text-xs font-semibold text-slate-600">Location</div>
+                <div className="text-xs font-semibold text-slate-600">
+                  Location
+                </div>
                 <select
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -389,7 +401,11 @@ export default function AllJobsPage() {
               {/* CTA */}
               <button
                 type="button"
-                onClick={() => document.getElementById("latest")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() =>
+                  document
+                    .getElementById("latest")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
                 className="mt-6 h-11 w-full rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
               >
                 Apply filters
