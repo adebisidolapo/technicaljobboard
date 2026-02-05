@@ -164,32 +164,33 @@ export default function AllJobsPage() {
 
   return (
     <main className="bg-[#F6F7FB] text-[#0B1222]">
-      {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-200/70">
-        {/* subtle, not loud */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_18%_0%,rgba(99,102,241,0.10),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(900px_320px_at_85%_-10%,rgba(34,197,94,0.08),transparent_55%)]" />
-        </div>
+    {/* ================= HERO ================= */}
+<section className="relative overflow-hidden bg-white border-b border-slate-200/70">
+  {/* subtle background only (no loud blobs) */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_18%_0%,rgba(99,102,241,0.10),transparent_60%)]" />
+    <div className="absolute inset-0 bg-[radial-gradient(900px_320px_at_85%_-10%,rgba(34,197,94,0.08),transparent_55%)]" />
+  </div>
 
-        {/* hero moved UP and tightened */}
-        <div className="relative max-w-7xl mx-auto px-6 pt-6 pb-7 md:pt-8 md:pb-9">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
-              Verified technical roles
-            </span>
+  {/* keep YOUR text/content below exactly how you had it */}
+  <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-8 md:pt-10 md:pb-10">
+    <div className="max-w-3xl">
+      <span className="inline-flex items-center rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 text-xs font-semibold">
+        Browse verified technical roles
+      </span>
 
-            <h1 className="mt-4 text-3xl md:text-4xl font-extrabold leading-tight">
-              Explore technical jobs you can actually trust.
-            </h1>
+      <h1 className="mt-4 text-3xl md:text-4xl font-extrabold text-[#0B1222] leading-tight">
+        Find your next technical role — faster, cleaner, and transparent.
+      </h1>
 
-            <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
-              A technical job site for developers, cloud, data, security, QA, and product teams.
-              Filter tightly by type, location, and salary — then apply in one click.
-            </p>
-          </div>
-        </div>
-      </section>
+      <p className="mt-3 text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
+        A technical job site built for developers, engineers, data, cloud, security, and product teams.
+        Filter by role type, location, and salary range — then apply in one click.
+      </p>
+    </div>
+  </div>
+</section>
+
 
       {/* ================= RESULTS + FILTER ================= */}
       <section id="latest" className="max-w-7xl mx-auto px-6 py-8 md:py-10">
