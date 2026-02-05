@@ -72,9 +72,7 @@ const JOBS: Job[] = [
   },
 ];
 
-const TYPES = ["All", "Full-time", "Contract", "Part-time"];
-const LOCATIONS = ["All", "Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
-
+// helpers
 function norm(s: string) {
   return s.toLowerCase().trim();
 }
@@ -84,16 +82,16 @@ function words(s: string) {
 }
 
 function payToNumber(raw: string): number {
-  // supports: "$120k – $160k", "$120,000", "120000"
+  // supports: "$120k – $160k", "$120,000", "120000", "120k"
   const t = norm(raw).replace(/,/g, "");
-  const m = t.match(/(\d+(\.\d+)?)(k)?/); // first numeric token
+  const m = t.match(/(\d+(\.\d+)?)(k)?/);
   if (!m) return 0;
   const base = Number(m[1]);
   if (Number.isNaN(base)) return 0;
   return m[3] ? Math.round(base * 1000) : Math.round(base);
 }
 
-function jobHaystack(job: Job) {
+function haystack(job: Job) {
   return norm(
     [
       job.title,
@@ -101,290 +99,305 @@ function jobHaystack(job: Job) {
       job.location,
       job.type,
       job.pay,
-      job.posted,
       job.tags.join(" "),
       job.description,
     ].join(" ")
   );
 }
 
-export default function JobsSection() {
-  const [q, setQ] = useState("");
-  const [loc, setLoc] = useState("All");
-  const [type, setType] = useState<string>("All");
-  const [cat, setCat] = useState("");
-  const [minPay, setMinPay] = useState("");
-  const [remoteOnly, setRemoteOnly] = useState(false);
-  const [sort, setSort] = useState<"relevance" | "newest" | "payHigh">("relevance");
+const TYPE_OPTIONS = ["Full-time", "Contract", "Part-time"];
+const LOCATION_OPTIONS = ["Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
+const PAY_BUCKETS = [
+  { label: "$100k+", min: 100000 },
+  { label: "$120k+", min: 120000 },
+  { label: "$140k+", min: 140000 },
+  { label: "$160k+", min: 160000 },
+];
 
-  // read query params (?q=...&loc=...&cat=...)
+export default function JobsSection() {
+  // main search
+  const [q, setQ] = useState("");
+
+  // narrowed filters
+  const [type, setType] = useState<string[]>([]);
+  const [location, setLocation] = useState<string[]>([]);
+  const [payMin, setPayMin] = useState<number | null>(null);
+  const [sort, setSort] = useState<"relevance" | "payHigh">("relevance");
+
+  // read query params (?q=...&loc=...&cat=...) - keep q + loc only
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const q0 = params.get("q") ?? "";
-    const loc0 = params.get("loc") ?? "All";
-    const cat0 = params.get("cat") ?? "";
+    const loc0 = params.get("loc");
     setQ(q0);
-    setLoc(loc0 || "All");
-    setCat(cat0);
+
+    if (loc0 && loc0.trim() && loc0 !== "All") {
+      setLocation([loc0]);
+    }
   }, []);
 
   const filtered = useMemo(() => {
     const qWords = words(q);
-    const catWords = words(cat);
-
-    const min = minPay.trim() ? payToNumber(minPay) : 0;
 
     let list = JOBS.filter((job) => {
-      const h = jobHaystack(job);
+      const h = haystack(job);
 
-      // keyword: ALL query words must appear (better filtering)
+      // keyword: ALL words must match (narrower / better)
       if (qWords.length && !qWords.every((w) => h.includes(w))) return false;
 
-      // category: if provided, require ANY category word
-      if (catWords.length) {
-        const catHay = norm([job.title, job.description, job.tags.join(" "), job.company].join(" "));
-        if (!catWords.some((w) => catHay.includes(w))) return false;
+      // type checkboxes
+      if (type.length && !type.includes(job.type)) return false;
+
+      // location checkboxes
+      if (location.length) {
+        const jl = norm(job.location);
+        const ok = location.some((l) => jl.includes(norm(l)));
+        if (!ok) return false;
       }
 
-      // location
-      if (loc !== "All") {
-        if (!norm(job.location).includes(norm(loc))) return false;
-      }
-
-      // remote toggle
-      if (remoteOnly) {
-        if (!norm(job.location).includes("remote")) return false;
-      }
-
-      // type
-      if (type !== "All") {
-        if (job.type !== type) return false;
-      }
-
-      // min pay (compares against the LOWER bound of pay range)
-      if (min > 0) {
+      // pay bucket
+      if (payMin != null) {
         const lower = payToNumber(job.pay);
-        if (lower < min) return false;
+        if (lower < payMin) return false;
       }
 
       return true;
     });
 
-    // sorting
     if (sort === "payHigh") {
       list = list.slice().sort((a, b) => payToNumber(b.pay) - payToNumber(a.pay));
-    } else if (sort === "newest") {
-      // your "posted" is text; keep stable for now. (If you later store actual dates, we’ll sort by date)
-      list = list.slice();
-    } else {
-      // relevance: simple scoring by keyword matches
+    }
+
+    // relevance sort: basic scoring (keyword matches)
+    if (sort === "relevance") {
       const score = (job: Job) => {
-        const h = jobHaystack(job);
+        const h = haystack(job);
         let s = 0;
-        for (const w of qWords) if (h.includes(w)) s += 2;
-        for (const w of catWords) if (h.includes(w)) s += 1;
-        if (remoteOnly && norm(job.location).includes("remote")) s += 1;
+        for (const w of qWords) if (h.includes(w)) s += 3;
+        if (norm(job.location).includes("remote")) s += 1;
         return s;
       };
       list = list.slice().sort((a, b) => score(b) - score(a));
     }
 
     return list;
-  }, [q, loc, type, cat, minPay, remoteOnly, sort]);
+  }, [q, type, location, payMin, sort]);
 
   const clearAll = () => {
     setQ("");
-    setLoc("All");
-    setType("All");
-    setCat("");
-    setMinPay("");
-    setRemoteOnly(false);
+    setType([]);
+    setLocation([]);
+    setPayMin(null);
     setSort("relevance");
     window.history.replaceState({}, "", "/all-jobs");
   };
 
-  const activeChips = [
-    q.trim() ? { k: "q", label: `Keyword: ${q.trim()}` } : null,
-    cat.trim() ? { k: "cat", label: `Category: ${cat.trim()}` } : null,
-    loc !== "All" ? { k: "loc", label: `Location: ${loc}` } : null,
-    type !== "All" ? { k: "type", label: `Type: ${type}` } : null,
-    minPay.trim() ? { k: "minPay", label: `Min pay: ${minPay.trim()}` } : null,
-    remoteOnly ? { k: "remote", label: "Remote only" } : null,
-  ].filter(Boolean) as { k: string; label: string }[];
+  const toggle = (arr: string[], value: string) =>
+    arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value];
 
-  const input =
-    "h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none " +
-    "focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300";
-
-  const pillBase =
-    "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold";
+  const Chip = ({ label, onRemove }: { label: string; onRemove: () => void }) => (
+    <button
+      type="button"
+      onClick={onRemove}
+      className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-100 transition"
+      aria-label={`Remove filter ${label}`}
+      title="Remove"
+    >
+      {label}
+      <span className="text-indigo-600">✕</span>
+    </button>
+  );
 
   return (
     <section className="bg-[#F4F6FB]">
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        {/* Top bar */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">All Jobs</h1>
             <p className="mt-2 text-sm text-slate-600">
-              Filter cleanly by keyword, location, type, and pay.
+              Search and filter roles like Indeed/ZipRecruiter style.
             </p>
           </div>
 
-          <div className="text-sm text-slate-600">
-            <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
-            result{filtered.length === 1 ? "" : "s"}
-          </div>
-        </div>
-
-        {/* Sticky filter bar */}
-        <div className="sticky top-4 z-10">
-          <div className="rounded-2xl border border-slate-200 bg-white/90 backdrop-blur p-4 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-              {/* Keyword */}
-              <div className="md:col-span-5">
-                <label className="text-xs font-semibold text-slate-600">Keyword</label>
-                <input
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="React, AWS, Security…"
-                  className={"mt-2 " + input}
-                />
-              </div>
-
-              {/* Category */}
-              <div className="md:col-span-3">
-                <label className="text-xs font-semibold text-slate-600">Category</label>
-                <input
-                  value={cat}
-                  onChange={(e) => setCat(e.target.value)}
-                  placeholder="Frontend, DevOps…"
-                  className={"mt-2 " + input}
-                />
-              </div>
-
-              {/* Location */}
-              <div className="md:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">Location</label>
-                <select value={loc} onChange={(e) => setLoc(e.target.value)} className={"mt-2 " + input}>
-                  {LOCATIONS.map((l) => (
-                    <option key={l} value={l}>
-                      {l}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Type */}
-              <div className="md:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">Type</label>
-                <select value={type} onChange={(e) => setType(e.target.value)} className={"mt-2 " + input}>
-                  {TYPES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
-              {/* Min Pay */}
-              <div className="sm:col-span-4">
-                <label className="text-xs font-semibold text-slate-600">Min pay</label>
-                <input
-                  value={minPay}
-                  onChange={(e) => setMinPay(e.target.value)}
-                  placeholder="120k or 120000"
-                  className={"mt-2 " + input}
-                />
-              </div>
-
-              {/* Remote toggle */}
-              <div className="sm:col-span-4">
-                <label className="text-xs font-semibold text-slate-600">Remote</label>
-                <button
-                  type="button"
-                  onClick={() => setRemoteOnly((v) => !v)}
-                  className={[
-                    "mt-2 h-11 w-full rounded-xl border text-sm font-semibold transition",
-                    remoteOnly
-                      ? "bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700"
-                      : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
-                  ].join(" ")}
-                >
-                  {remoteOnly ? "Remote only: ON" : "Remote only: OFF"}
-                </button>
-              </div>
-
-              {/* Sort */}
-              <div className="sm:col-span-4">
-                <label className="text-xs font-semibold text-slate-600">Sort</label>
-                <select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as any)}
-                  className={"mt-2 " + input}
-                >
-                  <option value="relevance">Relevance</option>
-                  <option value="newest">Newest</option>
-                  <option value="payHigh">Pay (high)</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Active chips + actions */}
-            <div className="mt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div className="flex flex-wrap gap-2">
-                {activeChips.length === 0 ? (
-                  <span className="text-xs text-slate-500">No filters applied.</span>
-                ) : (
-                  activeChips.map((c) => (
-                    <span
-                      key={c.k}
-                      className={[
-                        pillBase,
-                        "bg-indigo-50 text-indigo-700 border-indigo-100",
-                      ].join(" ")}
-                    >
-                      {c.label}
-                    </span>
-                  ))
-                )}
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={clearAll}
-                  className="h-10 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Results */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filtered.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-8 text-center">
-            <h3 className="text-lg font-extrabold">No results</h3>
-            <p className="mt-2 text-sm text-slate-600">Try fewer keywords, or remove filters.</p>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-slate-600">
+              <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
+              result{filtered.length === 1 ? "" : "s"}
+            </span>
             <button
               type="button"
               onClick={clearAll}
-              className="mt-5 h-11 px-5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition"
+              className="h-10 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
             >
-              Clear filters
+              Clear
             </button>
           </div>
-        )}
+        </div>
+
+        {/* Search row (horizontal) */}
+        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="flex flex-col md:flex-row gap-3 md:items-center">
+            <div className="flex-1">
+              <label className="text-xs font-semibold text-slate-600">Keyword</label>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Title, company, skill (react aws security)…"
+                className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300"
+              />
+            </div>
+
+            <div className="md:w-56">
+              <label className="text-xs font-semibold text-slate-600">Sort</label>
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value as any)}
+                className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300"
+              >
+                <option value="relevance">Relevance</option>
+                <option value="payHigh">Pay (high)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Active chips */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {q.trim() ? <Chip label={`Keyword: ${q.trim()}`} onRemove={() => setQ("")} /> : null}
+            {type.map((t) => (
+              <Chip key={t} label={`Type: ${t}`} onRemove={() => setType((x) => x.filter((v) => v !== t))} />
+            ))}
+            {location.map((l) => (
+              <Chip
+                key={l}
+                label={`Location: ${l}`}
+                onRemove={() => setLocation((x) => x.filter((v) => v !== l))}
+              />
+            ))}
+            {payMin != null ? (
+              <Chip label={`Pay: ${payMin.toLocaleString()}+`} onRemove={() => setPayMin(null)} />
+            ) : null}
+
+            {q.trim() || type.length || location.length || payMin != null ? null : (
+              <span className="text-xs text-slate-500">No filters applied.</span>
+            )}
+          </div>
+        </div>
+
+        {/* Two-column layout */}
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* LEFT: Filters */}
+          <aside className="lg:col-span-4">
+            <div className="lg:sticky lg:top-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="text-sm font-extrabold text-slate-900">Filters</h2>
+              <p className="mt-1 text-xs text-slate-500">Narrow results with checkboxes.</p>
+
+              {/* Type */}
+              <div className="mt-5">
+                <div className="text-xs font-semibold text-slate-700">Job type</div>
+                <div className="mt-3 space-y-2">
+                  {TYPE_OPTIONS.map((t) => (
+                    <label key={t} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={type.includes(t)}
+                        onChange={() => setType((x) => toggle(x, t))}
+                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-200"
+                      />
+                      {t}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="mt-6">
+                <div className="text-xs font-semibold text-slate-700">Location</div>
+                <div className="mt-3 space-y-2">
+                  {LOCATION_OPTIONS.map((l) => (
+                    <label key={l} className="flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={location.includes(l)}
+                        onChange={() => setLocation((x) => toggle(x, l))}
+                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-200"
+                      />
+                      {l}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Pay */}
+              <div className="mt-6">
+                <div className="text-xs font-semibold text-slate-700">Pay range</div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  {PAY_BUCKETS.map((b) => {
+                    const active = payMin === b.min;
+                    return (
+                      <button
+                        key={b.label}
+                        type="button"
+                        onClick={() => setPayMin(active ? null : b.min)}
+                        className={[
+                          "h-10 rounded-xl border text-xs font-semibold transition",
+                          active
+                            ? "bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700"
+                            : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
+                        ].join(" ")}
+                      >
+                        {b.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={clearAll}
+                className="mt-6 h-11 w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold shadow-sm transition"
+              >
+                Clear all filters
+              </button>
+            </div>
+          </aside>
+
+          {/* RIGHT: Results */}
+          <div className="lg:col-span-8">
+            {/* Results header */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm flex items-center justify-between">
+              <div className="text-sm text-slate-600">
+                Showing <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
+                result{filtered.length === 1 ? "" : "s"}
+              </div>
+              <div className="text-xs text-slate-500 hidden sm:block">
+                Tip: Search “react remote” to narrow fast.
+              </div>
+            </div>
+
+            {/* Cards */}
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-6">
+              {filtered.map((job) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </div>
+
+            {filtered.length === 0 && (
+              <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-8 text-center">
+                <h3 className="text-lg font-extrabold text-slate-900">No results</h3>
+                <p className="mt-2 text-sm text-slate-600">Try removing some filters.</p>
+                <button
+                  type="button"
+                  onClick={clearAll}
+                  className="mt-5 h-11 px-5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );
