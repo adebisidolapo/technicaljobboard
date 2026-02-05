@@ -1,4 +1,4 @@
-// components/CompanyLogoCarousel.tsx
+import Image from "next/image";
 
 type CompanyLogo = { src: string; alt: string };
 
@@ -6,31 +6,45 @@ const COMPANY_LOGOS: CompanyLogo[] = [
   { src: "/Architects.png", alt: "Architects" },
   { src: "/vermot.png", alt: "Vermot" },
   { src: "/Devops.png", alt: "Devops" },
-  { src: "/Hiredengineer.png", alt: "HiredEngineer" },
+  { src: "/Hiredengineer.png", alt: "Hired Engineer" },
   { src: "/redtail.png", alt: "Redtail" },
 ];
 
-function LogoRow({ reverse = false }: { reverse?: boolean }) {
+function LogoRow({
+  reverse = false,
+  ariaHidden = false,
+}: {
+  reverse?: boolean;
+  ariaHidden?: boolean;
+}) {
   // Duplicate enough times so it never “runs out” on wide screens
-  const items = [...COMPANY_LOGOS, ...COMPANY_LOGOS, ...COMPANY_LOGOS, ...COMPANY_LOGOS];
+  const items = [
+    ...COMPANY_LOGOS,
+    ...COMPANY_LOGOS,
+    ...COMPANY_LOGOS,
+    ...COMPANY_LOGOS,
+  ];
 
   return (
     <div
+      aria-hidden={ariaHidden}
       className={[
-        "flex w-max items-center gap-12 md:gap-16 py-3",
+        "flex w-max items-center gap-12 md:gap-16 py-3 select-none",
         reverse ? "animate-marquee-reverse" : "animate-marquee",
       ].join(" ")}
     >
       {items.map((logo, idx) => (
         <div key={`${logo.alt}-${idx}`} className="flex items-center justify-center">
           <div className="group flex h-12 md:h-14 items-center justify-center px-3 md:px-4">
-            <img
+            <Image
               src={logo.src}
               alt={logo.alt}
+              width={160}
+              height={60}
               className="h-8 md:h-10 w-auto object-contain opacity-60 grayscale
                          transition duration-300
                          group-hover:opacity-100 group-hover:grayscale-0"
-              loading="lazy"
+              priority={false}
             />
           </div>
         </div>
@@ -51,7 +65,7 @@ export default function CompanyLogoCarousel() {
         <div className="px-6 py-6">
           <LogoRow />
           <div className="mt-2 opacity-70">
-            <LogoRow reverse />
+            <LogoRow reverse ariaHidden />
           </div>
         </div>
       </div>

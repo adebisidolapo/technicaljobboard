@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function CategoryPage({
   params,
 }: {
-  params?: { slug?: string };
+  params: { slug: string };
 }) {
-  const slug = params?.slug ?? "category";
+  const slug = params.slug || "category";
 
   const pretty = slug
     .split("-")
@@ -13,32 +13,39 @@ export default function CategoryPage({
     .join(" ");
 
   return (
-    <main className="max-w-6xl mx-auto px-6 py-16">
-      <Link href="/" className="text-sm text-gray-600 underline">
-        ← Back to Home
+    <div className="max-w-6xl mx-auto px-6 py-16">
+      <Link href="/categories" className="text-sm text-slate-600 underline underline-offset-4">
+        ← Back to Categories
       </Link>
 
-      <h1 className="text-3xl font-semibold text-gray-900 mt-6">{pretty}</h1>
+      <h1 className="text-3xl font-extrabold text-slate-900 mt-6">{pretty}</h1>
 
-      <p className="text-gray-600 mt-3 max-w-2xl">
+      <p className="text-slate-600 mt-3 max-w-2xl">
         Explore roles, pay ranges, and opportunities in this Technical category.
       </p>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Link
-          href={`/?category=${encodeURIComponent(slug)}#jobs`}
-          className="px-6 py-3 rounded-2xl bg-[#6F00FC] text-white font-semibold hover:bg-[#8C33FD] transition text-center"
+          href={`/all-jobs?cat=${encodeURIComponent(pretty)}`}
+          className="px-6 py-3 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold hover:bg-[var(--brand-purple-dark)] transition text-center"
         >
           View jobs in this category
         </Link>
 
         <Link
-          href="/#jobs"
-          className="px-6 py-3 rounded-2xl bg-white border border-gray-200 text-gray-900 font-semibold hover:shadow-sm transition text-center"
+          href="/all-jobs"
+          className="px-6 py-3 rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold hover:shadow-sm transition text-center"
         >
           Browse all jobs
         </Link>
       </div>
-    </main>
+
+      <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
+        <p className="text-sm text-slate-600">
+          Tip: This page is a category landing page. Your actual listings are on{" "}
+          <span className="font-semibold">/all-jobs</span>.
+        </p>
+      </div>
+    </div>
   );
 }
