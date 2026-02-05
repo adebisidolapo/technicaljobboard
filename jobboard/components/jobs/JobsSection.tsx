@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Job } from "@/components/jobs/JobCard";
 
-/** Demo data — keep yours if you already fetch from API */
 const JOBS: Job[] = [
   {
     id: "1",
@@ -76,7 +75,6 @@ const JOBS: Job[] = [
 
 const TYPE_OPTIONS = ["Full-time", "Contract", "Part-time"];
 const LOCATION_OPTIONS = ["Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
-
 const PAY_BUCKETS = [
   { label: "$100k+", min: 100000 },
   { label: "$120k+", min: 120000 },
@@ -87,11 +85,9 @@ const PAY_BUCKETS = [
 function norm(s: string) {
   return s.toLowerCase().trim();
 }
-
 function splitWords(s: string) {
   return norm(s).split(/\s+/).filter(Boolean);
 }
-
 function payLowerBound(raw: string): number {
   const t = norm(raw).replace(/,/g, "");
   const m = t.match(/(\d+(\.\d+)?)(k)?/);
@@ -100,7 +96,6 @@ function payLowerBound(raw: string): number {
   if (Number.isNaN(base)) return 0;
   return m[3] ? Math.round(base * 1000) : Math.round(base);
 }
-
 function jobHaystack(job: Job) {
   return norm(
     [
@@ -114,11 +109,9 @@ function jobHaystack(job: Job) {
     ].join(" ")
   );
 }
-
 function toggle(arr: string[], v: string) {
   return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v];
 }
-
 function initials(name: string) {
   const parts = name.split(" ").filter(Boolean);
   const a = parts[0]?.[0] ?? "C";
@@ -135,7 +128,6 @@ export default function JobsSection() {
   const [payMin, setPayMin] = useState<number | null>(null);
   const [sort, setSort] = useState<"relevance" | "payHigh">("relevance");
 
-  // Load query params (?q=...&loc=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const q0 = params.get("q") ?? "";
@@ -150,7 +142,7 @@ export default function JobsSection() {
     let list = JOBS.filter((job) => {
       const h = jobHaystack(job);
 
-      // keyword: ALL words must match
+      // keyword: ALL words must match (feels more “narrow”)
       if (words.length && !words.every((w) => h.includes(w))) return false;
 
       if (types.length && !types.includes(job.type)) return false;
@@ -171,7 +163,6 @@ export default function JobsSection() {
     if (sort === "payHigh") {
       list = list.slice().sort((a, b) => payLowerBound(b.pay) - payLowerBound(a.pay));
     } else {
-      // relevance: simple scoring by word matches
       const score = (job: Job) => {
         const h = jobHaystack(job);
         let s = 0;
@@ -185,6 +176,8 @@ export default function JobsSection() {
     return list;
   }, [q, types, locs, payMin, sort]);
 
+  const hasFilters = q.trim() || types.length || locs.length || payMin != null;
+
   const resetFilters = () => {
     setQ("");
     setTypes([]);
@@ -194,59 +187,55 @@ export default function JobsSection() {
     window.history.replaceState({}, "", "/all-jobs");
   };
 
-  const hasFilters = q.trim() || types.length || locs.length || payMin != null;
-
-  // “Search” button: just updates URL (so it feels like action), does NOT clear anything
   const applySearch = () => {
     const params = new URLSearchParams();
     if (q.trim()) params.set("q", q.trim());
     if (locs.length === 1) params.set("loc", locs[0]);
     const qs = params.toString();
-    const nextUrl = qs ? `/all-jobs?${qs}` : "/all-jobs";
-    window.history.replaceState({}, "", nextUrl);
+    window.history.replaceState({}, "", qs ? `/all-jobs?${qs}` : "/all-jobs");
   };
 
   return (
-    <section className="bg-[#F4F6FB]">
+    <section className="relative">
+      {/* subtle background */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 -left-24 h-[360px] w-[360px] rounded-full bg-emerald-200/30 blur-3xl" />
+        <div className="absolute -bottom-28 right-[-120px] h-[420px] w-[420px] rounded-full bg-indigo-200/20 blur-3xl" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* Header */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        {/* Top search line (clean) */}
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">All Jobs</h1>
-            <p className="mt-2 text-sm text-slate-600">
-              <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
-              result{filtered.length === 1 ? "" : "s"} found
-            </p>
+            <div className="text-sm font-semibold text-slate-700">Browse opportunities</div>
+            <div className="mt-1 text-sm text-slate-500">
+              Filter by type, location, salary — then apply in one click.
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-full md:w-[520px]">
-              <label className="sr-only">Search</label>
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search title, company, skill…"
-                className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
-              />
-            </div>
-
+          <div className="flex w-full md:w-[560px] gap-2">
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search by title, company, skill…"
+              className="h-11 flex-1 rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300 shadow-sm"
+            />
             <button
               type="button"
               onClick={applySearch}
-              className="h-11 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-sm font-semibold shadow-sm"
+              className="h-11 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white transition text-sm font-semibold shadow-sm"
             >
               Search
             </button>
           </div>
         </div>
 
-        {/* Layout */}
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Filters */}
           <aside className="lg:col-span-4">
-            <div className="lg:sticky lg:top-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="lg:sticky lg:top-6 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur p-5 shadow-sm">
               <div className="flex items-center justify-between">
-                <h2 className="text-sm font-extrabold text-slate-900">Filters</h2>
+                <h2 className="text-sm font-extrabold text-slate-900">Refine results</h2>
                 {hasFilters ? (
                   <button
                     type="button"
@@ -344,23 +333,26 @@ export default function JobsSection() {
 
           {/* Results */}
           <div className="lg:col-span-8">
-            {/* Results toolbar (kept as small clean bar) */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm flex items-center justify-between">
+            {/* Results meta bar */}
+            <div className="rounded-2xl border border-slate-200 bg-white/90 backdrop-blur p-4 shadow-sm flex items-center justify-between">
               <div className="text-sm text-slate-700">
-                <span className="font-semibold text-slate-900">{filtered.length}</span>{" "}
-                result{filtered.length === 1 ? "" : "s"}
+                Showing{" "}
+                <span className="font-extrabold text-slate-900">{filtered.length}</span>{" "}
+                job{filtered.length === 1 ? "" : "s"}
+                {hasFilters ? <span className="text-slate-500"> • filtered</span> : null}
               </div>
+
               <div className="text-xs text-slate-500 hidden sm:block">
-                {hasFilters ? "Filtered results" : "Use filters to narrow results"}
+                Tip: try “remote react” or “aws platform”
               </div>
             </div>
 
-            {/* JOBS LIST — no “card wrapper”, just clean rows */}
-            <div className="mt-4">
+            {/* Job rows (clean, not cards) */}
+            <div className="mt-3 rounded-2xl border border-slate-200 bg-white/85 backdrop-blur shadow-sm overflow-hidden">
               {filtered.map((job) => (
                 <div
                   key={job.id}
-                  className="group flex flex-col sm:flex-row sm:items-center gap-4 py-5 border-b border-slate-200/70 last:border-b-0"
+                  className="group flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-5 border-b border-slate-200/70 last:border-b-0 hover:bg-slate-50/60 transition"
                 >
                   <div className="flex items-start gap-4 min-w-0 flex-1">
                     <div className="h-12 w-12 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shrink-0">
@@ -368,7 +360,7 @@ export default function JobsSection() {
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                         <div className="min-w-0">
                           <div className="text-sm font-extrabold text-slate-900 truncate">
                             {job.title}
@@ -385,7 +377,7 @@ export default function JobsSection() {
                       </div>
 
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {(job.tags ?? []).slice(0, 4).map((t) => (
+                        {(job.tags ?? []).slice(0, 5).map((t) => (
                           <span
                             key={t}
                             className="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-700"
@@ -411,8 +403,10 @@ export default function JobsSection() {
 
               {filtered.length === 0 && (
                 <div className="py-16 text-center">
-                  <h3 className="text-lg font-extrabold text-slate-900">No results</h3>
-                  <p className="mt-2 text-sm text-slate-600">Try removing some filters.</p>
+                  <h3 className="text-lg font-extrabold text-slate-900">No matches</h3>
+                  <p className="mt-2 text-sm text-slate-600">
+                    Try removing some filters or changing keywords.
+                  </p>
                   <button
                     type="button"
                     onClick={resetFilters}
@@ -422,6 +416,11 @@ export default function JobsSection() {
                   </button>
                 </div>
               )}
+            </div>
+
+            {/* small footer hint */}
+            <div className="mt-3 text-xs text-slate-500">
+              Results update instantly as you change filters.
             </div>
           </div>
         </div>
