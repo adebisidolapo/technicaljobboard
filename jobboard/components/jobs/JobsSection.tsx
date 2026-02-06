@@ -208,18 +208,14 @@ export default function JobsSection() {
         Use the filters to narrow down results and apply from the job page.
       </p>
 
-      {/* little stats row (replaces search bar) */}
-      <div className="mt-6 flex flex-wrap gap-3 text-xs">
-        <span className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-slate-700">
-          ✅ Verified listings
-        </span>
-        <span className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-slate-700">
-          ⚡ Fast filtering
-        </span>
-        <span className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-slate-700">
-          🎯 Technical roles only
-        </span>
-      </div>
+    {/* subtle metadata row */}
+<div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
+  <span>Verified listings</span>
+  <span className="hidden sm:inline">•</span>
+  <span>Fast filtering</span>
+  <span className="hidden sm:inline">•</span>
+  <span>Technical roles only</span>
+</div>
     </div>
   </div>
 </section>
