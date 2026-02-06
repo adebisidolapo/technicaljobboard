@@ -11,49 +11,65 @@ export default function LoginForm({ role }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const heading = "Sign in";
-  const subheading =
-    role === "jobseeker"
-      ? "Login for Jobseekers"
-      : "Login for Employers";
+  const isJobseeker = role === "jobseeker";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Hook API later
     console.log({ email, password, role });
     alert("Login submitted (API will be connected later)");
   };
 
   return (
     <main className="min-h-[calc(100vh-80px)] bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
         <div className="mx-auto w-full max-w-md">
           {/* Card */}
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-            {/* Top */}
-            <div className="px-6 pt-6 pb-4 border-b border-slate-100">
-              <p className="text-xs font-semibold tracking-wide text-slate-500">
-                Technicaljobboard.com
-              </p>
-              <h1 className="mt-2 text-2xl font-bold text-[#0B1222]">
-                {heading}
+            {/* Header */}
+            <div className="px-6 pt-6 pb-5 border-b border-slate-100">
+              {/* Brand */}
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-bold tracking-tight text-[#0B1222]">
+                  Technical<span className="text-[var(--brand-purple)]">jobboard</span>.com
+                </p>
+
+                {/* Role badge */}
+                <span
+                  className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
+                    isJobseeker
+                      ? "bg-indigo-50 text-indigo-700 border border-indigo-100"
+                      : "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                  }`}
+                >
+                  {isJobseeker ? "Jobseeker" : "Employer"}
+                </span>
+              </div>
+
+              {/* Headings */}
+              <h1 className="mt-4 text-2xl font-extrabold text-[#0B1222]">
+                Sign in
               </h1>
-              <p className="mt-1 text-sm text-slate-600">{subheading}</p>
+
+              <p className="mt-1 text-sm text-slate-600">
+                {isJobseeker
+                  ? "Access job listings and track your applications"
+                  : "Manage job postings and review candidates"}
+              </p>
             </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="px-6 py-6 space-y-4">
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700">
-                  Email
+                  Email address
                 </label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-[var(--brand-purple)]/40 focus:border-[var(--brand-purple)]"
+                  placeholder="you@company.com"
+                  className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-[var(--brand-purple)]/40 focus:border-[var(--brand-purple)]"
                 />
               </div>
 
@@ -67,10 +83,11 @@ export default function LoginForm({ role }: LoginFormProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-[var(--brand-purple)]/40 focus:border-[var(--brand-purple)]"
+                  className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-[var(--brand-purple)]/40 focus:border-[var(--brand-purple)]"
                 />
               </div>
 
+              {/* Actions */}
               <div className="flex items-center justify-between text-sm">
                 <Link
                   href="#"
@@ -79,15 +96,12 @@ export default function LoginForm({ role }: LoginFormProps) {
                   Forgot password?
                 </Link>
 
-                <span className="text-slate-500">
-                  New here?{" "}
-                  <Link
-                    href={role === "jobseeker" ? "/jobseeker/signup" : "/employer/signup"}
-                    className="font-semibold text-[var(--brand-purple)] hover:text-[var(--brand-purple-dark)] transition"
-                  >
-                    Create account
-                  </Link>
-                </span>
+                <Link
+                  href={isJobseeker ? "/jobseeker/signup" : "/employer/signup"}
+                  className="font-semibold text-[var(--brand-purple)] hover:text-[var(--brand-purple-dark)] transition"
+                >
+                  Create account
+                </Link>
               </div>
 
               <button
@@ -96,19 +110,14 @@ export default function LoginForm({ role }: LoginFormProps) {
               >
                 Sign in
               </button>
-
-              {/* subtle helper line */}
-              <p className="pt-1 text-xs text-slate-500">
-                By continuing, you agree to our Terms and Privacy Policy.
-              </p>
             </form>
           </div>
 
-          {/* bottom hint */}
+          {/* Switch role */}
           <p className="mt-6 text-center text-xs text-slate-500">
-            {role === "jobseeker" ? (
+            {isJobseeker ? (
               <>
-                Looking to hire?{" "}
+                Hiring talent?{" "}
                 <Link
                   href="/employer/login"
                   className="font-semibold text-[var(--brand-purple)] hover:text-[var(--brand-purple-dark)] transition"
@@ -118,7 +127,7 @@ export default function LoginForm({ role }: LoginFormProps) {
               </>
             ) : (
               <>
-                Looking for jobs?{" "}
+                Looking for a job?{" "}
                 <Link
                   href="/jobseeker/login"
                   className="font-semibold text-[var(--brand-purple)] hover:text-[var(--brand-purple-dark)] transition"
