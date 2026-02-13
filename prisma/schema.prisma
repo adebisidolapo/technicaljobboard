@@ -1,0 +1,279 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  JOBSEEKER
+  EMPLOYER
+  ADMIN
+}
+
+enum JobStatus {
+  DRAFT
+  PUBLISHED
+  PAUSED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  APPLIED
+  REVIEWING
+  SHORTLISTED
+  REJECTED
+  HIRED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String?
+  role         UserRole @default(JOBSEEKER)
+
+  jobseekerProfile JobseekerProfile?
+  employerProfile  EmployerProfile?
+
+  companyMemberships CompanyMember[]
+  applications       Application[]
+  savedJobs          SavedJob[]
+  jobViews           JobView[]
+  jobAlerts          JobAlert[]
+
+  sessions Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+}
+
+model Session {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token     String   @unique
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model JobseekerProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  fullName  String?
+  headline  String?
+  location  String?
+  resumeUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmployerProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  memberships CompanyMember[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id          String  @id @default(cuid())
+  name        String
+  website     String?
+  logoUrl     String?
+  industry    String?
+  size        String?
+  hqLocation  String?
+  description String?
+
+  members CompanyMember[]
+  jobs    Job[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+}
+
+model CompanyMember {
+  id        String @id @default(cuid())
+  companyId String
+  userId    String
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  employerProfileId String?
+  employerProfile   EmployerProfile? @relation(fields: [employerProfileId], references: [id], onDelete: SetNull)
+
+  role      String   @default("RECRUITER")
+  createdAt DateTime @default(now())
+
+  @@unique([companyId, userId])
+  @@index([userId])
+  @@index([companyId])
+}
+
+model Job {
+  id        String  @id @default(cuid())
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String
+  jobType     String?
+  level       String?
+  remote      Boolean @default(false)
+  salaryMin   Int?
+  salaryMax   Int?
+  currency    String?
+
+  status JobStatus @default(DRAFT)
+
+  locations JobLocation[]
+  skills    JobSkill[]
+
+  applications Application[]
+  views        JobView[]
+  savedBy      SavedJob[]
+
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([status])
+  @@index([title])
+}
+
+model JobLocation {
+  id    String @id @default(cuid())
+  jobId String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  country String?
+  city    String?
+  label   String?
+
+  @@index([jobId])
+}
+
+model JobSkill {
+  id    String @id @default(cuid())
+  jobId String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  name String
+
+  @@index([jobId])
+  @@index([name])
+}
+
+model Application {
+  id    String @id @default(cuid())
+  jobId String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status ApplicationStatus @default(APPLIED)
+
+  resumeUrl   String?
+  coverLetter String?
+
+  events ApplicationEvent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([jobId, userId])
+  @@index([jobId])
+  @@index([userId])
+  @@index([status])
+}
+
+model ApplicationEvent {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  status    ApplicationStatus
+  note      String?
+  createdAt DateTime          @default(now())
+
+  @@index([applicationId])
+  @@index([status])
+}
+
+model SavedJob {
+  id     String @id @default(cuid())
+  jobId  String
+  userId String
+
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([jobId, userId])
+  @@index([userId])
+  @@index([jobId])
+}
+
+model JobView {
+  id     String  @id @default(cuid())
+  jobId  String
+  userId String?
+
+  job  Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([jobId])
+  @@index([userId])
+}
+
+enum AlertFrequency {
+  DAILY
+  WEEKLY
+}
+
+model JobAlert {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  query      String?
+  location   String?
+  remoteOnly Boolean @default(false)
+  jobType    String?
+  level      String?
+  salaryMin  Int?
+  salaryMax  Int?
+
+  frequency  AlertFrequency @default(DAILY)
+  isActive   Boolean        @default(true)
+  lastSentAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isActive])
+}

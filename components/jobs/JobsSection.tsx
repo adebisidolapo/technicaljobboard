@@ -3,75 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import JobCard, { Job } from "@/components/jobs/JobCard";
 
-const JOBS: Job[] = [
-  {
-    id: "1",
-    title: "Senior Frontend Engineer",
-    company: "NovaTech",
-    location: "Remote",
-    type: "Full-time",
-    pay: "$120k – $160k",
-    posted: "2 days ago",
-    tags: ["React", "Next.js", "TypeScript"],
-    description: "Build performance-first UI systems with React + Next.js.",
-  },
-  {
-    id: "2",
-    title: "DevOps / Platform Engineer",
-    company: "CloudSprint",
-    location: "Remote",
-    type: "Full-time",
-    pay: "$140k – $190k",
-    posted: "5 days ago",
-    tags: ["AWS", "CI/CD", "Terraform"],
-    description: "Own CI/CD, infra automation, and reliability workflows.",
-  },
-  {
-    id: "3",
-    title: "Data Engineer",
-    company: "ByteForge",
-    location: "New York, NY",
-    type: "Full-time",
-    pay: "$125k – $175k",
-    posted: "4 days ago",
-    tags: ["Pipelines", "SQL", "ETL"],
-    description: "Build robust data pipelines and analytics foundations.",
-  },
-  {
-    id: "4",
-    title: "Security Engineer",
-    company: "SentinelWorks",
-    location: "Remote",
-    type: "Full-time",
-    pay: "$145k – $200k",
-    posted: "6 days ago",
-    tags: ["AppSec", "Cloud", "IAM"],
-    description: "Secure-by-default systems, AppSec and cloud controls.",
-  },
-  {
-    id: "5",
-    title: "QA Automation Engineer",
-    company: "VerityLabs",
-    location: "Chicago, IL",
-    type: "Full-time",
-    pay: "$110k – $150k",
-    posted: "5 days ago",
-    tags: ["Automation", "Playwright", "CI"],
-    description: "Test automation, CI integration and reliability.",
-  },
-  {
-    id: "6",
-    title: "Cloud Engineer (AWS)",
-    company: "Northwind",
-    location: "Denver, CO",
-    type: "Full-time",
-    pay: "$125k – $170k",
-    posted: "3 days ago",
-    tags: ["AWS", "Networking", "Security"],
-    description: "AWS infra, IAM, networking, and security best practices.",
-  },
-];
-
 const TYPES = ["All", "Full-time", "Contract", "Part-time"];
 const LOCATIONS = ["All", "Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
 
@@ -115,6 +46,42 @@ function matchesCategory(job: Job, rawCat: string) {
   return parts.some((p) => haystack.includes(p));
 }
 
+function mapApiJobToCard(job: any): Job {
+  const loc0 = job.locations?.[0];
+
+  const primaryLoc =
+    loc0?.label ||
+    [loc0?.city, loc0?.country].filter(Boolean).join(", ") ||
+    (job.remote ? "Remote" : "—");
+
+  const tags = (job.skills ?? []).map((s: any) => s.name).slice(0, 6);
+
+  const pay =
+    job.salaryMin && job.salaryMax
+      ? `$${Number(job.salaryMin).toLocaleString()} – $${Number(
+          job.salaryMax
+        ).toLocaleString()}`
+      : job.salaryMin
+      ? `From $${Number(job.salaryMin).toLocaleString()}`
+      : job.salaryMax
+      ? `Up to $${Number(job.salaryMax).toLocaleString()}`
+      : "—";
+
+  const posted = job.publishedAt ? "Recently" : "—";
+
+  return {
+    id: job.id,
+    title: job.title,
+    company: job.company?.name ?? "—",
+    location: primaryLoc,
+    type: job.jobType ?? "—",
+    pay,
+    posted,
+    tags,
+    description: job.description,
+  };
+}
+
 export default function JobsSection() {
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
@@ -126,6 +93,10 @@ export default function JobsSection() {
 
   const [popKey, setPopKey] = useState(0);
 
+  const [apiJobs, setApiJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState<string | null>(null);
+
   // ✅ Load query params (?q=...&loc=...&cat=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -134,8 +105,40 @@ export default function JobsSection() {
     setCat(params.get("cat") ?? "");
   }, []);
 
+  // ✅ Load jobs from backend
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadJobs() {
+      try {
+        setLoading(true);
+        setApiError(null);
+
+        // Fetch published jobs; filters can remain client-side for now.
+        const res = await fetch("/api/jobs/search?take=100&skip=0", {
+          cache: "no-store",
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.message || "Failed to fetch jobs");
+
+        const mapped = (data.items ?? []).map(mapApiJobToCard);
+        if (!cancelled) setApiJobs(mapped);
+      } catch (e: any) {
+        if (!cancelled) setApiError(e?.message || "Error loading jobs");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    loadJobs();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const filtered = useMemo(() => {
-    let list = JOBS.slice();
+    let list = apiJobs.slice();
 
     // keyword search
     list = list.filter((job) => matchesKeywords(job, q));
@@ -175,7 +178,7 @@ export default function JobsSection() {
     }
 
     return list;
-  }, [q, loc, cat, type, minPay, sort]);
+  }, [apiJobs, q, loc, cat, type, minPay, sort]);
 
   useEffect(() => {
     setPopKey((k) => k + 1);
@@ -327,17 +330,25 @@ export default function JobsSection() {
           </div>
         </div>
 
+        {loading && (
+          <div className="mt-8 text-sm text-slate-600">Loading jobs...</div>
+        )}
+
+        {apiError && (
+          <div className="mt-8 text-sm text-red-600">{apiError}</div>
+        )}
+
         {/* RESULTS */}
         <div
           key={popKey}
           className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-[pop_220ms_ease-out]"
         >
-          {filtered.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
+          {!loading &&
+            !apiError &&
+            filtered.map((job) => <JobCard key={job.id} job={job} />)}
         </div>
 
-        {filtered.length === 0 && (
+        {!loading && !apiError && filtered.length === 0 && (
           <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-8 text-center">
             <h3 className="text-lg font-extrabold">No results</h3>
             <p className="mt-2 text-sm text-slate-600">
