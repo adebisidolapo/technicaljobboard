@@ -13,11 +13,24 @@ enum UserRole {
   ADMIN
 }
 
+enum AccountStatus {
+  ACTIVE
+  HIBERNATED
+  SUSPENDED
+}
+
 enum JobStatus {
   DRAFT
   PUBLISHED
   PAUSED
   CLOSED
+}
+
+enum CompanyRole {
+  OWNER
+  ADMIN
+  RECRUITER
+  VIEWER
 }
 
 enum ApplicationStatus {
@@ -29,10 +42,13 @@ enum ApplicationStatus {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String  @id @default(cuid())
+  email        String  @unique
   passwordHash String?
-  role         UserRole @default(JOBSEEKER)
+
+  // ✅ user role stays as UserRole
+  role   UserRole      @default(JOBSEEKER)
+  status AccountStatus @default(ACTIVE)
 
   jobseekerProfile JobseekerProfile?
   employerProfile  EmployerProfile?
@@ -42,6 +58,7 @@ model User {
   savedJobs          SavedJob[]
   jobViews           JobView[]
   jobAlerts          JobAlert[]
+  auditLogs          AuditLog[] // ✅ opposite relation for AuditLog.actorUser
 
   sessions Session[]
 
@@ -49,6 +66,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@index([role])
+  @@index([status])
 }
 
 model Session {
@@ -100,8 +118,9 @@ model Company {
   hqLocation  String?
   description String?
 
-  members CompanyMember[]
-  jobs    Job[]
+  members   CompanyMember[]
+  jobs      Job[]
+  auditLogs AuditLog[] // ✅ opposite relation for AuditLog.company
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -120,12 +139,14 @@ model CompanyMember {
   employerProfileId String?
   employerProfile   EmployerProfile? @relation(fields: [employerProfileId], references: [id], onDelete: SetNull)
 
-  role      String   @default("RECRUITER")
-  createdAt DateTime @default(now())
+  // ✅ use CompanyRole enum (NOT string)
+  role      CompanyRole @default(RECRUITER)
+  createdAt DateTime    @default(now())
 
   @@unique([companyId, userId])
   @@index([userId])
   @@index([companyId])
+  @@index([role])
 }
 
 model Job {
@@ -276,4 +297,26 @@ model JobAlert {
 
   @@index([userId])
   @@index([isActive])
+}
+
+model AuditLog {
+  id String @id @default(cuid())
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  actorUserId String?
+  actorUser   User?   @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  action   String
+  entity   String?
+  entityId String?
+  meta     Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([companyId])
+  @@index([actorUserId])
+  @@index([action])
+  @@index([createdAt])
 }

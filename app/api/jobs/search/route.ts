@@ -1,26 +1,37 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+function parseBool(v: string | null): boolean | undefined {
+  if (v == null) return undefined;
+  const s = v.trim().toLowerCase();
+  if (["true", "1", "yes", "y"].includes(s)) return true;
+  if (["false", "0", "no", "n"].includes(s)) return false;
+  return undefined;
+}
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const q = searchParams.get("q")?.trim() || "";
   const location = searchParams.get("location")?.trim() || "";
-  const remote = searchParams.get("remote") === "true";
+  const remote = parseBool(searchParams.get("remote"));
   const jobType = searchParams.get("jobType")?.trim() || "";
   const level = searchParams.get("level")?.trim() || "";
 
   const take = Math.min(parseInt(searchParams.get("take") || "20", 10), 50);
   const skip = Math.max(parseInt(searchParams.get("skip") || "0", 10), 0);
 
-  // Basic “ZipRecruiter-style” matching:
-  // - q matches title OR description OR company name OR skills
-  // - location matches JobLocation fields OR label
+  const now = new Date();
+
   const where: any = {
+    // ✅ Public visibility rule (do not show unpublished)
     status: "PUBLISHED",
-    ...(remote ? { remote: true } : {}),
+    publishedAt: { not: null, lte: now },
+
+    ...(typeof remote === "boolean" ? { remote } : {}),
     ...(jobType ? { jobType } : {}),
     ...(level ? { level } : {}),
+
     ...(q
       ? {
           OR: [
@@ -31,6 +42,7 @@ export async function GET(req: Request) {
           ],
         }
       : {}),
+
     ...(location
       ? {
           locations: {
@@ -39,6 +51,9 @@ export async function GET(req: Request) {
                 { country: { contains: location, mode: "insensitive" } },
                 { city: { contains: location, mode: "insensitive" } },
                 { label: { contains: location, mode: "insensitive" } },
+                // If these columns exist in your schema, they help a lot:
+                // { state: { contains: location, mode: "insensitive" } },
+                // { name: { contains: location, mode: "insensitive" } },
               ],
             },
           },

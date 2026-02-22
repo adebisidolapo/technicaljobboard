@@ -12,6 +12,21 @@ export async function GET(req: Request) {
       { status: 400 }
     );
   }
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, status: true },
+    });
+
+    if (!user) {
+      return NextResponse.json({ ok: false, message: "User not found" }, { status: 404 });
+    }
+
+    if (user.status !== "ACTIVE") {
+      return NextResponse.json(
+        { ok: false, message: "Account is not active" },
+        { status: 403 }
+      );
+    }
 
   const applications = await prisma.application.findMany({
     where: { jobId },

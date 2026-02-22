@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import JobCard, { Job } from "@/components/jobs/JobCard";
 
 const TYPES = ["All", "Full-time", "Contract", "Part-time"];
-const LOCATIONS = ["All", "Remote", "New York, NY", "Chicago, IL", "Denver, CO"];
+const LOCATIONS = ["All", "Remote", "United States", "New York, NY", "Chicago, IL", "Denver, CO"];
 
 function normalize(s: string) {
   return s.toLowerCase().trim();
@@ -41,7 +41,6 @@ function matchesCategory(job: Job, rawCat: string) {
     [job.title, job.description, job.tags.join(" "), job.company].join(" ")
   );
 
-  // Example: "Healthcare IT" → matches if "healthcare" or "it" appears
   const parts = c.split(/\s+/).filter(Boolean);
   return parts.some((p) => haystack.includes(p));
 }
@@ -52,7 +51,7 @@ function mapApiJobToCard(job: any): Job {
   const primaryLoc =
     loc0?.label ||
     [loc0?.city, loc0?.country].filter(Boolean).join(", ") ||
-    (job.remote ? "Remote" : "—");
+    (job.remote ? "Remote" : "United States");
 
   const tags = (job.skills ?? []).map((s: any) => s.name).slice(0, 6);
 
@@ -105,7 +104,7 @@ export default function JobsSection() {
     setCat(params.get("cat") ?? "");
   }, []);
 
-  // ✅ Load jobs from backend
+  // ✅ Load jobs from backend (NOW uses filters)
   useEffect(() => {
     let cancelled = false;
 
@@ -114,12 +113,27 @@ export default function JobsSection() {
         setLoading(true);
         setApiError(null);
 
-        // Fetch published jobs; filters can remain client-side for now.
-        const res = await fetch("/api/jobs/search?take=100&skip=0", {
-          cache: "no-store",
-        });
+        const params = new URLSearchParams();
+        if (q.trim()) params.set("q", q.trim());
 
-        const data = await res.json();
+        // If location says "Remote", treat it as remote=true
+        const locVal = loc && normalize(loc) !== "all" ? loc : "";
+        const isRemote = normalize(locVal) === "remote";
+
+        if (locVal && !isRemote) params.set("location", locVal);
+        if (isRemote) params.set("remote", "true");
+
+        params.set("take", "100");
+        params.set("skip", "0");
+
+        const url = `/api/jobs/search?${params.toString()}`;
+
+        const res = await fetch(url, { cache: "no-store" });
+
+        // safer parse (prevents JSON crash)
+        const text = await res.text();
+        const data = text ? JSON.parse(text) : null;
+
         if (!res.ok) throw new Error(data?.message || "Failed to fetch jobs");
 
         const mapped = (data.items ?? []).map(mapApiJobToCard);
@@ -135,18 +149,18 @@ export default function JobsSection() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [q, loc]); // ✅ key change: refetch when q/loc changes
 
   const filtered = useMemo(() => {
     let list = apiJobs.slice();
 
-    // keyword search
+    // keyword search (extra client-side)
     list = list.filter((job) => matchesKeywords(job, q));
 
-    // category search
+    // category search (client-side)
     list = list.filter((job) => matchesCategory(job, cat));
 
-    // location filter
+    // location filter (client-side)
     if (loc && normalize(loc) !== "all") {
       const locQ = normalize(loc);
       list = list.filter((job) => normalize(job.location).includes(locQ));
