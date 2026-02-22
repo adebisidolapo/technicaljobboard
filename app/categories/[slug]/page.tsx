@@ -1,11 +1,14 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function CategoryPage({
-  params,
-}: {
+type Props = {
   params: { slug: string };
-}) {
-  const slug = params.slug || "category";
+};
+
+export default async function CategoryPage({ params }: Props) {
+  const slug = params?.slug;
+
+  if (!slug) return notFound();
 
   const pretty = slug
     .split("-")
@@ -14,7 +17,10 @@ export default function CategoryPage({
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
-      <Link href="/categories" className="text-sm text-slate-600 underline underline-offset-4">
+      <Link
+        href="/categories"
+        className="text-sm text-slate-600 underline underline-offset-4"
+      >
         ← Back to Categories
       </Link>
 
