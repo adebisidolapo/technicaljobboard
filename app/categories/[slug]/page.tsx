@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export default async function CategoryPage({ params }: Props) {
-  const slug = params?.slug;
+  const { slug } = await params;
 
   if (!slug) return notFound();
 
