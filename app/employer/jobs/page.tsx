@@ -2,12 +2,23 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
+function getBaseUrl() {
+  // ✅ Works on Vercel + local dev without headers() hacks
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (siteUrl) return siteUrl.replace(/\/$/, "");
+
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) return `https://${vercelUrl}`;
+
+  return "http://localhost:3000";
+}
+
 async function getJobs(companyId: string) {
-  const url = `/api/employer/jobs?companyId=${encodeURIComponent(companyId)}`;
+  const baseUrl = getBaseUrl();
+  const url = `${baseUrl}/api/employer/jobs?companyId=${encodeURIComponent(companyId)}`;
 
   const res = await fetch(url, { cache: "no-store" });
 
-  // Safer than res.json() (prevents "Unexpected end of JSON input")
   const text = await res.text();
   let data: any = null;
 
@@ -22,8 +33,8 @@ async function getJobs(companyId: string) {
     );
   }
 
-  if (!res.ok) {
-    throw new Error(data?.message || `Failed (${res.status})`);
+  if (!res.ok || data?.ok === false) {
+    throw new Error(data?.error || `Failed (${res.status})`);
   }
 
   return data;
@@ -109,7 +120,7 @@ export default async function EmployerJobsPage() {
               const loc =
                 j.locations?.length
                   ? j.locations
-                      .map((l: any) => l.label || l.city || l.country)
+                      .map((l: any) => l.label || l.city || l.state || l.country)
                       .filter(Boolean)
                       .join(", ")
                   : "United States";
@@ -149,7 +160,6 @@ export default async function EmployerJobsPage() {
                         applicant{appsCount === 1 ? "" : "s"}
                       </div>
 
-                      {/* ✅ This generates a REAL jobId URL */}
                       <Link
                         href={`/employer/jobs/${j.id}/candidates`}
                         className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
