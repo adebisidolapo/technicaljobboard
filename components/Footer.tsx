@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
+import Image from "next/image";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -10,13 +11,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
           {/* BRAND */}
           <div className="flex flex-col items-center md:items-start">
-            <Link href="/" className="flex items-center">
-              <img
-                src="/Technicaljoblogo-removebg-preview.png"
-                alt="TechnicalJobboard"
-                className="h-16 w-auto object-contain"
-              />
-            </Link>
+        <Link href="/" className="flex items-center">
+  <Image
+    src="/logo.png"
+    alt="TechnicalJobboard"
+    width={180}
+    height={70}
+    className="h-14 w-auto object-contain"
+  />
+</Link>
 
             <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-xs">
               Curated technical roles from trusted teams.
