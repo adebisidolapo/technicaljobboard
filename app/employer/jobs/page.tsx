@@ -3,7 +3,6 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 function getBaseUrl() {
-  // ✅ Works on Vercel + local dev without headers() hacks
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (siteUrl) return siteUrl.replace(/\/$/, "");
 
@@ -15,7 +14,9 @@ function getBaseUrl() {
 
 async function getJobs(companyId: string) {
   const baseUrl = getBaseUrl();
-  const url = `${baseUrl}/api/employer/jobs?companyId=${encodeURIComponent(companyId)}`;
+  const url = `${baseUrl}/api/employer/jobs?companyId=${encodeURIComponent(
+    companyId
+  )}`;
 
   const res = await fetch(url, { cache: "no-store" });
 
@@ -81,7 +82,6 @@ export default async function EmployerJobsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
@@ -102,7 +102,6 @@ export default async function EmployerJobsPage() {
         </div>
       </section>
 
-      {/* List */}
       <section className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
           <div className="text-sm font-semibold text-slate-900">

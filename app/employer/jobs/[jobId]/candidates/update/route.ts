@@ -1,33 +1,32 @@
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request, ctx: { params: { jobId: string } }) {
-  const { jobId } = ctx.params;
+type Ctx = {
+  params: Promise<{ jobId: string }>;
+};
 
-  const form = await req.formData();
-  const applicationId = String(form.get("applicationId") ?? "");
-  const status = String(form.get("status") ?? "");
-  const note = String(form.get("note") ?? "");
+export async function POST(req: Request, ctx: Ctx) {
+  const { jobId } = await ctx.params;
 
-  if (!applicationId || !status) {
-    return NextResponse.redirect(
-      new URL(`/employer/jobs/${jobId}/candidates`, req.url),
-      302
+  if (!jobId) {
+    return NextResponse.json(
+      { ok: false, error: "Missing jobId" },
+      { status: 400 }
     );
   }
 
-  // Call your existing API route that updates status + creates ApplicationEvent + logs
-  await fetch("http://localhost:3000/api/applications/status", {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      applicationId,
-      status,
-      note: note || undefined,
-    }),
-  });
+  // Read body safely
+  const body = await req.json().catch(() => null);
 
-  return NextResponse.redirect(
-    new URL(`/employer/jobs/${jobId}/candidates`, req.url),
-    302
-  );
+  // TODO: plug in your update logic here.
+  // Example expected payload: { applicationId, status, note }
+  // - update Application status
+  // - write ApplicationEvent
+  // - write AuditLog
+  // using jobId for scoping/validation
+
+  return NextResponse.json({
+    ok: true,
+    jobId,
+    received: body,
+  });
 }

@@ -1,50 +1,69 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// GET /api/employer/applications?jobId=...
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const jobId = searchParams.get("jobId");
+  try {
+    const { searchParams } = new URL(req.url);
 
-  if (!jobId) {
-    return NextResponse.json(
-      { ok: false, message: "jobId is required" },
-      { status: 400 }
-    );
-  }
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { id: true, status: true },
-    });
-
-    if (!user) {
-      return NextResponse.json({ ok: false, message: "User not found" }, { status: 404 });
-    }
-
-    if (user.status !== "ACTIVE") {
+    const jobId = searchParams.get("jobId")?.trim() || "";
+    if (!jobId) {
       return NextResponse.json(
-        { ok: false, message: "Account is not active" },
-        { status: 403 }
+        { ok: false, error: "Missing required query param: jobId" },
+        { status: 400 }
       );
     }
 
-  const applications = await prisma.application.findMany({
-    where: { jobId },
-    orderBy: { createdAt: "desc" },
-    include: {
-      user: {
-        include: {
-          jobseekerProfile: true,
-        },
-      },
-      events: {
-        orderBy: { createdAt: "desc" },
-      },
-      job: {
-        include: { company: true },
-      },
-    },
-  });
+    const status = searchParams.get("status")?.trim() || "";
+    const take = Math.min(parseInt(searchParams.get("take") || "25", 10), 100);
+    const skip = Math.max(parseInt(searchParams.get("skip") || "0", 10), 0);
 
-  return NextResponse.json({ ok: true, applications });
+    const where: any = {
+      jobId,
+      ...(status ? { status } : {}),
+    };
+
+    const [items, total] = await Promise.all([
+      prisma.application.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip,
+        take,
+        include: {
+          job: { select: { id: true, title: true } },
+          user: {
+            select: {
+              id: true,
+              email: true,
+              jobseekerProfile: {
+                select: {
+                  fullName: true,
+                  headline: true,
+                  location: true,
+                  resumeUrl: true,
+                },
+              },
+            },
+          },
+          events: {
+            orderBy: { createdAt: "desc" },
+            take: 20,
+          },
+        },
+      }),
+      prisma.application.count({ where }),
+    ]);
+
+    return NextResponse.json({
+      ok: true,
+      total,
+      take,
+      skip,
+      items,
+    });
+  } catch (e: any) {
+    return NextResponse.json(
+      { ok: false, error: e?.message || "Server error" },
+      { status: 500 }
+    );
+  }
 }
