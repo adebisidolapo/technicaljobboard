@@ -10,9 +10,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
           {/* BRAND */}
           <div className="flex flex-col items-center md:items-start">
-            <div className="text-2xl font-extrabold tracking-tight">
-              TechnicalJobboard
-            </div>
+            <Link href="/" className="flex items-center">
+              <img
+                src="/Technicaljoblogo-removebg-preview.png"
+                alt="TechnicalJobboard"
+                className="h-16 w-auto object-contain"
+              />
+            </Link>
 
             <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-xs">
               Curated technical roles from trusted teams.
@@ -31,20 +35,19 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                {/* Works from any page */}
                 <Link href="/#categories" className="hover:text-white transition">
                   Categories
                 </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition">
-                  Career Resources
-                </a>
+                <Link href="/jobseeker/login" className="hover:text-white transition">
+                  Jobseeker
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition">
-                  Contact
-                </a>
+                <Link href="/employer/login" className="hover:text-white transition">
+                  Employer
+                </Link>
               </li>
             </ul>
           </div>
@@ -53,7 +56,6 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-sm font-semibold mb-4">Stay connected</h3>
 
-            {/* ✅ working newsletter */}
             <NewsletterForm />
 
             <div className="mt-6 flex gap-6 text-sm text-white/70">
