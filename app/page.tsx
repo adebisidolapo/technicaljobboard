@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
-
+import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
 
 type FeaturedJob = {
   title: string;
@@ -410,107 +410,7 @@ export default function Home() {
       </section>
 
       {/* ================= FEATURED JOBS ================= */}
-      <section id="featured" className="relative overflow-hidden py-16 bg-[#F2F4F8]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-start justify-between gap-6">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0B1222]">Featured Jobs</h2>
-              <p className="mt-2 text-sm text-slate-600">
-                A curated selection of standout roles from trusted teams.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() =>
-                  document.getElementById("featured-carousel")?.scrollBy({ left: -520, behavior: "smooth" })
-                }
-                className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
-                aria-label="Scroll left"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  document.getElementById("featured-carousel")?.scrollBy({ left: 520, behavior: "smooth" })
-                }
-                className="h-12 w-12 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex items-center justify-center"
-                aria-label="Scroll right"
-              >
-                →
-              </button>
-            </div>
-          </div>
-
-          <div className="relative mt-10">
-            <div
-              id="featured-carousel"
-              className="no-scrollbar flex gap-7 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory w-full pr-6"
-            >
-              {FEATURED_JOBS.map((job, idx) => (
-                <article
-                  key={idx}
-                  className="snap-start flex-none w-[340px] sm:w-[360px] bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition relative overflow-hidden"
-                >
-                  <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
-
-                  <div className="p-5 pl-8">
-                    <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
-                        <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                        Featured
-                      </span>
-
-                      <button
-                      
-                        type="button"
-                        aria-label="Save job"
-                        className="text-slate-300 hover:text-slate-600 transition"
-                      >
-                        ★
-                      </button>
-                    </div>
-
-                    <div className="mt-4 flex items-center gap-4">
-                      <div className="h-11 w-11 rounded-2xl bg-[#0B1222] text-white flex items-center justify-center font-extrabold shadow-sm">
-                        {job.company.charAt(0)}
-                      </div>
-
-                      <div className="min-w-0">
-                        <h3 className="text-base font-extrabold text-[#0B1222] truncate">{job.title}</h3>
-                        <p className="text-sm text-slate-500 truncate">
-                          {job.company} • {job.location}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="mt-3 text-sm text-slate-600 truncate">{job.description}</p>
-
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">{job.type}</span>
-                      <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">{job.pay}</span>
-                    </div>
-
-                    <div className="mt-6 flex items-center justify-between">
-                     <button
-  type="button"
-  onClick={() => router.push("/all-jobs")}
-  className="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md"
->
-  Apply
-</button>
-
-                      <span className="text-xs text-slate-400">Posted {job.posted}</span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+ <FeaturedJobsSection />
 
       {/* ================= EMPOWERING ================= */}
       <section className="relative py-16 md:py-20 overflow-hidden bg-[#F3F4FA]">
