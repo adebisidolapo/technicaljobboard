@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
-
 type FeaturedJob = {
   title: string;
   company: string;
