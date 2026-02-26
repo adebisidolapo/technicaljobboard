@@ -7,18 +7,14 @@ export default function Footer() {
   return (
     <footer className="bg-[#0F1426] text-white">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           {/* BRAND */}
           <div className="flex flex-col items-center md:items-start">
-            <div className="flex items-center gap-3">
-              <img
-                src="/logo.png.png"
-                className="h-12 md:h-14 w-auto object-contain"
-              />
-              <span className="text-lg md:text-xl font-extrabold tracking-tight">
-                TechnicalJobBoard
-              </span>
-            </div>
+            <img
+              src="/logo.png.png"
+              alt="TechnicalJobBoard"
+              className="h-14 md:h-16 w-auto object-contain"
+            />
 
             <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-sm text-center md:text-left">
               Curated technical roles from trusted teams. Clean listings, fast apply,
