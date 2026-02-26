@@ -13,7 +13,6 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <img
                 src="/logo.png.png"
-                alt="TechnicalJobBoard"
                 className="h-12 md:h-14 w-auto object-contain"
               />
               <span className="text-lg md:text-xl font-extrabold tracking-tight">
