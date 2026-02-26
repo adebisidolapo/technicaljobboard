@@ -71,7 +71,7 @@ export default function SiteHeader() {
 </Link>
 
    
-   <Link
+<Link
   href="/employer/jobs/new"
   className="px-4 py-2 rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
 >

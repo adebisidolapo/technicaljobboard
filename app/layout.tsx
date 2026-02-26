@@ -1,5 +1,6 @@
 import "./globals.css";
-import Chrome from "@/components/Chrome";
+import SiteHeader from "@/components/SiteHeader";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "TechnicalJobBoard",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Chrome>{children}</Chrome>
+        <SiteHeader />
+        {children}
+        <Footer />
       </body>
     </html>
   );
