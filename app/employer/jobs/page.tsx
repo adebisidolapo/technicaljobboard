@@ -14,9 +14,7 @@ function getBaseUrl() {
 
 async function getJobs(companyId: string) {
   const baseUrl = getBaseUrl();
-  const url = `${baseUrl}/api/employer/jobs?companyId=${encodeURIComponent(
-    companyId
-  )}`;
+  const url = `${baseUrl}/api/employer/jobs?companyId=${encodeURIComponent(companyId)}`;
 
   const res = await fetch(url, { cache: "no-store" });
 
@@ -27,10 +25,7 @@ async function getJobs(companyId: string) {
     data = text ? JSON.parse(text) : null;
   } catch {
     throw new Error(
-      `API did not return JSON.\nStatus: ${res.status}\nURL: ${url}\n\nResponse:\n${text.slice(
-        0,
-        400
-      )}`
+      `API did not return JSON.\nStatus: ${res.status}\nURL: ${url}\n\nResponse:\n${text.slice(0, 400)}`
     );
   }
 
@@ -73,127 +68,222 @@ function StatusPill({ status }: { status: string }) {
   );
 }
 
-export default async function EmployerJobsPage() {
+function Stat({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="text-xs font-extrabold text-slate-500">{label}</div>
+      <div className="mt-1 text-xl font-extrabold text-slate-900">{value}</div>
+    </div>
+  );
+}
+
+function CandidateCard({
+  name,
+  title,
+  location,
+  note,
+}: {
+  name: string;
+  title: string;
+  location: string;
+  note?: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow transition">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="font-extrabold text-slate-900 truncate">{name}</div>
+          <div className="mt-0.5 text-xs text-slate-600 truncate">
+            {title} • {location}
+          </div>
+        </div>
+
+        <button
+          className="h-9 px-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-xs font-semibold"
+          type="button"
+        >
+          Review
+        </button>
+      </div>
+
+      {note ? (
+        <div className="mt-3 text-xs text-slate-600">
+          <span className="font-semibold text-slate-700">Note:</span> {note}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export default async function JobCandidatesPage({
+  params,
+}: {
+  params: { jobId: string };
+}) {
   // Later: derive from logged-in employer
   const companyId = "cmlkxmg130000tnn0av04lkpg";
 
   const data = await getJobs(companyId);
   const jobs = data?.jobs ?? [];
+  const job = jobs.find((j: any) => j.id === params.jobId);
+
+  if (!job) {
+    return (
+      <div className="space-y-6">
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="text-lg font-extrabold text-slate-900">Job not found</div>
+          <p className="mt-2 text-sm text-slate-600">
+            We couldn’t find this job in your employer account.
+          </p>
+          <Link
+            href="/employer/jobs"
+            className="mt-4 inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-slate-900 text-sm font-semibold hover:bg-slate-50 transition"
+          >
+            Back to Jobs
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const loc =
+    job.locations?.length
+      ? job.locations
+          .map((l: any) => l.label || l.city || l.state || l.country)
+          .filter(Boolean)
+          .join(", ")
+      : "United States";
+
+  const appsCount = job._count?.applications ?? 0;
+
+  // Placeholder candidates (until you wire your applications API)
+  const candidates = {
+    new: [
+      { name: "Jordan M.", title: "Frontend Engineer", location: "Remote", note: "Strong React + TypeScript." },
+      { name: "Sam K.", title: "Backend Engineer", location: "Austin, TX", note: "Great API experience." },
+    ],
+    reviewed: [
+      { name: "Taylor R.", title: "DevOps Engineer", location: "NYC", note: "Terraform + AWS." },
+    ],
+    interview: [{ name: "Avery L.", title: "Product Designer", location: "Remote" }],
+    offer: [],
+  };
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
-              Jobs
-            </h1>
-            <p className="mt-2 text-sm text-slate-600">
-              Manage postings and review candidates.
-            </p>
+        <div className="flex flex-col gap-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 truncate">
+                  {job.title}
+                </h1>
+                <StatusPill status={job.status} />
+              </div>
+              <p className="mt-2 text-sm text-slate-600">
+                {job.remote ? "Remote" : "On-site"} • {loc} •{" "}
+                <span className="font-semibold text-slate-700">{appsCount}</span>{" "}
+                applicant{appsCount === 1 ? "" : "s"}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Link
+                href="/employer/jobs"
+                className="hidden md:inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-slate-900 text-sm font-semibold hover:bg-slate-50 transition"
+              >
+                Back to Jobs
+              </Link>
+
+              <Link
+                href={`/employer/jobs/${job.id}/edit`}
+                className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[#0B1222] text-white hover:bg-slate-900 transition text-sm font-semibold"
+              >
+                Edit job
+              </Link>
+            </div>
           </div>
 
-          <Link
-            href="/employer/jobs/new"
-            className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-white text-sm font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
-          >
-            + Post a Job
-          </Link>
+          {/* Search / Filters placeholder */}
+          <div className="flex flex-col md:flex-row gap-3">
+            <div className="flex-1">
+              <div className="h-11 rounded-2xl border border-slate-200 bg-white px-4 flex items-center gap-2">
+                <span className="text-slate-400">⌕</span>
+                <span className="text-sm text-slate-500">Search candidates…</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="h-11 px-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold text-slate-900"
+            >
+              Filter
+            </button>
+
+            <button
+              type="button"
+              className="h-11 px-4 rounded-2xl bg-[color:var(--brand-purple)/0.10] text-[var(--brand-purple)] border border-[color:var(--brand-purple)/0.20] hover:bg-[color:var(--brand-purple)/0.14] transition text-sm font-extrabold"
+            >
+              Pipeline settings
+            </button>
+          </div>
         </div>
       </section>
 
-      <section className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
-          <div className="text-sm font-semibold text-slate-900">
-            {jobs.length} job{jobs.length === 1 ? "" : "s"}
-          </div>
+      {/* Pipeline stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Stat label="New" value={candidates.new.length} />
+        <Stat label="Reviewed" value={candidates.reviewed.length} />
+        <Stat label="Interview" value={candidates.interview.length} />
+        <Stat label="Offer" value={candidates.offer.length} />
+      </div>
 
-          <div className="text-xs text-slate-500">
-            Tip: click “View candidates” to open ATS per job.
-          </div>
-        </div>
+      {/* Pipeline columns */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {[
+          { key: "new", title: "New", items: candidates.new, tint: "bg-[color:var(--brand-purple)/0.06] border-[color:var(--brand-purple)/0.14]" },
+          { key: "reviewed", title: "Reviewed", items: candidates.reviewed, tint: "bg-[#F4F6FB] border-slate-200" },
+          { key: "interview", title: "Interview", items: candidates.interview, tint: "bg-[#F4F6FB] border-slate-200" },
+          { key: "offer", title: "Offer", items: candidates.offer, tint: "bg-[#F4F6FB] border-slate-200" },
+        ].map((col) => (
+          <div key={col.key} className="lg:col-span-3">
+            <div className={`rounded-3xl border ${col.tint} p-4`}>
+              <div className="flex items-center justify-between">
+                <div className="text-sm font-extrabold text-slate-900">{col.title}</div>
+                <div className="text-xs font-bold text-slate-600">{col.items.length}</div>
+              </div>
 
-        <div className="divide-y divide-slate-200">
-          {jobs.length ? (
-            jobs.map((j: any) => {
-              const loc =
-                j.locations?.length
-                  ? j.locations
-                      .map((l: any) => l.label || l.city || l.state || l.country)
-                      .filter(Boolean)
-                      .join(", ")
-                  : "United States";
-
-              const appsCount = j._count?.applications ?? 0;
-
-              return (
-                <div key={j.id} className="px-6 py-5">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-3">
-                        <div className="font-extrabold text-slate-900 truncate">
-                          {j.title}
-                        </div>
-                        <StatusPill status={j.status} />
-                      </div>
-
-                      <div className="mt-1 text-sm text-slate-600">
-                        {j.remote ? "Remote" : "On-site"} • {loc}
-                      </div>
-
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {(j.skills ?? []).slice(0, 6).map((s: any, idx: number) => (
-                          <span
-                            key={s?.id ?? `${j.id}-skill-${idx}`}
-                            className="text-xs font-semibold px-2 py-1 rounded-full bg-slate-100 text-slate-700"
-                          >
-                            {s.name}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3 md:justify-end">
-                      <div className="text-sm text-slate-700">
-                        <span className="font-extrabold">{appsCount}</span>{" "}
-                        applicant{appsCount === 1 ? "" : "s"}
-                      </div>
-
-                      <Link
-                        href={`/employer/jobs/${j.id}/candidates`}
-                        className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-                      >
-                        View candidates
-                      </Link>
-
-                      <Link
-                        href={`/employer/jobs/${j.id}/edit`}
-                        className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[#0B1222] text-white hover:bg-slate-900 transition text-sm font-semibold"
-                      >
-                        Edit
-                      </Link>
+              <div className="mt-3 space-y-3">
+                {col.items.length ? (
+                  col.items.map((c: any) => (
+                    <CandidateCard
+                      key={c.name}
+                      name={c.name}
+                      title={c.title}
+                      location={c.location}
+                      note={c.note}
+                    />
+                  ))
+                ) : (
+                  <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center">
+                    <div className="text-sm font-extrabold text-slate-900">Empty</div>
+                    <div className="mt-1 text-xs text-slate-600">
+                      Candidates will appear here.
                     </div>
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="px-6 py-10 text-center">
-              <div className="text-lg font-extrabold text-slate-900">
-                No jobs yet
+                )}
               </div>
-              <p className="mt-2 text-sm text-slate-600">
-                Post your first role to start receiving candidates.
-              </p>
-              <Link
-                href="/employer/jobs/new"
-                className="mt-5 inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-white text-sm font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
-              >
-                + Post a Job
-              </Link>
             </div>
-          )}
-        </div>
+          </div>
+        ))}
       </section>
     </div>
   );
