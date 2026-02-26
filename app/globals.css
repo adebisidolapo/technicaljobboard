@@ -3,6 +3,7 @@
 /* =========================
    Design tokens
 ========================= */
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -10,7 +11,15 @@
   /* Brand (purple) */
   --brand-purple: #6a6ff2;
   --brand-purple-dark: #585de0;
+
+  --brand-accent: #22c55e;
+--brand-accent-dark: #16a34a;
+
+  /* Brand accent (used lightly across dashboard) */
+  --brand-accent: #22c55e;
+  --brand-accent-dark: #16a34a;
 }
+
 
 html {
   scroll-behavior: smooth;
