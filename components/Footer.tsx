@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-3">
               <img
-                src="/logo.png"
+                src="/logo.png.png"
                 alt="TechnicalJobBoard"
                 className="h-12 md:h-14 w-auto object-contain"
               />
