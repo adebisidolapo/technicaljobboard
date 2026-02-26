@@ -1,11 +1,9 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import Footer from "../components/Footer";
-import SiteHeader from "../components/SiteHeader";
+import Chrome from "@/components/Chrome";
 
-export const metadata: Metadata = {
-  title: "Technical Job Board",
-  description: "Where technical careers meet opportunity",
+export const metadata = {
+  title: "TechnicalJobBoard",
+  description: "Curated technical roles from trusted teams.",
 };
 
 export default function RootLayout({
@@ -14,11 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen font-sans flex flex-col">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en">
+      <body>
+        <Chrome>{children}</Chrome>
       </body>
     </html>
   );
