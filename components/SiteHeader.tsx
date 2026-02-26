@@ -2,18 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-
-  // Optional: hide Post Job on a few pages if you want less CTA repetition
-  // (keep it on core browsing pages)
-  const hidePostJob =
-    pathname?.startsWith("/employer") ||
-    pathname?.startsWith("/jobseeker") ||
-    pathname === "/";
 
   // Close on ESC
   useEffect(() => {
@@ -36,20 +27,18 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-18 sm:h-20 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-20 flex items-center justify-between">
         {/* LOGO */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="h-12 sm:h-14 w-auto flex items-center">
-            <img
-              src="/Technicaljoblogo-removebg-preview.png"
-              alt="TechnicalJobboard"
-              className="h-full w-auto object-contain"
-            />
-          </div>
+        <Link href="/" className="flex items-center">
+          <img
+            src="/Technicaljoblogo-removebg-preview.png"
+            alt="TechnicalJobboard"
+            className="h-20 sm:h-24 md:h-28 w-auto object-contain"
+          />
         </Link>
 
         {/* DESKTOP NAV */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-900">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-900">
           <Link href="/" className="hover:text-[var(--brand-purple)] transition">
             Home
           </Link>
@@ -82,14 +71,12 @@ export default function SiteHeader() {
             Employer
           </Link>
 
-          {!hidePostJob && (
-            <Link
-              href="/employer/jobs/new"
-              className="px-4 py-2 rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
-            >
-              Post Job
-            </Link>
-          )}
+          <Link
+            href="/employer/jobs/new"
+            className="px-4 py-2 rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+          >
+            Post Job
+          </Link>
         </nav>
 
         {/* MOBILE TOGGLE */}
@@ -114,11 +101,11 @@ export default function SiteHeader() {
           />
 
           <div className="relative z-50 border-t border-gray-200 bg-white">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-2">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-3">
               <Link
                 href="/"
                 onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 font-semibold"
+                className="py-3 px-3 rounded-xl hover:bg-gray-50"
               >
                 Home
               </Link>
@@ -126,7 +113,7 @@ export default function SiteHeader() {
               <Link
                 href="/all-jobs"
                 onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 font-semibold"
+                className="py-3 px-3 rounded-xl hover:bg-gray-50"
               >
                 All Jobs
               </Link>
@@ -134,7 +121,7 @@ export default function SiteHeader() {
               <Link
                 href="/#categories"
                 onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 font-semibold"
+                className="py-3 px-3 rounded-xl hover:bg-gray-50"
               >
                 Categories
               </Link>
@@ -142,29 +129,26 @@ export default function SiteHeader() {
               <Link
                 href="/jobseeker/login"
                 onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 font-semibold"
+                className="py-3 px-3 rounded-xl hover:bg-gray-50"
               >
                 Jobseeker
               </Link>
 
               <Link
-                href="/employer"
+                href="/employer/login"
                 onClick={() => setOpen(false)}
-                className="py-3 px-3 rounded-xl hover:bg-gray-50 font-semibold"
+                className="py-3 px-3 rounded-xl hover:bg-gray-50"
               >
                 Employer
               </Link>
 
-              {/* CTA in mobile menu only when not hidden */}
-              {!hidePostJob && (
-                <Link
-                  href="/employer/jobs/new"
-                  onClick={() => setOpen(false)}
-                  className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] text-white font-semibold shadow-sm transition"
-                >
-                  Post Job
-                </Link>
-              )}
+              <Link
+                href="/employer/jobs/new"
+                onClick={() => setOpen(false)}
+                className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] text-white font-semibold shadow-sm transition"
+              >
+                Post Job
+              </Link>
             </div>
           </div>
         </div>
