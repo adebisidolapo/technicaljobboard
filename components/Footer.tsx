@@ -99,26 +99,16 @@ export default function Footer() {
             </div>
 
             {/* Company */}
-            <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-white/90">Company</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/70">
-                <li>
-                  <Link href="/about" className="hover:text-white transition">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="hover:text-white transition">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/support" className="hover:text-white transition">
-                    Support
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <div className="lg:col-span-4 min-w-0">
+  <h3 className="text-sm font-semibold text-white/90">Newsletter</h3>
+  <p className="mt-4 text-sm text-white/70 leading-relaxed">
+    Weekly roles + updates.
+  </p>
+
+  <div className="mt-4 w-full min-w-0">
+    <NewsletterForm />
+  </div>
+</div>
 
             {/* Newsletter (compact + aligned) */}
             <div className="lg:col-span-2">
