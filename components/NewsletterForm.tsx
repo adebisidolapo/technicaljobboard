@@ -8,14 +8,17 @@ function isValidEmail(email: string) {
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
   const [message, setMessage] = useState("");
 
   const submit = async () => {
     const clean = email.trim();
+
     if (!isValidEmail(clean)) {
       setStatus("error");
-      setMessage("Please enter a valid email.");
+      setMessage("Enter a valid email.");
       return;
     }
 
@@ -33,50 +36,58 @@ export default function NewsletterForm() {
 
       if (!res.ok || !data.ok) {
         setStatus("error");
-        setMessage(data.message || "Something went wrong. Try again.");
+        setMessage(data.message || "Something went wrong.");
         return;
       }
 
       setStatus("success");
-      setMessage("You’re in! Check your inbox soon.");
+      setMessage("Subscribed.");
       setEmail("");
     } catch {
       setStatus("error");
-      setMessage("Network error. Try again.");
+      setMessage("Network error.");
     }
   };
 
   return (
-    <div className="w-full max-w-sm">
-      <input
-        type="email"
-        placeholder="Your email address"
-        aria-label="Email address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="w-full h-11 px-4 rounded-xl
-                   bg-white/10 border border-white/20
-                   text-sm text-white placeholder:text-white/50
-                   outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.5)]"
-      />
+    <div className="w-full">
+      {/* Compact row */}
+      <div className="flex items-center gap-2">
+        <input
+          type="email"
+          placeholder="Email address"
+          aria-label="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") submit();
+          }}
+          className="flex-1 h-10 px-3 rounded-xl
+                     bg-white/10 border border-white/15
+                     text-sm text-white placeholder:text-white/50
+                     outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.45)]"
+        />
 
-      <button
-        type="button"
-        onClick={submit}
-        disabled={status === "loading"}
-        className="mt-3 w-full h-11 rounded-xl
-                   bg-[var(--brand-purple)]
-                   hover:bg-[var(--brand-purple-dark)]
-                   text-sm font-semibold transition
-                   disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        {status === "loading" ? "Joining..." : "Join newsletter"}
-      </button>
+        <button
+          type="button"
+          onClick={submit}
+          disabled={status === "loading"}
+          className="h-10 px-4 rounded-xl
+                     bg-[var(--brand-purple)]
+                     hover:bg-[var(--brand-purple-dark)]
+                     text-sm font-semibold transition
+                     whitespace-nowrap
+                     disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {status === "loading" ? "Joining..." : "Join"}
+        </button>
+      </div>
 
+      {/* Small feedback text (doesn't blow up layout) */}
       {message && (
         <p
           className={[
-            "mt-2 text-xs",
+            "mt-2 text-[11px]",
             status === "success" ? "text-emerald-300" : "text-rose-200",
           ].join(" ")}
         >
