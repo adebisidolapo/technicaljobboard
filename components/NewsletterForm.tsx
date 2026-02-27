@@ -50,9 +50,9 @@ export default function NewsletterForm() {
   };
 
   return (
-    <div className="w-full">
-      {/* Compact row */}
-      <div className="flex items-center gap-2">
+    <div className="w-full min-w-0">
+      {/* One clean pill */}
+      <div className="flex items-stretch w-full min-w-0 overflow-hidden rounded-2xl border border-white/12 bg-white/5">
         <input
           type="email"
           placeholder="Email address"
@@ -62,28 +62,24 @@ export default function NewsletterForm() {
           onKeyDown={(e) => {
             if (e.key === "Enter") submit();
           }}
-          className="flex-1 h-10 px-3 rounded-xl
-                     bg-white/10 border border-white/15
-                     text-sm text-white placeholder:text-white/50
-                     outline-none focus:ring-2 focus:ring-[rgba(106,111,242,0.45)]"
+          className="min-w-0 flex-1 h-10 px-3 bg-transparent
+                     text-sm text-white placeholder:text-white/45
+                     outline-none"
         />
 
         <button
           type="button"
           onClick={submit}
           disabled={status === "loading"}
-          className="h-10 px-4 rounded-xl
-                     bg-[var(--brand-purple)]
+          className="h-10 px-4 bg-[var(--brand-purple)]
                      hover:bg-[var(--brand-purple-dark)]
-                     text-sm font-semibold transition
-                     whitespace-nowrap
+                     text-sm font-semibold text-white transition
                      disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {status === "loading" ? "Joining..." : "Join"}
         </button>
       </div>
 
-      {/* Small feedback text (doesn't blow up layout) */}
       {message && (
         <p
           className={[
