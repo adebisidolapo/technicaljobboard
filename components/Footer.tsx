@@ -30,11 +30,10 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Top */}
         <div className="py-12 sm:py-14">
-          {/* On mobile: 1 column. On sm: 2 columns. On lg: 12-col layout. */}
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
             {/* Brand */}
-            <div className="sm:col-span-2 lg:col-span-4">
-              <div className="flex items-center">
+            <div className="sm:col-span-2 lg:col-span-4 text-center sm:text-left">
+              <div className="flex justify-center sm:justify-start">
                 <img
                   src="/logo.png.png"
                   alt="TechnicalJobBoard"
@@ -42,11 +41,11 @@ export default function Footer() {
                 />
               </div>
 
-              <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+              <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-white/70 sm:mx-0">
                 Curated technical roles from trusted teams.
               </p>
 
-              <div className="mt-5 flex flex-wrap gap-2">
+              <div className="mt-5 flex flex-wrap justify-center gap-2 sm:justify-start">
                 <Link
                   href="/all-jobs"
                   className="inline-flex h-10 items-center justify-center rounded-xl bg-white px-4 text-sm font-semibold text-[#0F1426] transition hover:bg-white/90"
@@ -63,7 +62,7 @@ export default function Footer() {
             </div>
 
             {/* Explore */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 text-center sm:text-left">
               <h3 className="text-sm font-semibold text-white/90">Explore</h3>
               <ul className="mt-4 space-y-3 text-sm text-white/70">
                 <li>
@@ -88,7 +87,7 @@ export default function Footer() {
             </div>
 
             {/* Employers */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 text-center sm:text-left">
               <h3 className="text-sm font-semibold text-white/90">Employers</h3>
               <ul className="mt-4 space-y-3 text-sm text-white/70">
                 <li>
@@ -108,7 +107,7 @@ export default function Footer() {
             </div>
 
             {/* Company */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 text-center sm:text-left">
               <h3 className="text-sm font-semibold text-white/90">Company</h3>
               <ul className="mt-4 space-y-3 text-sm text-white/70">
                 <li>
@@ -130,13 +129,13 @@ export default function Footer() {
             </div>
 
             {/* Newsletter */}
-            <div className="sm:col-span-2 lg:col-span-2">
+            <div className="sm:col-span-2 lg:col-span-2 text-center sm:text-left">
               <h3 className="text-sm font-semibold text-white/90">Newsletter</h3>
               <p className="mt-4 text-sm leading-relaxed text-white/70">
                 Weekly roles + updates.
               </p>
 
-              <div className="mt-4 w-full max-w-sm">
+              <div className="mt-4 mx-auto w-full max-w-sm sm:mx-0">
                 <NewsletterForm />
               </div>
             </div>
@@ -145,13 +144,13 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="border-t border-white/10 py-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
             <p className="text-xs text-white/60">
               © {year} TechnicalJobBoard. All rights reserved.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between md:justify-end md:gap-5">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5 md:items-center">
+              <div className="flex items-center justify-center gap-2">
                 <SocialIconButton href="#" label="Twitter">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                     <path
@@ -189,7 +188,7 @@ export default function Footer() {
                 </SocialIconButton>
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/70">
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-white/70">
                 <Link href="/terms" className="transition hover:text-white">
                   Terms
                 </Link>
