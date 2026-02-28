@@ -3,10 +3,12 @@ import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-function getOrigin() {
-  const h = headers();
+async function getOrigin() {
+  const h = await headers();
+
   const proto = h.get("x-forwarded-proto") ?? "https";
   const host = h.get("x-forwarded-host") ?? h.get("host");
+
   if (!host) return "http://localhost:3000";
   return `${proto}://${host}`;
 }
@@ -21,7 +23,8 @@ async function safeJson(res: Response) {
 }
 
 async function getDashboard(companyId: string) {
-  const origin = getOrigin();
+  const origin = await getOrigin();
+
   const res = await fetch(
     `${origin}/api/employer/dashboard?companyId=${encodeURIComponent(companyId)}`,
     { cache: "no-store" }
@@ -29,16 +32,21 @@ async function getDashboard(companyId: string) {
 
   const data = await safeJson(res);
   if (!res.ok || data?.ok === false) {
-    throw new Error(data?.message || data?.error || `Dashboard failed (${res.status})`);
+    throw new Error(
+      data?.message || data?.error || `Dashboard failed (${res.status})`
+    );
   }
 
   return data as { metrics: any };
 }
 
 async function getAudit(companyId: string) {
-  const origin = getOrigin();
+  const origin = await getOrigin();
+
   const res = await fetch(
-    `${origin}/api/employer/audit?companyId=${encodeURIComponent(companyId)}&take=20`,
+    `${origin}/api/employer/audit?companyId=${encodeURIComponent(
+      companyId
+    )}&take=20`,
     { cache: "no-store" }
   );
 
@@ -98,7 +106,9 @@ function Panel({
       <div className="flex items-start justify-between gap-4 border-b border-slate-200 px-6 py-4">
         <div>
           <div className="text-sm font-extrabold text-slate-900">{title}</div>
-          {subtitle ? <div className="mt-1 text-xs text-slate-600">{subtitle}</div> : null}
+          {subtitle ? (
+            <div className="mt-1 text-xs text-slate-600">{subtitle}</div>
+          ) : null}
         </div>
 
         {actionLabel && actionHref ? (
@@ -141,7 +151,6 @@ export default async function EmployerOverviewPage() {
 
     const byStatus = metrics.applicationsByStatus || {};
     const statuses = ["APPLIED", "REVIEWING", "SHORTLISTED", "REJECTED", "HIRED"];
-
     const recentApps = metrics.recentApplications ?? [];
     const topJobs = metrics.topJobsByApplications ?? [];
     const logs = audit?.logs ?? [];
@@ -217,7 +226,9 @@ export default async function EmployerOverviewPage() {
 
                         return (
                           <tr key={a.id} className="border-t border-slate-200">
-                            <td className="py-3 pr-3 font-semibold text-slate-900">{name}</td>
+                            <td className="py-3 pr-3 font-semibold text-slate-900">
+                              {name}
+                            </td>
                             <td className="py-3 pr-3">{role}</td>
                             <td className="py-3 pr-3">
                               <span
@@ -229,7 +240,9 @@ export default async function EmployerOverviewPage() {
                                 {stage}
                               </span>
                             </td>
-                            <td className="py-3 pr-3 text-slate-600">{appliedAt}</td>
+                            <td className="py-3 pr-3 text-slate-600">
+                              {appliedAt}
+                            </td>
                             <td className="py-3 text-right">
                               <Link
                                 href="/employer/candidates"
@@ -255,7 +268,7 @@ export default async function EmployerOverviewPage() {
 
             <Panel title="Candidate pipeline" subtitle="Counts by stage across your job listings">
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                {["APPLIED", "REVIEWING", "SHORTLISTED", "REJECTED", "HIRED"].map((s) => {
+                {statuses.map((s) => {
                   const tone = statusTone(s);
                   return (
                     <div
@@ -279,10 +292,7 @@ export default async function EmployerOverviewPage() {
               </div>
             </Panel>
 
-            <Panel
-              title="Recruiter activity"
-              subtitle="Audit trail of actions (status changes, notes, downloads)"
-            >
+            <Panel title="Recruiter activity" subtitle="Audit trail of actions (status changes, notes, downloads)">
               <div className="space-y-3">
                 {logs.length ? (
                   logs.map((log: any) => (
@@ -316,8 +326,8 @@ export default async function EmployerOverviewPage() {
               actionHref="/employer/jobs"
             >
               <div className="space-y-3">
-                {(metrics.topJobsByApplications ?? []).length ? (
-                  (metrics.topJobsByApplications ?? []).slice(0, 5).map((j: any) => (
+                {topJobs.length ? (
+                  topJobs.slice(0, 5).map((j: any) => (
                     <div key={j.id} className="rounded-2xl border border-slate-200 bg-white p-4">
                       <div className="text-sm font-extrabold text-slate-900">{j.title}</div>
                       <div className="mt-2 text-xs font-semibold text-slate-900">
@@ -358,19 +368,15 @@ export default async function EmployerOverviewPage() {
       </div>
     );
   } catch (e: any) {
-    // IMPORTANT: prevent full app crash so you can see what failed
     return (
       <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-900">
         <div className="text-lg font-extrabold">Employer overview failed to load</div>
         <div className="mt-2 text-sm text-rose-800">
-          This is coming from your server/API on Vercel.
+          Open Vercel logs — message below tells you what failed.
         </div>
         <pre className="mt-4 overflow-auto rounded-xl bg-white/60 p-4 text-xs text-rose-900">
 {String(e?.message ?? e)}
         </pre>
-        <div className="mt-4 text-sm">
-          Open Vercel logs for the real stack trace (the message above tells you which endpoint failed).
-        </div>
       </div>
     );
   }
