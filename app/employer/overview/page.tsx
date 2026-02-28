@@ -17,9 +17,14 @@ export default async function EmployerOverviewPage() {
   const { metrics } = await getEmployerDashboard(companyId);
 
   const recent = metrics.recentApplications ?? [];
-  const byStatus = metrics.applicationsByStatus ?? {};
 
-  // Dummy analytics data (replace later with real metrics)
+  // Safely compute pipeline from recentApplications
+  const pipeline = recent.reduce<Record<string, number>>((acc, app: any) => {
+    const key = app.status || "APPLIED";
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+
   const chartData = [
     { day: "Sat", views: 80 },
     { day: "Sun", views: 120 },
@@ -33,7 +38,7 @@ export default async function EmployerOverviewPage() {
   return (
     <div className="space-y-10">
 
-      {/* ================= KPI STRIP ================= */}
+      {/* KPI STRIP */}
       <div className="rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="bg-gradient-to-r from-[color:var(--brand-purple)/0.12] via-white to-[color:var(--brand-accent)/0.08] px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -45,13 +50,12 @@ export default async function EmployerOverviewPage() {
         </div>
       </div>
 
-      {/* ================= MAIN GRID ================= */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
 
         {/* LEFT */}
         <div className="xl:col-span-8 space-y-10">
 
-          {/* ===== Chart ===== */}
+          {/* Chart */}
           <Card title="Daily Job Views">
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -65,19 +69,12 @@ export default async function EmployerOverviewPage() {
                     stroke="var(--brand-purple)"
                     fill="url(#colorViews)"
                     strokeWidth={3}
+                    dot={false}
                   />
                   <defs>
                     <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
-                      <stop
-                        offset="0%"
-                        stopColor="var(--brand-purple)"
-                        stopOpacity={0.4}
-                      />
-                      <stop
-                        offset="100%"
-                        stopColor="var(--brand-purple)"
-                        stopOpacity={0}
-                      />
+                      <stop offset="0%" stopColor="var(--brand-purple)" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="var(--brand-purple)" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                 </AreaChart>
@@ -85,23 +82,22 @@ export default async function EmployerOverviewPage() {
             </div>
           </Card>
 
-          {/* ===== Pipeline ===== */}
+          {/* Pipeline */}
           <Card title="Candidate Pipeline">
             <div className="space-y-6">
-              {["APPLIED","REVIEWING","SHORTLISTED","REJECTED","HIRED"].map((s) => {
-                const value = byStatus[s] ?? 0;
-                const percent = Math.min((value / 20) * 100, 100); // temp calc
+              {Object.entries(pipeline).map(([status, count]) => {
+                const percent = Math.min((Number(count) / 10) * 100, 100);
 
                 return (
-                  <div key={s}>
+                  <div key={status}>
                     <div className="flex justify-between text-sm font-semibold text-slate-700">
-                      <span>{s}</span>
-                      <span>{value}</span>
+                      <span>{status}</span>
+                      <span>{count}</span>
                     </div>
 
                     <div className="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
                       <div
-                        className="h-full bg-[var(--brand-purple)] transition-all duration-500"
+                        className="h-full bg-gradient-to-r from-[var(--brand-purple)] to-[var(--brand-accent)] transition-all duration-700 ease-out"
                         style={{ width: `${percent}%` }}
                       />
                     </div>
@@ -111,11 +107,11 @@ export default async function EmployerOverviewPage() {
             </div>
           </Card>
 
-          {/* ===== Recent Applicants ===== */}
+          {/* Recent Applicants */}
           <Card title="Recent Applicants" actionHref="/employer/candidates" actionLabel="View all">
             <div className="space-y-4">
               {recent.length ? (
-                recent.slice(0,5).map((a: any) => (
+                recent.slice(0, 5).map((a: any) => (
                   <div
                     key={a.id}
                     className="flex justify-between items-center rounded-2xl border border-slate-200 p-4 hover:shadow-md transition"
@@ -147,7 +143,7 @@ export default async function EmployerOverviewPage() {
         </div>
 
         {/* RIGHT */}
-        <div className="xl:col-span-4 space-y-10">
+        <div className="xl:col-span-4 space-y-10 sticky top-24 h-fit">
 
           <Card title="Quick Actions">
             <div className="space-y-4">
@@ -163,7 +159,7 @@ export default async function EmployerOverviewPage() {
   );
 }
 
-/* ================= COMPONENTS ================= */
+/* COMPONENTS */
 
 function Metric({ label, value }: { label: string; value: any }) {
   return (
@@ -190,7 +186,7 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-3xl border border-slate-200 bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
       <div className="px-6 py-5 border-b border-slate-200 flex justify-between items-center">
         <h2 className="text-lg font-bold text-slate-900">
           {title}
