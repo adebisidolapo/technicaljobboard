@@ -2,14 +2,9 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-function baseUrl() {
-  const env = process.env.NEXT_PUBLIC_SITE_URL;
-  return env && env.startsWith("http") ? env : "http://localhost:3000";
-}
-
 async function getDashboard(companyId: string) {
   const res = await fetch(
-    `${baseUrl()}/api/employer/dashboard?companyId=${companyId}`,
+    `/api/employer/dashboard?companyId=${encodeURIComponent(companyId)}`,
     { cache: "no-store" }
   );
 
@@ -20,7 +15,7 @@ async function getDashboard(companyId: string) {
 
 async function getAudit(companyId: string) {
   const res = await fetch(
-    `${baseUrl()}/api/employer/audit?companyId=${companyId}&take=20`,
+    `/api/employer/audit?companyId=${encodeURIComponent(companyId)}&take=20`,
     { cache: "no-store" }
   );
 
@@ -129,7 +124,6 @@ export default async function EmployerOverviewPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page header */}
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
@@ -156,37 +150,14 @@ export default async function EmployerOverviewPage() {
         </div>
       </div>
 
-      {/* KPI row (real metrics) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard
-          label="Total jobs"
-          value={String(metrics.totalJobs ?? 0)}
-          hint="All listings"
-          tone="neutral"
-        />
-        <StatCard
-          label="Active jobs"
-          value={String(metrics.activeJobs ?? 0)}
-          hint="Live on the board"
-          tone="purple"
-        />
-        <StatCard
-          label="Total applications"
-          value={String(metrics.totalApplications ?? 0)}
-          hint="All-time"
-          tone="accent"
-        />
-        <StatCard
-          label="Recent applicants"
-          value={String(recentApps.length)}
-          hint="Most recent submissions"
-          tone="neutral"
-        />
+        <StatCard label="Total jobs" value={String(metrics.totalJobs ?? 0)} hint="All listings" />
+        <StatCard label="Active jobs" value={String(metrics.activeJobs ?? 0)} hint="Live on the board" tone="purple" />
+        <StatCard label="Total applications" value={String(metrics.totalApplications ?? 0)} hint="All-time" tone="accent" />
+        <StatCard label="Recent applicants" value={String(recentApps.length)} hint="Most recent submissions" />
       </div>
 
-      {/* Main grid */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* Left */}
         <div className="xl:col-span-8 space-y-6">
           <Panel
             title="Recent applicants"
@@ -205,7 +176,6 @@ export default async function EmployerOverviewPage() {
                     <th className="py-2 text-right">Action</th>
                   </tr>
                 </thead>
-
                 <tbody className="text-slate-700">
                   {recentApps.length ? (
                     recentApps.slice(0, 6).map((a: any) => {
@@ -236,9 +206,7 @@ export default async function EmployerOverviewPage() {
                               {stage}
                             </span>
                           </td>
-                          <td className="py-3 pr-3 text-slate-600">
-                            {appliedAt}
-                          </td>
+                          <td className="py-3 pr-3 text-slate-600">{appliedAt}</td>
                           <td className="py-3 text-right">
                             <Link
                               href="/employer/applicants"
@@ -262,10 +230,7 @@ export default async function EmployerOverviewPage() {
             </div>
           </Panel>
 
-          <Panel
-            title="Candidate pipeline"
-            subtitle="Counts by stage across your job listings"
-          >
+          <Panel title="Candidate pipeline" subtitle="Counts by stage across your job listings">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {statuses.map((s) => {
                 const tone = statusTone(s);
@@ -281,9 +246,7 @@ export default async function EmployerOverviewPage() {
                         : "bg-[#F4F6FB] border-slate-200",
                     ].join(" ")}
                   >
-                    <div className="text-xs font-extrabold text-slate-500">
-                      {s}
-                    </div>
+                    <div className="text-xs font-extrabold text-slate-500">{s}</div>
                     <div className="mt-1 text-xl font-extrabold text-slate-900">
                       {String(byStatus[s] ?? 0)}
                     </div>
@@ -293,17 +256,11 @@ export default async function EmployerOverviewPage() {
             </div>
           </Panel>
 
-          <Panel
-            title="Recruiter activity"
-            subtitle="Audit trail of actions (status changes, notes, downloads)"
-          >
+          <Panel title="Recruiter activity" subtitle="Audit trail of actions (status changes, notes, downloads)">
             <div className="space-y-3">
               {logs.length ? (
                 logs.map((log: any) => (
-                  <div
-                    key={log.id}
-                    className="rounded-2xl border border-slate-200 bg-white p-4"
-                  >
+                  <div key={log.id} className="rounded-2xl border border-slate-200 bg-white p-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
                         <div className="text-sm font-extrabold text-slate-900">
@@ -331,9 +288,7 @@ export default async function EmployerOverviewPage() {
                       </div>
 
                       <div className="shrink-0 text-xs text-slate-500">
-                        {log.createdAt
-                          ? new Date(log.createdAt).toLocaleString()
-                          : ""}
+                        {log.createdAt ? new Date(log.createdAt).toLocaleString() : ""}
                       </div>
                     </div>
                   </div>
@@ -345,7 +300,6 @@ export default async function EmployerOverviewPage() {
           </Panel>
         </div>
 
-        {/* Right */}
         <div className="xl:col-span-4 space-y-6">
           <Panel
             title="Top jobs by applications"
@@ -356,13 +310,8 @@ export default async function EmployerOverviewPage() {
             <div className="space-y-3">
               {topJobs.length ? (
                 topJobs.slice(0, 5).map((j: any) => (
-                  <div
-                    key={j.id}
-                    className="rounded-2xl border border-slate-200 bg-white p-4"
-                  >
-                    <div className="text-sm font-extrabold text-slate-900">
-                      {j.title}
-                    </div>
+                  <div key={j.id} className="rounded-2xl border border-slate-200 bg-white p-4">
+                    <div className="text-sm font-extrabold text-slate-900">{j.title}</div>
                     <div className="mt-1 text-xs text-slate-600">
                       Status: <span className="font-semibold">{j.status}</span>
                     </div>
