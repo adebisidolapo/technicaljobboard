@@ -15,7 +15,7 @@ function SocialIconButton({
       href={href}
       aria-label={label}
       title={label}
-      className="h-9 w-9 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white"
     >
       {children}
     </a>
@@ -26,33 +26,36 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0F1426] text-white overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Top grid */}
-        <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 items-start min-w-0">
+    <footer className="bg-[#0F1426] text-white">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Top */}
+        <div className="py-12 sm:py-14">
+          {/* On mobile: 1 column. On sm: 2 columns. On lg: 12-col layout. */}
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
             {/* Brand */}
-            <div className="lg:col-span-4 min-w-0">
-              <img
-                src="/logo.png.png"
-                alt="TechnicalJobBoard"
-                className="h-12 md:h-14 w-auto object-contain"
-              />
+            <div className="sm:col-span-2 lg:col-span-4">
+              <div className="flex items-center">
+                <img
+                  src="/logo.png.png"
+                  alt="TechnicalJobBoard"
+                  className="h-12 w-auto object-contain"
+                />
+              </div>
 
-              <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-sm">
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
                 Curated technical roles from trusted teams.
               </p>
 
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
                   href="/all-jobs"
-                  className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-white text-[#0F1426] text-sm font-semibold hover:bg-white/90 transition"
+                  className="inline-flex h-10 items-center justify-center rounded-xl bg-white px-4 text-sm font-semibold text-[#0F1426] transition hover:bg-white/90"
                 >
                   Browse jobs
                 </Link>
                 <Link
                   href="/employer"
-                  className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white text-sm font-semibold hover:bg-white/10 transition"
+                  className="inline-flex h-10 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Employers
                 </Link>
@@ -60,23 +63,23 @@ export default function Footer() {
             </div>
 
             {/* Explore */}
-            <div className="lg:col-span-2 min-w-0">
+            <div className="lg:col-span-2">
               <h3 className="text-sm font-semibold text-white/90">Explore</h3>
               <ul className="mt-4 space-y-3 text-sm text-white/70">
                 <li>
-                  <Link href="/all-jobs" className="hover:text-white transition">
+                  <Link href="/all-jobs" className="transition hover:text-white">
                     All Jobs
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#categories" className="hover:text-white transition">
+                  <Link href="/#categories" className="transition hover:text-white">
                     Categories
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/jobseeker/login"
-                    className="hover:text-white transition"
+                    className="transition hover:text-white"
                   >
                     Jobseeker
                   </Link>
@@ -85,18 +88,18 @@ export default function Footer() {
             </div>
 
             {/* Employers */}
-            <div className="lg:col-span-2 min-w-0">
+            <div className="lg:col-span-2">
               <h3 className="text-sm font-semibold text-white/90">Employers</h3>
               <ul className="mt-4 space-y-3 text-sm text-white/70">
                 <li>
-                  <Link href="/employer" className="hover:text-white transition">
+                  <Link href="/employer" className="transition hover:text-white">
                     Dashboard
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/employer/jobs"
-                    className="hover:text-white transition"
+                    className="transition hover:text-white"
                   >
                     Manage jobs
                   </Link>
@@ -105,47 +108,49 @@ export default function Footer() {
             </div>
 
             {/* Company */}
-            <div className="lg:col-span-2 min-w-0">
+            <div className="lg:col-span-2">
               <h3 className="text-sm font-semibold text-white/90">Company</h3>
               <ul className="mt-4 space-y-3 text-sm text-white/70">
                 <li>
-                  <Link href="/about" className="hover:text-white transition">
+                  <Link href="/about" className="transition hover:text-white">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-white transition">
+                  <Link href="/contact" className="transition hover:text-white">
                     Contact
                   </Link>
                 </li>
                 <li>
-                  <Link href="/support" className="hover:text-white transition">
+                  <Link href="/support" className="transition hover:text-white">
                     Support
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Newsletter (ONE, compact, cannot overflow) */}
-            <div className="lg:col-span-2 min-w-0">
+            {/* Newsletter */}
+            <div className="sm:col-span-2 lg:col-span-2">
               <h3 className="text-sm font-semibold text-white/90">Newsletter</h3>
-              <p className="mt-4 text-sm text-white/70 leading-relaxed">
+              <p className="mt-4 text-sm leading-relaxed text-white/70">
                 Weekly roles + updates.
               </p>
 
-              <div className="mt-4 w-full min-w-0 max-w-xs overflow-hidden">
+              <div className="mt-4 w-full max-w-sm">
                 <NewsletterForm />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="py-6 border-t border-white/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/60">
-            <p>© {year} TechnicalJobBoard. All rights reserved.</p>
+        {/* Bottom */}
+        <div className="border-t border-white/10 py-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <p className="text-xs text-white/60">
+              © {year} TechnicalJobBoard. All rights reserved.
+            </p>
 
-            <div className="flex items-center gap-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between md:justify-end md:gap-5">
               <div className="flex items-center gap-2">
                 <SocialIconButton href="#" label="Twitter">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -184,17 +189,17 @@ export default function Footer() {
                 </SocialIconButton>
               </div>
 
-              <span className="hidden md:inline text-white/25">•</span>
-
-              <Link href="/terms" className="hover:text-white transition">
-                Terms
-              </Link>
-              <Link href="/privacy" className="hover:text-white transition">
-                Privacy
-              </Link>
-              <Link href="/support" className="hover:text-white transition">
-                Support
-              </Link>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/70">
+                <Link href="/terms" className="transition hover:text-white">
+                  Terms
+                </Link>
+                <Link href="/privacy" className="transition hover:text-white">
+                  Privacy
+                </Link>
+                <Link href="/support" className="transition hover:text-white">
+                  Support
+                </Link>
+              </div>
             </div>
           </div>
         </div>
