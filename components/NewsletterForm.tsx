@@ -49,10 +49,12 @@ export default function NewsletterForm() {
     }
   };
 
+  const isLoading = status === "loading";
+
   return (
-    <div className="w-full min-w-0">
+    <div className="w-full">
       {/* One clean pill */}
-      <div className="flex items-stretch w-full min-w-0 overflow-hidden rounded-2xl border border-white/12 bg-white/5">
+      <div className="group flex w-full items-stretch overflow-hidden rounded-2xl border border-white/12 bg-white/5 transition focus-within:border-white/20 focus-within:bg-white/7">
         <input
           type="email"
           placeholder="Email address"
@@ -62,28 +64,29 @@ export default function NewsletterForm() {
           onKeyDown={(e) => {
             if (e.key === "Enter") submit();
           }}
-          className="min-w-0 flex-1 h-10 px-3 bg-transparent
-                     text-sm text-white placeholder:text-white/45
-                     outline-none"
+          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/45 outline-none"
         />
 
         <button
           type="button"
           onClick={submit}
-          disabled={status === "loading"}
-          className="h-10 px-4 bg-[var(--brand-purple)]
-                     hover:bg-[var(--brand-purple-dark)]
-                     text-sm font-semibold text-white transition
-                     disabled:opacity-60 disabled:cursor-not-allowed"
+          disabled={isLoading}
+          className={[
+            "shrink-0 px-4 sm:px-5",
+            "text-sm font-semibold text-white",
+            "bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)]",
+            "transition",
+            "disabled:opacity-60 disabled:cursor-not-allowed",
+          ].join(" ")}
         >
-          {status === "loading" ? "Joining..." : "Join"}
+          {isLoading ? "Joining..." : "Join"}
         </button>
       </div>
 
       {message && (
         <p
           className={[
-            "mt-2 text-[11px]",
+            "mt-2 text-[11px] leading-relaxed",
             status === "success" ? "text-emerald-300" : "text-rose-200",
           ].join(" ")}
         >
