@@ -28,12 +28,12 @@ export default function Footer() {
   return (
     <footer className="bg-[#0F1426] text-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Top */}
+        {/* TOP */}
         <div className="py-12 sm:py-14">
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
             {/* Brand */}
-            <div className="sm:col-span-2 lg:col-span-4 text-center sm:text-left">
-              <div className="flex justify-center sm:justify-start">
+            <div className="lg:col-span-4 text-center lg:text-left">
+              <div className="flex justify-center lg:justify-start">
                 <img
                   src="/logo.png.png"
                   alt="TechnicalJobBoard"
@@ -41,11 +41,11 @@ export default function Footer() {
                 />
               </div>
 
-              <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-white/70 sm:mx-0">
+              <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-white/70 lg:mx-0">
                 Curated technical roles from trusted teams.
               </p>
 
-              <div className="mt-5 flex flex-wrap justify-center gap-2 sm:justify-start">
+              <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
                 <Link
                   href="/all-jobs"
                   className="inline-flex h-10 items-center justify-center rounded-xl bg-white px-4 text-sm font-semibold text-[#0F1426] transition hover:bg-white/90"
@@ -61,96 +61,132 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Explore */}
-            <div className="lg:col-span-2 text-center sm:text-left">
-              <h3 className="text-sm font-semibold text-white/90">Explore</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/70">
-                <li>
-                  <Link href="/all-jobs" className="transition hover:text-white">
-                    All Jobs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/#categories" className="transition hover:text-white">
-                    Categories
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/jobseeker/login"
-                    className="transition hover:text-white"
-                  >
-                    Jobseeker
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {/* Links group (the “tabs”) */}
+            <div className="lg:col-span-5">
+              <div
+                className={[
+                  "grid grid-cols-3",
+                  "gap-6 sm:gap-8",
+                  "text-center lg:text-left",
+                  "justify-items-center lg:justify-items-start",
+                ].join(" ")}
+              >
+                {/* Explore */}
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-white/90">
+                    Explore
+                  </h3>
+                  <ul className="mt-4 space-y-2 text-sm text-white/70">
+                    <li>
+                      <Link
+                        href="/all-jobs"
+                        className="transition hover:text-white"
+                      >
+                        All Jobs
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/#categories"
+                        className="transition hover:text-white"
+                      >
+                        Categories
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/jobseeker/login"
+                        className="transition hover:text-white"
+                      >
+                        Jobseeker
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-            {/* Employers */}
-            <div className="lg:col-span-2 text-center sm:text-left">
-              <h3 className="text-sm font-semibold text-white/90">Employers</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/70">
-                <li>
-                  <Link href="/employer" className="transition hover:text-white">
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/employer/jobs"
-                    className="transition hover:text-white"
-                  >
-                    Manage jobs
-                  </Link>
-                </li>
-              </ul>
-            </div>
+                {/* Employers */}
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-white/90">
+                    Employers
+                  </h3>
+                  <ul className="mt-4 space-y-2 text-sm text-white/70">
+                    <li>
+                      <Link
+                        href="/employer"
+                        className="transition hover:text-white"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/employer/jobs"
+                        className="transition hover:text-white"
+                      >
+                        Manage jobs
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-            {/* Company */}
-            <div className="lg:col-span-2 text-center sm:text-left">
-              <h3 className="text-sm font-semibold text-white/90">Company</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/70">
-                <li>
-                  <Link href="/about" className="transition hover:text-white">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="transition hover:text-white">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/support" className="transition hover:text-white">
-                    Support
-                  </Link>
-                </li>
-              </ul>
+                {/* Company */}
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-white/90">
+                    Company
+                  </h3>
+                  <ul className="mt-4 space-y-2 text-sm text-white/70">
+                    <li>
+                      <Link
+                        href="/about"
+                        className="transition hover:text-white"
+                      >
+                        About
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/contact"
+                        className="transition hover:text-white"
+                      >
+                        Contact
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/support"
+                        className="transition hover:text-white"
+                      >
+                        Support
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             {/* Newsletter */}
-            <div className="sm:col-span-2 lg:col-span-2 text-center sm:text-left">
+            <div className="lg:col-span-3 text-center lg:text-left">
               <h3 className="text-sm font-semibold text-white/90">Newsletter</h3>
               <p className="mt-4 text-sm leading-relaxed text-white/70">
                 Weekly roles + updates.
               </p>
 
-              <div className="mt-4 mx-auto w-full max-w-sm sm:mx-0">
+              <div className="mt-4 mx-auto w-full max-w-sm lg:mx-0">
                 <NewsletterForm />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
+        {/* BOTTOM */}
         <div className="border-t border-white/10 py-6">
           <div className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
             <p className="text-xs text-white/60">
               © {year} TechnicalJobBoard. All rights reserved.
             </p>
 
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5 md:items-center">
-              <div className="flex items-center justify-center gap-2">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
+              <div className="flex items-center gap-2">
                 <SocialIconButton href="#" label="Twitter">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                     <path
@@ -188,7 +224,7 @@ export default function Footer() {
                 </SocialIconButton>
               </div>
 
-              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-white/70">
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-white/70">
                 <Link href="/terms" className="transition hover:text-white">
                   Terms
                 </Link>
