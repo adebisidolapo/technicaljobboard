@@ -1,4 +1,4 @@
-import "./globals.css";
+ import "./globals.css";
 import Chrome from "@/components/Chrome";
 
 export const metadata = {
@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased">
         <Chrome>{children}</Chrome>
       </body>
     </html>
