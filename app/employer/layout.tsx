@@ -175,8 +175,7 @@ export default function EmployerLayout({ children }: { children: React.ReactNode
         </div>
       </div>
 
-      {/* Footer on employer dashboard too */}
-      <Footer />
+  
     </div>
   );
 }
