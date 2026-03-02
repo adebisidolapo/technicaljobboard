@@ -2,15 +2,15 @@
 
 import React from "react";
 
-type Point = { day: string; value: number };
+type Point = { day: string; views: number };
 
 export default function ChartClient({ data }: { data: Point[] }) {
   const w = 900;
   const h = 260;
   const pad = 28;
 
-  const max = Math.max(...data.map((d) => d.value), 1);
-  const min = Math.min(...data.map((d) => d.value), 0);
+  const max = Math.max(...data.map((d) => d.views), 1);
+  const min = Math.min(...data.map((d) => d.views), 0);
 
   const x = (i: number) =>
     pad + (i * (w - pad * 2)) / Math.max(data.length - 1, 1);
@@ -21,7 +21,7 @@ export default function ChartClient({ data }: { data: Point[] }) {
   };
 
   const path = data
-    .map((d, i) => `${i === 0 ? "M" : "L"} ${x(i)} ${y(d.value)}`)
+    .map((d, i) => `${i === 0 ? "M" : "L"} ${x(i)} ${y(d.views)}`)
     .join(" ");
 
   const area =
@@ -74,7 +74,7 @@ export default function ChartClient({ data }: { data: Point[] }) {
           <circle
             key={d.day}
             cx={x(i)}
-            cy={y(d.value)}
+            cy={y(d.views)}
             r="4.4"
             fill="white"
             stroke="var(--brand-purple)"
