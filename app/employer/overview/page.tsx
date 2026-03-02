@@ -1,8 +1,7 @@
 import Link from "next/link";
+import ChartClient, { type Point } from "@/components/employer/ChartClient";
 import { getEmployerDashboard } from "@/lib/employer/dashboard";
-import ChartClient from "./ChartClient";
 
-export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 function cx(...classes: Array<string | false | null | undefined>) {
@@ -12,205 +11,162 @@ function cx(...classes: Array<string | false | null | undefined>) {
 function Card({
   title,
   subtitle,
-  actionLabel,
-  actionHref,
-  tone = "plain",
+  right,
   children,
 }: {
   title: string;
   subtitle?: string;
-  actionLabel?: string;
-  actionHref?: string;
-  tone?: "plain" | "tinted";
+  right?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
-    <section
-      className={cx(
-        "rounded-3xl border border-slate-200 shadow-sm overflow-hidden",
-        tone === "tinted" ? "bg-[color:var(--brand-purple)/0.04]" : "bg-white"
-      )}
-    >
+    <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
       <div className="px-6 py-5 border-b border-slate-200 flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <h2 className="text-[15px] font-extrabold text-slate-950 tracking-tight">
-            {title}
-          </h2>
+        <div>
+          <div className="text-sm font-extrabold text-slate-900">{title}</div>
           {subtitle ? (
-            <p className="mt-1 text-xs text-slate-600 leading-relaxed">
-              {subtitle}
-            </p>
+            <div className="mt-1 text-xs text-slate-600">{subtitle}</div>
           ) : null}
         </div>
-
-        {actionLabel && actionHref ? (
-          <Link
-            href={actionHref}
-            className="shrink-0 text-sm font-semibold text-[var(--brand-purple)] hover:underline"
-          >
-            {actionLabel}
-          </Link>
-        ) : null}
+        {right ? <div className="shrink-0">{right}</div> : null}
       </div>
-
       <div className="p-6">{children}</div>
     </section>
   );
 }
 
-function Metric({
+function Stat({
   label,
   value,
   tone = "neutral",
 }: {
   label: string;
-  value: number;
-  tone?: "neutral" | "purple" | "accent";
+  value: string | number;
+  tone?: "purple" | "accent" | "neutral";
 }) {
-  const vClass =
+  const ring =
     tone === "purple"
-      ? "text-[var(--brand-purple-dark)]"
+      ? "ring-[color:var(--brand-purple)/0.20]"
+      : tone === "accent"
+      ? "ring-[color:var(--brand-accent)/0.20]"
+      : "ring-slate-200";
+
+  const top =
+    tone === "purple"
+      ? "bg-[color:var(--brand-purple)/0.10]"
+      : tone === "accent"
+      ? "bg-[color:var(--brand-accent)/0.10]"
+      : "bg-slate-100";
+
+  const valueColor =
+    tone === "purple"
+      ? "text-[var(--brand-purple)]"
       : tone === "accent"
       ? "text-[var(--brand-accent-dark)]"
-      : "text-slate-950";
+      : "text-slate-900";
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-      <div className="text-[10px] font-extrabold tracking-[0.18em] text-slate-500 uppercase">
+    <div className={cx("rounded-3xl bg-white ring-1", ring, "p-5")}>
+      <div className={cx("h-1.5 w-12 rounded-full", top)} />
+      <div className="mt-3 text-xs font-extrabold tracking-wide text-slate-500 uppercase">
         {label}
       </div>
-      <div className={cx("mt-2 text-2xl font-extrabold tracking-tight", vClass)}>
+      <div className={cx("mt-2 text-3xl font-extrabold tracking-tight", valueColor)}>
         {value}
       </div>
     </div>
   );
 }
 
-function HealthRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3">
-      <div className="text-sm font-semibold text-slate-700">{label}</div>
-      <div className="text-sm font-extrabold text-slate-950">{value}</div>
-    </div>
-  );
-}
+function StagePill({ stage }: { stage: string }) {
+  const s = String(stage || "").toUpperCase();
 
-function CandidateRow({ name, meta }: { name: string; meta: string }) {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4">
-      <div className="font-extrabold text-slate-950">{name}</div>
-      <div className="mt-1 text-xs text-slate-600">{meta}</div>
+  const cls =
+    s === "APPLIED" || s === "NEW"
+      ? "bg-[color:var(--brand-purple)/0.10] border-[color:var(--brand-purple)/0.22] text-[var(--brand-purple-dark)]"
+      : s === "SHORTLISTED" || s === "HIRED"
+      ? "bg-[color:var(--brand-accent)/0.10] border-[color:var(--brand-accent)/0.22] text-[var(--brand-accent-dark)]"
+      : "bg-slate-100 border-slate-200 text-slate-700";
 
-      <div className="mt-3 flex gap-2">
-        <button className="h-9 flex-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-xs font-semibold">
-          View
-        </button>
-        <button className="h-9 flex-1 rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition text-xs font-semibold">
-          Message
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function ActionButton({
-  href,
-  label,
-  primary,
-}: {
-  href: string;
-  label: string;
-  primary?: boolean;
-}) {
   return (
-    <Link
-      href={href}
-      className={cx(
-        "h-11 rounded-xl text-sm font-semibold inline-flex items-center justify-center transition",
-        primary
-          ? "bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] shadow-sm"
-          : "bg-white border border-slate-200 text-slate-900 hover:bg-slate-50"
-      )}
-    >
-      {label}
-    </Link>
+    <span className={cx("inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border", cls)}>
+      {s}
+    </span>
   );
 }
 
 export default async function EmployerOverviewPage() {
+  // Later: derive from logged-in employer session
   const companyId = "cmlkxmg130000tnn0av04lkpg";
+
   const { metrics } = await getEmployerDashboard(companyId);
 
-  const recent = metrics.recentApplications ?? [];
+  const recent = metrics?.recentApplications ?? [];
 
-  // pipeline from recent apps only (NO applicationsByStatus)
-  const pipeline = recent.reduce<Record<string, number>>((acc, app: any) => {
-    const key = String(app.status || "APPLIED").toUpperCase();
-    acc[key] = (acc[key] || 0) + 1;
-    return acc;
-  }, {});
+  // Build pipeline counts from recent applications (no dependency on applicationsByStatus)
+  const pipelineKeys = ["APPLIED", "REVIEWING", "SHORTLISTED", "REJECTED", "HIRED"] as const;
+  const byStatus: Record<string, number> = {};
+  pipelineKeys.forEach((k) => (byStatus[k] = 0));
+  for (const a of recent) {
+    const s = String(a?.status || "APPLIED").toUpperCase();
+    byStatus[s] = (byStatus[s] ?? 0) + 1;
+  }
 
-  const stages = ["APPLIED", "REVIEWING", "SHORTLISTED", "HIRED", "REJECTED"];
-  const denom = Math.max(recent.length, 1);
-
-  // “Glassdoor-ish” signals (safe UI signals)
-  const hiringVelocity = recent.length >= 8 ? "High" : recent.length >= 3 ? "Moderate" : "Low";
-  const responsiveness = recent.length >= 5 ? "On track" : "Needs attention";
-  const companyHealthScore = Math.min(92, 70 + Math.floor(recent.length * 3));
-
-  // simple analytics placeholders (replace with real later)
-  const chartData = [
-    { day: "Sat", value: 80 },
-    { day: "Sun", value: 120 },
-    { day: "Mon", value: 180 },
-    { day: "Tue", value: 240 },
-    { day: "Wed", value: 210 },
-    { day: "Thu", value: 160 },
-    { day: "Fri", value: 130 },
+  // ✅ FIX: Chart points MUST have `views` (not value)
+  const chartData: Point[] = [
+    { day: "Sat", views: 60 },
+    { day: "Sun", views: 95 },
+    { day: "Mon", views: 150 },
+    { day: "Tue", views: 240 },
+    { day: "Wed", views: 210 },
+    { day: "Thu", views: 165 },
+    { day: "Fri", views: 130 },
   ];
 
+  // “Glassdoor-ish” company health widgets (static placeholders for now)
+  const healthScore = 73;
+  const hiringVelocity = "Low";
+  const recruiterResponsiveness = "Needs attention";
+
   return (
-    <div className="space-y-6 lg:space-y-8">
-      {/* Header + KPIs */}
-      <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <div className="bg-gradient-to-r from-[color:var(--brand-purple)/0.12] via-white to-[color:var(--brand-accent)/0.10] px-6 py-6">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-            <div className="min-w-0">
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950">
-                Overview
-              </h1>
-              <p className="mt-1 text-sm text-slate-600">
-                Performance, applicants, and hiring activity at a glance.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-              <Link
-                href="/employer/jobs"
-                className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-              >
-                View jobs
-              </Link>
-              <Link
-                href="/employer/candidates"
-                className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition text-sm font-semibold shadow-sm"
-              >
-                Review candidates
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <Metric label="Total jobs" value={metrics.totalJobs ?? 0} />
-            <Metric label="Active jobs" value={metrics.activeJobs ?? 0} tone="purple" />
-            <Metric label="Total applications" value={metrics.totalApplications ?? 0} />
-            <Metric label="Recent applicants" value={recent.length} tone="accent" />
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+            Overview
+          </h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Performance, applicants, and hiring activity at a glance.
+          </p>
         </div>
-      </section>
 
-      {/* Main layout */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 lg:gap-8 items-start">
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href="/employer/jobs"
+            className="h-10 px-4 inline-flex items-center justify-center rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm hover:bg-slate-50 transition"
+          >
+            View jobs
+          </Link>
+          <Link
+            href="/employer/candidates"
+            className="h-10 px-4 inline-flex items-center justify-center rounded-2xl bg-[var(--brand-purple)] text-white font-semibold text-sm hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+          >
+            Review candidates
+          </Link>
+        </div>
+      </div>
+
+      {/* KPI */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <Stat label="Total jobs" value={metrics?.totalJobs ?? 0} />
+        <Stat label="Active jobs" value={metrics?.activeJobs ?? 0} tone="purple" />
+        <Stat label="Total applications" value={metrics?.totalApplications ?? 0} tone="accent" />
+        <Stat label="Recent applicants" value={recent.length} />
+      </div>
+
+      {/* Main grid */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
         {/* Left column */}
         <div className="xl:col-span-8 space-y-6">
           <Card title="Job interest (last 7 days)" subtitle="Daily views trend">
@@ -220,71 +176,83 @@ export default async function EmployerOverviewPage() {
           </Card>
 
           <Card title="Candidate pipeline" subtitle="Distribution from recent applications">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {stages.map((stage) => {
-                const count = pipeline[stage] ?? 0;
-                const pct = Math.round((count / denom) * 100);
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {pipelineKeys.map((k) => {
+                const v = byStatus[k] ?? 0;
+                const total = Math.max(1, recent.length);
+                const pct = Math.round((v / total) * 100);
+
+                const barTone =
+                  k === "SHORTLISTED" || k === "HIRED"
+                    ? "bg-[var(--brand-accent)]"
+                    : "bg-[var(--brand-purple)]";
 
                 return (
-                  <div key={stage} className="rounded-2xl border border-slate-200 bg-white p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-extrabold text-slate-950 tracking-tight">
-                        {stage}
-                      </div>
-                      <div className="text-sm font-extrabold text-slate-950">
-                        {count}
-                      </div>
+                  <div key={k} className="rounded-3xl border border-slate-200 bg-white p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="text-xs font-extrabold text-slate-900">{k}</div>
+                      <div className="text-xs font-extrabold text-slate-900">{v}</div>
                     </div>
 
-                    <div className="mt-2 h-2 rounded-full bg-slate-100 overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-[var(--brand-purple)] to-[var(--brand-accent)] transition-all duration-700 ease-out"
-                        style={{ width: `${pct}%` }}
-                      />
+                    <div className="mt-3 h-2 rounded-full bg-slate-100 overflow-hidden">
+                      <div className={cx("h-full rounded-full", barTone)} style={{ width: `${pct}%` }} />
                     </div>
 
-                    <div className="mt-2 text-xs text-slate-500">{pct}% of recent</div>
+                    <div className="mt-2 text-xs text-slate-600">{pct}% of recent</div>
                   </div>
                 );
               })}
             </div>
           </Card>
 
-          <Card title="Recent applicants" actionLabel="View all" actionHref="/employer/candidates">
+          <Card
+            title="Recent applicants"
+            right={
+              <Link
+                href="/employer/candidates"
+                className="text-sm font-semibold text-[var(--brand-purple)] hover:underline"
+              >
+                View all
+              </Link>
+            }
+          >
             <div className="space-y-3">
               {recent.length ? (
-                recent.slice(0, 6).map((a: any) => (
-                  <div
-                    key={a.id}
-                    className="rounded-2xl border border-slate-200 bg-white p-4 hover:shadow-md transition"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                recent.slice(0, 6).map((a: any) => {
+                  const name =
+                    a.user?.jobseekerProfile?.fullName ||
+                    a.user?.email ||
+                    "Applicant";
+
+                  const role = a.job?.title || "—";
+                  const stage = a.status || "APPLIED";
+
+                  return (
+                    <div
+                      key={a.id}
+                      className="rounded-3xl border border-slate-200 bg-white p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+                    >
                       <div className="min-w-0">
-                        <div className="font-extrabold text-slate-950 truncate">
-                          {a.user?.jobseekerProfile?.fullName ||
-                            a.user?.email ||
-                            "Applicant"}
+                        <div className="text-sm font-extrabold text-slate-900 truncate">
+                          {name}
                         </div>
-                        <div className="text-sm text-slate-600 truncate">
-                          Applied to:{" "}
-                          <span className="font-semibold">{a.job?.title || "—"}</span>
+                        <div className="mt-1 text-xs text-slate-600 truncate">
+                          Applied to: <span className="font-semibold text-slate-800">{role}</span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[color:var(--brand-purple)/0.10] text-[var(--brand-purple-dark)]">
-                          {a.status}
-                        </span>
+                      <div className="flex items-center gap-2 justify-between sm:justify-end">
+                        <StagePill stage={stage} />
                         <Link
                           href="/employer/candidates"
-                          className="h-9 px-3 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-xs font-semibold"
+                          className="h-9 px-3 inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-900 font-semibold text-xs hover:bg-slate-50 transition"
                         >
                           Review
                         </Link>
                       </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="text-sm text-slate-600">No applications yet.</div>
               )}
@@ -293,43 +261,61 @@ export default async function EmployerOverviewPage() {
         </div>
 
         {/* Right column */}
-        <div className="xl:col-span-4 space-y-6 xl:sticky xl:top-24 h-fit">
-          <Card title="Company health" subtitle="Signals that help you hire faster" tone="tinted">
+        <div className="xl:col-span-4 space-y-6">
+          <Card title="Company health" subtitle="Signals that help you hire faster">
             <div className="space-y-3">
-              <HealthRow label="Health score" value={`${companyHealthScore}/100`} />
-              <HealthRow label="Hiring velocity" value={hiringVelocity} />
-              <HealthRow label="Recruiter responsiveness" value={responsiveness} />
-            </div>
-
-            <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
-              <div className="text-sm font-extrabold text-slate-950 tracking-tight">
-                Recommended
+              <div className="rounded-3xl border border-slate-200 bg-[#F4F6FB] p-4 flex items-center justify-between">
+                <div className="text-xs font-extrabold text-slate-600">Health score</div>
+                <div className="text-sm font-extrabold text-slate-900">{healthScore}/100</div>
               </div>
-              <p className="mt-1 text-xs text-slate-600 leading-relaxed">
-                Review new applicants daily to improve response rate and candidate quality.
-              </p>
-              <Link
-                href="/employer/candidates"
-                className="mt-3 h-10 w-full inline-flex items-center justify-center rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition text-sm font-semibold shadow-sm"
-              >
-                Review applicants
-              </Link>
+
+              <div className="rounded-3xl border border-slate-200 bg-[#F4F6FB] p-4 flex items-center justify-between">
+                <div className="text-xs font-extrabold text-slate-600">Hiring velocity</div>
+                <div className="text-sm font-extrabold text-slate-900">{hiringVelocity}</div>
+              </div>
+
+              <div className="rounded-3xl border border-slate-200 bg-[#F4F6FB] p-4 flex items-center justify-between">
+                <div className="text-xs font-extrabold text-slate-600">Recruiter responsiveness</div>
+                <div className="text-sm font-extrabold text-slate-900">{recruiterResponsiveness}</div>
+              </div>
+
+              <div className="rounded-3xl border border-slate-200 bg-white p-4">
+                <div className="text-sm font-extrabold text-slate-900">Recommended</div>
+                <p className="mt-1 text-xs text-slate-600">
+                  Review new applicants daily to improve response rate and candidate quality.
+                </p>
+                <Link
+                  href="/employer/candidates"
+                  className="mt-3 h-10 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold text-sm inline-flex items-center justify-center hover:bg-[var(--brand-purple-dark)] transition shadow-sm w-full"
+                >
+                  Review applicants
+                </Link>
+              </div>
             </div>
           </Card>
 
-          <Card title="Suggested candidates" subtitle="Shortlist-ready profiles" tone="tinted">
-            <div className="space-y-3">
-              <CandidateRow name="David M." meta="New York, NY • Backend" />
-              <CandidateRow name="Sarah T." meta="Remote • Frontend" />
-              <CandidateRow name="Michael B." meta="Chicago, IL • DevOps" />
-            </div>
-          </Card>
-
-          <Card title="Quick actions" subtitle="Common tasks" tone="tinted">
+          <Card title="Quick actions" subtitle="Common tasks">
             <div className="grid gap-2">
-              <ActionButton href="/employer/jobs/new" label="Post a job" primary />
-              <ActionButton href="/employer/jobs" label="Manage jobs" />
-              <ActionButton href="/employer/settings" label="Company settings" />
+              <Link
+                href="/employer/jobs/new"
+                className="h-11 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold text-sm inline-flex items-center justify-center hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+              >
+                Post a job
+              </Link>
+
+              <Link
+                href="/employer/jobs"
+                className="h-11 rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
+              >
+                Manage jobs
+              </Link>
+
+              <Link
+                href="/employer/settings"
+                className="h-11 rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
+              >
+                Company settings
+              </Link>
             </div>
           </Card>
         </div>
