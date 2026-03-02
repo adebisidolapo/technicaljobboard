@@ -17,10 +17,9 @@ async function getJobs(companyId: string) {
   const url = `${baseUrl}/api/employer/jobs?companyId=${encodeURIComponent(companyId)}`;
 
   const res = await fetch(url, { cache: "no-store" });
-
   const text = await res.text();
-  let data: any = null;
 
+  let data: any = null;
   try {
     data = text ? JSON.parse(text) : null;
   } catch {
@@ -33,297 +32,282 @@ async function getJobs(companyId: string) {
     throw new Error(data?.error || `Failed (${res.status})`);
   }
 
-  return data;
+  return data as { jobs: any[] };
 }
 
 function StatusPill({ status }: { status: string }) {
-  const base =
-    "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold border";
+  const s = String(status || "").toUpperCase();
+  const base = "inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold border";
 
-  switch (status) {
-    case "PUBLISHED":
-      return (
-        <span className={`${base} bg-emerald-50 border-emerald-200 text-emerald-700`}>
-          Active
-        </span>
-      );
-    case "PAUSED":
-      return (
-        <span className={`${base} bg-amber-50 border-amber-200 text-amber-700`}>
-          Paused
-        </span>
-      );
-    case "CLOSED":
-      return (
-        <span className={`${base} bg-slate-100 border-slate-200 text-slate-700`}>
-          Closed
-        </span>
-      );
-    default:
-      return (
-        <span className={`${base} bg-slate-50 border-slate-200 text-slate-700`}>
-          Draft
-        </span>
-      );
+  if (s === "PUBLISHED") {
+    return <span className={`${base} bg-[color:var(--brand-accent)/0.10] border-[color:var(--brand-accent)/0.25] text-[var(--brand-accent-dark)]`}>Active</span>;
   }
-}
-
-function jobLocation(j: any) {
-  if (j.remote) return "Remote";
-  if (j.locations?.length) {
-    const loc = j.locations
-      .map((l: any) => l.label || l.city || l.state || l.country)
-      .filter(Boolean)
-      .join(", ");
-    return loc || "United States";
+  if (s === "PAUSED") {
+    return <span className={`${base} bg-amber-50 border-amber-200 text-amber-700`}>Paused</span>;
   }
-  return "United States";
+  if (s === "CLOSED") {
+    return <span className={`${base} bg-slate-100 border-slate-200 text-slate-700`}>Closed</span>;
+  }
+  return <span className={`${base} bg-slate-50 border-slate-200 text-slate-700`}>Draft</span>;
 }
 
-function normalizeStatus(s: string) {
-  return String(s || "").toUpperCase();
+function TabLink({
+  href,
+  label,
+  active,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={[
+        "h-10 px-4 inline-flex items-center justify-center rounded-2xl text-sm font-extrabold transition border",
+        active
+          ? "bg-[color:var(--brand-purple)/0.12] border-[color:var(--brand-purple)/0.25] text-slate-900"
+          : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
+      ].join(" ")}
+    >
+      {label}
+    </Link>
+  );
 }
 
-export default async function EmployerJobsPage() {
+export default async function EmployerJobsPage({ searchParams }: any) {
   // Later: derive from logged-in employer
   const companyId = "cmlkxmg130000tnn0av04lkpg";
 
   const data = await getJobs(companyId);
-  const jobs = (data?.jobs ?? []) as any[];
+  const allJobs = data?.jobs ?? [];
 
-  // Server-side filtering (simple + clean). Later you can move to query params.
-  const statusOptions = ["ALL", "PUBLISHED", "PAUSED", "CLOSED", "DRAFT"];
+  const q = String(searchParams?.q ?? "").trim().toLowerCase();
+  const status = String(searchParams?.status ?? "ALL").toUpperCase();
+
+  // Lightweight filtering without breaking backend
+  const jobs = allJobs.filter((j: any) => {
+    const matchesQ =
+      !q ||
+      String(j.title ?? "").toLowerCase().includes(q) ||
+      String(j.company?.name ?? "").toLowerCase().includes(q) ||
+      String(j.description ?? "").toLowerCase().includes(q);
+
+    const matchesStatus = status === "ALL" ? true : String(j.status ?? "").toUpperCase() === status;
+
+    return matchesQ && matchesStatus;
+  });
+
+  const counts = {
+    ALL: allJobs.length,
+    PUBLISHED: allJobs.filter((j: any) => String(j.status).toUpperCase() === "PUBLISHED").length,
+    PAUSED: allJobs.filter((j: any) => String(j.status).toUpperCase() === "PAUSED").length,
+    CLOSED: allJobs.filter((j: any) => String(j.status).toUpperCase() === "CLOSED").length,
+    DRAFT: allJobs.filter((j: any) => !["PUBLISHED", "PAUSED", "CLOSED"].includes(String(j.status).toUpperCase())).length,
+  };
+
+  const makeHref = (next: Record<string, string>) => {
+    const sp = new URLSearchParams();
+    if (q) sp.set("q", q);
+    if (status && status !== "ALL") sp.set("status", status);
+    Object.entries(next).forEach(([k, v]) => {
+      if (v) sp.set(k, v);
+      else sp.delete(k);
+    });
+    const qs = sp.toString();
+    return qs ? `/employer/jobs?${qs}` : "/employer/jobs";
+  };
 
   return (
     <div className="space-y-6">
-      {/* Header row (no giant card, employer layout already frames) */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
-            Jobs
-          </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Manage postings and review candidates per job.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Link
-            href="/employer/overview"
-            className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-50 transition"
-          >
-            Back to overview
-          </Link>
-        </div>
-      </div>
-
-      {/* Controls (Zip-like) */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="text-sm font-semibold text-slate-900">
-            {jobs.length} job{jobs.length === 1 ? "" : "s"}
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end w-full lg:w-auto">
-            {/* Search (UI only for now — wire later to query params) */}
-            <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 h-10 w-full sm:w-[280px]">
-              <span className="text-slate-400">⌕</span>
-              <input
-                placeholder="Search jobs…"
-                className="w-full bg-transparent outline-none text-sm text-slate-700"
-              />
-            </div>
-
-            {/* Status filter (UI only for now) */}
-            <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 h-10 w-full sm:w-[190px]">
-              <span className="text-slate-400">⎇</span>
-              <select className="w-full bg-transparent outline-none text-sm text-slate-700">
-                {statusOptions.map((s) => (
-                  <option key={s} value={s}>
-                    {s === "ALL" ? "All statuses" : s}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-3 text-xs text-slate-500">
-          Tip: click <span className="font-semibold">View candidates</span> to open ATS per job.
-        </div>
-      </div>
-
-      {/* Desktop table */}
-      <div className="hidden lg:block rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50">
-              <tr className="text-left text-xs font-extrabold text-slate-500">
-                <th className="px-6 py-4">Job</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Location</th>
-                <th className="px-6 py-4">Applicants</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-
-            <tbody className="divide-y divide-slate-200">
-              {jobs.length ? (
-                jobs.map((j: any) => {
-                  const loc = jobLocation(j);
-                  const appsCount = j._count?.applications ?? 0;
-                  const status = normalizeStatus(j.status);
-
-                  return (
-                    <tr key={j.id} className="hover:bg-slate-50/60 transition">
-                      <td className="px-6 py-5">
-                        <div className="font-extrabold text-slate-900">{j.title}</div>
-                        <div className="mt-1 flex flex-wrap gap-2">
-                          {(j.skills ?? []).slice(0, 4).map((s: any, idx: number) => (
-                            <span
-                              key={s?.id ?? `${j.id}-skill-${idx}`}
-                              className="text-[11px] font-semibold px-2 py-1 rounded-full bg-slate-100 text-slate-700"
-                            >
-                              {s.name}
-                            </span>
-                          ))}
-                          {(j.skills ?? []).length > 4 ? (
-                            <span className="text-[11px] font-semibold px-2 py-1 rounded-full bg-slate-100 text-slate-600">
-                              +{(j.skills ?? []).length - 4}
-                            </span>
-                          ) : null}
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-5">
-                        <StatusPill status={status} />
-                      </td>
-
-                      <td className="px-6 py-5 text-slate-700">
-                        {j.remote ? "Remote" : "On-site"} • {loc}
-                      </td>
-
-                      <td className="px-6 py-5">
-                        <span className="font-extrabold text-slate-900">{appsCount}</span>{" "}
-                        <span className="text-slate-600">
-                          applicant{appsCount === 1 ? "" : "s"}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-5">
-                        <div className="flex items-center justify-end gap-2">
-                          <Link
-                            href={`/employer/jobs/${j.id}/candidates`}
-                            className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-                          >
-                            View candidates
-                          </Link>
-
-                          <Link
-                            href={`/employer/jobs/${j.id}/edit`}
-                            className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[#0B1222] text-white hover:bg-slate-900 transition text-sm font-semibold"
-                          >
-                            Edit
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan={5} className="px-6 py-14 text-center">
-                    <div className="text-lg font-extrabold text-slate-900">No jobs yet</div>
-                    <p className="mt-2 text-sm text-slate-600">
-                      Post your first role to start receiving candidates.
-                    </p>
-                    <Link
-                      href="/employer/jobs/new"
-                      className="mt-5 inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-white text-sm font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
-                    >
-                      Post a job
-                    </Link>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Mobile / Tablet cards */}
-      <div className="lg:hidden space-y-3">
-        {jobs.length ? (
-          jobs.map((j: any) => {
-            const loc = jobLocation(j);
-            const appsCount = j._count?.applications ?? 0;
-            const status = normalizeStatus(j.status);
-
-            return (
-              <div
-                key={j.id}
-                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <div className="font-extrabold text-slate-900 truncate">{j.title}</div>
-                    <div className="mt-1 text-sm text-slate-600">
-                      {j.remote ? "Remote" : "On-site"} • {loc}
-                    </div>
-                  </div>
-                  <StatusPill status={status} />
-                </div>
-
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {(j.skills ?? []).slice(0, 6).map((s: any, idx: number) => (
-                    <span
-                      key={s?.id ?? `${j.id}-skill-${idx}`}
-                      className="text-[11px] font-semibold px-2 py-1 rounded-full bg-slate-100 text-slate-700"
-                    >
-                      {s.name}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <div className="text-sm text-slate-700">
-                    <span className="font-extrabold text-slate-900">{appsCount}</span>{" "}
-                    applicant{appsCount === 1 ? "" : "s"}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/employer/jobs/${j.id}/candidates`}
-                      className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-                    >
-                      Candidates
-                    </Link>
-                    <Link
-                      href={`/employer/jobs/${j.id}/edit`}
-                      className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[#0B1222] text-white hover:bg-slate-900 transition text-sm font-semibold"
-                    >
-                      Edit
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-            <div className="text-lg font-extrabold text-slate-900">No jobs yet</div>
+      {/* Header */}
+      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              Jobs
+            </h1>
             <p className="mt-2 text-sm text-slate-600">
-              Post your first role to start receiving candidates.
+              Manage postings, monitor interest, and open candidates per role.
             </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/employer/overview"
+              className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
+            >
+              Back to overview
+            </Link>
+
             <Link
               href="/employer/jobs/new"
-              className="mt-5 inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-white text-sm font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+              className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[var(--brand-purple)] text-white hover:bg-[var(--brand-purple-dark)] transition text-sm font-semibold shadow-sm"
             >
               Post a job
             </Link>
           </div>
-        )}
-      </div>
+        </div>
+
+        {/* Tabs + Search */}
+        <div className="mt-5 flex flex-col lg:flex-row lg:items-center gap-3">
+          <div className="flex flex-wrap gap-2">
+            <TabLink
+              href={makeHref({ status: "ALL" })}
+              label={`All (${counts.ALL})`}
+              active={status === "ALL"}
+            />
+            <TabLink
+              href={makeHref({ status: "PUBLISHED" })}
+              label={`Active (${counts.PUBLISHED})`}
+              active={status === "PUBLISHED"}
+            />
+            <TabLink
+              href={makeHref({ status: "PAUSED" })}
+              label={`Paused (${counts.PAUSED})`}
+              active={status === "PAUSED"}
+            />
+            <TabLink
+              href={makeHref({ status: "CLOSED" })}
+              label={`Closed (${counts.CLOSED})`}
+              active={status === "CLOSED"}
+            />
+            <TabLink
+              href={makeHref({ status: "DRAFT" })}
+              label={`Draft (${counts.DRAFT})`}
+              active={status === "DRAFT"}
+            />
+          </div>
+
+          <form action="/employer/jobs" method="GET" className="lg:ml-auto w-full lg:w-[420px]">
+            <div className="flex items-stretch w-full rounded-2xl border border-slate-200 bg-white overflow-hidden">
+              <input
+                name="q"
+                defaultValue={String(searchParams?.q ?? "")}
+                placeholder="Search jobs (title, company, description)…"
+                className="h-11 w-full px-4 text-sm outline-none"
+              />
+              {/* keep status when searching */}
+              {status !== "ALL" ? <input type="hidden" name="status" value={status} /> : null}
+
+              <button
+                type="submit"
+                className="h-11 px-5 bg-[color:var(--brand-purple)/0.10] text-slate-900 font-extrabold text-sm border-l border-slate-200 hover:bg-[color:var(--brand-purple)/0.14] transition"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {/* List */}
+      <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="text-sm font-extrabold text-slate-900">
+            {jobs.length} job{jobs.length === 1 ? "" : "s"}
+          </div>
+          <div className="text-xs text-slate-500">
+            Tip: use “View candidates” to open the ATS per job.
+          </div>
+        </div>
+
+        <div className="divide-y divide-slate-200">
+          {jobs.length ? (
+            jobs.map((j: any) => {
+              const loc =
+                j.locations?.length
+                  ? j.locations
+                      .map((l: any) => l.label || l.city || l.state || l.country)
+                      .filter(Boolean)
+                      .join(", ")
+                  : "United States";
+
+              const appsCount = j._count?.applications ?? 0;
+
+              return (
+                <div key={j.id} className="px-6 py-5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    {/* Left */}
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <div className="font-extrabold text-slate-900 truncate text-base">
+                          {j.title}
+                        </div>
+                        <StatusPill status={j.status} />
+                      </div>
+
+                      <div className="mt-1 text-sm text-slate-600">
+                        {j.remote ? "Remote" : "On-site"} • {loc}
+                      </div>
+
+                      {!!(j.skills?.length) && (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {(j.skills ?? []).slice(0, 8).map((s: any, idx: number) => (
+                            <span
+                              key={s?.id ?? `${j.id}-skill-${idx}`}
+                              className="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-700"
+                            >
+                              {s.name}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right */}
+                    <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+                      <div className="text-sm text-slate-700 mr-1">
+                        <span className="font-extrabold">{appsCount}</span>{" "}
+                        applicant{appsCount === 1 ? "" : "s"}
+                      </div>
+
+                      <Link
+                        href={`/employer/jobs/${j.id}/candidates`}
+                        className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
+                      >
+                        View candidates
+                      </Link>
+
+                      <Link
+                        href={`/employer/jobs/${j.id}/edit`}
+                        className="h-10 px-4 inline-flex items-center justify-center rounded-xl bg-[#0B1222] text-white hover:bg-slate-900 transition text-sm font-semibold"
+                      >
+                        Edit
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="px-6 py-12 text-center">
+              <div className="text-lg font-extrabold text-slate-900">
+                No jobs match your filters
+              </div>
+              <p className="mt-2 text-sm text-slate-600">
+                Try clearing search/status, or post a new role.
+              </p>
+
+              <div className="mt-5 flex flex-wrap justify-center gap-2">
+                <Link
+                  href="/employer/jobs"
+                  className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-slate-900 text-sm font-semibold hover:bg-slate-50 transition"
+                >
+                  Clear filters
+                </Link>
+
+                <Link
+                  href="/employer/jobs/new"
+                  className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-white text-sm font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+                >
+                  Post a job
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
