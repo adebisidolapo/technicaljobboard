@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ChartClient, { type Point } from "@/components/employer/ChartClient";
+import ChartClient, { type Point } from "./ChartClient";
 import { getEmployerDashboard } from "@/lib/employer/dashboard";
 
 export const dynamic = "force-dynamic";
