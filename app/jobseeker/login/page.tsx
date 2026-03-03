@@ -1,40 +1,76 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { supabaseBrowser } from "@/lib/supabase/browser";
 
 export const dynamic = "force-dynamic";
 
 export default function JobseekerLoginPage() {
+  const router = useRouter();
+  const supabase = supabaseBrowser();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+
+  async function submit() {
+    setMsg(null);
+    setBusy(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+    setBusy(false);
+
+    if (error) return setMsg(error.message);
+
+    router.push("/jobseeker/overview");
+    router.refresh();
+  }
+
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
+    <div className="min-h-[70vh] flex items-center justify-center px-4 bg-[#F4F6FB]">
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
           Jobseeker sign in
         </h1>
         <p className="mt-2 text-sm text-slate-600">
-          This is the placeholder login page. We’ll wire auth next.
+          Access your applications, saved jobs, and resume.
         </p>
 
         <div className="mt-6 grid gap-3">
+          <input
+            className="h-11 rounded-2xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            className="h-11 rounded-2xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
           <button
             type="button"
-            className="h-11 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+            disabled={busy}
+            onClick={submit}
+            className="h-11 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm disabled:opacity-60"
           >
-            Continue
+            {busy ? "Signing in..." : "Sign in"}
           </button>
 
-          <Link
-            href="/jobseeker/overview"
-            className="h-11 rounded-2xl border border-slate-200 bg-white text-slate-900 font-semibold inline-flex items-center justify-center hover:bg-slate-50 transition"
-          >
-            Skip to dashboard (dev)
-          </Link>
+          {msg && <div className="text-sm text-rose-600">{msg}</div>}
 
-          <div className="pt-2 text-xs text-slate-500">
-            Don’t have an account?{" "}
-            <Link
-              href="/jobseeker/register"
-              className="font-semibold text-[var(--brand-purple)] hover:underline"
-            >
-              Create one
+          <div className="text-xs text-slate-500">
+            New here?{" "}
+            <Link href="/jobseeker/register" className="font-semibold text-[var(--brand-purple)] hover:underline">
+              Create account
             </Link>
           </div>
         </div>

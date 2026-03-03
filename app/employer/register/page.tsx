@@ -7,7 +7,7 @@ import { supabaseBrowser } from "@/lib/supabase/browser";
 
 export const dynamic = "force-dynamic";
 
-export default function JobseekerRegisterPage() {
+export default function EmployerRegisterPage() {
   const router = useRouter();
   const supabase = supabaseBrowser();
 
@@ -24,14 +24,14 @@ export default function JobseekerRegisterPage() {
       email: email.trim(),
       password,
       options: {
-        data: { role: "JOBSEEKER" },
+        data: { role: "EMPLOYER" },
       },
     });
 
     setBusy(false);
     if (error) return setMsg(error.message);
 
-    router.push("/jobseeker/overview");
+    router.push("/employer/overview");
     router.refresh();
   }
 
@@ -39,16 +39,16 @@ export default function JobseekerRegisterPage() {
     <div className="min-h-[70vh] flex items-center justify-center px-4 bg-[#F4F6FB]">
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-          Create jobseeker account
+          Create employer account
         </h1>
         <p className="mt-2 text-sm text-slate-600">
-          Save jobs, apply faster, and manage your resume.
+          Post jobs and search candidates.
         </p>
 
         <div className="mt-6 grid gap-3">
           <input
             className="h-11 rounded-2xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
-            placeholder="Email"
+            placeholder="Work email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -64,7 +64,7 @@ export default function JobseekerRegisterPage() {
             type="button"
             disabled={busy}
             onClick={submit}
-            className="h-11 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm disabled:opacity-60"
+            className="h-11 rounded-2xl bg-[#0B1222] text-white font-semibold hover:bg-slate-900 transition shadow-sm disabled:opacity-60"
           >
             {busy ? "Creating..." : "Create account"}
           </button>
@@ -73,7 +73,7 @@ export default function JobseekerRegisterPage() {
 
           <div className="text-xs text-slate-500">
             Already have an account?{" "}
-            <Link href="/jobseeker/login" className="font-semibold text-[var(--brand-purple)] hover:underline">
+            <Link href="/employer/login" className="font-semibold text-[var(--brand-purple)] hover:underline">
               Sign in
             </Link>
           </div>
