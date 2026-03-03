@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 
-export function supabaseServer() {
-  const cookieStore = cookies();
+export async function supabaseServer() {
+  const cookieStore = await cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -13,13 +13,12 @@ export function supabaseServer() {
           return cookieStore.getAll();
         },
         setAll(cookiesToSet) {
-          // next/headers cookies() is mutable in Route Handlers / Server Actions.
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            );
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
           } catch {
-            // In some render phases cookies may be read-only; safe to ignore.
+            // Some render phases may be read-only; safe to ignore.
           }
         },
       },

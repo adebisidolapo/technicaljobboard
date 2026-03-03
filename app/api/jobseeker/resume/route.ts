@@ -3,7 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { supabaseServer } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
-  const supabase = supabaseServer();
+  const supabase = await supabaseServer();
+
   const { data } = await supabase.auth.getUser();
   const user = data.user;
 
@@ -16,7 +17,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Missing resumePath" }, { status: 400 });
   }
 
-  const resumeUrl = body.resumePath; // store the storage path; later we can serve signed URLs
+  const resumeUrl = body.resumePath;
 
   const updated = await prisma.jobseekerProfile.upsert({
     where: { userId: user.id },
