@@ -320,3 +320,51 @@ model AuditLog {
   @@index([action])
   @@index([createdAt])
 }
+
+enum CompanyType {
+  COMPANY
+  AGENCY
+}
+
+model Company {
+  id        String      @id @default(cuid())
+  name      String
+  type      CompanyType @default(COMPANY)
+  website   String?
+  city      String?
+  state     String?
+  country   String?     @default("United States")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  employers EmployerProfile[]
+  jobs      Job[]
+}
+
+model EmployerProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique // this should match Supabase auth user id
+  email     String?
+  fullName  String?
+  roleTitle String?  // recruiter / HR / admin
+
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model JobseekerProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique // Supabase auth user id
+  email     String?
+  fullName  String?
+  headline  String?
+  location  String?
+  resumeUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
