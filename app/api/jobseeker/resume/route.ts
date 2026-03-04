@@ -1,29 +1,28 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { supabaseServer } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
-  const supabase = await supabaseServer();
+  try {
+    const body = await req.json().catch(() => null);
+    const userId = body?.userId as string | undefined;
+    const resumeUrl = body?.resumeUrl as string | undefined;
 
-  const { data } = await supabase.auth.getUser();
-  const user = data.user;
+    if (!userId || !resumeUrl) {
+      return NextResponse.json({ ok: false, error: "Missing userId or resumeUrl" }, { status: 400 });
+    }
 
-  if (!user) {
-    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    // Ensure profile exists; update resumeUrl
+    const profile = await prisma.jobseekerProfile.upsert({
+      where: { userId },
+      update: { resumeUrl },
+      create: { userId, resumeUrl },
+    });
+
+    return NextResponse.json({ ok: true, profile });
+  } catch (e: any) {
+    return NextResponse.json(
+      { ok: false, error: e?.message || "Internal error" },
+      { status: 500 }
+    );
   }
-
-  const body = (await req.json()) as { resumePath: string };
-  if (!body?.resumePath) {
-    return NextResponse.json({ ok: false, error: "Missing resumePath" }, { status: 400 });
-  }
-
-  const resumeUrl = body.resumePath;
-
-  const updated = await prisma.jobseekerProfile.upsert({
-    where: { userId: user.id },
-    update: { resumeUrl },
-    create: { userId: user.id, resumeUrl },
-  });
-
-  return NextResponse.json({ ok: true, profile: updated });
 }

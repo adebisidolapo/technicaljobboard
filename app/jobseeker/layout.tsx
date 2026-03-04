@@ -10,7 +10,15 @@ function clsx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Item({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
+function Item({
+  href,
+  label,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  onClick?: () => void;
+}) {
   const pathname = usePathname();
   const active = pathname === href || pathname.startsWith(href + "/");
 
@@ -19,8 +27,11 @@ function Item({ href, label, onClick }: { href: string; label: string; onClick?:
       href={href}
       onClick={onClick}
       className={clsx(
-        "px-4 py-3 rounded-2xl text-sm font-semibold transition block",
-        active ? "bg-[color:var(--brand-purple)/0.10] text-slate-900" : "text-slate-700 hover:bg-slate-50"
+        "block w-full px-4 py-3 rounded-2xl text-sm font-extrabold transition",
+        "min-w-0 truncate",
+        active
+          ? "bg-[color:var(--brand-purple)/0.10] text-slate-900 ring-1 ring-[color:var(--brand-purple)/0.18]"
+          : "text-slate-700 hover:bg-slate-50"
       )}
     >
       {label}
@@ -33,7 +44,9 @@ function CardShell({ children }: { children: React.ReactNode }) {
     <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
       <div className="p-5 border-b border-slate-200 bg-gradient-to-b from-[color:var(--brand-purple)/0.10] via-white to-[#F4F6FB]">
         <div className="text-sm font-extrabold text-slate-900">Jobseeker</div>
-        <div className="mt-1 text-xs text-slate-600">Applications, saved jobs and resume.</div>
+        <div className="mt-1 text-xs text-slate-600">
+          Applications, saved jobs, and resume.
+        </div>
       </div>
       <div className="p-3">{children}</div>
     </div>
@@ -58,7 +71,7 @@ export default function JobseekerLayout({ children }: { children: React.ReactNod
         <Item href="/jobseeker/overview" label="Overview" onClick={() => setOpen(false)} />
         <Item href="/jobseeker/applications" label="Applications" onClick={() => setOpen(false)} />
         <Item href="/jobseeker/saved" label="Saved jobs" onClick={() => setOpen(false)} />
-        <Item href="/jobseeker/settings" label="Settings" onClick={() => setOpen(false)} />
+        <Item href="/jobseeker/settings" label="Settings & Resume" onClick={() => setOpen(false)} />
       </div>
 
       <div className="mt-4 p-3">
@@ -68,7 +81,7 @@ export default function JobseekerLayout({ children }: { children: React.ReactNod
             <Link
               href="/all-jobs"
               onClick={() => setOpen(false)}
-              className="h-10 rounded-xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
+              className="h-10 rounded-xl bg-white border border-slate-200 text-slate-900 font-extrabold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
             >
               Browse jobs
             </Link>
@@ -86,10 +99,10 @@ export default function JobseekerLayout({ children }: { children: React.ReactNod
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="lg:hidden h-10 w-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition grid place-items-center"
+              className="lg:hidden h-10 px-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition font-extrabold text-slate-900"
               aria-label="Open menu"
             >
-              ☰
+              Menu
             </button>
 
             <div className="leading-tight min-w-0">
@@ -100,9 +113,9 @@ export default function JobseekerLayout({ children }: { children: React.ReactNod
 
           <Link
             href="/"
-            className="h-10 px-4 hidden sm:inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
+            className="h-10 px-3 sm:px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-extrabold text-slate-900"
           >
-            Back to site
+            Home
           </Link>
         </div>
       </div>
@@ -128,10 +141,10 @@ export default function JobseekerLayout({ children }: { children: React.ReactNod
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="h-9 w-9 rounded-xl border border-slate-200 bg-white grid place-items-center"
+                className="h-9 px-3 rounded-xl border border-slate-200 bg-white font-extrabold text-slate-900"
                 aria-label="Close menu"
               >
-                ✕
+                Close
               </button>
             </div>
             {menu}
