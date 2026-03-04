@@ -2,6 +2,8 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
+type SearchParams = { q?: string };
+
 function getBaseUrl() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (siteUrl) return siteUrl.replace(/\/$/, "");
@@ -19,6 +21,7 @@ async function getResumes(companyId: string, q: string) {
     (q ? `&q=${encodeURIComponent(q)}` : "");
 
   const res = await fetch(url, { cache: "no-store" });
+
   const text = await res.text();
   const data = text ? JSON.parse(text) : null;
 
@@ -29,13 +32,15 @@ async function getResumes(companyId: string, q: string) {
   return data as { ok: true; items: any[] };
 }
 
-export default async function EmployerResumesPage({
-  searchParams,
-}: {
-  searchParams?: { q?: string };
+export default async function EmployerResumesPage(props: {
+  // ✅ Next 16 types sometimes treat searchParams as Promise
+  searchParams?: Promise<SearchParams>;
 }) {
+  const sp: SearchParams = await Promise.resolve(props.searchParams ?? {});
+  const q = (sp.q ?? "").toString().trim();
+
+  // Later: derive from logged-in employer
   const companyId = "cmlkxmg130000tnn0av04lkpg";
-  const q = (searchParams?.q ?? "").toString().trim();
 
   const data = await getResumes(companyId, q);
   const items = data.items ?? [];
@@ -77,9 +82,7 @@ export default async function EmployerResumesPage({
           <div className="text-sm font-extrabold text-slate-900">
             {items.length} result{items.length === 1 ? "" : "s"}
           </div>
-          <div className="text-xs text-slate-500">
-            Tip: open resume to review quickly.
-          </div>
+          <div className="text-xs text-slate-500">Tip: open resume to review quickly.</div>
         </div>
 
         {items.length ? (
@@ -122,9 +125,7 @@ export default async function EmployerResumesPage({
           </div>
         ) : (
           <div className="px-6 py-10 text-center">
-            <div className="text-lg font-extrabold text-slate-900">
-              No resumes found
-            </div>
+            <div className="text-lg font-extrabold text-slate-900">No resumes found</div>
             <p className="mt-2 text-sm text-slate-600">
               Once applicants upload resumes, they’ll show here.
             </p>
