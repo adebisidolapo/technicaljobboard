@@ -9,12 +9,14 @@ function parseBool(v: string | null): boolean | undefined {
   return undefined;
 }
 
+
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-
-  const q = searchParams.get("q")?.trim() || "";
-  const location = searchParams.get("location")?.trim() || "";
-  const remote = parseBool(searchParams.get("remote"));
+const location =
+  searchParams.get("loc")?.trim() ||
+  searchParams.get("location")?.trim() ||
+  "";
   const jobType = searchParams.get("jobType")?.trim() || "";
   const level = searchParams.get("level")?.trim() || "";
 
