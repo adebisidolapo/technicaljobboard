@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -29,7 +29,12 @@ type ApiJob = {
   currency?: string | null;
   publishedAt?: string | null;
   company?: { name?: string | null; logoUrl?: string | null } | null;
-  locations?: Array<{ label?: string | null; city?: string | null; state?: string | null; country?: string | null }>;
+  locations?: Array<{
+    label?: string | null;
+    city?: string | null;
+    state?: string | null;
+    country?: string | null;
+  }>;
   skills?: Array<{ name: string }>;
 };
 
@@ -58,15 +63,11 @@ function fmtMoney(min?: number | null, max?: number | null) {
 function pickLoc(j: ApiJob) {
   if (j.remote) return "Remote";
   const l = j.locations?.[0];
-  const label =
-    l?.label ||
-    [l?.city, l?.state].filter(Boolean).join(", ") ||
-    l?.country ||
-    "United States";
+  const label = l?.label || [l?.city, l?.state].filter(Boolean).join(", ") || l?.country || "United States";
   return label;
 }
 
-function short(s: string, n = 160) {
+function short(s: string, n = 170) {
   const t = String(s || "").replace(/\s+/g, " ").trim();
   return t.length > n ? t.slice(0, n - 1) + "…" : t;
 }
@@ -85,9 +86,34 @@ const SORT = [
   { value: "relevant", label: "Most relevant" },
 ];
 
+function Chip({
+  label,
+  onRemove,
+}: {
+  label: string;
+  onRemove?: () => void;
+}) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-extrabold text-slate-700">
+      {label}
+      {onRemove ? (
+        <button
+          type="button"
+          onClick={onRemove}
+          className="h-5 w-5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-slate-600 grid place-items-center"
+          aria-label="Remove filter"
+        >
+          ×
+        </button>
+      ) : null}
+    </span>
+  );
+}
+
 export default function AllJobsClient({ initial }: { initial: Initial }) {
   const router = useRouter();
 
+  // form state
   const [q, setQ] = useState(initial.q || "");
   const [loc, setLoc] = useState(initial.loc || "");
   const [cat, setCat] = useState(initial.cat || "");
@@ -99,6 +125,21 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
   const [posted, setPosted] = useState(initial.posted || "");
   const [sort, setSort] = useState(initial.sort || "new");
 
+  // debounced query inputs (Zip-like: type, then results update)
+  const [dq, setDq] = useState(q);
+  const [dloc, setDloc] = useState(loc);
+
+  useEffect(() => {
+    const t = setTimeout(() => setDq(q), 300);
+    return () => clearTimeout(t);
+  }, [q]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setDloc(loc), 300);
+    return () => clearTimeout(t);
+  }, [loc]);
+
+  // data
   const [items, setItems] = useState<ApiJob[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -109,10 +150,21 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  // keep page reset when filters change (except page)
+  const firstMountRef = useRef(true);
+  useEffect(() => {
+    if (firstMountRef.current) {
+      firstMountRef.current = false;
+      return;
+    }
+    setPage(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort]);
+
   const params = useMemo(() => {
     const p = new URLSearchParams();
-    if (q.trim()) p.set("q", q.trim());
-    if (loc.trim()) p.set("loc", loc.trim());
+    if (dq.trim()) p.set("q", dq.trim());
+    if (dloc.trim()) p.set("loc", dloc.trim());
     if (cat.trim()) p.set("cat", cat.trim());
     if (jobType.trim()) p.set("jobType", jobType.trim());
     if (level.trim()) p.set("level", level.trim());
@@ -124,18 +176,17 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
     p.set("take", String(take));
     p.set("skip", String(page * take));
     return p;
-  }, [q, loc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort, page]);
+  }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort, page]);
 
-  // keep URL in sync (clean, sharable)
+  // shareable URL (no take/skip)
   useEffect(() => {
     const urlParams = new URLSearchParams(params);
-    // remove paging from share url
     urlParams.delete("take");
     urlParams.delete("skip");
     const qs = urlParams.toString();
     router.replace(qs ? `/all-jobs?${qs}` : "/all-jobs");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, loc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort]);
+  }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort]);
 
   useEffect(() => {
     let cancelled = false;
@@ -188,47 +239,40 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
     setPage(0);
   }
 
-  function applyOnMobile() {
+  function closeMobileFilters() {
     setFiltersOpen(false);
-    setPage(0);
   }
+
+  const appliedChips = useMemo(() => {
+    const chips: Array<{ key: string; label: string; remove: () => void }> = [];
+    if (dq.trim()) chips.push({ key: "q", label: `“${dq.trim()}”`, remove: () => setQ("") });
+    if (dloc.trim()) chips.push({ key: "loc", label: dloc.trim(), remove: () => setLoc("") });
+    if (cat.trim()) chips.push({ key: "cat", label: `Category: ${cat.trim()}`, remove: () => setCat("") });
+    if (jobType.trim()) chips.push({ key: "jobType", label: jobType.trim(), remove: () => setJobType("") });
+    if (level.trim()) chips.push({ key: "level", label: `Level: ${level.trim()}`, remove: () => setLevel("") });
+    if (remote) chips.push({ key: "remote", label: "Remote only", remove: () => setRemote(false) });
+    if (salaryMin.trim()) chips.push({ key: "salaryMin", label: `Min: $${salaryMin.trim()}`, remove: () => setSalaryMin("") });
+    if (salaryMax.trim()) chips.push({ key: "salaryMax", label: `Max: $${salaryMax.trim()}`, remove: () => setSalaryMax("") });
+    if (posted.trim()) {
+      const lbl = POSTED.find((x) => x.value === posted)?.label || "Posted";
+      chips.push({ key: "posted", label: lbl, remove: () => setPosted("") });
+    }
+    if (sort.trim() && sort !== "new") {
+      const lbl = SORT.find((x) => x.value === sort)?.label || "Sort";
+      chips.push({ key: "sort", label: lbl, remove: () => setSort("new") });
+    }
+    return chips;
+  }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort]);
 
   const FilterPanel = (
     <div className="space-y-5">
-      <div>
-        <div className="text-xs font-extrabold text-slate-500">Search</div>
-        <div className="mt-2 space-y-2">
-          <input
-            value={q}
-            onChange={(e) => {
-              setQ(e.target.value);
-              setPage(0);
-            }}
-            placeholder="Job title, keyword, company"
-            className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
-          />
-          <input
-            value={loc}
-            onChange={(e) => {
-              setLoc(e.target.value);
-              setPage(0);
-            }}
-            placeholder="Location (Remote, New York, Austin)"
-            className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-emerald-200"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid gap-3">
         <div>
           <div className="text-xs font-extrabold text-slate-500">Job type</div>
           <select
             value={jobType}
-            onChange={(e) => {
-              setJobType(e.target.value);
-              setPage(0);
-            }}
-            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none"
+            onChange={(e) => setJobType(e.target.value)}
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
           >
             <option value="">Any</option>
             {JOB_TYPES.map((t) => (
@@ -243,11 +287,8 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
           <div className="text-xs font-extrabold text-slate-500">Level</div>
           <select
             value={level}
-            onChange={(e) => {
-              setLevel(e.target.value);
-              setPage(0);
-            }}
-            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none"
+            onChange={(e) => setLevel(e.target.value)}
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
           >
             <option value="">Any</option>
             {LEVELS.map((t) => (
@@ -257,19 +298,16 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
             ))}
           </select>
         </div>
-      </div>
 
-      <div>
-        <div className="text-xs font-extrabold text-slate-500">Category</div>
-        <input
-          value={cat}
-          onChange={(e) => {
-            setCat(e.target.value);
-            setPage(0);
-          }}
-          placeholder="e.g. DevOps, Security, Healthcare IT"
-          className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none"
-        />
+        <div>
+          <div className="text-xs font-extrabold text-slate-500">Category</div>
+          <input
+            value={cat}
+            onChange={(e) => setCat(e.target.value)}
+            placeholder="e.g. DevOps, Security, Frontend"
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -277,45 +315,33 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
           <div className="text-xs font-extrabold text-slate-500">Salary min</div>
           <input
             value={salaryMin}
-            onChange={(e) => {
-              setSalaryMin(e.target.value);
-              setPage(0);
-            }}
-            placeholder="e.g. 100000"
+            onChange={(e) => setSalaryMin(e.target.value)}
+            placeholder="100000"
             inputMode="numeric"
-            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none"
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
           />
         </div>
         <div>
           <div className="text-xs font-extrabold text-slate-500">Salary max</div>
           <input
             value={salaryMax}
-            onChange={(e) => {
-              setSalaryMax(e.target.value);
-              setPage(0);
-            }}
-            placeholder="e.g. 180000"
+            onChange={(e) => setSalaryMax(e.target.value)}
+            placeholder="180000"
             inputMode="numeric"
-            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none"
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
           />
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 flex items-center justify-between gap-3">
         <div>
           <div className="text-sm font-extrabold text-slate-900">Remote only</div>
           <div className="text-xs text-slate-500">Show remote jobs only</div>
         </div>
         <button
           type="button"
-          onClick={() => {
-            setRemote((v) => !v);
-            setPage(0);
-          }}
-          className={cx(
-            "h-9 w-14 rounded-full transition relative",
-            remote ? "bg-[var(--brand-purple)]" : "bg-slate-200"
-          )}
+          onClick={() => setRemote((v) => !v)}
+          className={cx("h-9 w-14 rounded-full transition relative", remote ? "bg-[var(--brand-purple)]" : "bg-slate-200")}
           aria-label="Toggle remote"
         >
           <span
@@ -332,11 +358,8 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
           <div className="text-xs font-extrabold text-slate-500">Posted</div>
           <select
             value={posted}
-            onChange={(e) => {
-              setPosted(e.target.value);
-              setPage(0);
-            }}
-            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none"
+            onChange={(e) => setPosted(e.target.value)}
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
           >
             {POSTED.map((x) => (
               <option key={x.label} value={x.value}>
@@ -350,11 +373,8 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
           <div className="text-xs font-extrabold text-slate-500">Sort</div>
           <select
             value={sort}
-            onChange={(e) => {
-              setSort(e.target.value);
-              setPage(0);
-            }}
-            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none"
+            onChange={(e) => setSort(e.target.value)}
+            className="mt-2 h-11 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
           >
             {SORT.map((x) => (
               <option key={x.value} value={x.value}>
@@ -365,28 +385,27 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={clearAll}
-          className="h-11 flex-1 rounded-2xl border border-slate-200 bg-white text-slate-900 text-sm font-extrabold hover:bg-slate-50 transition"
+          className="h-11 rounded-2xl border border-slate-200 bg-white text-slate-900 text-sm font-extrabold hover:bg-slate-50 transition"
         >
           Clear
         </button>
 
         <Link
           href="/"
-          className="h-11 flex-1 rounded-2xl bg-[#0B1222] text-white text-sm font-extrabold inline-flex items-center justify-center hover:bg-slate-900 transition"
+          className="h-11 rounded-2xl bg-[#0B1222] text-white text-sm font-extrabold inline-flex items-center justify-center hover:bg-slate-900 transition"
         >
           Home
         </Link>
       </div>
 
-      {/* Mobile apply button */}
       <button
         type="button"
-        onClick={applyOnMobile}
-        className="md:hidden h-12 w-full rounded-2xl bg-[var(--brand-purple)] text-white text-sm font-extrabold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+        onClick={closeMobileFilters}
+        className="lg:hidden h-12 w-full rounded-2xl bg-[var(--brand-purple)] text-white text-sm font-extrabold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
       >
         Apply filters
       </button>
@@ -395,10 +414,10 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
 
   return (
     <main className="bg-[#F3F6FB] text-slate-900">
-      {/* Top header */}
+      {/* Zip-like header */}
       <section className="border-b border-slate-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-7">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <div className="flex items-end justify-between gap-4">
             <div>
               <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                 All Jobs
@@ -408,26 +427,71 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2 text-xs text-slate-500">
+              <span className="inline-flex h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+              Live results
+            </div>
+          </div>
+
+          {/* Sticky search row (key part of “Zip feel”) */}
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-3">
+            <div className="md:col-span-6">
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Job title, keyword, company"
+                className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
+              />
+            </div>
+
+            <div className="md:col-span-4">
+              <input
+                value={loc}
+                onChange={(e) => setLoc(e.target.value)}
+                placeholder="Location (Remote, New York, Austin)"
+                className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-purple)/0.25]"
+              />
+            </div>
+
+            <div className="md:col-span-2 flex gap-2">
               <button
                 type="button"
                 onClick={() => setFiltersOpen(true)}
-                className="md:hidden h-11 px-4 rounded-2xl border border-slate-200 bg-white text-sm font-extrabold hover:bg-slate-50 transition"
+                className="lg:hidden h-12 w-full rounded-2xl border border-slate-200 bg-white text-sm font-extrabold hover:bg-slate-50 transition"
               >
                 Filters
               </button>
 
-              <div className="hidden md:flex items-center gap-2 text-xs text-slate-500">
-                <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                Live results
-              </div>
+              <Link
+                href="/"
+                className="hidden lg:inline-flex h-12 w-full items-center justify-center rounded-2xl border border-slate-200 bg-white text-sm font-extrabold hover:bg-slate-50 transition"
+              >
+                Home
+              </Link>
             </div>
           </div>
+
+          {/* Chips */}
+          {appliedChips.length ? (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {appliedChips.map((c) => (
+                <Chip key={c.key} label={c.label} onRemove={c.remove} />
+              ))}
+
+              <button
+                type="button"
+                onClick={clearAll}
+                className="text-xs font-extrabold text-[var(--brand-purple)] hover:underline ml-1"
+              >
+                Reset all
+              </button>
+            </div>
+          ) : null}
         </div>
       </section>
 
       {/* Main */}
-      <section className="max-w-7xl mx-auto px-6 py-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Filters desktop */}
           <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
@@ -473,7 +537,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
               </div>
             </div>
 
-            {/* Error */}
             {err && (
               <div className="mt-4 rounded-3xl border border-rose-200 bg-rose-50 p-5 text-sm text-rose-800">
                 {err}
@@ -496,41 +559,39 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
                   return (
                     <article
                       key={j.id}
-                      className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition"
+                      className="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm hover:shadow-md transition"
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <h2 className="text-lg md:text-xl font-extrabold text-slate-900 truncate">
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                        <div className="md:col-span-9 min-w-0">
+                          <h2 className="text-lg md:text-xl font-extrabold text-slate-900 leading-snug">
                             {j.title}
                           </h2>
 
-                          <div className="mt-1 text-sm text-slate-600">
+                          <div className="mt-1 text-sm text-slate-600 flex flex-wrap items-center gap-x-2 gap-y-1">
                             <span className="font-semibold text-slate-800">{company}</span>
-                            <span className="mx-2 text-slate-300">•</span>
-                            {location}
+                            <span className="text-slate-300">•</span>
+                            <span>{location}</span>
                             {j.remote ? (
                               <>
-                                <span className="mx-2 text-slate-300">•</span>
+                                <span className="text-slate-300">•</span>
                                 <span className="text-[var(--brand-purple)] font-semibold">Remote</span>
                               </>
                             ) : null}
                           </div>
 
-                          <div className="mt-2 text-sm text-slate-600">
-                            {j.jobType ? (
-                              <span className="font-semibold text-slate-800">{j.jobType}</span>
-                            ) : null}
+                          <div className="mt-2 text-sm text-slate-600 flex flex-wrap items-center gap-x-2 gap-y-1">
+                            {j.jobType ? <span className="font-semibold text-slate-800">{j.jobType}</span> : null}
                             {j.level ? (
                               <>
-                                <span className="mx-2 text-slate-300">•</span>
+                                <span className="text-slate-300">•</span>
                                 <span>{j.level}</span>
                               </>
                             ) : null}
-                            <span className="mx-2 text-slate-300">•</span>
-                            <span className="font-semibold">{salary}</span>
+                            <span className="text-slate-300">•</span>
+                            <span className="font-semibold text-slate-900">{salary}</span>
                           </div>
 
-                          <p className="mt-3 text-sm text-slate-600">
+                          <p className="mt-3 text-sm text-slate-600 leading-relaxed">
                             {short(j.description || "", 180)}
                           </p>
 
@@ -548,15 +609,15 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
                           ) : null}
                         </div>
 
-                        <div className="shrink-0 flex flex-col items-end gap-2">
+                        <div className="md:col-span-3 flex md:flex-col gap-2 md:items-end">
                           <Link
                             href={`/jobs/${j.id}`}
-                            className="h-11 px-5 rounded-2xl bg-[var(--brand-purple)] text-white text-sm font-extrabold inline-flex items-center justify-center hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
+                            className="h-11 w-full md:w-auto px-6 rounded-2xl bg-[var(--brand-purple)] text-white text-sm font-extrabold inline-flex items-center justify-center hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
                           >
                             View
                           </Link>
 
-                          <div className="text-xs text-slate-400">
+                          <div className="text-xs text-slate-400 md:text-right w-full">
                             {j.publishedAt ? "Posted recently" : ""}
                           </div>
                         </div>
@@ -566,12 +627,8 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
                 })
               ) : (
                 <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm text-center">
-                  <div className="text-lg font-extrabold text-slate-900">
-                    No jobs found
-                  </div>
-                  <p className="mt-2 text-sm text-slate-600">
-                    Try removing some filters or broadening your search.
-                  </p>
+                  <div className="text-lg font-extrabold text-slate-900">No jobs found</div>
+                  <p className="mt-2 text-sm text-slate-600">Try removing some filters or broadening your search.</p>
                   <button
                     type="button"
                     onClick={clearAll}
@@ -583,7 +640,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
               )}
             </div>
 
-            {/* Pagination footer */}
             {!loading && total > 0 && (
               <div className="mt-6 flex items-center justify-between text-sm text-slate-600">
                 <div>
@@ -622,9 +678,9 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
             type="button"
             aria-label="Close filters"
             className="absolute inset-0 bg-black/40"
-            onClick={() => setFiltersOpen(false)}
+            onClick={closeMobileFilters}
           />
-          <div className="absolute right-0 top-0 h-full w-full max-w-[420px] bg-white shadow-2xl">
+          <div className="absolute right-0 top-0 h-full w-full max-w-[440px] bg-white shadow-2xl">
             <div className="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
               <div className="text-sm font-extrabold text-slate-900">Filters</div>
               <div className="flex items-center gap-2">
@@ -637,7 +693,7 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setFiltersOpen(false)}
+                  onClick={closeMobileFilters}
                   className="h-10 w-10 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition text-lg"
                   aria-label="Close"
                 >
