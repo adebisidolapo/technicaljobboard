@@ -41,12 +41,21 @@ enum ApplicationStatus {
   HIRED
 }
 
+enum CompanyType {
+  COMPANY
+  AGENCY
+}
+
+enum AlertFrequency {
+  DAILY
+  WEEKLY
+}
+
 model User {
   id           String  @id @default(cuid())
   email        String  @unique
   passwordHash String?
 
-  // ✅ user role stays as UserRole
   role   UserRole      @default(JOBSEEKER)
   status AccountStatus @default(ACTIVE)
 
@@ -58,7 +67,7 @@ model User {
   savedJobs          SavedJob[]
   jobViews           JobView[]
   jobAlerts          JobAlert[]
-  auditLogs          AuditLog[] // ✅ opposite relation for AuditLog.actorUser
+  auditLogs          AuditLog[]
 
   sessions Session[]
 
@@ -88,6 +97,7 @@ model JobseekerProfile {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  email     String?
   fullName  String?
   headline  String?
   location  String?
@@ -101,6 +111,10 @@ model EmployerProfile {
   id     String @id @default(cuid())
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  email     String?
+  fullName  String?
+  roleTitle String?
 
   memberships CompanyMember[]
 
@@ -118,14 +132,20 @@ model Company {
   hqLocation  String?
   description String?
 
+  type    CompanyType @default(COMPANY)
+  city    String?
+  state   String?
+  country String?     @default("United States")
+
   members   CompanyMember[]
   jobs      Job[]
-  auditLogs AuditLog[] // ✅ opposite relation for AuditLog.company
+  auditLogs AuditLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([name])
+  @@index([type])
 }
 
 model CompanyMember {
@@ -139,7 +159,6 @@ model CompanyMember {
   employerProfileId String?
   employerProfile   EmployerProfile? @relation(fields: [employerProfileId], references: [id], onDelete: SetNull)
 
-  // ✅ use CompanyRole enum (NOT string)
   role      CompanyRole @default(RECRUITER)
   createdAt DateTime    @default(now())
 
@@ -270,11 +289,6 @@ model JobView {
   @@index([userId])
 }
 
-enum AlertFrequency {
-  DAILY
-  WEEKLY
-}
-
 model JobAlert {
   id     String @id @default(cuid())
   userId String
@@ -319,52 +333,4 @@ model AuditLog {
   @@index([actorUserId])
   @@index([action])
   @@index([createdAt])
-}
-
-enum CompanyType {
-  COMPANY
-  AGENCY
-}
-
-model Company {
-  id        String      @id @default(cuid())
-  name      String
-  type      CompanyType @default(COMPANY)
-  website   String?
-  city      String?
-  state     String?
-  country   String?     @default("United States")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  employers EmployerProfile[]
-  jobs      Job[]
-}
-
-model EmployerProfile {
-  id        String   @id @default(cuid())
-  userId    String   @unique // this should match Supabase auth user id
-  email     String?
-  fullName  String?
-  roleTitle String?  // recruiter / HR / admin
-
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model JobseekerProfile {
-  id        String   @id @default(cuid())
-  userId    String   @unique // Supabase auth user id
-  email     String?
-  fullName  String?
-  headline  String?
-  location  String?
-  resumeUrl String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
