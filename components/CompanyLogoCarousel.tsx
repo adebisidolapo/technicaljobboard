@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 type CompanyLogo = { src: string; alt: string };
 
@@ -10,64 +13,87 @@ const COMPANY_LOGOS: CompanyLogo[] = [
   { src: "/redtail.png", alt: "Redtail" },
 ];
 
-function LogoRow() {
-  const items = [...COMPANY_LOGOS, ...COMPANY_LOGOS, ...COMPANY_LOGOS];
-
-  return (
-    <div
-      className={[
-        "flex w-max items-center",
-        "gap-16 md:gap-24",
-        "py-6",
-        "animate-marquee-slow",
-      ].join(" ")}
-    >
-      {items.map((logo, idx) => (
-        <div
-          key={`${logo.alt}-${idx}`}
-          className="flex items-center justify-center"
-        >
-          <Image
-            src={logo.src}
-            alt={logo.alt}
-            width={220}
-            height={90}
-            className={[
-              "w-auto object-contain",
-              "h-12 md:h-16",
-              "opacity-50 grayscale",
-              "transition duration-500",
-              "hover:opacity-100 hover:grayscale-0 hover:scale-105",
-            ].join(" ")}
-          />
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function CompanyLogoCarousel() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((prev) => (prev + 1) % COMPANY_LOGOS.length);
+    }, 2600);
+
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <div
-      className="relative"
       role="region"
       aria-label="Company logos"
+      className="relative w-full overflow-hidden rounded-[28px] border border-slate-200 bg-white"
     >
-      {/* fade edges */}
+      {/* soft edge fades */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 sm:w-24 bg-gradient-to-r from-white to-transparent"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-white to-transparent"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 sm:w-24 bg-gradient-to-l from-white to-transparent"
         aria-hidden
       />
 
-      {/* frame */}
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
-        <div className="px-6 py-10">
-          <LogoRow />
-        </div>
+      {/* track */}
+      <div className="relative h-[140px] sm:h-[170px] md:h-[190px] lg:h-[210px] w-full">
+        {COMPANY_LOGOS.map((logo, i) => {
+          const active = i === index;
+
+          return (
+            <div
+              key={logo.alt}
+              className={[
+                "absolute inset-0 flex items-center justify-center transition-all duration-1000 ease-out",
+                active
+                  ? "opacity-100 translate-x-0 scale-100"
+                  : i < index
+                  ? "opacity-0 -translate-x-24 scale-95"
+                  : "opacity-0 translate-x-24 scale-95",
+              ].join(" ")}
+            >
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={520}
+                height={180}
+                priority={i === 0}
+                className={[
+                  "w-auto object-contain",
+                  "h-16 sm:h-20 md:h-24 lg:h-28",
+                  "grayscale opacity-70",
+                  "transition duration-700",
+                ].join(" ")}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* indicators */}
+      <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
+        {COMPANY_LOGOS.map((logo, i) => {
+          const active = i === index;
+          return (
+            <button
+              key={logo.alt}
+              type="button"
+              aria-label={`Show ${logo.alt}`}
+              onClick={() => setIndex(i)}
+              className={[
+                "h-2.5 rounded-full transition-all duration-300",
+                active
+                  ? "w-8 bg-[var(--brand-purple)]"
+                  : "w-2.5 bg-slate-300 hover:bg-slate-400",
+              ].join(" ")}
+            />
+          );
+        })}
       </div>
     </div>
   );
