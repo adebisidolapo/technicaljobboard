@@ -18,12 +18,18 @@ export default function JobseekerLoginPage() {
     setErr(null);
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+
       if (error) {
         setErr(error.message);
         return;
       }
+
       router.push("/jobseeker/overview");
+      router.refresh();
     } finally {
       setLoading(false);
     }
@@ -33,7 +39,6 @@ export default function JobseekerLoginPage() {
     <div className="min-h-screen bg-[#F4F6FB]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-          {/* Brand panel */}
           <div className="hidden lg:block">
             <div className="h-full rounded-3xl border border-slate-200 bg-white p-10 shadow-sm overflow-hidden relative">
               <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[color:var(--brand-purple)/0.18] blur-3xl" />
@@ -50,28 +55,18 @@ export default function JobseekerLoginPage() {
                   Sign in to manage your job search
                 </h1>
                 <p className="mt-3 text-slate-600 leading-relaxed">
-                  Save roles, track applications, and upload your resume for employers.
+                  Save roles, track applications, and keep your resume ready for employers.
                 </p>
 
-                <ul className="mt-8 space-y-3 text-sm text-slate-700">
-                  <li className="flex items-center gap-3">
-                    <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-                    Save jobs & apply faster
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-                    Track applications in one place
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <span className="h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-                    Keep your resume up to date
-                  </li>
-                </ul>
+                <div className="mt-8 space-y-3 text-sm text-slate-700">
+                  <div>Save jobs and apply faster</div>
+                  <div>Track applications in one place</div>
+                  <div>Keep your resume up to date</div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Form */}
           <div className="flex">
             <div className="w-full rounded-3xl border border-slate-200 bg-white p-8 sm:p-10 shadow-sm">
               <div className="flex items-center justify-between">
@@ -147,7 +142,7 @@ export default function JobseekerLoginPage() {
             </div>
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   );
 }

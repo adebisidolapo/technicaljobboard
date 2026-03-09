@@ -20,16 +20,13 @@ const CATEGORIES = [
 export default function Home() {
   const router = useRouter();
 
-  // hero inputs
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
-
-  // category chips
   const [categoryQuery, setCategoryQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const inputBase =
-    "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-200";
+    "h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-[color:var(--brand-purple)/0.18]";
 
   const chipBase =
     "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition active:scale-[0.99]";
@@ -55,60 +52,47 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#F3F6FB] font-sans text-[#0F172A]">
-      {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-[#EEF6F2]">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-[#EEF3FA]">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#EEF6F2] via-[#EEF6F2] to-[#F3F6FB]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#F5F7FC] to-[#F3F6FB]" />
           <div
             className="absolute inset-0 opacity-[0.16]"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
+                "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
               backgroundSize: "30px 30px",
             }}
           />
+          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[color:var(--brand-purple)/0.16] blur-3xl" />
+          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[color:var(--brand-accent)/0.12] blur-3xl" />
         </div>
 
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl py-14 text-center sm:py-18 md:py-22 lg:py-24">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              Curated roles • Remote friendly • Fast apply
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center py-14 sm:py-18 md:py-22 lg:py-24">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+                <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+                Curated roles • Remote friendly • U.S. focused
+              </div>
 
-            <h1 className="mt-6 font-extrabold leading-[1.05] tracking-tight text-[#0F172A] text-[clamp(2rem,4.2vw,3.25rem)]">
-              Find{" "}
-              <span className="relative inline-block">
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-12 -inset-y-10 rounded-full bg-emerald-400/12 blur-[70px]"
-                />
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-8 -inset-y-6 rounded-full bg-emerald-400/16 blur-[42px]"
-                />
-                <span className="relative text-emerald-600">
+              <h1 className="mt-6 font-extrabold leading-[1.03] tracking-tight text-[#0F172A] text-[clamp(2.2rem,4.6vw,4rem)]">
+                Find{" "}
+                <span className="relative inline-block text-[var(--brand-purple)]">
                   Technical Jobs
-                </span>
-              </span>{" "}
-              built for long-term careers
-            </h1>
+                </span>{" "}
+                built for long-term careers
+              </h1>
 
-            <p className="mx-auto mt-5 max-w-2xl text-[14.5px] leading-relaxed text-slate-600 sm:text-[15.5px] md:text-[16px]">
-              Browse opportunities across engineering, infrastructure, cloud,
-              security, and data — including remote options. Simple, clean, and
-              focused on serious hiring.
-            </p>
+              <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-slate-600 sm:text-[16px]">
+                Browse opportunities across engineering, infrastructure, cloud,
+                security, data, and applied technical work — with cleaner search,
+                clearer salary ranges, and trusted employers.
+              </p>
 
-            <div className="mt-8">
-              <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-                {/* On small screens: stacked inputs + button. On md+: grid. */}
+              <div className="mt-8 max-w-3xl rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
-                  <label className="sr-only" htmlFor="hero-q">
-                    Job title or keyword
-                  </label>
                   <input
-                    id="hero-q"
                     value={heroQ}
                     onChange={(e) => setHeroQ(e.target.value)}
                     type="text"
@@ -119,15 +103,11 @@ export default function Home() {
                     }}
                   />
 
-                  <label className="sr-only" htmlFor="hero-loc">
-                    Location
-                  </label>
                   <input
-                    id="hero-loc"
                     value={heroLoc}
                     onChange={(e) => setHeroLoc(e.target.value)}
                     type="text"
-                    placeholder="Location (Remote, Lagos, New York)"
+                    placeholder="Location (Remote, New York, Austin)"
                     className={inputBase}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") runHeroSearch();
@@ -137,14 +117,14 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={runHeroSearch}
-                    className="h-12 w-full rounded-xl bg-slate-900 px-6 text-sm font-semibold text-white transition hover:bg-slate-800 md:w-auto shadow-[0_10px_26px_rgba(2,6,23,0.22)]"
+                    className="h-12 w-full rounded-2xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white transition hover:bg-[var(--brand-purple-dark)] md:w-auto shadow-[0_10px_26px_rgba(2,6,23,0.14)]"
                   >
                     Search Jobs
                   </button>
                 </div>
 
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
-                  <span>Popular</span>
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                  <span>Popular:</span>
                   {["Frontend", "DevOps", "Data", "Security"].map((t) => (
                     <button
                       key={t}
@@ -160,20 +140,54 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={jumpToFeatured}
+                  className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50"
+                >
+                  Explore featured jobs
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => router.push("/employer/register")}
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#0B1222] px-5 py-3 text-sm font-semibold text-white hover:bg-slate-900"
+                >
+                  Hire talent
+                </button>
+              </div>
             </div>
 
-            <button
-              type="button"
-              onClick={jumpToFeatured}
-              className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
-            >
-              Jump to Jobs <span aria-hidden>↓</span>
-            </button>
+            <div className="hidden lg:block">
+              <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_16px_40px_rgba(15,23,42,0.10)]">
+                <div className="rounded-3xl border border-slate-200 bg-[#F8FAFD] p-5">
+                  <div className="text-sm font-extrabold text-slate-900">Technical hiring, made cleaner</div>
+                  <div className="mt-2 text-sm text-slate-600">
+                    Search faster, compare jobs more easily, and connect with employers running serious hiring pipelines.
+                  </div>
+
+                  <div className="mt-5 grid gap-3">
+                    {[
+                      { title: "Curated technical roles", note: "Less noise, stronger job quality." },
+                      { title: "Resume-ready workflow", note: "Faster apply and employer visibility." },
+                      { title: "Employer dashboards", note: "Post, review, and manage hiring in one place." },
+                    ].map((x) => (
+                      <div key={x.title} className="rounded-2xl border border-slate-200 bg-white p-4">
+                        <div className="text-sm font-extrabold text-slate-900">{x.title}</div>
+                        <div className="mt-1 text-xs text-slate-600">{x.note}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ================= TRUSTED BY TEAMS ================= */}
+      {/* TRUSTED */}
       <section className="bg-white py-14 sm:py-16 md:py-20">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -184,8 +198,7 @@ export default function Home() {
               Popular Companies We Have Worked With
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-500">
-              Teams across the US trust TechnicalJobboard to hire technical
-              talent.
+              Teams across the U.S. trust TechnicalJobBoard to hire technical talent.
             </p>
           </div>
 
@@ -195,7 +208,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= CATEGORIES ================= */}
+      {/* CATEGORIES */}
       <section
         id="categories"
         className="relative overflow-hidden bg-[#F4F6FB] py-14 sm:py-16 md:py-20"
@@ -214,8 +227,7 @@ export default function Home() {
                 Browse by category
               </h3>
               <p className="mt-3 max-w-2xl text-sm text-slate-600 md:text-base">
-                Search and swipe through categories — tap one to explore matching
-                roles.
+                Search and explore categories to find matching roles faster.
               </p>
             </div>
 
@@ -235,9 +247,7 @@ export default function Home() {
               {selectedCategory && (
                 <div className="mt-2 text-xs text-slate-500">
                   Selected:{" "}
-                  <span className="font-semibold text-slate-700">
-                    {selectedCategory}
-                  </span>
+                  <span className="font-semibold text-slate-700">{selectedCategory}</span>
                   <button
                     type="button"
                     onClick={() => {
@@ -254,7 +264,6 @@ export default function Home() {
           </div>
 
           <div className="mt-8 sm:mt-10">
-            {/* Better mobile experience: snap + padding + gradient edges */}
             <div className="relative">
               <div className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-2 snap-x snap-mandatory">
                 <button
@@ -294,22 +303,12 @@ export default function Home() {
                           : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
                       ].join(" ")}
                     >
-                      <span
-                        className={[
-                          "mr-2 inline-block h-2 w-2 rounded-full",
-                          active
-                            ? "bg-[var(--brand-purple)]"
-                            : "bg-emerald-500/80",
-                        ].join(" ")}
-                        aria-hidden
-                      />
                       {cat}
                     </button>
                   );
                 })}
               </div>
 
-              {/* subtle fade edges */}
               <div
                 className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#F4F6FB] to-transparent"
                 aria-hidden
@@ -320,24 +319,12 @@ export default function Home() {
               />
             </div>
           </div>
-
-          <div className="mt-4 text-xs text-slate-500">
-            Tip: swipe sideways to see more categories.
-          </div>
-
-          {filteredCategories.length === 0 && (
-            <div className="mt-6 text-sm text-slate-600">
-              No categories match{" "}
-              <span className="font-semibold">“{categoryQuery}”</span>.
-            </div>
-          )}
         </div>
       </section>
 
-      {/* ================= FEATURED JOBS ================= */}
       <FeaturedJobsSection />
 
-      {/* ================= EMPOWERING ================= */}
+      {/* EMPOWERING */}
       <section className="relative overflow-hidden bg-[#F3F4FA] py-14 sm:py-16 md:py-20">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.16)] blur-3xl" />
@@ -366,35 +353,23 @@ export default function Home() {
               </h3>
 
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600">
-                Discover vetted Technical roles, transparent salary ranges, and
+                Discover vetted technical roles, transparent salary ranges, and
                 trusted employers — all in one place designed to support long-term
                 career growth.
               </p>
 
-              <ul className="mt-6 space-y-3 text-sm text-slate-700">
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Verified Technical opportunities only
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Clear expectations & salary visibility
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Roles built for growth, not churn
-                </li>
-              </ul>
+              <div className="mt-6 space-y-3 text-sm text-slate-700">
+                <div>Verified technical opportunities only</div>
+                <div>Clear expectations and salary visibility</div>
+                <div>Roles built for growth, not churn</div>
+              </div>
 
               <button
                 type="button"
                 onClick={() => router.push("/all-jobs")}
-                className="btn-primary mt-8 inline-flex items-center gap-3 rounded-2xl px-6 py-3 text-sm font-semibold shadow-md"
+                className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-[var(--brand-purple)] px-6 py-3 text-sm font-semibold text-white shadow-md hover:bg-[var(--brand-purple-dark)]"
               >
                 Get Started
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-                  →
-                </span>
               </button>
             </div>
           </div>

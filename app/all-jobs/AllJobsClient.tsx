@@ -63,13 +63,12 @@ function fmtMoney(min?: number | null, max?: number | null) {
 function pickLoc(j: ApiJob) {
   if (j.remote) return "Remote";
   const l = j.locations?.[0];
-  const label = l?.label || [l?.city, l?.state].filter(Boolean).join(", ") || l?.country || "United States";
-  return label;
+  return l?.label || [l?.city, l?.state].filter(Boolean).join(", ") || l?.country || "United States";
 }
 
 function short(s: string, n = 170) {
   const t = String(s || "").replace(/\s+/g, " ").trim();
-  return t.length > n ? t.slice(0, n - 1) + "…" : t;
+  return t.length > n ? `${t.slice(0, n - 1)}…` : t;
 }
 
 const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"];
@@ -86,13 +85,7 @@ const SORT = [
   { value: "relevant", label: "Most relevant" },
 ];
 
-function Chip({
-  label,
-  onRemove,
-}: {
-  label: string;
-  onRemove?: () => void;
-}) {
+function Chip({ label, onRemove }: { label: string; onRemove?: () => void }) {
   return (
     <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-extrabold text-slate-700">
       {label}
@@ -100,7 +93,7 @@ function Chip({
         <button
           type="button"
           onClick={onRemove}
-          className="h-5 w-5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-slate-600 grid place-items-center"
+          className="h-5 w-5 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100"
           aria-label="Remove filter"
         >
           ×
@@ -113,7 +106,6 @@ function Chip({
 export default function AllJobsClient({ initial }: { initial: Initial }) {
   const router = useRouter();
 
-  // form state
   const [q, setQ] = useState(initial.q || "");
   const [loc, setLoc] = useState(initial.loc || "");
   const [cat, setCat] = useState(initial.cat || "");
@@ -125,32 +117,28 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
   const [posted, setPosted] = useState(initial.posted || "");
   const [sort, setSort] = useState(initial.sort || "new");
 
-  // debounced query inputs (Zip-like: type, then results update)
   const [dq, setDq] = useState(q);
   const [dloc, setDloc] = useState(loc);
 
+  const [items, setItems] = useState<ApiJob[]>([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
+
+  const [page, setPage] = useState(0);
+  const take = 20;
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
   useEffect(() => {
-    const t = setTimeout(() => setDq(q), 300);
+    const t = setTimeout(() => setDq(q), 250);
     return () => clearTimeout(t);
   }, [q]);
 
   useEffect(() => {
-    const t = setTimeout(() => setDloc(loc), 300);
+    const t = setTimeout(() => setDloc(loc), 250);
     return () => clearTimeout(t);
   }, [loc]);
 
-  // data
-  const [items, setItems] = useState<ApiJob[]>([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState<string>("");
-
-  const [page, setPage] = useState(0);
-  const take = 20;
-
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  // keep page reset when filters change (except page)
   const firstMountRef = useRef(true);
   useEffect(() => {
     if (firstMountRef.current) {
@@ -158,7 +146,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
       return;
     }
     setPage(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort]);
 
   const params = useMemo(() => {
@@ -178,15 +165,13 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
     return p;
   }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort, page]);
 
-  // shareable URL (no take/skip)
   useEffect(() => {
     const urlParams = new URLSearchParams(params);
     urlParams.delete("take");
     urlParams.delete("skip");
     const qs = urlParams.toString();
     router.replace(qs ? `/all-jobs?${qs}` : "/all-jobs");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dq, dloc, cat, jobType, level, remote, salaryMin, salaryMax, posted, sort]);
+  }, [router, params]);
 
   useEffect(() => {
     let cancelled = false;
@@ -196,7 +181,9 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
         setLoading(true);
         setErr("");
 
-        const res = await fetch(`/api/jobs/search?${params.toString()}`, { cache: "no-store" });
+        const res = await fetch(`/api/jobs/search?${params.toString()}`, {
+          cache: "no-store",
+        });
         const text = await res.text();
         const data = text ? (JSON.parse(text) as ApiResp) : null;
 
@@ -239,10 +226,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
     setPage(0);
   }
 
-  function closeMobileFilters() {
-    setFiltersOpen(false);
-  }
-
   const appliedChips = useMemo(() => {
     const chips: Array<{ key: string; label: string; remove: () => void }> = [];
     if (dq.trim()) chips.push({ key: "q", label: `“${dq.trim()}”`, remove: () => setQ("") });
@@ -257,7 +240,7 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
       const lbl = POSTED.find((x) => x.value === posted)?.label || "Posted";
       chips.push({ key: "posted", label: lbl, remove: () => setPosted("") });
     }
-    if (sort.trim() && sort !== "new") {
+    if (sort !== "new") {
       const lbl = SORT.find((x) => x.value === sort)?.label || "Sort";
       chips.push({ key: "sort", label: lbl, remove: () => setSort("new") });
     }
@@ -404,7 +387,7 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
 
       <button
         type="button"
-        onClick={closeMobileFilters}
+        onClick={() => setFiltersOpen(false)}
         className="lg:hidden h-12 w-full rounded-2xl bg-[var(--brand-purple)] text-white text-sm font-extrabold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
       >
         Apply filters
@@ -414,14 +397,11 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
 
   return (
     <main className="bg-[#F3F6FB] text-slate-900">
-      {/* Zip-like header */}
       <section className="border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-                All Jobs
-              </h1>
+              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">All Jobs</h1>
               <p className="mt-1 text-sm text-slate-600">
                 Search technical roles across the U.S. (remote-friendly).
               </p>
@@ -433,7 +413,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
             </div>
           </div>
 
-          {/* Sticky search row (key part of “Zip feel”) */}
           <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-3">
             <div className="md:col-span-6">
               <input
@@ -471,13 +450,11 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
             </div>
           </div>
 
-          {/* Chips */}
           {appliedChips.length ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {appliedChips.map((c) => (
                 <Chip key={c.key} label={c.label} onRemove={c.remove} />
               ))}
-
               <button
                 type="button"
                 onClick={clearAll}
@@ -490,10 +467,8 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
         </div>
       </section>
 
-      {/* Main */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Filters desktop */}
           <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
             <div className="sticky top-24 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="flex items-center justify-between">
@@ -510,7 +485,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
             </div>
           </aside>
 
-          {/* Results */}
           <div className="lg:col-span-8 xl:col-span-9">
             <div className="flex items-center justify-between gap-3">
               <div className="text-sm text-slate-600">
@@ -543,7 +517,6 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
               </div>
             )}
 
-            {/* Jobs list */}
             <div className="mt-4 grid gap-4">
               {loading ? (
                 <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -671,14 +644,13 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
         </div>
       </section>
 
-      {/* Mobile Filters Drawer */}
       {filtersOpen && (
         <div className="fixed inset-0 z-[60]">
           <button
             type="button"
             aria-label="Close filters"
             className="absolute inset-0 bg-black/40"
-            onClick={closeMobileFilters}
+            onClick={() => setFiltersOpen(false)}
           />
           <div className="absolute right-0 top-0 h-full w-full max-w-[440px] bg-white shadow-2xl">
             <div className="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
@@ -693,7 +665,7 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
                 </button>
                 <button
                   type="button"
-                  onClick={closeMobileFilters}
+                  onClick={() => setFiltersOpen(false)}
                   className="h-10 w-10 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition text-lg"
                   aria-label="Close"
                 >

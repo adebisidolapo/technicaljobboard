@@ -1,4 +1,3 @@
-// app/all-jobs/page.tsx
 import AllJobsClient from "./AllJobsClient";
 
 export const dynamic = "force-dynamic";
@@ -26,14 +25,12 @@ function pick(sp: any, key: string): string {
 export default async function AllJobsPage({
   searchParams,
 }: {
-  // Next 16 build typing can expect searchParams as a Promise in some setups
   searchParams?: Promise<any>;
 }) {
   const sp = (await searchParams) ?? {};
 
   const initial: InitialFilters = {
     q: pick(sp, "q"),
-    // support both loc and location
     loc: pick(sp, "loc") || pick(sp, "location"),
     cat: pick(sp, "cat"),
     jobType: pick(sp, "jobType"),

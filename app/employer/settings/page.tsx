@@ -28,14 +28,13 @@ function Field({
 export default function EmployerSettingsPage() {
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-            Settings
+            Company Settings
           </h1>
           <p className="mt-2 text-sm text-slate-600">
-            Manage company profile and hiring preferences.
+            Manage your company or agency profile, branding, and hiring preferences.
           </p>
         </div>
 
@@ -48,34 +47,60 @@ export default function EmployerSettingsPage() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* Left */}
         <section className="xl:col-span-8 rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
           <div className="px-6 py-5 border-b border-slate-200">
             <div className="text-sm font-extrabold text-slate-900">Company profile</div>
             <div className="mt-1 text-xs text-slate-600">
-              This will display on your jobs and employer pages.
+              This appears on your jobs and employer-facing pages.
             </div>
           </div>
 
           <div className="p-6 space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Field
-                label="Company name"
+                label="Company / Agency name"
                 hint="Shown publicly on job posts."
                 placeholder="e.g. NovaTech"
               />
+              <div className="space-y-2">
+                <div>
+                  <div className="text-sm font-extrabold text-slate-900">Account type</div>
+                  <div className="text-xs text-slate-600">
+                    Choose the type that matches your hiring model.
+                  </div>
+                </div>
+                <select className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]">
+                  <option>Company</option>
+                  <option>Agency</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Field
                 label="Website"
                 hint="Optional but recommended."
                 placeholder="https://example.com"
               />
+              <Field
+                label="Industry"
+                hint="What sector do you hire in?"
+                placeholder="Software, Healthcare, Fintech..."
+              />
             </div>
 
-            <Field
-              label="Headquarters"
-              hint="City / State (U.S.)."
-              placeholder="San Francisco, CA"
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Field
+                label="Headquarters"
+                hint="City / State (U.S.)."
+                placeholder="San Francisco, CA"
+              />
+              <Field
+                label="Company size"
+                hint="Approximate team size."
+                placeholder="11–50 employees"
+              />
+            </div>
 
             <div className="space-y-2">
               <div className="text-sm font-extrabold text-slate-900">About</div>
@@ -99,7 +124,6 @@ export default function EmployerSettingsPage() {
           </div>
         </section>
 
-        {/* Right */}
         <div className="xl:col-span-4 space-y-6">
           <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-200">
@@ -112,7 +136,7 @@ export default function EmployerSettingsPage() {
             <div className="p-6 space-y-4">
               {[
                 { title: "Response time", note: "Aim for 48 hours for top candidates." },
-                { title: "Salary transparency", note: "U.S. market strongly prefers ranges." },
+                { title: "Salary transparency", note: "U.S. market strongly prefers salary ranges." },
                 { title: "Remote policy", note: "Remote / hybrid / on-site — keep it consistent." },
               ].map((x) => (
                 <div key={x.title} className="rounded-2xl border border-slate-200 bg-[#F4F6FB] p-4">
