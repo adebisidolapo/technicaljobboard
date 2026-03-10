@@ -20,115 +20,78 @@ const CATEGORIES = [
 export default function Home() {
   const router = useRouter();
 
-  // hero inputs
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
-
-  // category chips
   const [categoryQuery, setCategoryQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-
-  const inputBase =
-    "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-200";
-
-  const chipBase =
-    "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition active:scale-[0.99]";
 
   const filteredCategories = useMemo(() => {
     const q = categoryQuery.toLowerCase().trim();
     return CATEGORIES.filter((c) => c.toLowerCase().includes(q));
   }, [categoryQuery]);
 
-  const runHeroSearch = () => {
+  function runHeroSearch() {
     const params = new URLSearchParams();
     if (heroQ.trim()) params.set("q", heroQ.trim());
     if (heroLoc.trim()) params.set("loc", heroLoc.trim());
     const qs = params.toString();
     router.push(qs ? `/all-jobs?${qs}` : "/all-jobs");
-  };
+  }
 
-  const jumpToFeatured = () => {
+  function goToCategory(cat: string) {
+    setSelectedCategory(cat);
+    router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
+  }
+
+  function jumpToFeatured() {
     const el = document.getElementById("featured");
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  }
 
   return (
-    <main className="min-h-screen bg-[#F3F6FB] font-sans text-[#0F172A]">
-      {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-[#EEF6F2]">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#EEF6F2] via-[#EEF6F2] to-[#F3F6FB]" />
-          <div
-            className="absolute inset-0 opacity-[0.16]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-              backgroundSize: "30px 30px",
-            }}
-          />
-        </div>
+    <main className="min-h-screen text-[#0F172A]">
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="site-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pt-12 pb-14 sm:pt-16 sm:pb-16 md:pt-20 md:pb-20">
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-bold text-slate-600 shadow-sm">
+                <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
+                Technical careers • Remote friendly • Employer tools built in
+              </div>
 
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl py-14 text-center sm:py-18 md:py-22 lg:py-24">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              Curated roles • Remote friendly • Fast apply
-            </div>
+              <h1 className="mt-6 max-w-4xl text-[clamp(2.3rem,5vw,4.5rem)] font-extrabold leading-[1.02] tracking-tight text-slate-900">
+                Find serious{" "}
+                <span className="text-[var(--brand-purple)]">technical jobs</span>{" "}
+                and connect with employers who are actually hiring.
+              </h1>
 
-            <h1 className="mt-6 font-extrabold leading-[1.05] tracking-tight text-[#0F172A] text-[clamp(2rem,4.2vw,3.25rem)]">
-              Find{" "}
-              <span className="relative inline-block">
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-12 -inset-y-10 rounded-full bg-emerald-400/12 blur-[70px]"
-                />
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-8 -inset-y-6 rounded-full bg-emerald-400/16 blur-[42px]"
-                />
-                <span className="relative text-emerald-600">
-                  Technical Jobs
-                </span>
-              </span>{" "}
-              built for long-term careers
-            </h1>
+              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-slate-600 sm:text-base">
+                Search cleanly across engineering, infrastructure, security, cloud,
+                field operations, healthcare IT, and other technical roles — with a
+                faster hiring experience for both candidates and employers.
+              </p>
 
-            <p className="mx-auto mt-5 max-w-2xl text-[14.5px] leading-relaxed text-slate-600 sm:text-[15.5px] md:text-[16px]">
-              Browse opportunities across engineering, infrastructure, cloud,
-              security, and data — including remote options. Simple, clean, and
-              focused on serious hiring.
-            </p>
-
-            <div className="mt-8">
-              <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-                {/* On small screens: stacked inputs + button. On md+: grid. */}
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
-                  <label className="sr-only" htmlFor="hero-q">
-                    Job title or keyword
-                  </label>
+              <div className="mt-8 rounded-[24px] border border-slate-200 bg-white p-3 shadow-sm">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto]">
                   <input
-                    id="hero-q"
                     value={heroQ}
                     onChange={(e) => setHeroQ(e.target.value)}
                     type="text"
-                    placeholder="Job title, keyword"
-                    className={inputBase}
+                    placeholder="Job title, keyword, company"
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-[color:var(--brand-purple)/0.18]"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") runHeroSearch();
                     }}
                   />
 
-                  <label className="sr-only" htmlFor="hero-loc">
-                    Location
-                  </label>
                   <input
-                    id="hero-loc"
                     value={heroLoc}
                     onChange={(e) => setHeroLoc(e.target.value)}
                     type="text"
-                    placeholder="Location (Remote, Lagos, New York)"
-                    className={inputBase}
+                    placeholder="Location (Remote, Texas, New York)"
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-[color:var(--brand-purple)/0.18]"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") runHeroSearch();
                     }}
@@ -137,14 +100,14 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={runHeroSearch}
-                    className="h-12 w-full rounded-xl bg-slate-900 px-6 text-sm font-semibold text-white transition hover:bg-slate-800 md:w-auto shadow-[0_10px_26px_rgba(2,6,23,0.22)]"
+                    className="btn-primary h-12 rounded-2xl"
                   >
-                    Search Jobs
+                    Search jobs
                   </button>
                 </div>
 
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-slate-500">
-                  <span>Popular</span>
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                  <span className="font-semibold">Popular:</span>
                   {["Frontend", "DevOps", "Data", "Security"].map((t) => (
                     <button
                       key={t}
@@ -153,69 +116,116 @@ export default function Home() {
                         setHeroQ(t);
                         setTimeout(runHeroSearch, 0);
                       }}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 font-semibold text-slate-700 hover:border-slate-300"
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1 font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50"
                     >
                       {t}
                     </button>
                   ))}
                 </div>
               </div>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                <button type="button" onClick={jumpToFeatured} className="btn-secondary">
+                  Explore featured jobs
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push("/employer/register")}
+                  className="btn-primary"
+                >
+                  Hire technical talent
+                </button>
+              </div>
             </div>
 
-            <button
-              type="button"
-              onClick={jumpToFeatured}
-              className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline"
-            >
-              Jump to Jobs <span aria-hidden>↓</span>
-            </button>
+            <div className="lg:col-span-5">
+              <div className="card-surface p-5 sm:p-6">
+                <div className="grid gap-4">
+                  <div className="rounded-3xl border border-slate-200 bg-[var(--surface-muted)] p-5">
+                    <div className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                      For jobseekers
+                    </div>
+                    <div className="mt-2 text-lg font-extrabold text-slate-900">
+                      Search, save, apply, and manage your resume in one place.
+                    </div>
+                    <div className="mt-3 text-sm leading-6 text-slate-600">
+                      A cleaner workflow for technical candidates who want serious roles,
+                      not endless noise.
+                    </div>
+                  </div>
+
+                  <div className="rounded-3xl border border-slate-200 bg-white p-5">
+                    <div className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                      For employers
+                    </div>
+                    <div className="mt-2 text-lg font-extrabold text-slate-900">
+                      Post jobs, review applicants, and search resumes with a focused dashboard.
+                    </div>
+                    <div className="mt-3 text-sm leading-6 text-slate-600">
+                      Built for companies and agencies that want a professional hiring flow.
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { k: "10MB", v: "Resume upload" },
+                      { k: "Fast", v: "Application flow" },
+                      { k: "Clean", v: "Employer tools" },
+                    ].map((x) => (
+                      <div
+                        key={x.v}
+                        className="rounded-2xl border border-slate-200 bg-white px-4 py-4 text-center"
+                      >
+                        <div className="text-base font-extrabold text-slate-900">{x.k}</div>
+                        <div className="mt-1 text-[11px] font-semibold text-slate-500">{x.v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ================= TRUSTED BY TEAMS ================= */}
-      <section className="bg-white py-14 sm:py-16 md:py-20">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* TRUSTED COMPANIES */}
+      <section className="section-pad bg-white">
+        <div className="site-container">
           <div className="text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-slate-400">
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-slate-400">
               Trusted by teams
             </p>
-            <h2 className="mt-3 text-[clamp(1.5rem,3.4vw,2.5rem)] font-extrabold tracking-tight text-[#0B1222]">
-              Popular Companies We Have Worked With
+            <h2 className="mt-3 text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tight text-slate-900">
+              Companies we’ve worked with
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-500">
-              Teams across the US trust TechnicalJobboard to hire technical
-              talent.
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+              Employers using the platform to source and manage technical talent.
             </p>
           </div>
 
-          <div className="mt-10 sm:mt-12 md:mt-14">
+          <div className="mt-10 sm:mt-12">
             <CompanyLogoCarousel />
           </div>
         </div>
       </section>
 
-      {/* ================= CATEGORIES ================= */}
-      <section
-        id="categories"
-        className="relative overflow-hidden bg-[#F4F6FB] py-14 sm:py-16 md:py-20"
-      >
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
-        </div>
+      {/* FEATURED JOBS */}
+      <FeaturedJobsSection />
 
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* CATEGORIES */}
+      <section id="categories" className="section-pad">
+        <div className="site-container">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-500">
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-slate-400">
                 Categories
               </p>
-              <h3 className="mt-3 text-[clamp(1.5rem,3.2vw,2.5rem)] font-extrabold tracking-tight text-[#0B1222]">
-                Browse by category
+              <h3 className="mt-3 text-[clamp(1.6rem,3vw,2.4rem)] font-extrabold tracking-tight text-slate-900">
+                Browse by technical discipline
               </h3>
-              <p className="mt-3 max-w-2xl text-sm text-slate-600 md:text-base">
-                Search and swipe through categories — tap one to explore matching
-                roles.
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+                Explore industries and technical categories to narrow in on the work
+                you actually want.
               </p>
             </div>
 
@@ -232,12 +242,10 @@ export default function Home() {
                 />
               </div>
 
-              {selectedCategory && (
+              {selectedCategory ? (
                 <div className="mt-2 text-xs text-slate-500">
                   Selected:{" "}
-                  <span className="font-semibold text-slate-700">
-                    {selectedCategory}
-                  </span>
+                  <span className="font-semibold text-slate-700">{selectedCategory}</span>
                   <button
                     type="button"
                     onClick={() => {
@@ -249,14 +257,13 @@ export default function Home() {
                     Clear
                   </button>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 
-          <div className="mt-8 sm:mt-10">
-            {/* Better mobile experience: snap + padding + gradient edges */}
+          <div className="mt-8">
             <div className="relative">
-              <div className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-2 snap-x snap-mandatory">
+              <div className="no-scrollbar flex gap-3 overflow-x-auto py-2 pr-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -265,11 +272,10 @@ export default function Home() {
                     router.push("/all-jobs");
                   }}
                   className={[
-                    chipBase,
-                    "snap-start",
+                    "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition",
                     !selectedCategory
-                      ? "border-[#0B1222] bg-[#0B1222] text-white"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
+                      ? "border-slate-900 bg-slate-900 text-white"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50",
                   ].join(" ")}
                 >
                   All
@@ -282,120 +288,123 @@ export default function Home() {
                     <button
                       key={cat}
                       type="button"
-                      onClick={() => {
-                        setSelectedCategory(cat);
-                        router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
-                      }}
+                      onClick={() => goToCategory(cat)}
                       className={[
-                        chipBase,
-                        "snap-start",
+                        "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition",
                         active
-                          ? "border-[rgba(106,111,242,0.25)] bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
+                          ? "border-[color:var(--brand-purple)/0.25] bg-[color:var(--brand-purple)/0.10] text-[var(--brand-purple)]"
+                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50",
                       ].join(" ")}
                     >
-                      <span
-                        className={[
-                          "mr-2 inline-block h-2 w-2 rounded-full",
-                          active
-                            ? "bg-[var(--brand-purple)]"
-                            : "bg-emerald-500/80",
-                        ].join(" ")}
-                        aria-hidden
-                      />
                       {cat}
                     </button>
                   );
                 })}
               </div>
-
-              {/* subtle fade edges */}
-              <div
-                className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#F4F6FB] to-transparent"
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#F4F6FB] to-transparent"
-                aria-hidden
-              />
             </div>
           </div>
-
-          <div className="mt-4 text-xs text-slate-500">
-            Tip: swipe sideways to see more categories.
-          </div>
-
-          {filteredCategories.length === 0 && (
-            <div className="mt-6 text-sm text-slate-600">
-              No categories match{" "}
-              <span className="font-semibold">“{categoryQuery}”</span>.
-            </div>
-          )}
         </div>
       </section>
 
-      {/* ================= FEATURED JOBS ================= */}
-      <FeaturedJobsSection />
-
-      {/* ================= EMPOWERING ================= */}
-      <section className="relative overflow-hidden bg-[#F3F4FA] py-14 sm:py-16 md:py-20">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.16)] blur-3xl" />
-          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.14)] blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
+      {/* WHY THIS PLATFORM */}
+      <section className="section-pad bg-white">
+        <div className="site-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
             <div className="flex justify-center md:justify-start">
-              <div className="rounded-2xl bg-white p-3 shadow-[0_12px_28px_rgba(15,23,42,0.10)]">
+              <div className="rounded-[28px] bg-white p-3 shadow-[0_12px_28px_rgba(15,23,42,0.08)] border border-slate-200">
                 <img
                   src="/empower-platform.png"
-                  alt="Job platform dashboard illustration"
-                  className="w-full max-w-[520px] rounded-xl"
+                  alt="Technical job platform dashboard"
+                  className="w-full max-w-[560px] rounded-[20px]"
                 />
               </div>
             </div>
 
             <div>
-              <span className="inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-4 py-1.5 text-xs font-semibold text-indigo-700">
-                Built for Technical Careers
+              <span className="inline-flex items-center rounded-full border border-slate-200 bg-[var(--surface-muted)] px-4 py-1.5 text-xs font-bold text-slate-700">
+                Built for technical careers
               </span>
 
-              <h3 className="mt-4 text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-slate-900">
-                Empowering Job Seekers
+              <h3 className="mt-4 text-[clamp(1.6rem,3vw,2.2rem)] font-extrabold text-slate-900">
+                A more focused job board for serious technical hiring
               </h3>
 
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600">
-                Discover vetted Technical roles, transparent salary ranges, and
-                trusted employers — all in one place designed to support long-term
-                career growth.
+              <p className="mt-4 max-w-xl text-sm leading-7 text-slate-600">
+                We’re building a cleaner experience for both sides of the market:
+                jobseekers who want better technical opportunities, and employers
+                who want more organized hiring tools.
               </p>
 
-              <ul className="mt-6 space-y-3 text-sm text-slate-700">
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Verified Technical opportunities only
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Clear expectations & salary visibility
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  Roles built for growth, not churn
-                </li>
-              </ul>
+              <div className="mt-6 grid gap-3">
+                {[
+                  "Cleaner search and category browsing",
+                  "Jobseeker dashboard with resume updates",
+                  "Employer dashboard with candidate and resume workflow",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-slate-200 bg-[var(--surface-muted)] px-4 py-4 text-sm font-semibold text-slate-700"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
 
-              <button
-                type="button"
-                onClick={() => router.push("/all-jobs")}
-                className="btn-primary mt-8 inline-flex items-center gap-3 rounded-2xl px-6 py-3 text-sm font-semibold shadow-md"
-              >
-                Get Started
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-                  →
-                </span>
-              </button>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => router.push("/all-jobs")}
+                  className="btn-primary"
+                >
+                  Browse all jobs
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push("/jobseeker/register")}
+                  className="btn-secondary"
+                >
+                  Create account
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EMPLOYER CTA */}
+      <section className="section-pad">
+        <div className="site-container">
+          <div className="rounded-[32px] border border-slate-200 bg-white p-8 sm:p-10 md:p-12 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-slate-400">
+                  Employers & agencies
+                </p>
+                <h3 className="mt-3 text-[clamp(1.7rem,3vw,2.5rem)] font-extrabold tracking-tight text-slate-900">
+                  Ready to hire technical talent with a cleaner workflow?
+                </h3>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+                  Build your company profile, post jobs, review applicants, and manage
+                  hiring from one employer dashboard designed to stay organized.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap lg:justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => router.push("/employer/register")}
+                  className="btn-primary"
+                >
+                  Create employer account
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push("/employer/login")}
+                  className="btn-secondary"
+                >
+                  Employer sign in
+                </button>
+              </div>
             </div>
           </div>
         </div>
