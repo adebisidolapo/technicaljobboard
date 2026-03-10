@@ -228,205 +228,210 @@ export default function Home() {
 </section>
 
       {/* ================= CATEGORIES ================= */}
-      <section
-        id="categories"
-        className={`relative overflow-hidden bg-[#F3F6FB] ${sectionPadding}`}
-      >
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#F7F9FC] via-[#F3F6FB] to-[#F6F8FC]" />
-        </div>
-
-        <div className={`relative ${container}`}>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className={eyebrow}>Categories</p>
-              <h3 className={sectionTitle}>Browse by category</h3>
-              <p className={sectionBody}>
-                Explore roles by specialty and move quickly into the area that
-                fits you best.
-              </p>
-            </div>
-
-            <div className="w-full md:w-[380px]">
-              <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-                <span className="text-slate-400" aria-hidden>
-                  ⌕
-                </span>
-                <input
-                  value={categoryQuery}
-                  onChange={(e) => setCategoryQuery(e.target.value)}
-                  placeholder="Search categories..."
-                  className="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                />
-              </div>
-
-              {selectedCategory && (
-                <div className="mt-2 text-xs text-slate-500">
-                  Selected:{" "}
-                  <span className="font-semibold text-slate-700">
-                    {selectedCategory}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedCategory("");
-                      setCategoryQuery("");
-                    }}
-                    className="ml-2 font-semibold text-[var(--brand-purple)] hover:underline"
-                  >
-                    Clear
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-8 sm:mt-10">
-            <div className="relative rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_12px_28px_rgba(15,23,42,0.04)]">
-              <div className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-2 snap-x snap-mandatory">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategory("");
-                    setCategoryQuery("");
-                    router.push("/all-jobs");
-                  }}
-                  className={[
-                    chipBase,
-                    "snap-start",
-                    !selectedCategory
-                      ? "border-[#0B1222] bg-[#0B1222] text-white"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
-                  ].join(" ")}
-                >
-                  All
-                </button>
-
-                {filteredCategories.map((cat) => {
-                  const active = selectedCategory === cat;
-
-                  return (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => {
-                        setSelectedCategory(cat);
-                        router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
-                      }}
-                      className={[
-                        chipBase,
-                        "snap-start",
-                        active
-                          ? "border-[rgba(106,111,242,0.25)] bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
-                      ].join(" ")}
-                    >
-                      <span
-                        className={[
-                          "mr-2 inline-block h-2 w-2 rounded-full",
-                          active
-                            ? "bg-[var(--brand-purple)]"
-                            : "bg-emerald-500/80",
-                        ].join(" ")}
-                        aria-hidden
-                      />
-                      {cat}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div
-                className="pointer-events-none absolute inset-y-0 left-0 w-8 rounded-l-3xl bg-gradient-to-r from-white to-transparent"
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute inset-y-0 right-0 w-10 rounded-r-3xl bg-gradient-to-l from-white to-transparent"
-                aria-hidden
-              />
-            </div>
-          </div>
-
-          {filteredCategories.length === 0 && (
-            <div className="mt-6 text-sm text-slate-600">
-              No categories match{" "}
-              <span className="font-semibold">“{categoryQuery}”</span>.
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ================= EMPOWERING ================= */}
-      <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
-          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-emerald-100 blur-3xl" />
-        </div>
-
-        <div className={`relative ${container}`}>
-          <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
-            <div className="flex justify-center md:justify-start">
-              <div className="rounded-3xl border border-slate-200 bg-[#F8FAFC] p-3 shadow-[0_12px_28px_rgba(15,23,42,0.07)]">
-                <img
-                  src="/empower-platform.png"
-                  alt="Job platform dashboard illustration"
-                  className="w-full max-w-[560px] rounded-2xl"
-                />
-              </div>
-            </div>
-
-            <div>
-            <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-xs font-semibold text-[var(--brand-purple)]">
-  Built for Technical Careers
-</span>
-
-              <h3 className="mt-4 text-[clamp(1.55rem,3vw,2rem)] font-extrabold tracking-tight text-slate-900">
-                Empowering Job Seekers
-              </h3>
-
-              <p className="mt-3 max-w-xl text-[15px] leading-7 text-slate-600">
-                Discover vetted technical roles, transparent salary ranges, and
-                trusted employers in one focused experience.
-              </p>
-
-              <ul className="mt-6 space-y-3 text-sm text-slate-700">
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
-                  Verified technical opportunities
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
-                  Clearer expectations and visibility
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
-                  Roles built for long-term growth
-                </li>
-              </ul>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <button
-  type="button"
-  onClick={() => router.push("/all-jobs")}
-  className="mt-8 inline-flex h-12 items-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+<section
+  id="categories"
+  className="relative overflow-hidden bg-[#F4F6FB] py-14 sm:py-16 md:py-20"
 >
-  Get Started
-  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-    →
-  </span>
-</button>
-                <button
-                  type="button"
-                  onClick={() => router.push("/all-jobs?loc=Remote")}
-                  className={secondaryButton}
-                >
-                  Remote Roles
-                </button>
-              </div>
-            </div>
-          </div>
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
+  </div>
+
+  <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-500">
+          Categories
+        </p>
+        <h3 className="mt-3 text-[clamp(1.5rem,3.2vw,2.5rem)] font-extrabold tracking-tight text-[#0B1222]">
+          Browse by category
+        </h3>
+        <p className="mt-3 max-w-2xl text-sm text-slate-600 md:text-base">
+          Search and swipe through categories — tap one to explore matching
+          roles.
+        </p>
+      </div>
+
+      <div className="w-full md:w-[380px]">
+        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+          <span className="text-slate-400" aria-hidden>
+            ⌕
+          </span>
+          <input
+            value={categoryQuery}
+            onChange={(e) => setCategoryQuery(e.target.value)}
+            placeholder="Search categories..."
+            className="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+          />
         </div>
-      </section>
+
+        {selectedCategory && (
+          <div className="mt-2 text-xs text-slate-500">
+            Selected:{" "}
+            <span className="font-semibold text-slate-700">
+              {selectedCategory}
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory("");
+                setCategoryQuery("");
+              }}
+              className="ml-2 font-semibold text-[var(--brand-purple)] hover:underline"
+            >
+              Clear
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div className="mt-8 sm:mt-10">
+      <div className="relative">
+        <div className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-2 snap-x snap-mandatory">
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedCategory("");
+              setCategoryQuery("");
+              router.push("/all-jobs");
+            }}
+            className={[
+              chipBase,
+              "snap-start",
+              !selectedCategory
+                ? "border-[#0B1222] bg-[#0B1222] text-white"
+                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
+            ].join(" ")}
+          >
+            All
+          </button>
+
+          {filteredCategories.map((cat) => {
+            const active = selectedCategory === cat;
+
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
+                }}
+                className={[
+                  chipBase,
+                  "snap-start",
+                  active
+                    ? "border-[rgba(106,111,242,0.25)] bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
+                    : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
+                ].join(" ")}
+              >
+                <span
+                  className={[
+                    "mr-2 inline-block h-2 w-2 rounded-full",
+                    active
+                      ? "bg-[var(--brand-purple)]"
+                      : "bg-emerald-500/80",
+                  ].join(" ")}
+                  aria-hidden
+                />
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#F4F6FB] to-transparent"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#F4F6FB] to-transparent"
+          aria-hidden
+        />
+      </div>
+    </div>
+
+    {filteredCategories.length === 0 && (
+      <div className="mt-6 text-sm text-slate-600">
+        No categories match{" "}
+        <span className="font-semibold">“{categoryQuery}”</span>.
+      </div>
+    )}
+  </div>
+</section>
+
+     {/* ================= EMPOWERING ================= */}
+<section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+    <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
+  </div>
+
+  <div className={`relative ${container}`}>
+    <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
+      <div className="flex justify-center md:justify-start">
+        <div className="rounded-3xl border border-slate-200 bg-[#F8FAFC] p-3 shadow-[0_12px_28px_rgba(15,23,42,0.07)]">
+          <img
+            src="/empower-platform.png"
+            alt="Job platform dashboard illustration"
+            className="w-full max-w-[560px] rounded-2xl"
+          />
+        </div>
+      </div>
+
+      <div>
+        <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-xs font-semibold text-[var(--brand-purple)]">
+          Built for Technical Careers
+        </span>
+
+        <h3 className="mt-4 text-[clamp(1.55rem,3vw,2rem)] font-extrabold tracking-tight text-slate-900">
+          Empowering Job Seekers
+        </h3>
+
+        <p className="mt-3 max-w-xl text-[15px] leading-7 text-slate-600">
+          Discover vetted technical roles, transparent salary ranges, and
+          trusted employers in one focused experience.
+        </p>
+
+        <ul className="mt-6 space-y-3 text-sm text-slate-700">
+          <li className="flex items-center gap-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+            Verified technical opportunities
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+            Clearer expectations and visibility
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+            Roles built for long-term growth
+          </li>
+        </ul>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => router.push("/all-jobs")}
+            className="inline-flex h-12 items-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+          >
+            Get Started
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+              →
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => router.push("/all-jobs?loc=Remote")}
+            className={secondaryButton}
+          >
+            Remote Roles
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
     </main>
   );
 }

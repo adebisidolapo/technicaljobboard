@@ -158,8 +158,6 @@ type ApiJob = {
   remote?: boolean;
   salaryMin?: number | null;
   salaryMax?: number | null;
-  currency?: string | null;
-  publishedAt?: string | null;
   company?: { name?: string | null } | null;
   locations?: Array<{
     label?: string | null;
@@ -215,7 +213,14 @@ export default function FeaturedJobsSection() {
   const [loading, setLoading] = useState(true);
 
   const displayJobs = useMemo(() => {
-    return items.length ? items : FALLBACK_FEATURED_JOBS;
+    if (!items.length) return FALLBACK_FEATURED_JOBS;
+
+    const existingIds = new Set(items.map((job) => job.id));
+    const fillerJobs = FALLBACK_FEATURED_JOBS.filter(
+      (job) => !existingIds.has(job.id)
+    );
+
+    return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
 
   useEffect(() => {
@@ -239,17 +244,11 @@ export default function FeaturedJobsSection() {
         const apiItems: ApiJob[] = data?.items ?? [];
         const mapped = apiItems.map(toCardJob);
 
-        if (!cancelled) {
-          setItems(mapped);
-        }
+        if (!cancelled) setItems(mapped);
       } catch {
-        if (!cancelled) {
-          setItems([]);
-        }
+        if (!cancelled) setItems([]);
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     }
 
