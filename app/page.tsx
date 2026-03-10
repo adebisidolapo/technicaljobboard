@@ -150,13 +150,13 @@ export default function Home() {
                     }}
                   />
 
-                  <button
-                    type="button"
-                    onClick={runHeroSearch}
-                    className={`${primaryButton} w-full md:w-auto`}
-                  >
-                    Search Jobs
-                  </button>
+                 <button
+  type="button"
+  onClick={runHeroSearch}
+  className="h-12 w-full rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white transition hover:opacity-95 md:w-auto shadow-[0_10px_24px_rgba(106,111,242,0.24)]"
+>
+  Search Jobs
+</button>
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
@@ -209,22 +209,23 @@ export default function Home() {
       </section>
 
       {/* ================= FEATURED JOBS ================= */}
-      <section id="featured" className={sectionPadding}>
-        <div className={container}>
-          <div className="mb-8 text-center sm:mb-10 md:mb-12">
-            <p className={eyebrow}>Featured jobs</p>
-            <h2 className={sectionTitle}>Opportunities worth a closer look</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
-              A focused selection of technical roles from employers actively
-              hiring.
-            </p>
-          </div>
-        </div>
+<section id="featured" className="py-14 sm:py-16 md:py-20 bg-[#F2F4F8]">
+  <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mb-8 sm:mb-10">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500">
+        Featured jobs
+      </p>
+      <h2 className="mt-3 text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold tracking-tight text-[#0B1222]">
+        Opportunities worth a closer look
+      </h2>
+      <p className="mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
+        A curated selection of standout technical roles.
+      </p>
+    </div>
 
-        <div className={wideContainer}>
-          <FeaturedJobsSection />
-        </div>
-      </section>
+    <FeaturedJobsSection />
+  </div>
+</section>
 
       {/* ================= CATEGORIES ================= */}
       <section
@@ -375,9 +376,9 @@ export default function Home() {
             </div>
 
             <div>
-              <span className="inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-4 py-1.5 text-xs font-semibold text-indigo-700">
-                Built for Technical Careers
-              </span>
+            <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-xs font-semibold text-[var(--brand-purple)]">
+  Built for Technical Careers
+</span>
 
               <h3 className="mt-4 text-[clamp(1.55rem,3vw,2rem)] font-extrabold tracking-tight text-slate-900">
                 Empowering Job Seekers
@@ -405,12 +406,15 @@ export default function Home() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <button
-                  type="button"
-                  onClick={() => router.push("/all-jobs")}
-                  className={primaryButton}
-                >
-                  Get Started
-                </button>
+  type="button"
+  onClick={() => router.push("/all-jobs")}
+  className="mt-8 inline-flex h-12 items-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+>
+  Get Started
+  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+    →
+  </span>
+</button>
                 <button
                   type="button"
                   onClick={() => router.push("/all-jobs?loc=Remote")}

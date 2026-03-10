@@ -167,18 +167,17 @@ type ApiJob = {
     state?: string | null;
     country?: string | null;
   }>;
-  skills?: Array<{ name: string }>;
 };
 
 function pickLocation(j: ApiJob) {
   if (j.remote) return "Remote";
   const l0 = j.locations?.[0];
-  const label =
+  return (
     l0?.label ||
     [l0?.city, l0?.state].filter(Boolean).join(", ") ||
     l0?.country ||
-    "United States";
-  return label;
+    "United States"
+  );
 }
 
 function payText(j: ApiJob) {
@@ -194,21 +193,15 @@ function payText(j: ApiJob) {
 }
 
 function toCardJob(j: ApiJob): FeaturedCardJob {
-  const company = j.company?.name ?? "Company";
-  const location = j.remote ? "Remote" : pickLocation(j);
-  const type = j.jobType ?? "Full-time";
-  const pay = payText(j);
-  const posted = j.publishedAt ? "Recently" : "Recently";
-
   return {
     id: j.id,
     title: j.title,
-    company,
-    location,
+    company: j.company?.name ?? "Company",
+    location: j.remote ? "Remote" : pickLocation(j),
     description: j.description,
-    type,
-    pay,
-    posted,
+    type: j.jobType ?? "Full-time",
+    pay: payText(j),
+    posted: "Recently",
     href: `/jobs/${j.id}`,
   };
 }
@@ -235,6 +228,7 @@ export default function FeaturedJobsSection() {
         const res = await fetch("/api/jobs/search?take=12&skip=0", {
           cache: "no-store",
         });
+
         const text = await res.text();
         const data = text ? JSON.parse(text) : null;
 
@@ -245,11 +239,17 @@ export default function FeaturedJobsSection() {
         const apiItems: ApiJob[] = data?.items ?? [];
         const mapped = apiItems.map(toCardJob);
 
-        if (!cancelled) setItems(mapped);
+        if (!cancelled) {
+          setItems(mapped);
+        }
       } catch {
-        if (!cancelled) setItems([]);
+        if (!cancelled) {
+          setItems([]);
+        }
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
@@ -267,75 +267,59 @@ export default function FeaturedJobsSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-transparent py-2">
-      <div className="flex items-start justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500">
-            Featured roles
-          </p>
-          <h2 className="mt-3 text-[clamp(1.6rem,3vw,2.2rem)] font-extrabold tracking-tight text-[#0F172A]">
-            Opportunities worth a closer look
-          </h2>
-          <p className="mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
-            {loading
-              ? "Loading live roles..."
-              : "A focused selection of technical roles from employers actively hiring."}
-          </p>
-        </div>
-
-        <div className="hidden items-center gap-3 sm:flex">
-          <button
-            type="button"
-            onClick={() => scrollByAmount(-420)}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-            aria-label="Scroll left"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollByAmount(420)}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-            aria-label="Scroll right"
-          >
-            →
-          </button>
-        </div>
+    <div className="relative">
+      <div className="absolute right-0 top-[-70px] hidden items-center gap-3 sm:flex">
+        <button
+          type="button"
+          onClick={() => scrollByAmount(-420)}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+          aria-label="Scroll left"
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollByAmount(420)}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+          aria-label="Scroll right"
+        >
+          →
+        </button>
       </div>
 
-      <div className="relative mt-8">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-[#F6F8FC] to-transparent sm:w-10 lg:w-16" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l from-[#F6F8FC] to-transparent sm:w-10 lg:w-16" />
+      <div
+        id="featured-carousel"
+        className="no-scrollbar flex gap-6 overflow-x-auto scroll-smooth pb-6 pr-6 snap-x snap-mandatory"
+      >
+        {displayJobs.map((job) => (
+          <article
+            key={job.id}
+            className="snap-start relative flex min-h-[315px] w-[320px] flex-none flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[350px] lg:w-[370px]"
+          >
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
 
-        <div
-          id="featured-carousel"
-          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-6 pr-4 scroll-smooth sm:gap-6 sm:px-6 lg:gap-7 lg:px-8"
-        >
-          {displayJobs.map((job) => (
-            <article
-              key={job.id}
-              className="snap-start flex min-h-[320px] w-[320px] flex-none flex-col rounded-[24px] border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:w-[360px] lg:w-[390px]"
-            >
+            <div className="p-5 pl-8">
               <div className="flex items-center justify-between gap-3">
-                <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.14)] bg-[rgba(106,111,242,0.08)] px-3 py-1 text-[11px] font-semibold tracking-[0.08em] text-[var(--brand-purple)]">
+                <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
+                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
                   Featured
                 </span>
 
-                <span className="text-xs font-medium text-slate-400">
-                  {job.posted}
+                <span className="text-xs text-slate-400">
+                  {loading ? "Loading..." : job.posted}
                 </span>
               </div>
 
-              <div className="mt-5 flex items-start gap-4">
-                <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[#0F172A] text-sm font-bold text-white shadow-sm">
+              <div className="mt-4 flex items-start gap-4">
+                <div className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-[var(--brand-purple)] text-sm font-extrabold text-white shadow-sm">
                   {companyInitial(job.company)}
                 </div>
 
                 <div className="min-w-0">
-                  <h3 className="line-clamp-2 text-[1.05rem] font-bold leading-6 text-[#0F172A]">
+                  <h3 className="line-clamp-2 text-base font-extrabold text-[#0B1222]">
                     {job.title}
                   </h3>
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 truncate text-sm text-slate-500">
                     {job.company} • {job.location}
                   </p>
                 </div>
@@ -345,27 +329,31 @@ export default function FeaturedJobsSection() {
                 {job.description}
               </p>
 
-              <div className="mt-5 flex flex-wrap gap-2.5">
-                <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
                   {job.type}
                 </span>
-                <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
                   {job.pay}
                 </span>
               </div>
 
-              <div className="mt-auto pt-6">
+              <div className="mt-6 flex items-center justify-between">
                 <Link
                   href={job.href}
-                  className="inline-flex h-11 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(2,6,23,0.18)] transition hover:bg-slate-800"
+                  className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
                 >
-                  View role
+                  View Role
                 </Link>
+
+                <span className="text-xs text-slate-400">
+                  Posted {job.posted}
+                </span>
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </article>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
