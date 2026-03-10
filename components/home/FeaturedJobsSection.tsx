@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type FeaturedCardJob = {
   id: string;
@@ -204,8 +205,26 @@ function toCardJob(j: ApiJob): FeaturedCardJob {
   };
 }
 
-function companyInitial(name: string) {
-  return name.trim().charAt(0).toUpperCase() || "C";
+function getCompanyLogo(company: string) {
+  const key = company.toLowerCase().trim();
+
+  if (key.includes("architect")) {
+    return { src: "/Architects.png", alt: "Architects" };
+  }
+  if (key.includes("vermot")) {
+    return { src: "/vermot.png", alt: "Vermot" };
+  }
+  if (key.includes("devops")) {
+    return { src: "/Devops.png", alt: "Devops" };
+  }
+  if (key.includes("hired")) {
+    return { src: "/Hiredengineer.png", alt: "Hired Engineer" };
+  }
+  if (key.includes("redtail")) {
+    return { src: "/redtail.png", alt: "Redtail" };
+  }
+
+  return null;
 }
 
 export default function FeaturedJobsSection() {
@@ -310,7 +329,7 @@ export default function FeaturedJobsSection() {
       <div className="absolute right-0 top-[-68px] hidden items-center gap-3 md:flex">
         <button
           type="button"
-          onClick={() => scrollByAmount(-420)}
+          onClick={() => scrollByAmount(-360)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Scroll left"
         >
@@ -318,7 +337,7 @@ export default function FeaturedJobsSection() {
         </button>
         <button
           type="button"
-          onClick={() => scrollByAmount(420)}
+          onClick={() => scrollByAmount(360)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Scroll right"
         >
@@ -338,70 +357,86 @@ export default function FeaturedJobsSection() {
           onMouseLeave={() => {
             isHoveringRef.current = false;
           }}
-          className="no-scrollbar flex gap-6 overflow-x-auto px-4 pb-6 pt-1 pr-4 scroll-smooth snap-x snap-mandatory sm:px-6 lg:px-8"
+          className="no-scrollbar flex gap-5 overflow-x-auto px-4 pb-6 pt-1 pr-4 scroll-smooth snap-x snap-mandatory sm:px-6 lg:px-8"
         >
-          {displayJobs.map((job) => (
-            <article
-              key={job.id}
-              className="snap-start relative flex min-h-[330px] w-[320px] flex-none flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_12px_28px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.10)] sm:w-[355px] lg:w-[385px]"
-            >
-              <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+          {displayJobs.map((job) => {
+            const logo = getCompanyLogo(job.company);
 
-              <div className="p-6 pl-8">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
-                    <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                    Featured
-                  </span>
+            return (
+              <article
+                key={job.id}
+                className="snap-start relative flex min-h-[285px] w-[285px] flex-none flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[310px] lg:w-[325px]"
+              >
+                <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
 
-                  <span className="text-xs text-slate-400">
-                    {loading ? "Loading..." : job.posted}
-                  </span>
-                </div>
+                <div className="p-5 pl-7">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700">
+                      <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                      Featured
+                    </span>
 
-                <div className="mt-5 flex items-start gap-4">
-                  <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[var(--brand-purple)] text-sm font-extrabold text-white shadow-sm">
-                    {companyInitial(job.company)}
+                    <span className="text-xs text-slate-400">
+                      {loading ? "Loading..." : job.posted}
+                    </span>
                   </div>
 
-                  <div className="min-w-0">
-                    <h3 className="line-clamp-2 text-[1.02rem] font-extrabold leading-6 text-[#0B1222]">
-                      {job.title}
-                    </h3>
-                    <p className="mt-1 truncate text-sm text-slate-500">
-                      {job.company} • {job.location}
-                    </p>
+                  <div className="mt-4 flex items-start gap-3">
+                    <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                      {logo ? (
+                        <Image
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={44}
+                          height={44}
+                          className="h-8 w-8 object-contain"
+                        />
+                      ) : (
+                        <span className="text-sm font-extrabold text-[var(--brand-purple)]">
+                          {job.company.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="min-w-0">
+                      <h3 className="line-clamp-2 text-[15px] font-extrabold leading-5 text-[#0B1222]">
+                        {job.title}
+                      </h3>
+                      <p className="mt-1 truncate text-sm text-slate-500">
+                        {job.company} • {job.location}
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="mt-4 line-clamp-3 text-sm leading-6 text-slate-600">
+                    {job.description}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                      {job.type}
+                    </span>
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                      {job.pay}
+                    </span>
+                  </div>
+
+                  <div className="mt-auto flex items-center justify-between pt-6">
+                    <Link
+                      href={job.href}
+                      className="inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+                    >
+                      Apply
+                    </Link>
+
+                    <span className="text-xs text-slate-400">
+                      Posted {job.posted}
+                    </span>
                   </div>
                 </div>
-
-                <p className="mt-4 line-clamp-3 text-sm leading-6 text-slate-600">
-                  {job.description}
-                </p>
-
-                <div className="mt-5 flex flex-wrap gap-2.5">
-                  <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">
-                    {job.type}
-                  </span>
-                  <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">
-                    {job.pay}
-                  </span>
-                </div>
-
-                <div className="mt-auto flex items-center justify-between pt-7">
-                  <Link
-                    href={job.href}
-                    className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
-                  >
-                    View Role
-                  </Link>
-
-                  <span className="text-xs text-slate-400">
-                    Posted {job.posted}
-                  </span>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </div>
