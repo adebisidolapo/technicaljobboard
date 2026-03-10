@@ -234,24 +234,25 @@ export default function Home() {
 >
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
+    <div className="absolute -top-24 right-[-100px] h-[280px] w-[280px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
   </div>
 
   <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-500">
+      <div className="max-w-2xl">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.30em] text-slate-500">
           Categories
         </p>
-        <h3 className="mt-3 text-[clamp(1.5rem,3.2vw,2.5rem)] font-extrabold tracking-tight text-[#0B1222]">
-          Browse by category
+        <h3 className="mt-3 text-[clamp(1.55rem,3.2vw,2.4rem)] font-extrabold tracking-tight text-[#0B1222]">
+          Explore roles by specialization
         </h3>
-        <p className="mt-3 max-w-2xl text-sm text-slate-600 md:text-base">
-          Search and swipe through categories — tap one to explore matching
-          roles.
+        <p className="mt-3 text-[15px] leading-7 text-slate-600">
+          Browse technical roles by category and move directly into the area
+          that matches your experience.
         </p>
       </div>
 
-      <div className="w-full md:w-[380px]">
+      <div className="w-full md:w-[390px]">
         <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
           <span className="text-slate-400" aria-hidden>
             ⌕
@@ -285,6 +286,7 @@ export default function Home() {
       </div>
     </div>
 
+    {/* top chip rail */}
     <div className="mt-8 sm:mt-10">
       <div className="relative">
         <div className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-2 snap-x snap-mandatory">
@@ -303,7 +305,7 @@ export default function Home() {
                 : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
             ].join(" ")}
           >
-            All
+            All Categories
           </button>
 
           {filteredCategories.map((cat) => {
@@ -351,8 +353,75 @@ export default function Home() {
       </div>
     </div>
 
+    {/* category preview grid */}
+    <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {filteredCategories.slice(0, 6).map((cat, index) => (
+        <button
+          key={cat}
+          type="button"
+          onClick={() => {
+            setSelectedCategory(cat);
+            router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
+          }}
+          className="group rounded-3xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div
+                className={[
+                  "inline-flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-bold shadow-sm",
+                  index % 3 === 0
+                    ? "bg-[rgba(106,111,242,0.10)] text-[var(--brand-purple)]"
+                    : index % 3 === 1
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "bg-slate-100 text-slate-700",
+                ].join(" ")}
+              >
+                {cat
+                  .split(" ")
+                  .map((word) => word[0])
+                  .join("")
+                  .slice(0, 2)}
+              </div>
+
+              <h4 className="mt-4 text-base font-extrabold text-[#0B1222]">
+                {cat}
+              </h4>
+
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Explore open roles in {cat.toLowerCase()} and related technical
+                specializations.
+              </p>
+            </div>
+
+            <span className="mt-1 text-slate-300 transition group-hover:text-[var(--brand-purple)]">
+              →
+            </span>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <div className="mt-8 flex flex-wrap items-center gap-3">
+      <button
+        type="button"
+        onClick={() => router.push("/all-jobs")}
+        className="inline-flex h-12 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+      >
+        Explore All Jobs
+      </button>
+
+      <button
+        type="button"
+        onClick={() => router.push("/categories")}
+        className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+      >
+        View All Categories
+      </button>
+    </div>
+
     {filteredCategories.length === 0 && (
-      <div className="mt-6 text-sm text-slate-600">
+      <div className="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm text-slate-600 shadow-sm">
         No categories match{" "}
         <span className="font-semibold">“{categoryQuery}”</span>.
       </div>
