@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 type CompanyLogo = { src: string; alt: string };
 
@@ -13,73 +12,56 @@ const COMPANY_LOGOS: CompanyLogo[] = [
   { src: "/redtail.png", alt: "Redtail" },
 ];
 
+const LOOP_LOGOS = [...COMPANY_LOGOS, ...COMPANY_LOGOS];
+
 export default function CompanyLogoCarousel() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((prev) => (prev + 1) % COMPANY_LOGOS.length);
-    }, 3200);
-
-    return () => clearInterval(id);
-  }, []);
-
   return (
-    <div role="region" aria-label="Company logos" className="relative w-full">
-      <div className="relative h-[150px] sm:h-[180px] md:h-[220px] lg:h-[240px] w-full overflow-hidden">
-        {COMPANY_LOGOS.map((logo, i) => {
-          const active = i === index;
+    <div
+      role="region"
+      aria-label="Company logos"
+      className="relative w-full overflow-hidden"
+    >
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white via-white/90 to-transparent sm:w-24 lg:w-32" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white via-white/90 to-transparent sm:w-24 lg:w-32" />
 
-          return (
+      <div className="py-4 sm:py-6 md:py-8">
+        <div className="company-logo-marquee flex w-max items-center gap-10 sm:gap-14 md:gap-16 lg:gap-20">
+          {LOOP_LOGOS.map((logo, i) => (
             <div
-              key={logo.alt}
-              className={[
-                "absolute inset-0 flex items-center justify-center transition-all duration-1000 ease-out",
-                active
-                  ? "opacity-100 translate-x-0 scale-100"
-                  : i < index
-                  ? "opacity-0 -translate-x-16 scale-95"
-                  : "opacity-0 translate-x-16 scale-95",
-              ].join(" ")}
+              key={`${logo.alt}-${i}`}
+              className="flex h-[110px] min-w-[180px] items-center justify-center rounded-2xl border border-slate-200/80 bg-white px-6 shadow-[0_8px_24px_rgba(15,23,42,0.04)] sm:h-[130px] sm:min-w-[220px] sm:px-8 md:h-[150px] md:min-w-[260px] lg:h-[170px] lg:min-w-[300px]"
             >
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={700}
-                height={220}
-                priority={i === 0}
-                className={[
-                  "w-auto object-contain",
-                  "h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36",
-                  "grayscale opacity-50",
-                  "transition-all duration-700",
-                ].join(" ")}
+                width={220}
+                height={90}
+                className="h-12 w-auto object-contain opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 sm:h-14 md:h-16 lg:h-20"
+                priority={i < COMPANY_LOGOS.length}
               />
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-center gap-2">
-        {COMPANY_LOGOS.map((logo, i) => {
-          const active = i === index;
+      <style jsx>{`
+        .company-logo-marquee {
+          animation: company-marquee 28s linear infinite;
+        }
 
-          return (
-            <button
-              key={logo.alt}
-              type="button"
-              aria-label={`Show ${logo.alt}`}
-              onClick={() => setIndex(i)}
-              className={[
-                "h-2 rounded-full transition-all duration-300",
-                active
-                  ? "w-8 bg-slate-500"
-                  : "w-2 bg-slate-300 hover:bg-slate-400",
-              ].join(" ")}
-            />
-          );
-        })}
-      </div>
+        .company-logo-marquee:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes company-marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </div>
   );
 }
