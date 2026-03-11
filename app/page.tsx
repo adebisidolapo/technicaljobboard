@@ -227,7 +227,7 @@ export default function Home() {
   </div>
 </section>
 
-     {/* ================= CATEGORIES ================= */}
+    {/* ================= CATEGORIES ================= */}
 <section
   id="categories"
   className="relative overflow-hidden bg-[#F4F6FB] py-14 sm:py-16 md:py-20"
@@ -238,85 +238,67 @@ export default function Home() {
   </div>
 
   <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-      <div className="max-w-2xl">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.30em] text-slate-500">
-          Categories
-        </p>
-        <h3 className="mt-3 text-[clamp(1.55rem,3.2vw,2.4rem)] font-extrabold tracking-tight text-[#0B1222]">
-          Explore roles by specialization
-        </h3>
-        <p className="mt-3 text-[15px] leading-7 text-slate-600">
-          Browse technical roles by category and move directly into the area
-          that matches your experience.
-        </p>
-      </div>
-
-      <button
-        type="button"
-        onClick={() => router.push("/categories")}
-        className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-      >
-        View All Categories
-      </button>
+    <div className="mx-auto max-w-3xl text-center">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.30em] text-slate-500">
+        Categories
+      </p>
+      <h3 className="mt-3 text-[clamp(1.55rem,3.2vw,2.4rem)] font-extrabold tracking-tight text-[#0B1222]">
+        Browse jobs by category
+      </h3>
+      <p className="mt-3 text-[15px] leading-7 text-slate-600">
+        Search categories and move directly into the area that matches your experience.
+      </p>
     </div>
 
-    <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      {CATEGORIES.map((cat, index) => (
+    {/* search item */}
+    <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto] md:items-center">
+        <input
+          value={categoryQuery}
+          onChange={(e) => setCategoryQuery(e.target.value)}
+          type="text"
+          placeholder="Search categories"
+          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 transition focus:border-slate-300 focus:ring-4 focus:ring-slate-100"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && filteredCategories[0]) {
+              router.push(`/all-jobs?cat=${encodeURIComponent(filteredCategories[0])}`);
+            }
+          }}
+        />
+
         <button
-          key={cat}
           type="button"
           onClick={() => {
-            router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
+            if (filteredCategories[0]) {
+              router.push(`/all-jobs?cat=${encodeURIComponent(filteredCategories[0])}`);
+            } else {
+              router.push("/categories");
+            }
           }}
-          className="group rounded-3xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+          className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
         >
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div
-                className={[
-                  "inline-flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-bold shadow-sm",
-                  index % 3 === 0
-                    ? "bg-[rgba(106,111,242,0.10)] text-[var(--brand-purple)]"
-                    : index % 3 === 1
-                    ? "bg-emerald-50 text-emerald-700"
-                    : "bg-slate-100 text-slate-700",
-                ].join(" ")}
-              >
-                {cat
-                  .split(" ")
-                  .map((word) => word[0])
-                  .join("")
-                  .slice(0, 2)}
-              </div>
-
-              <h4 className="mt-4 text-base font-extrabold text-[#0B1222]">
-                {cat}
-              </h4>
-
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                Explore open roles in {cat.toLowerCase()} and related technical
-                specializations.
-              </p>
-            </div>
-
-            <span className="mt-1 text-slate-300 transition group-hover:text-[var(--brand-purple)]">
-              →
-            </span>
-          </div>
+          Search
         </button>
-      ))}
+      </div>
     </div>
 
-    <div className="mt-8 flex flex-wrap items-center gap-3">
-      <button
-        type="button"
-        onClick={() => router.push("/all-jobs")}
-        className="inline-flex h-12 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
-      >
-        Explore All Jobs
-      </button>
+    {/* simple category items */}
+    <div className="mx-auto mt-8 max-w-5xl">
+      <div className="flex flex-wrap justify-center gap-3">
+        {filteredCategories.map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            onClick={() => router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)}
+            className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-[#0B1222] hover:bg-[#0B1222] hover:text-white"
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
 
+    <div className="mt-8 text-center">
       <button
         type="button"
         onClick={() => router.push("/categories")}
@@ -325,6 +307,12 @@ export default function Home() {
         View All Categories
       </button>
     </div>
+
+    {filteredCategories.length === 0 && (
+      <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-200 bg-white px-4 py-4 text-center text-sm text-slate-600 shadow-sm">
+        No categories match <span className="font-semibold">“{categoryQuery}”</span>.
+      </div>
+    )}
   </div>
 </section>
 
