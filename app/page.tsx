@@ -15,7 +15,6 @@ import {
   BadgeCheck,
   ChevronRight,
 } from "lucide-react";
-
 const CATEGORIES = [
   "Healthcare IT",
   "Aerospace / Defense",
