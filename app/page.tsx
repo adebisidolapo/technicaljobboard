@@ -4,6 +4,17 @@ import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
+import {
+  Waypoints,
+  ShieldCheck,
+  FlaskConical,
+  Database,
+  Cloud,
+  BriefcaseBusiness,
+  SearchCode,
+  BadgeCheck,
+  ChevronRight,
+} from "lucide-react";
 
 const CATEGORIES = [
   "Healthcare IT",
@@ -227,95 +238,104 @@ export default function Home() {
   </div>
 </section>
 
-    {/* ================= CATEGORIES ================= */}
-<section
-  id="categories"
-  className="relative overflow-hidden bg-[#F4F6FB] py-14 sm:py-16 md:py-20"
->
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-[#F7F8FC] via-[#F4F6FB] to-white" />
-    <div className="absolute -top-24 right-[-100px] h-[280px] w-[280px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
-  </div>
+   {/* ================= CATEGORIES ================= */}
+<section className="bg-[#F3F3F3] py-14 sm:py-16 md:py-20">
+  <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mb-8 flex items-center justify-between sm:mb-10">
+      <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
+        Category
+      </h2>
 
-  <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-3xl text-center">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.30em] text-slate-500">
-        Categories
-      </p>
-      <h3 className="mt-3 text-[clamp(1.55rem,3.2vw,2.4rem)] font-extrabold tracking-tight text-[#0B1222]">
-        Browse jobs by category
-      </h3>
-      <p className="mt-3 text-[15px] leading-7 text-slate-600">
-        Search categories and move directly into the area that matches your experience.
-      </p>
-    </div>
-
-    {/* search item */}
-    <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto] md:items-center">
-        <input
-          value={categoryQuery}
-          onChange={(e) => setCategoryQuery(e.target.value)}
-          type="text"
-          placeholder="Search categories"
-          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 transition focus:border-slate-300 focus:ring-4 focus:ring-slate-100"
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && filteredCategories[0]) {
-              router.push(`/all-jobs?cat=${encodeURIComponent(filteredCategories[0])}`);
-            }
-          }}
-        />
-
-        <button
-          type="button"
-          onClick={() => {
-            if (filteredCategories[0]) {
-              router.push(`/all-jobs?cat=${encodeURIComponent(filteredCategories[0])}`);
-            } else {
-              router.push("/categories");
-            }
-          }}
-          className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
-        >
-          Search
-        </button>
-      </div>
-    </div>
-
-    {/* simple category items */}
-    <div className="mx-auto mt-8 max-w-5xl">
-      <div className="flex flex-wrap justify-center gap-3">
-        {filteredCategories.map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)}
-            className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-[#0B1222] hover:bg-[#0B1222] hover:text-white"
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-    </div>
-
-    <div className="mt-8 text-center">
       <button
         type="button"
-        onClick={() => router.push("/categories")}
-        className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+        onClick={() => router.push("/all-jobs")}
+        className="inline-flex items-center gap-1 text-sm font-medium text-sky-500 transition hover:text-sky-600"
       >
-        View All Categories
+        All jobs
+        <ChevronRight className="h-4 w-4" />
       </button>
     </div>
 
-    {filteredCategories.length === 0 && (
-      <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-200 bg-white px-4 py-4 text-center text-sm text-slate-600 shadow-sm">
-        No categories match <span className="font-semibold">“{categoryQuery}”</span>.
-      </div>
-    )}
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      {[
+        {
+          name: "Telecommunications",
+          jobs: 0,
+          icon: Waypoints,
+        },
+        {
+          name: "Network Engineering",
+          jobs: 0,
+          icon: SearchCode,
+        },
+        {
+          name: "Cybersecurity",
+          jobs: 0,
+          icon: ShieldCheck,
+        },
+        {
+          name: "Science and Research",
+          jobs: 0,
+          icon: FlaskConical,
+        },
+        {
+          name: "Data Analytics",
+          jobs: 0,
+          icon: Database,
+        },
+        {
+          name: "Cloud Computing",
+          jobs: 0,
+          icon: Cloud,
+        },
+        {
+          name: "Database Administration",
+          jobs: 0,
+          icon: Database,
+        },
+        {
+          name: "IT Project Management",
+          jobs: 0,
+          icon: BriefcaseBusiness,
+        },
+        {
+          name: "Systems Analysis",
+          jobs: 0,
+          icon: SearchCode,
+        },
+        {
+          name: "Quality Assurance",
+          jobs: 0,
+          icon: BadgeCheck,
+        },
+      ].map((item) => {
+        const Icon = item.icon;
+
+        return (
+          <button
+            key={item.name}
+            type="button"
+            onClick={() =>
+              router.push(`/all-jobs?cat=${encodeURIComponent(item.name)}`)
+            }
+            className="flex min-h-[78px] items-center gap-4 rounded-xl border border-[#D9D9D9] bg-[#F8F8F8] px-5 py-4 text-left transition hover:border-slate-300 hover:bg-white"
+          >
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg">
+              <Icon className="h-6 w-6 text-sky-400" strokeWidth={1.8} />
+            </div>
+
+            <div className="min-w-0">
+              <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
+                {item.name}
+              </h3>
+              <p className="mt-1 text-sm text-[#222222]">{item.jobs} Jobs</p>
+            </div>
+          </button>
+        );
+      })}
+    </div>
   </div>
 </section>
-
      {/* ================= EMPOWERING ================= */}
 <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
   <div className="pointer-events-none absolute inset-0">
