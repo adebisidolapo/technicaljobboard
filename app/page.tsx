@@ -22,6 +22,11 @@ export default function Home() {
 
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
+   
+
+  const [categoryQuery, setCategoryQuery] = useState("");
+const [selectedCategory, setSelectedCategory] = useState("");
+const [visibleCategoryCount, setVisibleCategoryCount] = useState(9);
 
   const runHeroSearch = () => {
     const params = new URLSearchParams();
