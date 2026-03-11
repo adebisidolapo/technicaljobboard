@@ -66,19 +66,32 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
      
       {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-[#EEF6F2]">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#EEF6F2] via-[#EEF6F2] to-[#F6F8FC]" />
-          <div
-            className="absolute inset-0 opacity-[0.16]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-              backgroundSize: "30px 30px",
-            }}
-          />
-        </div>
+<section className="relative overflow-hidden bg-[#EEF6F2]">
+  <div className="pointer-events-none absolute inset-0">
 
+    {/* base gradient */}
+    <div className="absolute inset-0 bg-gradient-to-b from-[#EEF6F2] via-[#EEF6F2] to-[#F6F8FC]" />
+
+    {/* subtle grid texture */}
+    <div
+      className="absolute inset-0 opacity-[0.14]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
+        backgroundSize: "30px 30px",
+      }}
+    />
+
+    {/* corner glow top left */}
+    <div className="absolute -top-24 -left-32 h-[420px] w-[420px] rounded-full bg-emerald-300/20 blur-[120px]" />
+
+    {/* corner glow top right */}
+    <div className="absolute -top-32 right-[-140px] h-[460px] w-[460px] rounded-full bg-indigo-300/20 blur-[140px]" />
+
+    {/* bottom accent */}
+    <div className="absolute bottom-[-120px] left-[30%] h-[380px] w-[380px] rounded-full bg-sky-200/20 blur-[120px]" />
+
+  </div>
         <div className={`relative ${container}`}>
 <div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24">
               <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
