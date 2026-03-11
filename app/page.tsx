@@ -59,6 +59,7 @@ const wideContainer =
 
   return (
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
+     
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden bg-[#EEF6F2]">
         <div className="pointer-events-none absolute inset-0">
@@ -80,14 +81,20 @@ const wideContainer =
               Curated Roles • Remote Friendly • Fast Apply
             </div>
 
-            <h1 className="mt-6 text-[clamp(2.2rem,4.8vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
-              Find{" "}
-              <span className="inline-block">
-                <span className="text-emerald-600">Technical</span>{" "}
-                <span className="text-[#0F172A]">Jobs</span>
-              </span>{" "}
-              Built For Long-Term Careers
-            </h1>
+          <h1 className="mt-6 text-[clamp(2.2rem,4.8vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
+  Find{" "}
+  <span className="relative inline-block">
+    <span
+      aria-hidden
+      className="absolute left-[42%] top-1/2 h-[36px] w-[108px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/10 blur-2xl"
+    />
+    <span className="relative">
+      <span className="text-emerald-600">Technical</span>{" "}
+      <span className="text-[#0F172A]">Jobs</span>
+    </span>
+  </span>{" "}
+  Built For Long-Term Careers
+</h1>
 
             <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px]">
               Browse opportunities across engineering, infrastructure, cloud,
@@ -203,61 +210,89 @@ className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-w
         </div>
       </section>
 
-      {/* ================= CATEGORIES ================= */}
-      <section className="relative bg-[#E9EEF6] py-14 sm:py-16 md:py-20">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
-        </div>
+     {/* ================= CATEGORIES ================= */}
+<section className="relative overflow-hidden bg-[#E9EEF6] py-14 sm:py-16 md:py-20">
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
+    <div className="absolute -top-10 left-[8%] h-28 w-28 rounded-full bg-white/30 blur-2xl" />
+    <div className="absolute top-16 right-[12%] h-24 w-24 rounded-full bg-white/25 blur-2xl" />
+    <div className="absolute bottom-10 left-[24%] h-20 w-20 rounded-full bg-white/20 blur-2xl" />
+  </div>
 
-        <div className={`relative z-10 ${container}`}>
-<div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
-              Popular Category
-            </h2>
+  <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
+    <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
+      <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
+        Popular Category
+      </h2>
 
-            <button
-              type="button"
-              onClick={() => router.push("/all-jobs")}
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-[#0B1222] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition hover:bg-black"
-            >
-              All Jobs
-            </button>
-          </div>
+      <button
+        type="button"
+        onClick={() => router.push("/all-jobs")}
+        className="inline-flex h-11 items-center justify-center rounded-xl bg-[#0B1222] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition hover:bg-black"
+      >
+        All Jobs
+      </button>
+    </div>
 
-<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
-              {[
-              "Telecommunications",
-              "Network Engineering",
-              "Cybersecurity",
-              "Science And Research",
-              "Data Analytics",
-              "Cloud Computing",
-              "Database Administration",
-              "IT Project Management",
-              "Systems Analysis",
-              "Quality Assurance",
-            ].map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() =>
-                  router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
-                }
-className="flex min-h-[88px] items-center gap-4 rounded-xl border border-[#D8D1C7] bg-white px-4 sm:px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        "Telecommunications",
+        "Network Engineering",
+        "Cybersecurity",
+        "Science And Research",
+        "Data Analytics",
+        "Cloud Computing",
+        "Database Administration",
+        "IT Project Management",
+        "Systems Analysis",
+        "Quality Assurance",
+        "Healthcare IT",
+        "Aerospace / Defense",
+        "Architecture",
+        "Project Management",
+        "Construction / Building Systems",
+        "Manufacturing / Production",
+        "Field Service / Commissioning",
+        "Quality / Compliance",
+        "Maintenance / Reliability",
+      ]
+        .slice(0, visibleCategoryCount)
+        .map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            onClick={() => router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)}
+            className="group flex min-h-[92px] items-center gap-4 rounded-2xl border border-slate-200 bg-white/95 px-5 py-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-md"
+          >
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" />
 
-                <div className="min-w-0">
-                  <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
-                    {cat}
-                  </h3>
-                  <p className="mt-1 text-sm text-[#222222]">0 Jobs</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
+                {cat}
+              </h3>
+              <p className="mt-1 text-sm text-[#4B5563]">0 Jobs</p>
+            </div>
+
+            <span className="text-slate-300 transition group-hover:text-slate-500">
+              →
+            </span>
+          </button>
+        ))}
+    </div>
+
+    {visibleCategoryCount < 19 && (
+      <div className="mt-8 flex justify-center">
+        <button
+          type="button"
+          onClick={() => setVisibleCategoryCount((prev) => prev + 6)}
+          className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+        >
+          Load More
+        </button>
+      </div>
+    )}
+  </div>
+</section>
 
       {/* ================= EMPOWERING ================= */}
       <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
