@@ -1,21 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
-
+import {
+  Waypoints,
+  ShieldCheck,
+  FlaskConical,
+  Database,
+  Cloud,
+  BriefcaseBusiness,
+  SearchCode,
+  BadgeCheck,
+  ChevronRight,
+} from "lucide-react";
 const CATEGORIES = [
-  "Telecommunications",
-  "Network Engineering",
-  "Cybersecurity",
-  "Science And Research",
-  "Data Analytics",
-  "Cloud Computing",
-  "Database Administration",
-  "IT Project Management",
-  "Systems Analysis",
-  "Quality Assurance",
+  "Healthcare IT",
+  "Aerospace / Defense",
+  "Architecture",
+  "Project Management",
+  "Construction / Building Systems",
+  "Manufacturing / Production",
+  "Field Service / Commissioning",
+  "Quality / Compliance",
+  "Maintenance / Reliability",
 ];
 
 export default function Home() {
@@ -24,200 +33,338 @@ export default function Home() {
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
 
+  const [categoryQuery, setCategoryQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const filteredCategories = useMemo(() => {
+    const q = categoryQuery.toLowerCase().trim();
+    return CATEGORIES.filter((c) => c.toLowerCase().includes(q));
+  }, [categoryQuery]);
+
   const runHeroSearch = () => {
     const params = new URLSearchParams();
     if (heroQ.trim()) params.set("q", heroQ.trim());
     if (heroLoc.trim()) params.set("loc", heroLoc.trim());
-
     const qs = params.toString();
     router.push(qs ? `/all-jobs?${qs}` : "/all-jobs");
   };
 
+  const jumpToFeatured = () => {
+    const el = document.getElementById("featured");
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const container = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
+  const wideContainer = "mx-auto w-full px-4 sm:px-6 lg:px-8";
   const sectionPadding = "py-14 sm:py-16 md:py-20";
 
-  const titleFont = "font-[family-name:var(--font-title)]";
+  const eyebrow =
+    "text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500";
+  const sectionTitle =
+    "mt-3 text-[clamp(1.6rem,3.2vw,2.35rem)] font-extrabold tracking-tight text-[#0F172A]";
+  const sectionBody =
+    "mt-3 max-w-2xl text-[15px] leading-7 text-slate-600";
 
   const inputBase =
-    "h-14 w-full rounded-2xl border border-slate-200 bg-white px-5 text-[15px] text-slate-900 outline-none placeholder:text-slate-400 transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100";
+    "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-400 transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100";
+
+  const primaryButton =
+    "inline-flex h-12 items-center justify-center rounded-xl bg-slate-900 px-6 text-sm font-semibold text-white shadow-[0_10px_26px_rgba(2,6,23,0.18)] transition hover:bg-slate-800";
 
   const secondaryButton =
     "inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50";
 
+  const textButton =
+    "inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition hover:text-emerald-800 hover:underline";
+
+  const chipBase =
+    "shrink-0 rounded-full border px-4 py-2.5 text-sm font-semibold transition active:scale-[0.99]";
+
   return (
-    <main className="min-h-screen bg-[#F6F8FC] text-[#0F172A]">
+    <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
+      {/* ================= HERO ================= */}
+      <section className="relative overflow-hidden bg-[#EEF6F2]">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#EEF6F2] via-[#EEF6F2] to-[#F6F8FC]" />
+          <div
+            className="absolute inset-0 opacity-[0.16]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
+              backgroundSize: "30px 30px",
+            }}
+          />
+        </div>
 
-      {/* HERO */}
+        <div className={`relative ${container}`}>
+          <div className="mx-auto max-w-3xl py-14 text-center sm:py-18 md:py-22 lg:py-24">
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+              Curated roles • Remote friendly • Fast apply
+            </div>
 
-      <section className="bg-[#EEF6F2]">
-        <div className={`${container} text-center py-20 lg:py-28 max-w-5xl`}>
-
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            Curated Roles • Remote Friendly • Fast Apply
-          </div>
-
-          <h1 className={`${titleFont} mt-6 text-[clamp(2.2rem,5vw,4rem)] font-extrabold leading-tight`}>
-            Find{" "}
-            <span>
-              <span className="text-emerald-600">Technical</span>{" "}
-              <span>Jobs</span>
-            </span>{" "}
-            Built For Long-Term Careers
-          </h1>
-
-          <p className="mx-auto mt-5 max-w-2xl text-slate-600">
-            Browse opportunities across engineering, infrastructure, cloud,
-            security, and data across the United States.
-          </p>
-
-          {/* SEARCH BAR */}
-
-          <div className="mt-10">
-            <div className="mx-auto w-full max-w-6xl rounded-[28px] border border-slate-200 bg-white p-4 shadow-lg">
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_auto]">
-
-                <input
-                  value={heroQ}
-                  onChange={(e) => setHeroQ(e.target.value)}
-                  placeholder="Job Title Or Keyword"
-                  className={inputBase}
+            <h1 className="mt-6 text-[clamp(2rem,4.2vw,3.25rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
+              Find{" "}
+              <span className="relative inline-block">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-12 -inset-y-10 rounded-full bg-emerald-400/12 blur-[70px]"
                 />
-
-                <input
-                  value={heroLoc}
-                  onChange={(e) => setHeroLoc(e.target.value)}
-                  placeholder="Location (Remote Or U.S. City)"
-                  className={inputBase}
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-8 -inset-y-6 rounded-full bg-emerald-400/16 blur-[42px]"
                 />
+                <span className="relative text-emerald-600">
+                  Technical Jobs
+                </span>
+              </span>{" "}
+              built for long-term careers
+            </h1>
 
-                <button
-                  onClick={runHeroSearch}
-                  className="h-14 rounded-2xl bg-black px-8 text-white font-semibold hover:bg-slate-800"
-                >
-                  Search Jobs
-                </button>
+            <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-slate-600 sm:text-[16px]">
+              Browse opportunities across engineering, infrastructure, cloud,
+              security, and data — including remote options.
+            </p>
 
+            <div className="mt-8">
+              <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
+                  <label className="sr-only" htmlFor="hero-q">
+                    Job title or keyword
+                  </label>
+                  <input
+                    id="hero-q"
+                    value={heroQ}
+                    onChange={(e) => setHeroQ(e.target.value)}
+                    type="text"
+                    placeholder="Job title, keyword"
+                    className={inputBase}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") runHeroSearch();
+                    }}
+                  />
+
+                  <label className="sr-only" htmlFor="hero-loc">
+                    Location
+                  </label>
+                  <input
+                    id="hero-loc"
+                    value={heroLoc}
+                    onChange={(e) => setHeroLoc(e.target.value)}
+                    type="text"
+                    placeholder="Location (Remote, Lagos, New York)"
+                    className={inputBase}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") runHeroSearch();
+                    }}
+                  />
+
+    <button
+  type="button"
+  onClick={runHeroSearch}
+  className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
+>
+  Search Jobs
+</button>
+                </div>
+
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
+                  <span className="mr-1 font-medium">Popular</span>
+                  {["Frontend", "DevOps", "Data", "Security"].map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => {
+                        setHeroQ(t);
+                        setTimeout(runHeroSearch, 0);
+                      }}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
+            <button
+              type="button"
+              onClick={jumpToFeatured}
+              className={`mt-7 ${textButton}`}
+            >
+              Jump to Jobs <span aria-hidden>↓</span>
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* TRUSTED */}
-
+      {/* ================= TRUSTED BY TEAMS ================= */}
       <section className={`bg-white ${sectionPadding}`}>
         <div className={container}>
           <div className="text-center">
-            <h2 className={`${titleFont} text-3xl font-extrabold`}>
-              Companies Hiring Through Us
-            </h2>
+            <p className={eyebrow}>Trusted by teams</p>
+            <h2 className={sectionTitle}>Companies hiring through us</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
+              Trusted by teams hiring technical talent across high-value roles.
+            </p>
           </div>
         </div>
 
-        <div className="mt-12">
-          <CompanyLogoCarousel />
-        </div>
-      </section>
-
-      {/* FEATURED */}
-
-      <section id="featured" className="bg-[#F2F4F8] py-20">
-        <div className={container}>
-          <h2 className={`${titleFont} text-3xl font-extrabold`}>
-            Featured Jobs
-          </h2>
-
-          <div className="mt-10">
-            <FeaturedJobsSection />
+        <div className="mt-10 sm:mt-12 md:mt-14">
+          <div className={wideContainer}>
+            <CompanyLogoCarousel />
           </div>
         </div>
       </section>
 
-      {/* CATEGORIES */}
+      {/* ================= FEATURED JOBS ================= */}
+<section id="featured" className="py-14 sm:py-16 md:py-20 bg-[#F2F4F8]">
+  <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mb-8 sm:mb-10">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500">
+        Featured jobs
+      </p>
+      <h2 className="mt-3 text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold tracking-tight text-[#0B1222]">
+        Opportunities worth a closer look
+      </h2>
+      <p className="mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
+        A curated selection of standout technical roles.
+      </p>
+    </div>
 
-      <section className="bg-[#E9EEF6] py-20">
-        <div className={container}>
+    <FeaturedJobsSection />
+  </div>
+</section>
 
-          <div className="flex justify-between items-center mb-10">
-            <h2 className={`${titleFont} text-3xl font-extrabold`}>
-              Popular Category
-            </h2>
+  {/* ================= CATEGORIES ================= */}
+<section className="relative bg-[#E9EEF6] py-14 sm:py-16 md:py-20">
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
+  </div>
 
-            <button
-              onClick={() => router.push("/all-jobs")}
-              className="bg-black text-white px-5 py-2 rounded-xl font-semibold"
-            >
-              All Jobs
-            </button>
+  <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mb-8 flex items-center justify-between sm:mb-10">
+      <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
+        Popular category
+      </h2>
+
+      <button
+        type="button"
+        onClick={() => router.push("/all-jobs")}
+        className="inline-flex h-11 items-center justify-center rounded-xl bg-[#0B1222] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition hover:bg-black"
+      >
+        All jobs
+      </button>
+    </div>
+
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      {[
+        "Telecommunications",
+        "Network Engineering",
+        "Cybersecurity",
+        "Science and Research",
+        "Data Analytics",
+        "Cloud Computing",
+        "Database Administration",
+        "IT Project Management",
+        "Systems Analysis",
+        "Quality Assurance",
+      ].map((cat) => (
+        <button
+          key={cat}
+          type="button"
+          onClick={() =>
+            router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+          }
+          className="flex min-h-[78px] items-center gap-4 rounded-xl border border-[#D8D1C7] bg-white px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+        >
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+
+          <div className="min-w-0">
+            <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
+              {cat}
+            </h3>
+            <p className="mt-1 text-sm text-[#222222]">0 Jobs</p>
           </div>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+     {/* ================= EMPOWERING ================= */}
+<section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+    <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
+  </div>
 
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() =>
-                  router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
-                }
-                className="flex items-center gap-4 border bg-white px-5 py-4 rounded-xl shadow-sm hover:shadow-md transition"
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-
-                <div>
-                  <p className="font-semibold">{cat}</p>
-                  <p className="text-sm text-slate-500">0 Jobs</p>
-                </div>
-              </button>
-            ))}
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* EMPOWERING */}
-
-      <section className={`bg-white ${sectionPadding}`}>
-        <div className={`${container} grid gap-12 lg:grid-cols-2 items-center`}>
-
+  <div className={`relative ${container}`}>
+    <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
+      <div className="flex justify-center md:justify-start">
+        <div className="rounded-3xl border border-slate-200 bg-[#F8FAFC] p-3 shadow-[0_12px_28px_rgba(15,23,42,0.07)]">
           <img
             src="/empower-platform.png"
-            className="rounded-2xl"
-            alt="Job Platform"
+            alt="Job platform dashboard illustration"
+            className="w-full max-w-[560px] rounded-2xl"
           />
-
-          <div>
-            <h3 className={`${titleFont} text-3xl font-extrabold`}>
-              Empowering Job Seekers
-            </h3>
-
-            <p className="mt-4 text-slate-600">
-              Discover vetted technical roles, transparent salary ranges, and
-              trusted employers in one focused experience.
-            </p>
-
-            <div className="mt-8 flex gap-3">
-              <button
-                onClick={() => router.push("/all-jobs")}
-                className="bg-black text-white px-6 py-3 rounded-xl font-semibold"
-              >
-                Get Started
-              </button>
-
-              <button
-                onClick={() => router.push("/all-jobs?loc=Remote")}
-                className={secondaryButton}
-              >
-                Remote Roles
-              </button>
-            </div>
-          </div>
-
         </div>
-      </section>
+      </div>
 
+      <div>
+        <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-xs font-semibold text-[var(--brand-purple)]">
+          Built for Technical Careers
+        </span>
+
+        <h3 className="mt-4 text-[clamp(1.55rem,3vw,2rem)] font-extrabold tracking-tight text-slate-900">
+          Empowering Job Seekers
+        </h3>
+
+        <p className="mt-3 max-w-xl text-[15px] leading-7 text-slate-600">
+          Discover vetted technical roles, transparent salary ranges, and
+          trusted employers in one focused experience.
+        </p>
+
+        <ul className="mt-6 space-y-3 text-sm text-slate-700">
+          <li className="flex items-center gap-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+            Verified technical opportunities
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+            Clearer expectations and visibility
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+            Roles built for long-term growth
+          </li>
+        </ul>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => router.push("/all-jobs")}
+            className="inline-flex h-12 items-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+          >
+            Get Started
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+              →
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => router.push("/all-jobs?loc=Remote")}
+            className={secondaryButton}
+          >
+            Remote Roles
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
     </main>
   );
 }
