@@ -65,168 +65,174 @@ const wideContainer =
   return (
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
      
-      {/* ================= HERO ================= */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
+     {/* ================= HERO ================= */}
+<section className="relative isolate overflow-hidden bg-[#EEF6F2]">
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    {/* base background */}
+    <div className="absolute inset-0 bg-[#EEF6F2]" />
 
-  {/* base background */}
-  <div className="absolute inset-0 bg-[#EEF6F2]" />
-
-  {/* subtle grid texture */}
-  <div
-    className="absolute inset-0 opacity-[0.14]"
-    style={{
-      backgroundImage:
-        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
-      backgroundSize: "30px 30px",
-    }}
-  />
-
-  {/* AWS style curved gradient */}
-  <svg
-    className="absolute right-0 top-0 h-full w-[60%]"
-    viewBox="0 0 600 500"
-    preserveAspectRatio="none"
-  >
-    <path
-      d="M600 0C540 60 520 160 500 260C470 360 380 440 260 500H600V0Z"
-      fill="url(#awsGradient)"
+    {/* subtle grid texture */}
+    <div
+      className="absolute inset-0 opacity-[0.14]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
+        backgroundSize: "30px 30px",
+      }}
     />
-    <defs>
-      <linearGradient
-        id="awsGradient"
-        x1="600"
-        y1="0"
-        x2="260"
-        y2="500"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#CDE7FF" stopOpacity="0.9" />
-        <stop offset="1" stopColor="#EEF6F2" stopOpacity="0" />
-      </linearGradient>
-    </defs>
-  </svg>
-{/* bottom-left soft gradient layer */}
-<svg
-  className="absolute left-0 bottom-0 h-full w-[55%] opacity-60"
-  viewBox="0 0 600 500"
-  preserveAspectRatio="none"
->
-  <path
-    d="M0 500C120 440 180 360 220 280C260 200 320 120 420 0H0V500Z"
-    fill="url(#awsGradient2)"
-  />
-  <defs>
-    <linearGradient
-      id="awsGradient2"
-      x1="0"
-      y1="500"
-      x2="420"
-      y2="0"
-      gradientUnits="userSpaceOnUse"
+
+    {/* top-right AWS style curved gradient */}
+    <svg
+      className="absolute right-0 top-0 h-full w-[60%]"
+      viewBox="0 0 600 500"
+      preserveAspectRatio="none"
+      aria-hidden="true"
     >
-      <stop stopColor="#DFF4E8" stopOpacity="0.9" />
-      <stop offset="1" stopColor="#EEF6F2" stopOpacity="0" />
-    </linearGradient>
-  </defs>
-</svg>
-</div>
-        <div className={`relative ${container}`}>
-<div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24">
-              <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              Curated Roles • Remote Friendly • Fast Apply
-            </div>
+      <defs>
+        <linearGradient
+          id="awsGradientTop"
+          x1="600"
+          y1="0"
+          x2="260"
+          y2="500"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#CDE7FF" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#EEF6F2" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M600 0C540 60 520 160 500 260C470 360 380 440 260 500H600V0Z"
+        fill="url(#awsGradientTop)"
+      />
+    </svg>
 
-          <h1 className="mt-6 text-[clamp(2.2rem,4.8vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
-  Find{" "}
-  <span className="relative inline-block">
-    <span
-      aria-hidden
-      className="absolute left-[42%] top-1/2 h-[36px] w-[108px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/10 blur-2xl"
-    />
-    <span className="relative">
-      <span className="text-emerald-600">Technical</span>{" "}
-      <span className="text-[#0F172A]">Jobs</span>
-    </span>
-  </span>{" "}
-  Built For Long-Term Careers
-</h1>
+    {/* bottom-left soft curved layer */}
+    <svg
+      className="absolute bottom-0 left-0 h-full w-[55%] opacity-60"
+      viewBox="0 0 600 500"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient
+          id="awsGradientBottom"
+          x1="0"
+          y1="500"
+          x2="420"
+          y2="0"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DFF4E8" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#EEF6F2" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M0 500C120 440 180 360 220 280C260 200 320 120 420 0H0V500Z"
+        fill="url(#awsGradientBottom)"
+      />
+    </svg>
+  </div>
 
-            <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px]">
-              Browse opportunities across engineering, infrastructure, cloud,
-              security, and data — including remote options.
-            </p>
+  <div className={`relative ${container}`}>
+    <div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+        Curated Roles • Remote Friendly • Fast Apply
+      </div>
 
-           <div className="mt-8">
-  <div className="mx-auto w-full max-w-5xl rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
-                  <label className="sr-only" htmlFor="hero-q">
-                    Job Title Or Keyword
-                  </label>
-                  <input
-                    id="hero-q"
-                    value={heroQ}
-                    onChange={(e) => setHeroQ(e.target.value)}
-                    type="text"
-                    placeholder="Job Title, Keyword"
-                    className={inputBase}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") runHeroSearch();
-                    }}
-                  />
+      <h1 className="mt-6 text-[clamp(2.2rem,4.8vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
+        Find{" "}
+        <span className="relative inline-block">
+          <span
+            aria-hidden
+            className="absolute left-[42%] top-1/2 h-[36px] w-[108px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/10 blur-2xl"
+          />
+          <span className="relative">
+            <span className="text-emerald-600">Technical</span>{" "}
+            <span className="text-[#0F172A]">Jobs</span>
+          </span>
+        </span>{" "}
+        Built For Long-Term Careers
+      </h1>
 
-                  <label className="sr-only" htmlFor="hero-loc">
-                    Location
-                  </label>
-                  <input
-                    id="hero-loc"
-                    value={heroLoc}
-                    onChange={(e) => setHeroLoc(e.target.value)}
-                    type="text"
-                    placeholder="Location (Remote, New York, Texas)"
-                    className={inputBase}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") runHeroSearch();
-                    }}
-                  />
+      <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px]">
+        Browse opportunities across engineering, infrastructure, cloud,
+        security, and data — including remote options.
+      </p>
 
-                  <button
-                    type="button"
-                    onClick={runHeroSearch}
-className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:col-span-2 xl:col-span-1 xl:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"                  >
-                    Search Jobs
-                  </button>
-                </div>
+      <div className="mt-8">
+        <div className="mx-auto w-full max-w-5xl rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
+            <label className="sr-only" htmlFor="hero-q">
+              Job Title Or Keyword
+            </label>
+            <input
+              id="hero-q"
+              value={heroQ}
+              onChange={(e) => setHeroQ(e.target.value)}
+              type="text"
+              placeholder="Job Title, Keyword"
+              className={inputBase}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") runHeroSearch();
+              }}
+            />
 
-                <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
-                  <span className="mr-1 font-medium">Popular</span>
-                  {["Frontend", "DevOps", "Data", "Security"].map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => {
-                        setHeroQ(t);
-                        setTimeout(runHeroSearch, 0);
-                      }}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <label className="sr-only" htmlFor="hero-loc">
+              Location
+            </label>
+            <input
+              id="hero-loc"
+              value={heroLoc}
+              onChange={(e) => setHeroLoc(e.target.value)}
+              type="text"
+              placeholder="Location (Remote, New York, Texas)"
+              className={inputBase}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") runHeroSearch();
+              }}
+            />
 
             <button
               type="button"
-              onClick={jumpToFeatured}
-              className={`mt-7 ${textButton}`}
+              onClick={runHeroSearch}
+              className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:col-span-2 xl:col-span-1 xl:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
             >
-              Jump To Jobs <span aria-hidden>↓</span>
+              Search Jobs
             </button>
           </div>
+
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
+            <span className="mr-1 font-medium">Popular</span>
+            {["Frontend", "DevOps", "Data", "Security"].map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => {
+                  setHeroQ(t);
+                  setTimeout(runHeroSearch, 0);
+                }}
+                className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+              >
+                {t}
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
+      </div>
+
+      <button
+        type="button"
+        onClick={jumpToFeatured}
+        className={`mt-7 ${textButton}`}
+      >
+        Jump To Jobs <span aria-hidden>↓</span>
+      </button>
+    </div>
+  </div>
+</section>
+
 
       {/* ================= TRUSTED BY TEAMS ================= */}
       <section className={`bg-white ${sectionPadding}`}>
