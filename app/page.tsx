@@ -38,9 +38,9 @@ export default function Home() {
   };
 
   const container =
-    "mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12";
-  const wideContainer =
-    "mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12";
+  "mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8 xl:px-10";
+const wideContainer =
+  "mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8 xl:px-10";
   const sectionPadding = "py-14 sm:py-16 md:py-20";
 
   const eyebrow =
@@ -74,8 +74,8 @@ export default function Home() {
         </div>
 
         <div className={`relative ${container}`}>
-          <div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24 xl:py-28">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+<div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24">
+              <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
               <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
               Curated Roles • Remote Friendly • Fast Apply
             </div>
@@ -94,9 +94,9 @@ export default function Home() {
               security, and data — including remote options.
             </p>
 
-            <div className="mt-10">
-              <div className="mx-auto w-full max-w-5xl rounded-[28px] border border-slate-200 bg-white p-3 sm:p-4 lg:p-5 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
-                <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.35fr_1fr_auto] lg:items-center">
+           <div className="mt-8">
+  <div className="mx-auto w-full max-w-5xl rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
+    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
                   <label className="sr-only" htmlFor="hero-q">
                     Job Title Or Keyword
                   </label>
@@ -130,8 +130,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={runHeroSearch}
-                    className="h-14 w-full rounded-2xl bg-[#0B1222] px-8 text-sm font-semibold text-white transition hover:bg-black lg:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
-                  >
+className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:col-span-2 xl:col-span-1 xl:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"                  >
                     Search Jobs
                   </button>
                 </div>
@@ -211,8 +210,8 @@ export default function Home() {
         </div>
 
         <div className={`relative z-10 ${container}`}>
-          <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
+<div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
               Popular Category
             </h2>
 
@@ -225,8 +224,8 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
-            {[
+<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+              {[
               "Telecommunications",
               "Network Engineering",
               "Cybersecurity",
@@ -244,7 +243,7 @@ export default function Home() {
                 onClick={() =>
                   router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
                 }
-                className="flex min-h-[88px] items-center gap-4 rounded-xl border border-[#D8D1C7] bg-white px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+className="flex min-h-[88px] items-center gap-4 rounded-xl border border-[#D8D1C7] bg-white px-4 sm:px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
               >
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
 
