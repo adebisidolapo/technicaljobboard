@@ -238,7 +238,10 @@ export default function Home() {
 </section>
 
   {/* ================= CATEGORIES ================= */}
-<section className="bg-[#F1EFE9] py-14 sm:py-16 md:py-20">
+<section className="relative bg-[#E9EEF6] py-14 sm:py-16 md:py-20">
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
+  </div>
   <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mb-8 flex items-center justify-between sm:mb-10">
       <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
