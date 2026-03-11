@@ -242,7 +242,8 @@ export default function Home() {
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
   </div>
-  <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+
+  <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mb-8 flex items-center justify-between sm:mb-10">
       <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
         Popular category
