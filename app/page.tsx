@@ -237,104 +237,58 @@ export default function Home() {
   </div>
 </section>
 
-   {/* ================= CATEGORIES ================= */}
-<section className="bg-[#F3F3F3] py-14 sm:py-16 md:py-20">
+  {/* ================= CATEGORIES ================= */}
+<section className="bg-[#F1EFE9] py-14 sm:py-16 md:py-20">
   <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mb-8 flex items-center justify-between sm:mb-10">
       <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
-        Category
+        Popular category
       </h2>
 
       <button
         type="button"
         onClick={() => router.push("/all-jobs")}
-        className="inline-flex items-center gap-1 text-sm font-medium text-sky-500 transition hover:text-sky-600"
+        className="inline-flex h-11 items-center justify-center rounded-xl bg-[#0B1222] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition hover:bg-black"
       >
         All jobs
-        <ChevronRight className="h-4 w-4" />
       </button>
     </div>
 
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {[
-        {
-          name: "Telecommunications",
-          jobs: 0,
-          icon: Waypoints,
-        },
-        {
-          name: "Network Engineering",
-          jobs: 0,
-          icon: SearchCode,
-        },
-        {
-          name: "Cybersecurity",
-          jobs: 0,
-          icon: ShieldCheck,
-        },
-        {
-          name: "Science and Research",
-          jobs: 0,
-          icon: FlaskConical,
-        },
-        {
-          name: "Data Analytics",
-          jobs: 0,
-          icon: Database,
-        },
-        {
-          name: "Cloud Computing",
-          jobs: 0,
-          icon: Cloud,
-        },
-        {
-          name: "Database Administration",
-          jobs: 0,
-          icon: Database,
-        },
-        {
-          name: "IT Project Management",
-          jobs: 0,
-          icon: BriefcaseBusiness,
-        },
-        {
-          name: "Systems Analysis",
-          jobs: 0,
-          icon: SearchCode,
-        },
-        {
-          name: "Quality Assurance",
-          jobs: 0,
-          icon: BadgeCheck,
-        },
-      ].map((item) => {
-        const Icon = item.icon;
+        "Telecommunications",
+        "Network Engineering",
+        "Cybersecurity",
+        "Science and Research",
+        "Data Analytics",
+        "Cloud Computing",
+        "Database Administration",
+        "IT Project Management",
+        "Systems Analysis",
+        "Quality Assurance",
+      ].map((cat) => (
+        <button
+          key={cat}
+          type="button"
+          onClick={() =>
+            router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+          }
+          className="flex min-h-[78px] items-center gap-4 rounded-xl border border-[#D8D1C7] bg-white px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+        >
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
 
-        return (
-          <button
-            key={item.name}
-            type="button"
-            onClick={() =>
-              router.push(`/all-jobs?cat=${encodeURIComponent(item.name)}`)
-            }
-            className="flex min-h-[78px] items-center gap-4 rounded-xl border border-[#D9D9D9] bg-[#F8F8F8] px-5 py-4 text-left transition hover:border-slate-300 hover:bg-white"
-          >
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg">
-              <Icon className="h-6 w-6 text-sky-400" strokeWidth={1.8} />
-            </div>
-
-            <div className="min-w-0">
-              <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
-                {item.name}
-              </h3>
-              <p className="mt-1 text-sm text-[#222222]">{item.jobs} Jobs</p>
-            </div>
-          </button>
-        );
-      })}
+          <div className="min-w-0">
+            <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
+              {cat}
+            </h3>
+            <p className="mt-1 text-sm text-[#222222]">0 Jobs</p>
+          </div>
+        </button>
+      ))}
     </div>
   </div>
 </section>
+
      {/* ================= EMPOWERING ================= */}
 <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
   <div className="pointer-events-none absolute inset-0">
