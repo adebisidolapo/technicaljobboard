@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
@@ -150,10 +150,10 @@ export default function Home() {
                     }}
                   />
 
-                 <button
+    <button
   type="button"
   onClick={runHeroSearch}
-  className="h-12 w-full rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white transition hover:opacity-95 md:w-auto shadow-[0_10px_24px_rgba(106,111,242,0.24)]"
+  className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
 >
   Search Jobs
 </button>
@@ -227,7 +227,7 @@ export default function Home() {
   </div>
 </section>
 
-      {/* ================= CATEGORIES ================= */}
+     {/* ================= CATEGORIES ================= */}
 <section
   id="categories"
   className="relative overflow-hidden bg-[#F4F6FB] py-14 sm:py-16 md:py-20"
@@ -252,115 +252,21 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="w-full md:w-[390px]">
-        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-          <span className="text-slate-400" aria-hidden>
-            ⌕
-          </span>
-          <input
-            value={categoryQuery}
-            onChange={(e) => setCategoryQuery(e.target.value)}
-            placeholder="Search categories..."
-            className="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-          />
-        </div>
-
-        {selectedCategory && (
-          <div className="mt-2 text-xs text-slate-500">
-            Selected:{" "}
-            <span className="font-semibold text-slate-700">
-              {selectedCategory}
-            </span>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedCategory("");
-                setCategoryQuery("");
-              }}
-              className="ml-2 font-semibold text-[var(--brand-purple)] hover:underline"
-            >
-              Clear
-            </button>
-          </div>
-        )}
-      </div>
+      <button
+        type="button"
+        onClick={() => router.push("/categories")}
+        className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+      >
+        View All Categories
+      </button>
     </div>
 
-    {/* top chip rail */}
-    <div className="mt-8 sm:mt-10">
-      <div className="relative">
-        <div className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth py-2 pr-2 snap-x snap-mandatory">
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedCategory("");
-              setCategoryQuery("");
-              router.push("/all-jobs");
-            }}
-            className={[
-              chipBase,
-              "snap-start",
-              !selectedCategory
-                ? "border-[#0B1222] bg-[#0B1222] text-white"
-                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
-            ].join(" ")}
-          >
-            All Categories
-          </button>
-
-          {filteredCategories.map((cat) => {
-            const active = selectedCategory === cat;
-
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => {
-                  setSelectedCategory(cat);
-                  router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
-                }}
-                className={[
-                  chipBase,
-                  "snap-start",
-                  active
-                    ? "border-[rgba(106,111,242,0.25)] bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
-                    : "border-slate-200 bg-white text-slate-700 hover:border-slate-300",
-                ].join(" ")}
-              >
-                <span
-                  className={[
-                    "mr-2 inline-block h-2 w-2 rounded-full",
-                    active
-                      ? "bg-[var(--brand-purple)]"
-                      : "bg-emerald-500/80",
-                  ].join(" ")}
-                  aria-hidden
-                />
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-
-        <div
-          className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#F4F6FB] to-transparent"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#F4F6FB] to-transparent"
-          aria-hidden
-        />
-      </div>
-    </div>
-
-    {/* category preview grid */}
-    <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      {filteredCategories.slice(0, 6).map((cat, index) => (
+    <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {CATEGORIES.map((cat, index) => (
         <button
           key={cat}
           type="button"
           onClick={() => {
-            setSelectedCategory(cat);
             router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`);
           }}
           className="group rounded-3xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
@@ -419,13 +325,6 @@ export default function Home() {
         View All Categories
       </button>
     </div>
-
-    {filteredCategories.length === 0 && (
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm text-slate-600 shadow-sm">
-        No categories match{" "}
-        <span className="font-semibold">“{categoryQuery}”</span>.
-      </div>
-    )}
   </div>
 </section>
 
