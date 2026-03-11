@@ -1,4 +1,5 @@
 import "./globals.css";
+import Chrome from "@/components/Chrome";
 import { Inter, Baloo_2 } from "next/font/google";
 
 const inter = Inter({
@@ -14,7 +15,7 @@ const baloo = Baloo_2({
 
 export const metadata = {
   title: "TechnicalJobBoard",
-  description: "Find technical jobs across the United States",
+  description: "Curated technical roles from trusted teams."
 };
 
 export default function RootLayout({
@@ -24,8 +25,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${baloo.variable} font-sans`}>
-        {children}
+      <body
+        className={`${inter.variable} ${baloo.variable} min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased`}
+      >
+        <Chrome>{children}</Chrome>
       </body>
     </html>
   );
