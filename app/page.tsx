@@ -66,32 +66,70 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
      
       {/* ================= HERO ================= */}
-<section className="relative overflow-hidden bg-[#EEF6F2]">
-  <div className="pointer-events-none absolute inset-0">
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
 
-    {/* base gradient */}
-    <div className="absolute inset-0 bg-gradient-to-b from-[#EEF6F2] via-[#EEF6F2] to-[#F6F8FC]" />
+  {/* base background */}
+  <div className="absolute inset-0 bg-[#EEF6F2]" />
 
-    {/* subtle grid texture */}
-    <div
-      className="absolute inset-0 opacity-[0.14]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
-        backgroundSize: "30px 30px",
-      }}
+  {/* subtle grid texture */}
+  <div
+    className="absolute inset-0 opacity-[0.14]"
+    style={{
+      backgroundImage:
+        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.12) 1px, transparent 0)",
+      backgroundSize: "30px 30px",
+    }}
+  />
+
+  {/* AWS style curved gradient */}
+  <svg
+    className="absolute right-0 top-0 h-full w-[60%]"
+    viewBox="0 0 600 500"
+    preserveAspectRatio="none"
+  >
+    <path
+      d="M600 0C540 60 520 160 500 260C470 360 380 440 260 500H600V0Z"
+      fill="url(#awsGradient)"
     />
-
-    {/* corner glow top left */}
-    <div className="absolute -top-24 -left-32 h-[420px] w-[420px] rounded-full bg-emerald-300/20 blur-[120px]" />
-
-    {/* corner glow top right */}
-    <div className="absolute -top-32 right-[-140px] h-[460px] w-[460px] rounded-full bg-indigo-300/20 blur-[140px]" />
-
-    {/* bottom accent */}
-    <div className="absolute bottom-[-120px] left-[30%] h-[380px] w-[380px] rounded-full bg-sky-200/20 blur-[120px]" />
-
-  </div>
+    <defs>
+      <linearGradient
+        id="awsGradient"
+        x1="600"
+        y1="0"
+        x2="260"
+        y2="500"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#CDE7FF" stopOpacity="0.9" />
+        <stop offset="1" stopColor="#EEF6F2" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+  </svg>
+{/* bottom-left soft gradient layer */}
+<svg
+  className="absolute left-0 bottom-0 h-full w-[55%] opacity-60"
+  viewBox="0 0 600 500"
+  preserveAspectRatio="none"
+>
+  <path
+    d="M0 500C120 440 180 360 220 280C260 200 320 120 420 0H0V500Z"
+    fill="url(#awsGradient2)"
+  />
+  <defs>
+    <linearGradient
+      id="awsGradient2"
+      x1="0"
+      y1="500"
+      x2="420"
+      y2="0"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stopColor="#DFF4E8" stopOpacity="0.9" />
+      <stop offset="1" stopColor="#EEF6F2" stopOpacity="0" />
+    </linearGradient>
+  </defs>
+</svg>
+</div>
         <div className={`relative ${container}`}>
 <div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24">
               <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
