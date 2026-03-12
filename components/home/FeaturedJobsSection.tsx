@@ -229,54 +229,84 @@ function JobCard({
   return (
     <article
       className="
-        relative flex min-h-[158px] w-[240px] flex-none snap-start flex-col
-        rounded-2xl border border-slate-200 bg-white p-4
-        shadow-[0_8px_24px_rgba(15,23,42,0.06)] transition duration-300
-        hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(15,23,42,0.10)]
-        sm:w-[250px] lg:w-[270px]
+        relative flex min-h-[230px] w-[260px] flex-none snap-start flex-col
+        overflow-hidden rounded-[28px] border border-slate-200 bg-white
+        shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition duration-300
+        hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)]
+        sm:w-[280px] lg:w-[300px]
       "
     >
-      <div className="flex items-start gap-3">
-        <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white">
-          {logo ? (
-            <Image
-              src={logo.src}
-              alt={logo.alt}
-              width={40}
-              height={40}
-              className="h-7 w-7 object-contain"
-            />
-          ) : (
-            <span className="text-sm font-bold text-[var(--brand-purple)]">
-              {job.company.charAt(0).toUpperCase()}
-            </span>
-          )}
+      <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+      <div className="absolute right-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+
+      <div className="flex h-full flex-col p-5">
+        <div className="flex items-center justify-between gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700">
+            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+            Featured
+          </span>
         </div>
 
-        <div className="min-w-0">
+        <div className="mt-4 flex items-start gap-3">
+          <div className="flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            {logo ? (
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={44}
+                height={44}
+                className="h-8 w-8 object-contain"
+              />
+            ) : (
+              <span className="text-sm font-extrabold text-[var(--brand-purple)]">
+                {job.company.charAt(0).toUpperCase()}
+              </span>
+            )}
+          </div>
+
+          <div className="min-w-0">
+            <button
+              type="button"
+              onClick={() => onOpen(job)}
+              className="text-left"
+            >
+              <h3 className="line-clamp-2 text-[16px] font-extrabold leading-5 text-[#0B1222]">
+                {job.title}
+              </h3>
+            </button>
+
+            <p className="mt-1 truncate text-sm text-slate-500">
+              {job.company} • {job.location}
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-4 line-clamp-1 text-sm text-slate-600">
+          {job.description}
+        </p>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+            {job.type}
+          </span>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+            {job.pay}
+          </span>
+        </div>
+
+        <div className="mt-auto flex items-center justify-between pt-5">
           <button
             type="button"
             onClick={() => onOpen(job)}
-            className="text-left"
+            className="inline-flex h-10 min-w-[120px] items-center justify-center rounded-full bg-[var(--brand-purple)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
           >
-            <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222]">
-              {job.title}
-            </h3>
+            Apply
           </button>
 
-          <p className="mt-1 truncate text-sm text-slate-500">{job.location}</p>
-          <p className="mt-1 text-sm font-medium text-slate-700">{job.pay}</p>
+          <span className="text-xs text-slate-400">
+            Posted {job.posted}
+          </span>
         </div>
-      </div>
-
-      <div className="mt-auto pt-4">
-        <button
-          type="button"
-          onClick={() => onOpen(job)}
-          className="inline-flex h-9 items-center justify-center rounded-full bg-[var(--brand-purple)] px-4 text-sm font-semibold text-white transition hover:opacity-95"
-        >
-          Apply
-        </button>
       </div>
     </article>
   );
@@ -386,7 +416,7 @@ export default function FeaturedJobsSection() {
 
   return (
     <>
-      <section className="relative">
+      <section className="relative w-full">
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-[#0B1222]">Featured Jobs</h2>
@@ -415,10 +445,7 @@ export default function FeaturedJobsSection() {
           </div>
         </div>
 
-        <div className="relative -mx-4 sm:-mx-6 lg:-mx-0">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#F2F4F8] via-[#F2F4F8]/90 to-transparent sm:w-14" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#F2F4F8] via-[#F2F4F8]/90 to-transparent sm:w-14" />
-
+        <div className="w-full">
           <div
             ref={railRef}
             onMouseEnter={() => {
@@ -428,10 +455,9 @@ export default function FeaturedJobsSection() {
               isHoveringRef.current = false;
             }}
             className="
-              no-scrollbar flex gap-5 overflow-x-auto px-4 pb-4 pt-1 pr-4
+              no-scrollbar flex gap-5 overflow-x-auto pb-4 pt-1
               scroll-smooth snap-x snap-mandatory
-              sm:px-6
-              lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-6 lg:gap-y-6 lg:px-0 lg:pr-0
+              lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-6 lg:gap-y-6
             "
           >
             {displayJobs.map((job) => (
