@@ -285,8 +285,18 @@ export default function FeaturedJobsSection() {
     const rail = railRef.current;
     if (!rail) return;
 
+    const stop = () => {
+      if (autoScrollRef.current !== null) {
+        window.clearInterval(autoScrollRef.current);
+        autoScrollRef.current = null;
+      }
+    };
+
     const start = () => {
-      if (window.innerWidth < 768) return;
+      if (window.innerWidth < 768) {
+        stop();
+        return;
+      }
 
       stop();
 
@@ -302,13 +312,6 @@ export default function FeaturedJobsSection() {
           rail.scrollLeft = next;
         }
       }, 22);
-    };
-
-    const stop = () => {
-      if (autoScrollRef.current !== null) {
-        window.clearInterval(autoScrollRef.current);
-        autoScrollRef.current = null;
-      }
     };
 
     start();
@@ -329,7 +332,7 @@ export default function FeaturedJobsSection() {
       <div className="absolute right-0 top-[-68px] hidden items-center gap-3 md:flex">
         <button
           type="button"
-          onClick={() => scrollByAmount(-360)}
+          onClick={() => scrollByAmount(-300)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Scroll left"
         >
@@ -337,7 +340,7 @@ export default function FeaturedJobsSection() {
         </button>
         <button
           type="button"
-          onClick={() => scrollByAmount(360)}
+          onClick={() => scrollByAmount(300)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Scroll right"
         >
@@ -357,7 +360,7 @@ export default function FeaturedJobsSection() {
           onMouseLeave={() => {
             isHoveringRef.current = false;
           }}
-          className="no-scrollbar flex gap-5 overflow-x-auto px-4 pb-6 pt-1 pr-4 scroll-smooth snap-x snap-mandatory sm:px-6 lg:px-8"
+          className="no-scrollbar flex gap-4 overflow-x-auto px-4 pb-6 pt-1 pr-4 scroll-smooth snap-x snap-mandatory sm:px-6 lg:px-8"
         >
           {displayJobs.map((job) => {
             const logo = getCompanyLogo(job.company);
@@ -365,24 +368,25 @@ export default function FeaturedJobsSection() {
             return (
               <article
                 key={job.id}
-                className="snap-start relative flex min-h-[285px] w-[285px] flex-none flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[310px] lg:w-[325px]"
+                className="relative flex min-h-[230px] w-[260px] flex-none snap-start flex-col overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)] sm:w-[275px] lg:w-[285px]"
               >
-                <div className="absolute left-0 top-0 h-full w-1.5 bg-[var(--brand-purple)]" />
+                <div className="absolute left-0 top-5 h-16 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
+                <div className="absolute right-0 top-5 h-16 w-1.5 rounded-l-full bg-[var(--brand-purple)]" />
 
-                <div className="p-5 pl-7">
+                <div className="flex h-full flex-col p-4 sm:p-5">
                   <div className="flex items-center justify-between gap-3">
                     <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700">
                       <span className="h-2 w-2 rounded-full bg-indigo-500" />
                       Featured
                     </span>
 
-                    <span className="text-xs text-slate-400">
+                    <span className="text-[11px] text-slate-400">
                       {loading ? "Loading..." : job.posted}
                     </span>
                   </div>
 
                   <div className="mt-4 flex items-start gap-3">
-                    <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <div className="flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                       {logo ? (
                         <Image
                           src={logo.src}
@@ -399,7 +403,7 @@ export default function FeaturedJobsSection() {
                     </div>
 
                     <div className="min-w-0">
-                      <h3 className="line-clamp-2 text-[15px] font-extrabold leading-5 text-[#0B1222]">
+                      <h3 className="line-clamp-2 text-[16px] font-extrabold leading-5 text-[#0B1222]">
                         {job.title}
                       </h3>
                       <p className="mt-1 truncate text-sm text-slate-500">
@@ -408,30 +412,28 @@ export default function FeaturedJobsSection() {
                     </div>
                   </div>
 
-                  <p className="mt-4 line-clamp-3 text-sm leading-6 text-slate-600">
+                  <p className="mt-4 line-clamp-1 text-sm text-slate-600">
                     {job.description}
                   </p>
 
                   <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
                       {job.type}
                     </span>
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
                       {job.pay}
                     </span>
                   </div>
 
-                  <div className="mt-auto flex items-center justify-between pt-6">
+                  <div className="mt-auto flex items-center justify-between pt-5">
                     <Link
                       href={job.href}
-                      className="inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+                      className="inline-flex h-10 min-w-[110px] items-center justify-center rounded-full bg-[var(--brand-purple)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
                     >
                       Apply
                     </Link>
 
-                    <span className="text-xs text-slate-400">
-                      Posted {job.posted}
-                    </span>
+                    <span className="text-xs text-slate-400">Posted recently</span>
                   </div>
                 </div>
               </article>
