@@ -424,10 +424,9 @@ export default function FeaturedJobsSection() {
       <section className="relative w-full">
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-[#0B1222]">Featured Jobs</h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Roles worth exploring right now
-            </p>
+           <h2 className="text-2xl font-bold text-[#0B1222]">
+  Roles Worth Exploring
+</h2>
           </div>
 
           <div className="hidden items-center gap-3 md:flex">
