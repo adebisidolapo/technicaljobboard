@@ -367,83 +367,84 @@ const wideContainer =
       </section>
 
      {/* ================= CATEGORIES ================= */}
-<section className="relative overflow-hidden bg-[#E9EEF6] py-12 sm:py-14 md:py-16">
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
-    <div className="absolute -top-10 left-[8%] h-28 w-28 rounded-full bg-white/30 blur-2xl" />
-    <div className="absolute top-16 right-[12%] h-24 w-24 rounded-full bg-white/25 blur-2xl" />
-    <div className="absolute bottom-10 left-[24%] h-20 w-20 rounded-full bg-white/20 blur-2xl" />
-  </div>
 
-  <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
-    <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-[clamp(1.8rem,3vw,2.4rem)] font-extrabold tracking-tight text-black">
-        Browse by Category
-      </h2>
+<section className="bg-white py-10 sm:py-12">
+  <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
 
+```
+{/* Header */}
+<div className="mb-6 flex items-center justify-between">
+  <h2 className="text-2xl font-bold text-[#0B1222]">
+    Category
+  </h2>
+
+  <button
+    type="button"
+    onClick={() => router.push("/all-jobs")}
+    className="flex items-center gap-1 text-sm font-semibold text-sky-600 hover:text-sky-700"
+  >
+    All jobs →
+  </button>
+</div>
+
+{/* Categories Grid */}
+<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+  {[
+    "Engineering",
+    "Architecture & Design",
+    "Information Technology",
+    "Data, AI & Cybersecurity",
+    "Telecom & Network Infrastructure",
+    "Construction & Field Engineering",
+    "Manufacturing & Industrial",
+    "Energy & Utilities",
+    "Skilled Trades & Technical Services",
+    "Science & Research",
+  ]
+    .slice(0, visibleCategoryCount)
+    .map((cat) => (
       <button
+        key={cat}
         type="button"
-        onClick={() => router.push("/all-jobs")}
-        className="inline-flex h-11 items-center justify-center rounded-xl bg-[#0B1222] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition hover:bg-black"
+        onClick={() =>
+          router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+        }
+        className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm transition hover:border-slate-300 hover:shadow"
       >
-        All Jobs
+        {/* icon */}
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-50 text-sky-500">
+          📁
+        </span>
+
+        {/* text */}
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-[14px] font-semibold text-[#0B1222]">
+            {cat}
+          </h3>
+
+          <p className="text-xs text-slate-500">0 Jobs</p>
+        </div>
       </button>
-    </div>
+    ))}
+</div>
 
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {[
-        "Engineering",
-        "Architecture & Design",
-        "Information Technology",
-        "Data, AI & Cybersecurity",
-        "Telecom & Network Infrastructure",
-        "Construction & Field Engineering",
-        "Manufacturing & Industrial",
-        "Energy & Utilities",
-        "Skilled Trades & Technical Services",
-        "Technical Project & Operations Management",
-        "Healthcare & Medical Technology",
-        "Science & Research",
-      ]
-        .slice(0, visibleCategoryCount)
-        .map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() =>
-              router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
-            }
-            className="group flex min-h-[84px] items-center gap-4 rounded-2xl border border-slate-200 bg-white/95 px-5 py-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-md"
-          >
-            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" />
+{/* Load more */}
+{visibleCategoryCount < 10 && (
+  <div className="mt-6 flex justify-center">
+    <button
+      type="button"
+      onClick={() => setVisibleCategoryCount((prev) => prev + 5)}
+      className="rounded-lg border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+    >
+      Load More
+    </button>
+  </div>
+)}
+```
 
-            <div className="min-w-0 flex-1">
-              <h3 className="truncate text-[15px] font-semibold leading-5 text-[#161616]">
-                {cat}
-              </h3>
-              <p className="mt-1 text-sm text-[#4B5563]">0 Jobs</p>
-            </div>
-
-            <span className="text-slate-300 transition group-hover:text-slate-500">
-              →
-            </span>
-          </button>
-        ))}
-    </div>
-
-    {visibleCategoryCount < 12 && (
-      <div className="mt-8 flex justify-center">
-        <button
-          type="button"
-          onClick={() => setVisibleCategoryCount((prev) => prev + 6)}
-          className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-        >
-          Load More
-        </button>
-      </div>
-    )}
   </div>
 </section>
+
 
       {/* ================= EMPOWERING ================= */}
       <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
