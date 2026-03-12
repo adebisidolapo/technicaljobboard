@@ -255,12 +255,6 @@ const wideContainer =
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500">
               Featured Jobs
             </p>
-            <h2 className="mt-3 text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold tracking-tight text-[#0B1222]">
-              Opportunities Worth A Closer Look
-            </h2>
-            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
-              A curated selection of standout technical roles.
-            </p>
           </div>
 
           <FeaturedJobsSection />
