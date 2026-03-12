@@ -219,32 +219,28 @@ function getCompanyLogo(company: string) {
 
 function JobCard({
   job,
-  logo,
-  loading,
   onOpen,
 }: {
   job: FeaturedCardJob;
-  logo: ReturnType<typeof getCompanyLogo>;
-  loading: boolean;
   onOpen: (job: FeaturedCardJob) => void;
 }) {
+  const logo = getCompanyLogo(job.company);
+
   return (
     <article
       className="
-      relative flex min-h-[165px] w-[300px] flex-none snap-start flex-col
-      overflow-hidden rounded-[24px] border border-slate-200 bg-white
-      shadow-[0_8px_24px_rgba(15,23,42,0.08)]
-      transition duration-300
-      hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)]
-      sm:w-[340px] lg:w-[380px]
-    "
+        relative flex min-h-[165px] w-[300px] flex-none snap-start flex-col
+        overflow-hidden rounded-[24px] border border-slate-200 bg-white
+        shadow-[0_8px_24px_rgba(15,23,42,0.08)]
+        transition duration-300
+        hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)]
+        sm:w-[340px] lg:w-[380px]
+      "
     >
-      {/* purple bars */}
       <div className="absolute left-0 top-4 h-14 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
       <div className="absolute right-0 top-4 h-14 w-1.5 rounded-l-full bg-[var(--brand-purple)]" />
 
       <div className="flex h-full flex-col p-3 sm:p-4">
-        {/* featured badge */}
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700">
             <span className="h-2 w-2 rounded-full bg-indigo-500" />
@@ -252,7 +248,6 @@ function JobCard({
           </span>
         </div>
 
-        {/* title + company */}
         <div className="mt-3 flex items-start gap-3">
           <div className="flex h-10 w-10 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             {logo ? (
@@ -271,7 +266,11 @@ function JobCard({
           </div>
 
           <div className="min-w-0">
-            <button type="button" onClick={() => onOpen(job)} className="text-left">
+            <button
+              type="button"
+              onClick={() => onOpen(job)}
+              className="text-left"
+            >
               <h3 className="line-clamp-2 text-[15px] font-bold leading-5 text-[#0B1222]">
                 {job.title}
               </h3>
@@ -283,12 +282,10 @@ function JobCard({
           </div>
         </div>
 
-        {/* description */}
         <p className="mt-2 line-clamp-1 text-sm text-slate-600">
           {job.description}
         </p>
 
-        {/* tags */}
         <div className="mt-3 flex flex-wrap gap-2">
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
             {job.type}
@@ -299,7 +296,6 @@ function JobCard({
           </span>
         </div>
 
-        {/* apply */}
         <div className="mt-auto flex items-center justify-between pt-3">
           <button
             type="button"
@@ -310,7 +306,7 @@ function JobCard({
           </button>
 
           <span className="text-xs text-slate-400">
-            {loading ? "Loading..." : `Posted ${job.posted}`}
+            Posted {job.posted}
           </span>
         </div>
       </div>
