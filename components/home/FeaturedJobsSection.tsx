@@ -293,7 +293,7 @@ export default function FeaturedJobsSection() {
     };
 
     const start = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth >= 1024) {
         stop();
         return;
       }
@@ -329,10 +329,10 @@ export default function FeaturedJobsSection() {
 
   return (
     <div className="relative">
-      <div className="absolute right-0 top-[-68px] hidden items-center gap-3 md:flex">
+      <div className="absolute right-0 top-[-68px] hidden items-center gap-3 md:flex lg:hidden">
         <button
           type="button"
-          onClick={() => scrollByAmount(-300)}
+          onClick={() => scrollByAmount(-320)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Scroll left"
         >
@@ -340,7 +340,7 @@ export default function FeaturedJobsSection() {
         </button>
         <button
           type="button"
-          onClick={() => scrollByAmount(300)}
+          onClick={() => scrollByAmount(320)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Scroll right"
         >
@@ -348,9 +348,9 @@ export default function FeaturedJobsSection() {
         </button>
       </div>
 
-      <div className="relative -mx-4 sm:-mx-6 lg:-mx-8">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#F2F4F8] to-transparent sm:w-12 lg:w-16" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#F2F4F8] to-transparent sm:w-12 lg:w-16" />
+      <div className="relative -mx-4 sm:-mx-6 lg:-mx-0">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#F2F4F8] to-transparent sm:w-12 lg:hidden" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#F2F4F8] to-transparent sm:w-12 lg:hidden" />
 
         <div
           ref={railRef}
@@ -360,7 +360,13 @@ export default function FeaturedJobsSection() {
           onMouseLeave={() => {
             isHoveringRef.current = false;
           }}
-          className="no-scrollbar flex gap-4 overflow-x-auto px-4 pb-6 pt-1 pr-4 scroll-smooth snap-x snap-mandatory sm:px-6 lg:px-8"
+          className="
+            no-scrollbar
+            flex gap-6 overflow-x-auto px-4 pb-6 pt-1 pr-4
+            scroll-smooth snap-x snap-mandatory
+            sm:px-6
+            lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-7 lg:gap-y-7 lg:overflow-x-auto lg:px-0 lg:pr-0
+          "
         >
           {displayJobs.map((job) => {
             const logo = getCompanyLogo(job.company);
@@ -368,7 +374,14 @@ export default function FeaturedJobsSection() {
             return (
               <article
                 key={job.id}
-                className="relative flex min-h-[230px] w-[260px] flex-none snap-start flex-col overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)] sm:w-[275px] lg:w-[285px]"
+                className="
+                  relative flex min-h-[230px] w-[260px] flex-none snap-start flex-col
+                  overflow-hidden rounded-[26px] border border-slate-200 bg-white
+                  shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition duration-300
+                  hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)]
+                  sm:w-[275px]
+                  lg:w-[320px]
+                "
               >
                 <div className="absolute left-0 top-5 h-16 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
                 <div className="absolute right-0 top-5 h-16 w-1.5 rounded-l-full bg-[var(--brand-purple)]" />
@@ -378,10 +391,6 @@ export default function FeaturedJobsSection() {
                     <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700">
                       <span className="h-2 w-2 rounded-full bg-indigo-500" />
                       Featured
-                    </span>
-
-                    <span className="text-[11px] text-slate-400">
-                      {loading ? "Loading..." : job.posted}
                     </span>
                   </div>
 
@@ -433,7 +442,9 @@ export default function FeaturedJobsSection() {
                       Apply
                     </Link>
 
-                    <span className="text-xs text-slate-400">Posted recently</span>
+                    <span className="text-xs text-slate-400">
+                      {loading ? "Loading..." : `Posted ${job.posted}`}
+                    </span>
                   </div>
                 </div>
               </article>
