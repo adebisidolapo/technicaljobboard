@@ -131,7 +131,7 @@ export default function Home() {
 
   const [categoryQuery, setCategoryQuery] = useState("");
 const [selectedCategory, setSelectedCategory] = useState("");
-const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
+const [visibleCategoryCount, setVisibleCategoryCount] = useState(10);
 
   const runHeroSearch = () => {
     const params = new URLSearchParams();
@@ -366,12 +366,12 @@ const wideContainer =
         </div>
       </section>
 
-     {/* ================= CATEGORIES ================= */}
+    {/* ================= CATEGORIES ================= */}
 
 <section className="bg-white py-10 sm:py-12">
   <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
 
-```
+
 {/* Header */}
 <div className="mb-6 flex items-center justify-between">
   <h2 className="text-2xl font-bold text-[#0B1222]">
@@ -381,13 +381,13 @@ const wideContainer =
   <button
     type="button"
     onClick={() => router.push("/all-jobs")}
-    className="flex items-center gap-1 text-sm font-semibold text-sky-600 hover:text-sky-700"
+    className="text-sm font-semibold text-sky-600 hover:text-sky-700"
   >
     All jobs →
   </button>
 </div>
 
-{/* Categories Grid */}
+{/* Grid */}
 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
   {[
     "Engineering",
@@ -399,6 +399,8 @@ const wideContainer =
     "Manufacturing & Industrial",
     "Energy & Utilities",
     "Skilled Trades & Technical Services",
+    "Technical Project & Operations Management",
+    "Healthcare & Medical Technology",
     "Science & Research",
   ]
     .slice(0, visibleCategoryCount)
@@ -409,41 +411,46 @@ const wideContainer =
         onClick={() =>
           router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
         }
-        className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm transition hover:border-slate-300 hover:shadow"
+        className="
+          flex items-center justify-between
+          rounded-lg border border-slate-200
+          bg-white px-4 py-3 text-left
+          transition hover:border-slate-300 hover:bg-slate-50
+        "
       >
-        {/* icon */}
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-50 text-sky-500">
-          📁
-        </span>
-
-        {/* text */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0">
           <h3 className="truncate text-[14px] font-semibold text-[#0B1222]">
             {cat}
           </h3>
-
           <p className="text-xs text-slate-500">0 Jobs</p>
         </div>
+
+        <span className="text-slate-300">→</span>
       </button>
     ))}
 </div>
 
 {/* Load more */}
-{visibleCategoryCount < 10 && (
+{visibleCategoryCount < 12 && (
   <div className="mt-6 flex justify-center">
     <button
       type="button"
-      onClick={() => setVisibleCategoryCount((prev) => prev + 5)}
-      className="rounded-lg border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+      onClick={() => setVisibleCategoryCount((prev) => prev + 6)}
+      className="
+        rounded-lg border border-slate-200
+        bg-white px-6 py-2 text-sm font-semibold text-slate-700
+        hover:bg-slate-50
+      "
     >
       Load More
     </button>
   </div>
 )}
-```
+
 
   </div>
 </section>
+
 
 
       {/* ================= EMPOWERING ================= */}
