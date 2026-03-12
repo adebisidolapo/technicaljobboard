@@ -6,15 +6,120 @@ import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
 
 const CATEGORIES = [
-  "Healthcare IT",
-  "Aerospace / Defense",
-  "Architecture",
-  "Project Management",
-  "Construction / Building Systems",
-  "Manufacturing / Production",
-  "Field Service / Commissioning",
-  "Quality / Compliance",
-  "Maintenance / Reliability",
+  {
+    name: "Engineering",
+    roles: ["Mechanical", "Electrical", "Civil", "Structural", "Industrial"],
+  },
+  {
+    name: "Architecture & Design",
+    roles: [
+      "Architect",
+      "Architectural Designer",
+      "BIM / Revit Specialist",
+      "Urban Planner",
+      "CAD / Drafting",
+    ],
+  },
+  {
+    name: "Information Technology",
+    roles: [
+      "Software Development",
+      "Systems Administration",
+      "Network Engineering",
+      "Cloud / DevOps",
+      "IT Support",
+    ],
+  },
+  {
+    name: "Data, AI & Cybersecurity",
+    roles: [
+      "Data Scientist",
+      "Machine Learning Engineer",
+      "Cybersecurity Analyst",
+      "AI Engineer",
+      "Data Engineer",
+    ],
+  },
+  {
+    name: "Telecom & Network Infrastructure",
+    roles: [
+      "Fiber Technician",
+      "OSP Engineer",
+      "RF Engineer",
+      "Tower Technician",
+      "Broadband Network Engineer",
+    ],
+  },
+  {
+    name: "Construction & Field Engineering",
+    roles: [
+      "Field Engineer",
+      "Construction Manager",
+      "Surveyor",
+      "Site Engineer",
+      "Project Engineer",
+    ],
+  },
+  {
+    name: "Manufacturing & Industrial",
+    roles: [
+      "Manufacturing Engineer",
+      "Process Engineer",
+      "CNC Programmer",
+      "Automation Technician",
+      "Quality Engineer",
+    ],
+  },
+  {
+    name: "Energy & Utilities",
+    roles: [
+      "Power Systems Engineer",
+      "Substation Technician",
+      "Renewable Energy Engineer",
+      "Grid Infrastructure Engineer",
+      "Utility Technician",
+    ],
+  },
+  {
+    name: "Skilled Trades & Technical Services",
+    roles: [
+      "Electrician",
+      "HVAC Technician",
+      "Maintenance Technician",
+      "Controls Technician",
+      "Industrial Technician",
+    ],
+  },
+  {
+    name: "Technical Project & Operations Management",
+    roles: [
+      "Technical Project Manager",
+      "Engineering Manager",
+      "Operations Manager",
+      "Program Manager",
+      "Technical Director",
+    ],
+  },
+  {
+    name: "Healthcare & Medical Technology",
+    roles: [
+      "Biomedical Engineer",
+      "Medical Device Engineer",
+      "Radiology Technician",
+      "Lab Technician",
+      "Clinical Systems Specialist",
+    ],
+  },
+  {
+    name: "Science & Research",
+    roles: [
+      "Chemist",
+      "Physicist",
+      "Environmental Scientist",
+      "Materials Scientist",
+      "Laboratory Researcher",
+    ],
+  },
 ];
 
 export default function Home() {
@@ -26,7 +131,7 @@ export default function Home() {
 
   const [categoryQuery, setCategoryQuery] = useState("");
 const [selectedCategory, setSelectedCategory] = useState("");
-const [visibleCategoryCount, setVisibleCategoryCount] = useState(9);
+const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
 
   const runHeroSearch = () => {
     const params = new URLSearchParams();
@@ -262,7 +367,7 @@ const wideContainer =
       </section>
 
      {/* ================= CATEGORIES ================= */}
-<section className="relative overflow-hidden bg-[#E9EEF6] py-14 sm:py-16 md:py-20">
+<section className="relative overflow-hidden bg-[#E9EEF6] py-12 sm:py-14 md:py-16">
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-gradient-to-b from-[#EEF3FA] via-[#E9EEF6] to-[#E6ECF5]" />
     <div className="absolute -top-10 left-[8%] h-28 w-28 rounded-full bg-white/30 blur-2xl" />
@@ -272,8 +377,8 @@ const wideContainer =
 
   <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
     <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold tracking-tight text-black">
-        Popular Category
+      <h2 className="text-[clamp(1.8rem,3vw,2.4rem)] font-extrabold tracking-tight text-black">
+        Browse by Category
       </h2>
 
       <button
@@ -287,33 +392,28 @@ const wideContainer =
 
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {[
-        "Telecommunications",
-        "Network Engineering",
-        "Cybersecurity",
-        "Science And Research",
-        "Data Analytics",
-        "Cloud Computing",
-        "Database Administration",
-        "IT Project Management",
-        "Systems Analysis",
-        "Quality Assurance",
-        "Healthcare IT",
-        "Aerospace / Defense",
-        "Architecture",
-        "Project Management",
-        "Construction / Building Systems",
-        "Manufacturing / Production",
-        "Field Service / Commissioning",
-        "Quality / Compliance",
-        "Maintenance / Reliability",
+        "Engineering",
+        "Architecture & Design",
+        "Information Technology",
+        "Data, AI & Cybersecurity",
+        "Telecom & Network Infrastructure",
+        "Construction & Field Engineering",
+        "Manufacturing & Industrial",
+        "Energy & Utilities",
+        "Skilled Trades & Technical Services",
+        "Technical Project & Operations Management",
+        "Healthcare & Medical Technology",
+        "Science & Research",
       ]
         .slice(0, visibleCategoryCount)
         .map((cat) => (
           <button
             key={cat}
             type="button"
-            onClick={() => router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)}
-            className="group flex min-h-[92px] items-center gap-4 rounded-2xl border border-slate-200 bg-white/95 px-5 py-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-md"
+            onClick={() =>
+              router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+            }
+            className="group flex min-h-[84px] items-center gap-4 rounded-2xl border border-slate-200 bg-white/95 px-5 py-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-md"
           >
             <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" />
 
@@ -331,7 +431,7 @@ const wideContainer =
         ))}
     </div>
 
-    {visibleCategoryCount < 19 && (
+    {visibleCategoryCount < 12 && (
       <div className="mt-8 flex justify-center">
         <button
           type="button"
