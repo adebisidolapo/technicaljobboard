@@ -229,83 +229,89 @@ function JobCard({
   return (
     <article
       className="
-        relative flex min-h-[165px] w-[300px] flex-none snap-start flex-col
-        overflow-hidden rounded-[24px] border border-slate-200 bg-white
-        shadow-[0_8px_24px_rgba(15,23,42,0.08)]
+        relative flex min-h-[160px] w-[320px] flex-none snap-start flex-col
+        overflow-hidden rounded-[22px] border border-slate-200
+        bg-white/85 backdrop-blur-sm
+        shadow-[0_6px_20px_rgba(15,23,42,0.08)]
         transition duration-300
-        hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12)]
-        sm:w-[340px] lg:w-[380px]
+        hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]
       "
     >
-      <div className="absolute left-0 top-4 h-14 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
-      <div className="absolute right-0 top-4 h-14 w-1.5 rounded-l-full bg-[var(--brand-purple)]" />
+      {/* purple side bars */}
+      <div className="absolute left-0 top-4 h-12 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
+      <div className="absolute right-0 top-4 h-12 w-1.5 rounded-l-full bg-[var(--brand-purple)]" />
 
-      <div className="flex h-full flex-col p-3 sm:p-4">
+      <div className="flex h-full flex-col p-3">
+        {/* badge */}
         <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700">
-            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-semibold text-indigo-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
             Featured
           </span>
         </div>
 
-        <div className="mt-3 flex items-start gap-3">
-          <div className="flex h-10 w-10 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        {/* title row */}
+        <div className="mt-2 flex items-start gap-3">
+          <div className="flex h-9 w-9 flex-none items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white">
             {logo ? (
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={40}
-                height={40}
-                className="h-7 w-7 object-contain"
+                width={36}
+                height={36}
+                className="h-6 w-6 object-contain"
               />
             ) : (
-              <span className="text-sm font-extrabold text-[var(--brand-purple)]">
+              <span className="text-xs font-bold text-[var(--brand-purple)]">
                 {job.company.charAt(0).toUpperCase()}
               </span>
             )}
           </div>
 
           <div className="min-w-0">
-            <button
-              type="button"
-              onClick={() => onOpen(job)}
-              className="text-left"
-            >
-              <h3 className="line-clamp-2 text-[15px] font-bold leading-5 text-[#0B1222]">
+            <button onClick={() => onOpen(job)} className="text-left">
+              <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
                 {job.title}
               </h3>
             </button>
 
-            <p className="mt-1 truncate text-sm text-slate-500">
+            <p className="mt-0.5 truncate text-xs text-slate-500">
               {job.company} • {job.location}
             </p>
           </div>
         </div>
 
-        <p className="mt-2 line-clamp-1 text-sm text-slate-600">
+        {/* description */}
+        <p className="mt-1 line-clamp-1 text-xs text-slate-600">
           {job.description}
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-2">
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+        {/* tags */}
+        <div className="mt-2 flex flex-wrap gap-2">
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-700">
             {job.type}
           </span>
 
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-700">
             {job.pay}
           </span>
         </div>
 
-        <div className="mt-auto flex items-center justify-between pt-3">
+        {/* footer */}
+        <div className="mt-auto flex items-center justify-between pt-2">
           <button
-            type="button"
             onClick={() => onOpen(job)}
-            className="inline-flex h-9 min-w-[110px] items-center justify-center rounded-full bg-[var(--brand-purple)] px-4 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+            className="
+              inline-flex h-8 items-center justify-center rounded-full
+              bg-[var(--brand-purple)] px-3 text-xs font-semibold text-white
+              shadow-[0_6px_16px_rgba(106,111,242,0.25)]
+              transition hover:opacity-95
+            "
           >
             Apply
           </button>
 
-          <span className="text-xs text-slate-400">
+          <span className="text-[10px] text-slate-400">
             Posted {job.posted}
           </span>
         </div>
