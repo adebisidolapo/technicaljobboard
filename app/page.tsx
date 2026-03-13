@@ -158,9 +158,8 @@ const wideContainer =
   const sectionTitle =
     "mt-3 text-[clamp(1.6rem,3.2vw,2.35rem)] font-extrabold tracking-tight text-[#0F172A]";
 
-  const inputBase =
-    "h-14 w-full rounded-2xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none placeholder:text-slate-400 transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100";
-
+ const inputBase =
+  "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 placeholder:text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] outline-none transition focus:border-indigo-200 focus:ring-4 focus:ring-indigo-50";
   const secondaryButton =
     "inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50";
 
@@ -170,17 +169,16 @@ const wideContainer =
   return (
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
      
-    {/* ================= HERO ================= */}
+  {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
   {/* Background Layer */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
     {/* base color */}
     <div className="absolute inset-0 bg-[#F4F8FC]" />
 
     {/* subtle grid */}
     <div
-      className="absolute inset-0 opacity-[0.12]"
+      className="absolute inset-0 opacity-[0.10]"
       style={{
         backgroundImage:
           "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
@@ -188,9 +186,12 @@ const wideContainer =
       }}
     />
 
+    {/* soft ambient glow */}
+    <div className="absolute left-[-120px] top-[140px] h-[260px] w-[260px] rounded-full bg-white/50 blur-3xl" />
+
     {/* AWS style top gradient */}
     <svg
-      className="absolute right-0 top-0 h-full w-[65%]"
+      className="absolute right-0 top-0 h-full w-[68%]"
       viewBox="0 0 720 520"
       preserveAspectRatio="none"
       aria-hidden="true"
@@ -204,8 +205,8 @@ const wideContainer =
           y2="520"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#CFE7FF" stopOpacity="0.9" />
-          <stop offset="0.45" stopColor="#E3F1FF" stopOpacity="0.5" />
+          <stop stopColor="#CFE7FF" stopOpacity="0.95" />
+          <stop offset="0.42" stopColor="#E3F1FF" stopOpacity="0.58" />
           <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
         </linearGradient>
       </defs>
@@ -215,49 +216,49 @@ const wideContainer =
         fill="url(#awsHeroGradient)"
       />
     </svg>
-
   </div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
-    <div className="mx-auto max-w-5xl py-14 text-center sm:py-16 md:py-20 lg:py-24">
-
+    <div className="mx-auto max-w-5xl py-16 text-center sm:py-18 md:py-20 lg:py-24">
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        Curated Roles • Remote Friendly • Fast Apply
+        Curated Technical Roles • Salary Visibility • Fast Apply
       </div>
 
       {/* Title */}
-      <h1 className="mt-6 text-[clamp(2.2rem,4.8vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
+      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
         Find{" "}
         <span className="relative inline-block">
           <span
             aria-hidden
-            className="absolute left-[42%] top-1/2 h-[36px] w-[108px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/10 blur-2xl"
+            className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/12 blur-2xl"
           />
           <span className="relative">
-            <span className="text-emerald-600">Technical</span>{" "}
-            <span className="text-[#0F172A]">Jobs</span>
+            <span className="text-emerald-600">Technical Roles</span>
           </span>
         </span>{" "}
-        Built For Long-Term Careers
+        With Real Growth, Clear Pay, and Trusted Teams
       </h1>
 
       {/* Subtitle */}
-      <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px]">
-        Browse opportunities across engineering, infrastructure, cloud,
-        security, and data — including remote options.
+      <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">
+        Browse curated opportunities across engineering, infrastructure, cloud,
+        security, data, and skilled technical fields — including remote and
+        on-site roles.
       </p>
 
       {/* Search */}
-      <div className="mt-8">
-        <div className="mx-auto w-full max-w-5xl rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
+      <div className="mt-9">
+        <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-white/70 bg-white/88 p-3 sm:p-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-md">
+          <div className="mb-3 text-center text-[13px] font-medium text-slate-500">
+            Start with a title, keyword, or location
+          </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
-
             <label className="sr-only" htmlFor="hero-q">
-              Job Title Or Keyword
+              Job title, skill, or keyword
             </label>
 
             <input
@@ -265,7 +266,7 @@ const wideContainer =
               value={heroQ}
               onChange={(e) => setHeroQ(e.target.value)}
               type="text"
-              placeholder="Job Title, Keyword"
+              placeholder="Job title, skill, or keyword"
               className={inputBase}
               onKeyDown={(e) => {
                 if (e.key === "Enter") runHeroSearch();
@@ -273,7 +274,7 @@ const wideContainer =
             />
 
             <label className="sr-only" htmlFor="hero-loc">
-              Location
+              City, state, remote, or hybrid
             </label>
 
             <input
@@ -281,7 +282,7 @@ const wideContainer =
               value={heroLoc}
               onChange={(e) => setHeroLoc(e.target.value)}
               type="text"
-              placeholder="Location (Remote, New York, Texas)"
+              placeholder="City, state, remote, or hybrid"
               className={inputBase}
               onKeyDown={(e) => {
                 if (e.key === "Enter") runHeroSearch();
@@ -291,18 +292,17 @@ const wideContainer =
             <button
               type="button"
               onClick={runHeroSearch}
-              className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white transition hover:bg-black md:col-span-2 xl:col-span-1 xl:w-auto shadow-[0_10px_24px_rgba(15,23,42,0.22)]"
+              className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-[1px] hover:bg-[#111827] md:col-span-2 xl:col-span-1 xl:w-auto"
             >
               Search Jobs
             </button>
-
           </div>
 
           {/* Popular Tags */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
             <span className="mr-1 font-medium">Popular</span>
 
-            {["Frontend", "DevOps", "Data", "Security"].map((t) => (
+            {["Frontend", "DevOps", "Data", "Security", "Cloud"].map((t) => (
               <button
                 key={t}
                 type="button"
@@ -310,14 +310,22 @@ const wideContainer =
                   setHeroQ(t);
                   setTimeout(runHeroSearch, 0);
                 }}
-                className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white"
               >
                 {t}
               </button>
             ))}
           </div>
-
         </div>
+      </div>
+
+      {/* Trust micro-copy */}
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[13px] text-slate-500 sm:gap-x-5">
+        <span>Trusted employers</span>
+        <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
+        <span>Remote and on-site roles</span>
+        <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
+        <span>Fast applications</span>
       </div>
 
       {/* Jump */}
@@ -328,7 +336,6 @@ const wideContainer =
       >
         Jump To Jobs <span aria-hidden>↓</span>
       </button>
-
     </div>
   </div>
 </section>
