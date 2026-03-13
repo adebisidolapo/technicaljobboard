@@ -173,16 +173,19 @@ const wideContainer =
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
   {/* Background Layer */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
   {/* base */}
   <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* animated gradient wash */}
-  <div className="absolute inset-0 hero-bg-animation" />
+  {/* top animated AWS-style color band */}
+  <div className="absolute inset-x-0 top-0 h-[240px] overflow-hidden">
+    <div className="hero-top-band absolute inset-0" />
+    <div className="hero-top-band-2 absolute inset-0" />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+  </div>
 
   {/* subtle grid */}
   <div
-    className="absolute inset-0 opacity-[0.10]"
+    className="absolute inset-0 opacity-[0.08]"
     style={{
       backgroundImage:
         "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
@@ -190,9 +193,9 @@ const wideContainer =
     }}
   />
 
-  {/* AWS style top shape */}
+  {/* right shape */}
   <svg
-    className="absolute right-0 top-0 h-full w-[65%]"
+    className="absolute right-0 top-0 h-full w-[65%] opacity-80"
     viewBox="0 0 720 520"
     preserveAspectRatio="none"
     aria-hidden="true"
@@ -206,8 +209,8 @@ const wideContainer =
         y2="520"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#CFE7FF" stopOpacity="0.9" />
-        <stop offset="0.45" stopColor="#E3F1FF" stopOpacity="0.5" />
+        <stop stopColor="#D8EBFF" stopOpacity="0.75" />
+        <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
         <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
       </linearGradient>
     </defs>
@@ -218,6 +221,8 @@ const wideContainer =
     />
   </svg>
 
+  {/* very soft extra glow */}
+  <div className="absolute right-[12%] top-[36px] h-[180px] w-[240px] rounded-full bg-[#dff1ff]/70 blur-3xl" />
 </div>
 
   {/* floating glow 1 */}
