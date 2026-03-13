@@ -241,12 +241,12 @@ const wideContainer =
       {/* Badge */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        Curated Technical Roles • Salary Visibility • Fast Apply
+         Technical Roles • Salary Visibility • Fast Apply
       </div>
 
      {/* Title */}
 <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
-  Find{" "}
+  Powering{" "}
   <span className="relative inline-block">
     <span
       aria-hidden
@@ -254,14 +254,14 @@ const wideContainer =
     />
     <span className="relative text-emerald-600">Technical</span>
   </span>{" "}
-  Roles With Real Growth, Clear Pay, and Trusted Teams
+  Careers
 </h1>
 
       {/* Subtitle */}
       <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">
-        Browse curated opportunities across engineering, infrastructure, cloud,
-        security, data, and skilled technical fields — including remote and
-        on-site roles.
+        Browse Curated Opportunities Across Engineering, Infrastructure, Cloud,
+        Security, Data, and Skilled Technical Fields — Including Remote and
+        On-Site Roles.
       </p>
 
       {/* Search */}
