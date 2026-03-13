@@ -228,7 +228,7 @@ const wideContainer =
 
   {/* soft center fade */}
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
-</div> 
+
 
   {/* Content */}
   <div className={`relative ${container}`}>
