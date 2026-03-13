@@ -173,12 +173,16 @@ const wideContainer =
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
   {/* Background Layer */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
+
   {/* base */}
   <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* drifting grid */}
+  {/* animated gradient wash */}
+  <div className="absolute inset-0 hero-bg-animation" />
+
+  {/* subtle grid */}
   <div
-    className="hero-grid-drift absolute inset-0 opacity-[0.10]"
+    className="absolute inset-0 opacity-[0.10]"
     style={{
       backgroundImage:
         "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
@@ -186,36 +190,35 @@ const wideContainer =
     }}
   />
 
-  {/* soft large wash */}
-  <div className="hero-gradient-shift absolute inset-y-0 right-[-8%] w-[72%]">
-    <svg
-      className="h-full w-full"
-      viewBox="0 0 900 600"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient
-          id="heroAnimatedGradient"
-          x1="900"
-          y1="0"
-          x2="260"
-          y2="600"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#CDE5FF" stopOpacity="0.95" />
-          <stop offset="0.30" stopColor="#DCEEFF" stopOpacity="0.72" />
-          <stop offset="0.62" stopColor="#EAF4FF" stopOpacity="0.42" />
-          <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
-        </linearGradient>
-      </defs>
+  {/* AWS style top shape */}
+  <svg
+    className="absolute right-0 top-0 h-full w-[65%]"
+    viewBox="0 0 720 520"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient
+        id="awsHeroGradient"
+        x1="720"
+        y1="0"
+        x2="260"
+        y2="520"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#CFE7FF" stopOpacity="0.9" />
+        <stop offset="0.45" stopColor="#E3F1FF" stopOpacity="0.5" />
+        <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
+      </linearGradient>
+    </defs>
 
-      <path
-        d="M900 0C810 45 755 120 710 205C660 300 610 390 525 470C455 535 370 575 250 600H900V0Z"
-        fill="url(#heroAnimatedGradient)"
-      />
-    </svg>
-  </div>
+    <path
+      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
+      fill="url(#awsHeroGradient)"
+    />
+  </svg>
+
+</div>
 
   {/* floating glow 1 */}
   <div className="hero-glow-float absolute right-[12%] top-[8%] h-[220px] w-[220px] rounded-full bg-[#DCEEFF]/70 blur-3xl" />
@@ -225,7 +228,7 @@ const wideContainer =
 
   {/* soft center fade */}
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
-</div>
+</div> 
 
   {/* Content */}
   <div className={`relative ${container}`}>
@@ -236,20 +239,18 @@ const wideContainer =
         Curated Technical Roles • Salary Visibility • Fast Apply
       </div>
 
-      {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
-        Find{" "}
-        <span className="relative inline-block">
-          <span
-            aria-hidden
-            className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/12 blur-2xl"
-          />
-          <span className="relative">
-            <span className="text-emerald-600">Technical Roles</span>
-          </span>
-        </span>{" "}
-        With Real Growth, Clear Pay, and Trusted Teams
-      </h1>
+     {/* Title */}
+<h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
+  Find{" "}
+  <span className="relative inline-block">
+    <span
+      aria-hidden
+      className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 blur-2xl"
+    />
+    <span className="relative text-emerald-600">Technical</span>
+  </span>{" "}
+  Roles With Real Growth, Clear Pay, and Trusted Teams
+</h1>
 
       {/* Subtitle */}
       <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">

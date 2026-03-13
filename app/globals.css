@@ -373,3 +373,22 @@ body {
     animation: none !important;
   }
 }
+
+.hero-bg-animation {
+  background: radial-gradient(circle at 20% 30%, #e7f2ff 0%, transparent 40%),
+              radial-gradient(circle at 80% 40%, #d8ebff 0%, transparent 45%),
+              radial-gradient(circle at 60% 80%, #eef6ff 0%, transparent 50%);
+  animation: heroMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes heroMove {
+  0% {
+    transform: translate3d(0,0,0) scale(1);
+  }
+  50% {
+    transform: translate3d(-20px,10px,0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(20px,-10px,0) scale(1.08);
+  }
+}
