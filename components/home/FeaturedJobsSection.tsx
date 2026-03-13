@@ -205,7 +205,7 @@ function getCompanyLogo(company: string) {
     return { src: "/vermot.png", alt: "Vermot" };
   }
   if (key.includes("devops")) {
-    return { src: "/Devops.png", alt: "Devops" };
+    return { src: "/Devops.png", alt: "DevOps" };
   }
   if (key.includes("hired")) {
     return { src: "/Hiredengineer.png", alt: "Hired Engineer" };
@@ -229,40 +229,40 @@ function JobCard({
   return (
     <article
       className="
-        relative flex min-h-[160px] w-[320px] flex-none snap-start flex-col
-        overflow-hidden rounded-[22px] border border-slate-200
-        bg-white/85 backdrop-blur-sm
-        shadow-[0_6px_20px_rgba(15,23,42,0.08)]
+        group relative flex min-h-[188px] w-[320px] flex-none snap-start flex-col
+        overflow-hidden rounded-[24px] border border-slate-200/80
+        bg-white/92 backdrop-blur-sm
+        shadow-[0_10px_28px_rgba(15,23,42,0.06)]
         transition duration-300
-        hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]
+        hover:-translate-y-[3px] hover:shadow-[0_18px_36px_rgba(15,23,42,0.10)]
       "
     >
-      {/* purple side bars */}
-      <div className="absolute left-0 top-4 h-12 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
-      <div className="absolute right-0 top-4 h-12 w-1.5 rounded-l-full bg-[var(--brand-purple)]" />
+      <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[var(--brand-purple)] via-indigo-400 to-[var(--brand-purple)] opacity-80" />
 
-      <div className="flex h-full flex-col p-3">
-        {/* badge */}
+      <div className="flex h-full flex-col p-4">
         <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-semibold text-indigo-700">
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-[10px] font-semibold text-indigo-700">
             <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
             Featured
           </span>
+
+          <span className="text-[10px] font-medium text-slate-400">
+            Posted {job.posted}
+          </span>
         </div>
 
-        {/* title row */}
-        <div className="mt-2 flex items-start gap-3">
-          <div className="flex h-9 w-9 flex-none items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div className="mt-3 flex items-start gap-3">
+          <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)]">
             {logo ? (
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={36}
-                height={36}
-                className="h-6 w-6 object-contain"
+                width={40}
+                height={40}
+                className="h-7 w-7 object-contain"
               />
             ) : (
-              <span className="text-xs font-bold text-[var(--brand-purple)]">
+              <span className="text-sm font-bold text-[var(--brand-purple)]">
                 {job.company.charAt(0).toUpperCase()}
               </span>
             )}
@@ -270,50 +270,43 @@ function JobCard({
 
           <div className="min-w-0">
             <button onClick={() => onOpen(job)} className="text-left">
-              <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
+              <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222] transition-colors group-hover:text-[var(--brand-purple)]">
                 {job.title}
               </h3>
             </button>
 
-            <p className="mt-0.5 truncate text-xs text-slate-500">
+            <p className="mt-1 truncate text-xs text-slate-500">
               {job.company} • {job.location}
             </p>
           </div>
         </div>
 
-        {/* description */}
-        <p className="mt-1 line-clamp-1 text-xs text-slate-600">
+        <p className="mt-3 line-clamp-2 text-[12px] leading-5 text-slate-600">
           {job.description}
         </p>
 
-        {/* tags */}
-        <div className="mt-2 flex flex-wrap gap-2">
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-700">
+        <div className="mt-3 flex flex-wrap gap-2">
+          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-medium text-slate-700">
             {job.type}
           </span>
 
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-700">
+          <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-700">
             {job.pay}
           </span>
         </div>
 
-        {/* footer */}
-        <div className="mt-auto flex items-center justify-between pt-2">
+        <div className="mt-auto pt-4">
           <button
             onClick={() => onOpen(job)}
             className="
-              inline-flex h-8 items-center justify-center rounded-full
-              bg-[var(--brand-purple)] px-3 text-xs font-semibold text-white
-              shadow-[0_6px_16px_rgba(106,111,242,0.25)]
-              transition hover:opacity-95
+              inline-flex h-9 items-center justify-center rounded-full
+              bg-[var(--brand-purple)] px-4 text-xs font-semibold text-white
+              shadow-[0_8px_18px_rgba(106,111,242,0.24)]
+              transition duration-200 hover:translate-y-[-1px] hover:opacity-95
             "
           >
             Apply
           </button>
-
-          <span className="text-[10px] text-slate-400">
-            Posted {job.posted}
-          </span>
         </div>
       </div>
     </article>
@@ -397,7 +390,7 @@ export default function FeaturedJobsSection() {
         } else {
           rail.scrollLeft = next;
         }
-      }, 28);
+      }, 30);
     };
 
     start();
@@ -424,12 +417,19 @@ export default function FeaturedJobsSection() {
 
   return (
     <>
-      <section className="relative w-full">
-        <div className="mb-5 flex items-end justify-between gap-4">
+      <section id="featured-jobs" className="relative w-full">
+        <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-           <h2 className="text-2xl font-bold text-[#0B1222]">
-  Roles Worth Exploring
-</h2>
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+              Featured jobs
+            </p>
+            <h2 className="text-2xl font-bold tracking-tight text-[#0B1222] sm:text-[2rem]">
+              Roles Worth Exploring
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-slate-600">
+              A curated selection of technical roles with clearer expectations,
+              trusted employers, and salary visibility.
+            </p>
           </div>
 
           <div className="hidden items-center gap-3 md:flex">
