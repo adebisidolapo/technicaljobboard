@@ -300,126 +300,75 @@ body {
   }
 }
 
-@keyframes heroGradientShift {
+@keyframes heroBandSlide {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.9;
+    transform: translate3d(0%, 0, 0) scaleX(1.02);
+    opacity: 0.95;
   }
   25% {
-    transform: translate3d(-2%, 1%, 0) scale(1.03);
+    transform: translate3d(-2.5%, 0, 0) scaleX(1.04);
     opacity: 1;
   }
   50% {
-    transform: translate3d(1%, -1.5%, 0) scale(1.05);
+    transform: translate3d(2%, 0, 0) scaleX(1.06);
     opacity: 0.92;
   }
   75% {
-    transform: translate3d(-1%, 1.5%, 0) scale(1.02);
+    transform: translate3d(-1.5%, 0, 0) scaleX(1.04);
     opacity: 0.98;
   }
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.9;
+    transform: translate3d(0%, 0, 0) scaleX(1.02);
+    opacity: 0.95;
   }
 }
 
-@keyframes heroGlowFloat {
+@keyframes heroBandSlideSoft {
   0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0.45;
+    transform: translate3d(0%, 0, 0) scaleX(1);
+    opacity: 0.55;
   }
   50% {
-    transform: translate3d(18px, -14px, 0);
-    opacity: 0.62;
+    transform: translate3d(3%, 0, 0) scaleX(1.05);
+    opacity: 0.72;
   }
   100% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0.45;
+    transform: translate3d(0%, 0, 0) scaleX(1);
+    opacity: 0.55;
   }
 }
 
-@keyframes heroGridDrift {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(6px, 4px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.hero-gradient-shift {
-  animation: heroGradientShift 18s ease-in-out infinite;
-  transform-origin: top right;
+.hero-top-band-clean {
+  background: linear-gradient(
+    90deg,
+    rgba(247, 242, 204, 0.55) 0%,
+    rgba(229, 244, 193, 0.70) 22%,
+    rgba(210, 242, 196, 0.82) 48%,
+    rgba(209, 243, 220, 0.62) 74%,
+    rgba(222, 241, 255, 0.35) 100%
+  );
+  filter: blur(26px);
+  animation: heroBandSlide 14s ease-in-out infinite;
   will-change: transform, opacity;
 }
 
-.hero-glow-float {
-  animation: heroGlowFloat 14s ease-in-out infinite;
+.hero-top-band-clean-2 {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(240, 245, 210, 0.18) 18%,
+    rgba(220, 244, 199, 0.32) 45%,
+    rgba(210, 241, 214, 0.24) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: blur(42px);
+  animation: heroBandSlideSoft 18s ease-in-out infinite;
   will-change: transform, opacity;
-}
-
-.hero-grid-drift {
-  animation: heroGridDrift 24s ease-in-out infinite;
-  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-gradient-shift,
-  .hero-glow-float,
-  .hero-grid-drift {
-    animation: none !important;
-  }
-}
-
-.hero-bg-animation {
-  background: radial-gradient(circle at 20% 30%, #e7f2ff 0%, transparent 40%),
-              radial-gradient(circle at 80% 40%, #d8ebff 0%, transparent 45%),
-              radial-gradient(circle at 60% 80%, #eef6ff 0%, transparent 50%);
-  animation: heroMove 18s ease-in-out infinite alternate;
-}
-
-
-@keyframes heroBandMoveAlt {
-  0% {
-    transform: translateX(0%) translateY(0%) scale(1.02);
-    opacity: 0.72;
-  }
-  50% {
-    transform: translateX(3%) translateY(-2%) scale(1.06);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateX(0%) translateY(0%) scale(1.02);
-    opacity: 0.72;
-  }
-}
-
-.hero-top-band {
-  background:
-    radial-gradient(circle at 18% 20%, rgba(247, 241, 180, 0.85) 0%, rgba(247, 241, 180, 0.55) 18%, transparent 42%),
-    radial-gradient(circle at 52% 14%, rgba(214, 245, 176, 0.92) 0%, rgba(214, 245, 176, 0.60) 20%, transparent 44%),
-    radial-gradient(circle at 82% 18%, rgba(197, 239, 214, 0.88) 0%, rgba(197, 239, 214, 0.52) 18%, transparent 40%);
-  filter: blur(34px);
-  animation: heroBandMove 12s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-.hero-top-band-2 {
-  background:
-    radial-gradient(circle at 28% 16%, rgba(240, 233, 174, 0.55) 0%, transparent 34%),
-    radial-gradient(circle at 66% 12%, rgba(205, 241, 185, 0.62) 0%, transparent 36%);
-  filter: blur(54px);
-  animation: heroBandMoveAlt 16s ease-in-out infinite;
-  will-change: transform, opacity;
-  mix-blend-mode: normal;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-top-band,
-  .hero-top-band-2 {
+  .hero-top-band-clean,
+  .hero-top-band-clean-2 {
     animation: none !important;
   }
 }

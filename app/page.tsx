@@ -176,12 +176,12 @@ const wideContainer =
   {/* base */}
   <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* top animated AWS-style color band */}
-  <div className="absolute inset-x-0 top-0 h-[240px] overflow-hidden">
-    <div className="hero-top-band absolute inset-0" />
-    <div className="hero-top-band-2 absolute inset-0" />
-    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
-  </div>
+{/* top animated AWS-style color band */}
+<div className="absolute inset-x-0 top-0 h-[230px] overflow-hidden">
+  <div className="hero-top-band-clean absolute inset-0" />
+  <div className="hero-top-band-clean-2 absolute inset-0" />
+  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+</div>
 
   {/* subtle grid */}
   <div
