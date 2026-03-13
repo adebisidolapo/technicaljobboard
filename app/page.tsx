@@ -388,7 +388,7 @@ const wideContainer =
         </div>
       </section>
 
-    {/* ================= CATEGORIES ================= */}
+   {/* ================= CATEGORIES ================= */}
 
 <section className="bg-white py-10 sm:py-12">
   <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
