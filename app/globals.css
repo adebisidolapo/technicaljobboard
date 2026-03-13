@@ -299,3 +299,77 @@ body {
     transition: none;
   }
 }
+
+@keyframes heroGradientShift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate3d(-2%, 1%, 0) scale(1.03);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(1%, -1.5%, 0) scale(1.05);
+    opacity: 0.92;
+  }
+  75% {
+    transform: translate3d(-1%, 1.5%, 0) scale(1.02);
+    opacity: 0.98;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.9;
+  }
+}
+
+@keyframes heroGlowFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0);
+    opacity: 0.62;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.45;
+  }
+}
+
+@keyframes heroGridDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(6px, 4px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-gradient-shift {
+  animation: heroGradientShift 18s ease-in-out infinite;
+  transform-origin: top right;
+  will-change: transform, opacity;
+}
+
+.hero-glow-float {
+  animation: heroGlowFloat 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hero-grid-drift {
+  animation: heroGridDrift 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-shift,
+  .hero-glow-float,
+  .hero-grid-drift {
+    animation: none !important;
+  }
+}

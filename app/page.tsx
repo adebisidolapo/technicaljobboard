@@ -172,51 +172,60 @@ const wideContainer =
   {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
   {/* Background Layer */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    {/* base color */}
-    <div className="absolute inset-0 bg-[#F4F8FC]" />
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  {/* base */}
+  <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-    {/* subtle grid */}
-    <div
-      className="absolute inset-0 opacity-[0.10]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-        backgroundSize: "30px 30px",
-      }}
-    />
+  {/* drifting grid */}
+  <div
+    className="hero-grid-drift absolute inset-0 opacity-[0.10]"
+    style={{
+      backgroundImage:
+        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
+      backgroundSize: "30px 30px",
+    }}
+  />
 
-    {/* soft ambient glow */}
-    <div className="absolute left-[-120px] top-[140px] h-[260px] w-[260px] rounded-full bg-white/50 blur-3xl" />
-
-    {/* AWS style top gradient */}
+  {/* soft large wash */}
+  <div className="hero-gradient-shift absolute inset-y-0 right-[-8%] w-[72%]">
     <svg
-      className="absolute right-0 top-0 h-full w-[68%]"
-      viewBox="0 0 720 520"
+      className="h-full w-full"
+      viewBox="0 0 900 600"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <defs>
         <linearGradient
-          id="awsHeroGradient"
-          x1="720"
+          id="heroAnimatedGradient"
+          x1="900"
           y1="0"
           x2="260"
-          y2="520"
+          y2="600"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#CFE7FF" stopOpacity="0.95" />
-          <stop offset="0.42" stopColor="#E3F1FF" stopOpacity="0.58" />
+          <stop stopColor="#CDE5FF" stopOpacity="0.95" />
+          <stop offset="0.30" stopColor="#DCEEFF" stopOpacity="0.72" />
+          <stop offset="0.62" stopColor="#EAF4FF" stopOpacity="0.42" />
           <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
         </linearGradient>
       </defs>
 
       <path
-        d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-        fill="url(#awsHeroGradient)"
+        d="M900 0C810 45 755 120 710 205C660 300 610 390 525 470C455 535 370 575 250 600H900V0Z"
+        fill="url(#heroAnimatedGradient)"
       />
     </svg>
   </div>
+
+  {/* floating glow 1 */}
+  <div className="hero-glow-float absolute right-[12%] top-[8%] h-[220px] w-[220px] rounded-full bg-[#DCEEFF]/70 blur-3xl" />
+
+  {/* floating glow 2 */}
+  <div className="hero-glow-float absolute left-[-100px] top-[160px] h-[260px] w-[260px] rounded-full bg-white/60 blur-3xl [animation-delay:-5s]" />
+
+  {/* soft center fade */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
+</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
