@@ -229,21 +229,19 @@ function JobCard({
   return (
     <article
       className="
-        group relative flex min-h-[156px] w-[356px] flex-none snap-start flex-col
+        group relative flex min-h-[156px] w-[88vw] max-w-[372px] flex-none snap-center flex-col
         overflow-hidden rounded-[20px] border border-slate-200
         bg-white
         shadow-[0_4px_14px_rgba(15,23,42,0.035)]
         transition duration-200
         hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]
-        sm:w-[372px]
+        sm:w-[360px] lg:w-[372px]
       "
     >
-      {/* purple corner fill */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-8 -top-8 h-20 w-20 rounded-full bg-[var(--brand-purple)]/10 blur-2xl" />
       </div>
 
-      {/* subtle purple side accents */}
       <div className="absolute left-0 top-5 h-10 w-1 rounded-r-full bg-[var(--brand-purple)]/80" />
       <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-[var(--brand-purple)]/35" />
 
@@ -385,8 +383,12 @@ export default function FeaturedJobsSection() {
       }
     };
 
+    const isMobile = () => window.innerWidth < 1024;
+
     const start = () => {
       stop();
+
+      if (isMobile()) return;
 
       intervalRef.current = window.setInterval(() => {
         if (!rail || isHoveringRef.current) return;
@@ -427,74 +429,73 @@ export default function FeaturedJobsSection() {
   return (
     <>
       <section
-  id="featured-jobs"
-  className="relative overflow-hidden rounded-[28px] bg-[#F8FAFC] px-4 py-6 sm:px-5 sm:py-7"
->
-  {/* soft corner fills */}
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute -left-16 -top-16 h-44 w-44 rounded-full bg-[var(--brand-purple)]/10 blur-3xl" />
-    <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-indigo-200/30 blur-3xl" />
-    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(106,111,242,0.04),transparent_28%,transparent_72%,rgba(99,102,241,0.03))]" />
-  </div>
-
-  <div className="relative">
-    <div className="mb-6 flex items-end justify-between gap-4">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight text-[#0B1222] sm:text-[2rem]">
-          Roles Worth Exploring
-        </h2>
-        <p className="mt-2 max-w-2xl text-sm text-slate-600">
-          A curated selection of technical roles with clearer expectations,
-          trusted employers, and salary visibility.
-        </p>
-      </div>
-
-      <div className="hidden items-center gap-3 md:flex">
-        <button
-          type="button"
-          onClick={() => scrollRail(-360)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
-          aria-label="Scroll left"
-        >
-          ←
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollRail(360)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
-          aria-label="Scroll right"
-        >
-          →
-        </button>
-      </div>
-    </div>
-
-    <div className="w-full">
-      <div
-        ref={railRef}
-        onMouseEnter={() => {
-          isHoveringRef.current = true;
-        }}
-        onMouseLeave={() => {
-          isHoveringRef.current = false;
-        }}
-        className="
-          no-scrollbar -mx-1 flex gap-4 overflow-x-auto px-1 pb-2 pt-1
-          scroll-smooth snap-x snap-mandatory
-          [scrollbar-width:none] [-ms-overflow-style:none]
-          lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-5 lg:gap-y-5
-        "
-        style={{
-          WebkitOverflowScrolling: "touch",
-        }}
+        id="featured-jobs"
+        className="relative overflow-hidden rounded-[28px] bg-[#F8FAFC] px-4 py-6 sm:px-5 sm:py-7"
       >
-        {displayJobs.map((job) => (
-          <JobCard key={job.id} job={job} onOpen={openDetails} />
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-16 -top-16 h-44 w-44 rounded-full bg-[var(--brand-purple)]/10 blur-3xl" />
+          <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-indigo-200/30 blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(106,111,242,0.04),transparent_28%,transparent_72%,rgba(99,102,241,0.03))]" />
+        </div>
+
+        <div className="relative">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-[#0B1222] sm:text-[2rem]">
+                Roles Worth Exploring
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm text-slate-600">
+                A curated selection of technical roles with clearer expectations,
+                trusted employers, and salary visibility.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={() => scrollRail(-320)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white sm:h-10 sm:w-10"
+                aria-label="Scroll left"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollRail(320)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white sm:h-10 sm:w-10"
+                aria-label="Scroll right"
+              >
+                →
+              </button>
+            </div>
+          </div>
+
+          <div className="w-full">
+            <div
+              ref={railRef}
+              onMouseEnter={() => {
+                isHoveringRef.current = true;
+              }}
+              onMouseLeave={() => {
+                isHoveringRef.current = false;
+              }}
+              className="
+                no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 pt-1
+                scroll-smooth snap-x snap-mandatory
+                [scrollbar-width:none] [-ms-overflow-style:none]
+                lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-5 lg:gap-y-5
+              "
+              style={{
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {displayJobs.map((job) => (
+                <JobCard key={job.id} job={job} onOpen={openDetails} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <JobDetailsSheet
         job={selectedJob}
