@@ -238,12 +238,14 @@ function JobCard({
         sm:w-[360px] lg:w-[372px]
       "
     >
+      {/* stronger purple fill so it shows on mobile too */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-8 -top-8 h-20 w-20 rounded-full bg-[var(--brand-purple)]/10 blur-2xl" />
+        <div className="absolute -left-10 -top-10 h-24 w-24 rounded-full bg-[var(--brand-purple)]/18 blur-2xl sm:h-20 sm:w-20 sm:bg-[var(--brand-purple)]/12" />
       </div>
 
-      <div className="absolute left-0 top-5 h-10 w-1 rounded-r-full bg-[var(--brand-purple)]/80" />
-      <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-[var(--brand-purple)]/35" />
+      {/* visible purple side accents */}
+      <div className="absolute left-0 top-5 h-10 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
+      <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-[var(--brand-purple)]/45" />
 
       <div className="relative flex h-full flex-col p-4">
         <div className="flex items-start gap-3">
@@ -383,12 +385,12 @@ export default function FeaturedJobsSection() {
       }
     };
 
-    const isMobile = () => window.innerWidth < 1024;
+    const isDesktop = () => window.innerWidth >= 1024;
 
     const start = () => {
       stop();
 
-      if (isMobile()) return;
+      if (!isDesktop()) return;
 
       intervalRef.current = window.setInterval(() => {
         if (!rail || isHoveringRef.current) return;
@@ -456,19 +458,19 @@ export default function FeaturedJobsSection() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="hidden items-center gap-3 lg:flex">
               <button
                 type="button"
-                onClick={() => scrollRail(-320)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white sm:h-10 sm:w-10"
+                onClick={() => scrollRail(-780)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
                 aria-label="Scroll left"
               >
                 ←
               </button>
               <button
                 type="button"
-                onClick={() => scrollRail(320)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white sm:h-10 sm:w-10"
+                onClick={() => scrollRail(780)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
                 aria-label="Scroll right"
               >
                 →
@@ -489,6 +491,7 @@ export default function FeaturedJobsSection() {
                 no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 pt-1
                 scroll-smooth snap-x snap-mandatory
                 [scrollbar-width:none] [-ms-overflow-style:none]
+                lg:grid lg:grid-flow-col lg:grid-rows-2 lg:auto-cols-[372px] lg:gap-x-5 lg:gap-y-5
               "
               style={{
                 WebkitOverflowScrolling: "touch",
