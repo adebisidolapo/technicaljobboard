@@ -389,56 +389,44 @@ const wideContainer =
       </section>
 
    {/* ================= CATEGORIES ================= */}
-<section className="relative overflow-hidden bg-white py-12 sm:py-14">
-  {/* subtle techy background */}
+<section className="relative overflow-hidden bg-white py-10 sm:py-12">
+  {/* subtle tech background */}
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.06),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.05),transparent_20%)]" />
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
     <div
-      className="absolute inset-0 opacity-[0.10]"
+      className="absolute inset-0 opacity-[0.08]"
       style={{
         backgroundImage:
           "linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.05) 1px, transparent 1px)",
         backgroundSize: "28px 28px",
         maskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.75), rgba(0,0,0,0.15))",
+          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
         WebkitMaskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.75), rgba(0,0,0,0.15))",
+          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
       }}
     />
-    <div className="absolute right-[-60px] top-[-40px] h-40 w-40 rounded-full bg-emerald-200/30 blur-3xl" />
-    <div className="absolute left-[-50px] bottom-[-60px] h-44 w-44 rounded-full bg-indigo-100/40 blur-3xl" />
+    <div className="absolute right-[-60px] top-[-30px] h-36 w-36 rounded-full bg-emerald-200/30 blur-3xl" />
+    <div className="absolute left-[-50px] bottom-[-50px] h-40 w-40 rounded-full bg-indigo-100/35 blur-3xl" />
   </div>
 
   <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
     {/* Header */}
-    <div className="mb-8 flex items-end justify-between gap-4">
-      <div>
-        <p className="mb-2 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-          <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-          Browse by category
-        </p>
-
-        <h2 className="text-2xl font-bold tracking-tight text-[#0B1222] sm:text-[2rem]">
-          Explore Technical Categories
-        </h2>
-
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-[15px]">
-          Explore opportunities across engineering, IT, infrastructure,
-          industrial operations, research, and specialized technical fields.
-        </p>
-      </div>
+    <div className="mb-6 flex items-center justify-between gap-4">
+      <h2 className="text-2xl font-bold tracking-tight text-[#0B1222]">
+        Popular Category
+      </h2>
 
       <button
         type="button"
         onClick={() => router.push("/all-jobs")}
-        className="shrink-0 text-sm font-semibold text-sky-600 transition hover:text-sky-700"
+        className="text-sm font-semibold text-sky-600 transition hover:text-sky-700"
       >
         All jobs →
       </button>
     </div>
 
     {/* Grid */}
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {[
         "Engineering",
         "Architecture & Design",
@@ -462,49 +450,46 @@ const wideContainer =
               router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
             }
             className="
-              group relative overflow-hidden rounded-[22px]
-              border border-slate-200/80 bg-white/95
+              group relative flex items-start justify-between gap-3
+              overflow-hidden rounded-[24px]
+              border border-slate-200/90 bg-white/95
               px-4 py-4 text-left
-              shadow-[0_8px_24px_rgba(15,23,42,0.04)]
+              shadow-[0_6px_18px_rgba(15,23,42,0.035)]
               transition duration-200
               hover:-translate-y-[2px]
               hover:border-slate-300
-              hover:shadow-[0_14px_30px_rgba(15,23,42,0.07)]
+              hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
             "
           >
-            {/* soft corner fill */}
+            {/* soft fill */}
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -right-6 -top-6 h-16 w-16 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
+              <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
               <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
             </div>
 
-            <div className="relative flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <div className="flex items-start gap-2.5">
-                  <span className="mt-1 inline-block h-2 w-2 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
-                  <div className="min-w-0">
-                    <h3 className="text-[14px] font-semibold leading-5 text-[#0B1222] transition-colors group-hover:text-slate-900">
-                      {cat}
-                    </h3>
-
-                    <p className="mt-2 text-xs text-slate-500">
-                      Browse open roles in this category
-                    </p>
-                  </div>
-                </div>
+            <div className="relative min-w-0">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
+                <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
+                  {cat}
+                </h3>
               </div>
 
-              <span className="mt-0.5 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
-                →
-              </span>
+              <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
+                0 Jobs
+              </p>
             </div>
+
+            <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
+              →
+            </span>
           </button>
         ))}
     </div>
 
     {/* Load more */}
     {visibleCategoryCount < 12 && (
-      <div className="mt-8 flex justify-center">
+      <div className="mt-6 flex justify-center">
         <button
           type="button"
           onClick={() => setVisibleCategoryCount((prev) => prev + 6)}
