@@ -423,7 +423,13 @@ export default function FeaturedJobsSection() {
   };
 
   const scrollRail = (amount: number) => {
-    railRef.current?.scrollBy({ left: amount, behavior: "smooth" });
+    const rail = railRef.current;
+    if (!rail) return;
+
+    rail.scrollBy({
+      left: amount,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -470,7 +476,7 @@ export default function FeaturedJobsSection() {
             </div>
           </div>
 
-          <div className="w-full">
+          <div className="w-full overflow-hidden">
             <div
               ref={railRef}
               onMouseEnter={() => {
@@ -483,7 +489,6 @@ export default function FeaturedJobsSection() {
                 no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 pt-1
                 scroll-smooth snap-x snap-mandatory
                 [scrollbar-width:none] [-ms-overflow-style:none]
-                lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-5 lg:gap-y-5
               "
               style={{
                 WebkitOverflowScrolling: "touch",
