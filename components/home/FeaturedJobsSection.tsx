@@ -238,12 +238,10 @@ function JobCard({
         sm:w-[360px] lg:w-[372px]
       "
     >
-      {/* stronger purple fill so it shows on mobile too */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-10 -top-10 h-24 w-24 rounded-full bg-[var(--brand-purple)]/18 blur-2xl sm:h-20 sm:w-20 sm:bg-[var(--brand-purple)]/12" />
       </div>
 
-      {/* visible purple side accents */}
       <div className="absolute left-0 top-5 h-10 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
       <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-[var(--brand-purple)]/45" />
 
@@ -390,6 +388,7 @@ export default function FeaturedJobsSection() {
     const start = () => {
       stop();
 
+      // keep auto-scroll only on desktop
       if (!isDesktop()) return;
 
       intervalRef.current = window.setInterval(() => {
@@ -458,19 +457,20 @@ export default function FeaturedJobsSection() {
               </p>
             </div>
 
-            <div className="hidden items-center gap-3 lg:flex">
+            {/* mobile/tablet only arrows */}
+            <div className="flex items-center gap-2 lg:hidden">
               <button
                 type="button"
-                onClick={() => scrollRail(-780)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
+                onClick={() => scrollRail(-280)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
                 aria-label="Scroll left"
               >
                 ←
               </button>
               <button
                 type="button"
-                onClick={() => scrollRail(780)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
+                onClick={() => scrollRail(280)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
                 aria-label="Scroll right"
               >
                 →
