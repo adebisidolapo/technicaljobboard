@@ -229,30 +229,18 @@ function JobCard({
   return (
     <article
       className="
-        group relative flex min-h-[188px] w-[320px] flex-none snap-start flex-col
-        overflow-hidden rounded-[24px] border border-slate-200/80
-        bg-white/92 backdrop-blur-sm
-        shadow-[0_10px_28px_rgba(15,23,42,0.06)]
-        transition duration-300
-        hover:-translate-y-[3px] hover:shadow-[0_18px_36px_rgba(15,23,42,0.10)]
+        group relative flex min-h-[156px] w-[356px] flex-none snap-start flex-col
+        overflow-hidden rounded-[20px] border border-slate-200
+        bg-white
+        shadow-[0_4px_14px_rgba(15,23,42,0.035)]
+        transition duration-200
+        hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]
+        sm:w-[372px]
       "
     >
-      <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[var(--brand-purple)] via-indigo-400 to-[var(--brand-purple)] opacity-80" />
-
       <div className="flex h-full flex-col p-4">
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-[10px] font-semibold text-indigo-700">
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
-            Featured
-          </span>
-
-          <span className="text-[10px] font-medium text-slate-400">
-            Posted {job.posted}
-          </span>
-        </div>
-
-        <div className="mt-3 flex items-start gap-3">
-          <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)]">
+        <div className="flex items-start gap-3">
+          <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white">
             {logo ? (
               <Image
                 src={logo.src}
@@ -268,12 +256,18 @@ function JobCard({
             )}
           </div>
 
-          <div className="min-w-0">
-            <button onClick={() => onOpen(job)} className="text-left">
-              <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222] transition-colors group-hover:text-[var(--brand-purple)]">
-                {job.title}
-              </h3>
-            </button>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-3">
+              <button onClick={() => onOpen(job)} className="min-w-0 text-left">
+                <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222] transition-colors group-hover:text-[var(--brand-purple)]">
+                  {job.title}
+                </h3>
+              </button>
+
+              <span className="shrink-0 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-700">
+                {job.pay}
+              </span>
+            </div>
 
             <p className="mt-1 truncate text-xs text-slate-500">
               {job.company} • {job.location}
@@ -285,27 +279,33 @@ function JobCard({
           {job.description}
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-2">
-          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-medium text-slate-700">
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-medium text-slate-700">
             {job.type}
           </span>
 
-          <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-700">
-            {job.pay}
+          <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-medium text-slate-700">
+            Posted {job.posted}
           </span>
         </div>
 
-        <div className="mt-auto pt-4">
+        <div className="mt-auto flex items-center justify-between pt-4">
           <button
             onClick={() => onOpen(job)}
             className="
-              inline-flex h-9 items-center justify-center rounded-full
-              bg-[var(--brand-purple)] px-4 text-xs font-semibold text-white
-              shadow-[0_8px_18px_rgba(106,111,242,0.24)]
-              transition duration-200 hover:translate-y-[-1px] hover:opacity-95
+              inline-flex h-8 items-center justify-center rounded-full
+              bg-[#0B1222] px-4 text-xs font-semibold text-white
+              transition duration-200 hover:bg-[#111827]
             "
           >
             Apply
+          </button>
+
+          <button
+            onClick={() => onOpen(job)}
+            className="text-xs font-semibold text-[var(--brand-purple)] transition hover:opacity-80"
+          >
+            View details
           </button>
         </div>
       </div>
@@ -390,7 +390,7 @@ export default function FeaturedJobsSection() {
         } else {
           rail.scrollLeft = next;
         }
-      }, 30);
+      }, 24);
     };
 
     start();
@@ -420,9 +420,6 @@ export default function FeaturedJobsSection() {
       <section id="featured-jobs" className="relative w-full">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
-              Featured jobs
-            </p>
             <h2 className="text-2xl font-bold tracking-tight text-[#0B1222] sm:text-[2rem]">
               Roles Worth Exploring
             </h2>
@@ -435,7 +432,7 @@ export default function FeaturedJobsSection() {
           <div className="hidden items-center gap-3 md:flex">
             <button
               type="button"
-              onClick={() => scrollRail(-320)}
+              onClick={() => scrollRail(-360)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
               aria-label="Scroll left"
             >
@@ -443,7 +440,7 @@ export default function FeaturedJobsSection() {
             </button>
             <button
               type="button"
-              onClick={() => scrollRail(320)}
+              onClick={() => scrollRail(360)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
               aria-label="Scroll right"
             >
@@ -462,10 +459,14 @@ export default function FeaturedJobsSection() {
               isHoveringRef.current = false;
             }}
             className="
-              no-scrollbar flex gap-5 overflow-x-auto pb-4 pt-1
+              no-scrollbar -mx-1 flex gap-4 overflow-x-auto px-1 pb-4 pt-1
               scroll-smooth snap-x snap-mandatory
-              lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-6 lg:gap-y-6
+              [scrollbar-width:none] [-ms-overflow-style:none]
+              lg:grid lg:grid-flow-col lg:grid-rows-2 lg:gap-x-5 lg:gap-y-5
             "
+            style={{
+              WebkitOverflowScrolling: "touch",
+            }}
           >
             {displayJobs.map((job) => (
               <JobCard key={job.id} job={job} onOpen={openDetails} />

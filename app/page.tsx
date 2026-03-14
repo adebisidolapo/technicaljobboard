@@ -241,7 +241,7 @@ const wideContainer =
       {/* Badge */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-         Technical Roles • Salary Visibility • Fast Apply
+         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
      {/* Title */}
@@ -397,7 +397,7 @@ const wideContainer =
 {/* Header */}
 <div className="mb-6 flex items-center justify-between">
   <h2 className="text-2xl font-bold text-[#0B1222]">
-    Category
+   Popular Category
   </h2>
 
   <button
