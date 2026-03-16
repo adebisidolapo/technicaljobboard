@@ -1,27 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
-const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
 
-useEffect(() => {
-  const updateCategoryCount = () => {
-    if (window.innerWidth >= 1024) {
-      setVisibleCategoryCount(16);
-    } else if (window.innerWidth >= 640) {
-      setVisibleCategoryCount(8);
-    } else {
-      setVisibleCategoryCount(6);
-    }
-  };
-
-  updateCategoryCount();
-  window.addEventListener("resize", updateCategoryCount);
-
-  return () => window.removeEventListener("resize", updateCategoryCount);
-}, []);
 
 const CATEGORIES = [
   {
@@ -149,7 +132,24 @@ export default function Home() {
 
   const [categoryQuery, setCategoryQuery] = useState("");
 const [selectedCategory, setSelectedCategory] = useState("");
-const [visibleCategoryCount, setVisibleCategoryCount] = useState(10);
+const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
+
+useEffect(() => {
+  const updateCategoryCount = () => {
+    if (window.innerWidth >= 1024) {
+      setVisibleCategoryCount(16);
+    } else if (window.innerWidth >= 640) {
+      setVisibleCategoryCount(8);
+    } else {
+      setVisibleCategoryCount(6);
+    }
+  };
+
+  updateCategoryCount();
+  window.addEventListener("resize", updateCategoryCount);
+
+  return () => window.removeEventListener("resize", updateCategoryCount);
+}, []);
 
   const runHeroSearch = () => {
     const params = new URLSearchParams();
