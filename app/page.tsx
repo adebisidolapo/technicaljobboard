@@ -255,9 +255,8 @@ const wideContainer =
     </svg>
 
     {/* top glows */}
-    <div className="absolute right-[10%] top-[18px] h-[180px] w-[260px] rounded-full bg-[#cfe6ff]/80 blur-[80px]" />
-    <div className="absolute left-[10%] top-[10px] h-[140px] w-[220px] rounded-full bg-[#e8ffe8]/55 blur-[70px]" />
-
+    <div className="absolute left-[10%] top-[22px] h-[160px] w-[260px] rounded-full bg-[#9BECAE]/30 blur-[60px] animate-[heroGlowBlob_8s_ease-in-out_infinite]" />
+<div className="absolute right-[12%] top-[18px] h-[160px] w-[260px] rounded-full bg-[#C0B0FF]/24 blur-[70px] animate-[heroGlowBlob_10s_ease-in-out_infinite]" />
     {/* soft center fade */}
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_42%)]" />
   </div>
