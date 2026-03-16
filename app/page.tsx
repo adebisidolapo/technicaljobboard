@@ -169,56 +169,25 @@ const wideContainer =
   return (
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
      
+
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-  {/* Background Layer */}
+  {/* ================= AWS STYLE BACKGROUND ================= */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    {/* base */}
     <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-    {/* AWS-style moving color band */}
+    {/* animated top color field */}
     <div className="absolute inset-x-0 top-0 h-[260px] overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-100 blur-[36px]"
-        style={{
-          background: `
-            linear-gradient(
-              100deg,
-              rgba(255,255,255,0) 0%,
-              rgba(161, 242, 181, 0.85) 18%,
-              rgba(168, 210, 255, 0.92) 38%,
-              rgba(196, 167, 255, 0.88) 58%,
-              rgba(255,255,255,0) 80%
-            )
-          `,
-          backgroundSize: "180% 100%",
-          animation: "awsBandMove 10s ease-in-out infinite",
-        }}
-      />
-
-      <div
-        className="absolute inset-0 opacity-95 blur-[70px]"
-        style={{
-          background: `
-            linear-gradient(
-              90deg,
-              rgba(255,255,255,0) 0%,
-              rgba(184, 255, 196, 0.40) 16%,
-              rgba(177, 214, 255, 0.55) 42%,
-              rgba(213, 188, 255, 0.42) 66%,
-              rgba(255,255,255,0) 86%
-            )
-          `,
-          backgroundSize: "200% 100%",
-          animation: "awsBandMove2 15s ease-in-out infinite",
-        }}
-      />
-
+      <div className="absolute inset-0 hero-aws-band" />
+      <div className="absolute inset-0 hero-aws-band-2" />
+      <div className="absolute inset-0 hero-aws-band-3" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
     </div>
 
     {/* subtle grid */}
     <div
-      className="absolute inset-0 opacity-[0.08]"
+      className="absolute inset-0 opacity-[0.07]"
       style={{
         backgroundImage:
           "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
@@ -228,7 +197,7 @@ const wideContainer =
 
     {/* right shape */}
     <svg
-      className="absolute right-0 top-0 h-full w-[65%] opacity-80"
+      className="absolute right-0 top-0 h-full w-[65%] opacity-90"
       viewBox="0 0 720 520"
       preserveAspectRatio="none"
       aria-hidden="true"
@@ -254,23 +223,22 @@ const wideContainer =
       />
     </svg>
 
-    {/* top glows */}
-    <div className="absolute left-[10%] top-[22px] h-[160px] w-[260px] rounded-full bg-[#9BECAE]/30 blur-[60px] animate-[heroGlowBlob_8s_ease-in-out_infinite]" />
-<div className="absolute right-[12%] top-[18px] h-[160px] w-[260px] rounded-full bg-[#C0B0FF]/24 blur-[70px] animate-[heroGlowBlob_10s_ease-in-out_infinite]" />
+    {/* glow blobs */}
+    <div className="absolute right-[12%] top-[8%] h-[220px] w-[220px] rounded-full bg-[#DCEEFF]/70 blur-3xl hero-aws-float" />
+    <div className="absolute left-[-100px] top-[160px] h-[260px] w-[260px] rounded-full bg-white/60 blur-3xl hero-aws-float-delayed" />
+
     {/* soft center fade */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_42%)]" />
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
   </div>
 
-  {/* Content */}
+  {/* ================= HERO CONTENT ================= */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-5xl py-16 text-center sm:py-18 md:py-20 lg:py-24">
-      {/* Badge */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
-      {/* Title */}
       <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
         Powering{" "}
         <span className="relative inline-block">
@@ -283,14 +251,12 @@ const wideContainer =
         Careers
       </h1>
 
-      {/* Subtitle */}
       <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">
         Browse Curated Opportunities Across Engineering, Infrastructure, Cloud,
         Security, Data, and Skilled Technical Fields — Including Remote and
         On-Site Roles.
       </p>
 
-      {/* Search */}
       <div className="mt-9">
         <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-white/70 bg-white/88 p-3 sm:p-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-md">
           <div className="mb-3 text-center text-[13px] font-medium text-slate-500">
@@ -339,7 +305,6 @@ const wideContainer =
             </button>
           </div>
 
-          {/* Popular Tags */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
             <span className="mr-1 font-medium">Popular</span>
 
@@ -360,7 +325,6 @@ const wideContainer =
         </div>
       </div>
 
-      {/* Trust micro-copy */}
       <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[13px] text-slate-500 sm:gap-x-5">
         <span>Trusted employers</span>
         <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
@@ -369,7 +333,6 @@ const wideContainer =
         <span>Fast applications</span>
       </div>
 
-      {/* Jump */}
       <button
         type="button"
         onClick={jumpToFeatured}
@@ -379,32 +342,6 @@ const wideContainer =
       </button>
     </div>
   </div>
-
-  <style jsx>{`
-   @keyframes awsBandMove {
-  0% {
-    transform: translateY(-30%) scaleY(1.1);
-  }
-  50% {
-    transform: translateY(10%) scaleY(1.2);
-  }
-  100% {
-    transform: translateY(-15%) scaleY(1.15);
-  }
-}
-
-   @keyframes awsBandMove2 {
-  0% {
-    transform: translateY(-20%) scaleY(1);
-  }
-  50% {
-    transform: translateY(12%) scaleY(1.15);
-  }
-  100% {
-    transform: translateY(-10%) scaleY(1.05);
-  }
-}
-  `}</style>
 </section>
 
       {/* ================= TRUSTED BY TEAMS ================= */}
