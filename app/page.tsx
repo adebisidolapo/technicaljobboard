@@ -171,23 +171,54 @@ const wideContainer =
      
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-
-  {/* AWS style animated background */}
+  {/* Background Layer */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
-    {/* base */}
     <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-    {/* animated color band */}
+    {/* AWS-style moving color band */}
     <div className="absolute inset-x-0 top-0 h-[260px] overflow-hidden">
-      <div className="hero-band absolute inset-0" />
-      <div className="hero-band2 absolute inset-0" />
+      <div
+        className="absolute inset-0 opacity-100 blur-[36px]"
+        style={{
+          background: `
+            linear-gradient(
+              100deg,
+              rgba(255,255,255,0) 0%,
+              rgba(161, 242, 181, 0.85) 18%,
+              rgba(168, 210, 255, 0.92) 38%,
+              rgba(196, 167, 255, 0.88) 58%,
+              rgba(255,255,255,0) 80%
+            )
+          `,
+          backgroundSize: "180% 100%",
+          animation: "awsBandMove 10s ease-in-out infinite",
+        }}
+      />
+
+      <div
+        className="absolute inset-0 opacity-95 blur-[70px]"
+        style={{
+          background: `
+            linear-gradient(
+              90deg,
+              rgba(255,255,255,0) 0%,
+              rgba(184, 255, 196, 0.40) 16%,
+              rgba(177, 214, 255, 0.55) 42%,
+              rgba(213, 188, 255, 0.42) 66%,
+              rgba(255,255,255,0) 86%
+            )
+          `,
+          backgroundSize: "200% 100%",
+          animation: "awsBandMove2 15s ease-in-out infinite",
+        }}
+      />
+
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
     </div>
 
     {/* subtle grid */}
     <div
-      className="absolute inset-0 opacity-[0.07]"
+      className="absolute inset-0 opacity-[0.08]"
       style={{
         backgroundImage:
           "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
@@ -195,9 +226,9 @@ const wideContainer =
       }}
     />
 
-    {/* right soft shape */}
+    {/* right shape */}
     <svg
-      className="absolute right-0 top-0 h-full w-[65%] opacity-90"
+      className="absolute right-0 top-0 h-full w-[65%] opacity-80"
       viewBox="0 0 720 520"
       preserveAspectRatio="none"
       aria-hidden="true"
@@ -223,19 +254,17 @@ const wideContainer =
       />
     </svg>
 
-    {/* glow */}
-    <div className="absolute right-[12%] top-[8%] h-[220px] w-[220px] rounded-full bg-[#DCEEFF]/70 blur-3xl animate-[floatHero_12s_ease-in-out_infinite]" />
+    {/* top glows */}
+    <div className="absolute right-[10%] top-[18px] h-[180px] w-[260px] rounded-full bg-[#cfe6ff]/80 blur-[80px]" />
+    <div className="absolute left-[10%] top-[10px] h-[140px] w-[220px] rounded-full bg-[#e8ffe8]/55 blur-[70px]" />
 
-    <div className="absolute left-[-100px] top-[160px] h-[260px] w-[260px] rounded-full bg-white/60 blur-3xl animate-[floatHero_14s_ease-in-out_infinite]" />
-
-    {/* soft fade */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
+    {/* soft center fade */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_42%)]" />
   </div>
 
-  {/* ================= HERO CONTENT ================= */}
+  {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-5xl py-16 text-center sm:py-18 md:py-20 lg:py-24">
-
       {/* Badge */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
@@ -265,12 +294,14 @@ const wideContainer =
       {/* Search */}
       <div className="mt-9">
         <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-white/70 bg-white/88 p-3 sm:p-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-md">
-
           <div className="mb-3 text-center text-[13px] font-medium text-slate-500">
             Start with a title, keyword, or location
           </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
+            <label className="sr-only" htmlFor="hero-q">
+              Job title, skill, or keyword
+            </label>
 
             <input
               id="hero-q"
@@ -283,6 +314,10 @@ const wideContainer =
                 if (e.key === "Enter") runHeroSearch();
               }}
             />
+
+            <label className="sr-only" htmlFor="hero-loc">
+              City, state, remote, or hybrid
+            </label>
 
             <input
               id="hero-loc"
@@ -303,9 +338,26 @@ const wideContainer =
             >
               Search Jobs
             </button>
-
           </div>
 
+          {/* Popular Tags */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
+            <span className="mr-1 font-medium">Popular</span>
+
+            {["Frontend", "DevOps", "Data", "Security", "Cloud"].map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => {
+                  setHeroQ(t);
+                  setTimeout(runHeroSearch, 0);
+                }}
+                className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white"
+              >
+                {t}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -326,51 +378,34 @@ const wideContainer =
       >
         Jump To Jobs <span aria-hidden>↓</span>
       </button>
-
     </div>
   </div>
 
-  {/* animation styles */}
   <style jsx>{`
-    .hero-band {
-      background: linear-gradient(
-        90deg,
-        #f4f8fc,
-        #e8f3ff,
-        #dceeff,
-        #eaf4ff,
-        #f4f8fc
-      );
-      animation: heroShift 16s ease-in-out infinite alternate;
+    @keyframes awsBandMove {
+      0% {
+        transform: translateX(-18%) scaleX(1.08);
+      }
+      50% {
+        transform: translateX(7%) scaleX(1.18);
+      }
+      100% {
+        transform: translateX(-10%) scaleX(1.12);
+      }
     }
 
-    .hero-band2 {
-      background: radial-gradient(
-        circle at 70% 0%,
-        rgba(176,216,255,0.35),
-        transparent 70%
-      );
-      mix-blend-mode: screen;
-      animation: heroDrift 20s ease-in-out infinite alternate;
-    }
-
-    @keyframes heroShift {
-      0% { transform: translateX(0) scale(1); }
-      100% { transform: translateX(-3%) scale(1.05); }
-    }
-
-    @keyframes heroDrift {
-      0% { transform: translateX(-2%) scale(1); }
-      100% { transform: translateX(3%) scale(1.04); }
-    }
-
-    @keyframes floatHero {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
+    @keyframes awsBandMove2 {
+      0% {
+        transform: translateX(10%) scaleX(1);
+      }
+      50% {
+        transform: translateX(-12%) scaleX(1.12);
+      }
+      100% {
+        transform: translateX(4%) scaleX(1.03);
+      }
     }
   `}</style>
-
 </section>
 
       {/* ================= TRUSTED BY TEAMS ================= */}
