@@ -168,88 +168,10 @@ const wideContainer =
 
   return (
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
-     
-{/* ================= MOBILE HERO ================= */}
-<section className="relative overflow-hidden bg-[#F4F8FC] px-4 pb-8 pt-8 md:hidden">
-  {/* right angled background shape */}
-  <div
-    className="pointer-events-none absolute right-0 top-0 h-full w-[34%] bg-[#E8F1FB]"
-    style={{
-      clipPath: "polygon(28% 0%, 100% 0%, 100% 100%, 0% 100%)",
-    }}
-  />
-
-  {/* soft top fade */}
-  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.75),transparent_42%)]" />
-
-  <div className="relative mx-auto max-w-md text-center">
-    {/* badge */}
-    <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-[14px] font-medium text-slate-800 shadow-sm">
-      <span className="inline-block h-3 w-3 rounded-full bg-emerald-500" />
-      Curated Roles • Remote Friendly • Fast Apply
-    </div>
-
-    {/* title */}
-    <h1 className="mx-auto mt-8 max-w-[330px] text-[clamp(2.5rem,8vw,3.8rem)] font-extrabold leading-[0.95] tracking-[-0.05em] text-[#0B132B]">
-      Find <span className="text-emerald-600">Technical</span> Jobs Built For
-      Long-Term Careers
-    </h1>
-
-    {/* subtitle */}
-    <p className="mx-auto mt-6 max-w-[335px] text-[16px] leading-8 text-slate-700">
-      Browse opportunities across engineering, infrastructure, cloud, security,
-      and data — including remote options.
-    </p>
-
-    {/* search card */}
-    <div className="mt-10 rounded-[30px] border border-white/80 bg-white/92 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.10)] backdrop-blur">
-      <div className="space-y-4">
-        <label className="sr-only" htmlFor="mobile-hero-q">
-          Job title or keyword
-        </label>
-        <input
-          id="mobile-hero-q"
-          value={heroQ}
-          onChange={(e) => setHeroQ(e.target.value)}
-          type="text"
-          placeholder="Job Title, Keyword"
-          className="h-16 w-full rounded-[22px] border border-slate-200 bg-white px-6 text-[16px] text-slate-900 outline-none placeholder:text-slate-400"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") runHeroSearch();
-          }}
-        />
-
-        <label className="sr-only" htmlFor="mobile-hero-loc">
-          Location
-        </label>
-        <input
-          id="mobile-hero-loc"
-          value={heroLoc}
-          onChange={(e) => setHeroLoc(e.target.value)}
-          type="text"
-          placeholder="Location (Remote, New York, Texas)"
-          className="h-16 w-full rounded-[22px] border border-slate-200 bg-white px-6 text-[16px] text-slate-900 outline-none placeholder:text-slate-400"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") runHeroSearch();
-          }}
-        />
-
-        <button
-          type="button"
-          onClick={runHeroSearch}
-          className="h-16 w-full rounded-full bg-[#07153B] text-[18px] font-semibold text-white shadow-[0_16px_30px_rgba(7,21,59,0.28)] transition hover:opacity-95"
-        >
-          Search
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 {/* ================= HERO ================= */}
-<section className="relative isolate hidden overflow-hidden bg-[#F4F8FC] md:block">
-    {/* Background Layer */}
+<section className="relative isolate overflow-hidden bg-[#F4F8FC]">
+      {/* Background Layer */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
     <div className="absolute inset-0 bg-[#F4F8FC]" />
 

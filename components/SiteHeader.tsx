@@ -133,8 +133,8 @@ export default function SiteHeader() {
         ].join(" ")}
       >
         <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
-          {/* DESKTOP HEADER — left as your original sizing/structure */}
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-24 md:h-28 hidden md:flex items-center justify-between">
+          {/* DESKTOP HEADER — unchanged structure and logo breathing space */}
+          <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
             <Link href="/" className="flex items-center">
               <img
                 src="/Technicaljoblogo-removebg-preview.png"
@@ -168,7 +168,7 @@ export default function SiteHeader() {
 
           {/* MOBILE HEADER ONLY */}
           <div className="md:hidden">
-            {/* top row */}
+            {/* TOP ROW */}
             <div className="mx-auto flex h-24 items-center justify-between px-4">
               <Link href="/" className="flex items-center">
                 <img
@@ -220,7 +220,7 @@ export default function SiteHeader() {
               </div>
             </div>
 
-            {/* quick strip — Post a Job is part of the same strip */}
+            {/* QUICK STRIP — Post Job stays in same row */}
             <div className="border-t border-slate-100 px-4 py-3">
               <div className="no-scrollbar flex items-center gap-3 overflow-x-auto">
                 <MobileStripLink href="/all-jobs?type=remote" active>
@@ -267,7 +267,7 @@ export default function SiteHeader() {
             />
 
             <div className="relative z-50 border-t border-slate-200 bg-white">
-              <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-2">
+              <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
                 <NavLink href="/" onClick={() => setOpen(false)}>
                   Home
                 </NavLink>
@@ -279,7 +279,7 @@ export default function SiteHeader() {
                 <Link
                   href="/#categories"
                   onClick={() => setOpen(false)}
-                  className="rounded-xl px-3 py-3 text-sm font-semibold transition hover:bg-slate-50 hover:text-[var(--brand-purple)] text-slate-900"
+                  className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
                 >
                   Categories
                 </Link>
@@ -295,7 +295,7 @@ export default function SiteHeader() {
                 <Link
                   href="/employer/jobs/new"
                   onClick={() => setOpen(false)}
-                  className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] text-white font-semibold shadow-sm transition"
+                  className="mt-2 inline-flex items-center justify-center rounded-2xl bg-[var(--brand-purple)] py-3 font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
                 >
                   Post Job
                 </Link>
@@ -305,7 +305,7 @@ export default function SiteHeader() {
         )}
       </header>
 
-      {/* spacer — desktop unchanged, mobile slightly taller because of strip */}
+      {/* spacer only for header height; does not touch hero content */}
       <div className="h-[136px] md:h-28" />
     </>
   );
