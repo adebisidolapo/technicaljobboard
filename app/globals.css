@@ -375,10 +375,17 @@ body {
 
 .hero-aws-band {
   background:
-    radial-gradient(60% 140% at 10% 0%, rgba(255,255,255,0.95), rgba(232,244,255,0.45) 45%, transparent 75%),
-    radial-gradient(48% 120% at 90% 0%, rgba(191,222,255,0.65), rgba(214,235,255,0.32) 40%, transparent 70%),
-    linear-gradient(90deg,#f4f8fc,#e8f3ff,#ddeeff,#eaf4ff,#f4f8fc);
-  animation: awsShift 16s ease-in-out infinite alternate;
+    radial-gradient(60% 140% at 10% 0%, rgba(255,255,255,0.95), rgba(210,235,255,0.65) 45%, transparent 75%),
+    radial-gradient(48% 120% at 90% 0%, rgba(160,210,255,0.75), rgba(200,230,255,0.45) 40%, transparent 70%),
+    linear-gradient(
+      90deg,
+      #f4f8fc,
+      #e0f0ff,
+      #cfe7ff,
+      #e3f1ff,
+      #f4f8fc
+    );
+  animation: awsShift 12s ease-in-out infinite alternate;
 }
 
 .hero-aws-band-2 {
