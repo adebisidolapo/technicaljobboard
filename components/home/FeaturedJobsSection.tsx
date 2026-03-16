@@ -235,7 +235,7 @@ function JobCard({
         shadow-[0_4px_14px_rgba(15,23,42,0.035)]
         transition duration-200
         hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]
-        sm:w-[360px] lg:w-[372px]
+        sm:w-[360px] lg:w-full lg:max-w-none
       "
     >
       <div className="pointer-events-none absolute inset-0">
@@ -326,8 +326,6 @@ export default function FeaturedJobsSection() {
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   const railRef = useRef<HTMLDivElement | null>(null);
-  const intervalRef = useRef<number | null>(null);
-  const isHoveringRef = useRef(false);
 
   const displayJobs = useMemo(() => {
     if (!items.length) return FALLBACK_FEATURED_JOBS;
@@ -372,48 +370,6 @@ export default function FeaturedJobsSection() {
     };
   }, []);
 
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const stop = () => {
-      if (intervalRef.current !== null) {
-        window.clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-
-    const isDesktop = () => window.innerWidth >= 1024;
-
-    const start = () => {
-      stop();
-
-      // keep auto-scroll only on desktop
-      if (!isDesktop()) return;
-
-      intervalRef.current = window.setInterval(() => {
-        if (!rail || isHoveringRef.current) return;
-
-        const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
-        const next = rail.scrollLeft + 1;
-
-        if (next >= maxScrollLeft) {
-          rail.scrollLeft = 0;
-        } else {
-          rail.scrollLeft = next;
-        }
-      }, 24);
-    };
-
-    start();
-    window.addEventListener("resize", start);
-
-    return () => {
-      stop();
-      window.removeEventListener("resize", start);
-    };
-  }, [displayJobs]);
-
   const openDetails = (job: FeaturedCardJob) => {
     setSelectedJob(job);
     setDetailsOpen(true);
@@ -457,7 +413,6 @@ export default function FeaturedJobsSection() {
               </p>
             </div>
 
-            {/* mobile/tablet only arrows */}
             <div className="flex items-center gap-2 lg:hidden">
               <button
                 type="button"
@@ -481,17 +436,11 @@ export default function FeaturedJobsSection() {
           <div className="w-full overflow-hidden">
             <div
               ref={railRef}
-              onMouseEnter={() => {
-                isHoveringRef.current = true;
-              }}
-              onMouseLeave={() => {
-                isHoveringRef.current = false;
-              }}
               className="
                 no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 pt-1
                 scroll-smooth snap-x snap-mandatory
                 [scrollbar-width:none] [-ms-overflow-style:none]
-                lg:grid lg:grid-flow-col lg:grid-rows-2 lg:auto-cols-[372px] lg:gap-x-5 lg:gap-y-5
+                lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0
               "
               style={{
                 WebkitOverflowScrolling: "touch",

@@ -4,6 +4,24 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
+const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
+
+useEffect(() => {
+  const updateCategoryCount = () => {
+    if (window.innerWidth >= 1024) {
+      setVisibleCategoryCount(16);
+    } else if (window.innerWidth >= 640) {
+      setVisibleCategoryCount(8);
+    } else {
+      setVisibleCategoryCount(6);
+    }
+  };
+
+  updateCategoryCount();
+  window.addEventListener("resize", updateCategoryCount);
+
+  return () => window.removeEventListener("resize", updateCategoryCount);
+}, []);
 
 const CATEGORIES = [
   {
@@ -440,9 +458,8 @@ const wideContainer =
         </div>
       </section>
 
-   {/* ================= CATEGORIES ================= */}
+  {/* ================= CATEGORIES ================= */}
 <section className="relative overflow-hidden bg-white py-10 sm:py-12">
-  {/* subtle tech background */}
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
     <div
@@ -462,7 +479,6 @@ const wideContainer =
   </div>
 
   <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
-    {/* Header */}
     <div className="mb-6 flex items-center justify-between gap-4">
       <h2 className="text-2xl font-bold tracking-tight text-[#0B1222]">
         Popular Category
@@ -477,7 +493,6 @@ const wideContainer =
       </button>
     </div>
 
-    {/* Grid */}
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {[
         "Engineering",
@@ -492,6 +507,10 @@ const wideContainer =
         "Technical Project & Operations Management",
         "Healthcare & Medical Technology",
         "Science & Research",
+        "Cloud & DevOps",
+        "Product & Technical Support",
+        "QA & Compliance",
+        "Automation & Control Systems",
       ]
         .slice(0, visibleCategoryCount)
         .map((cat) => (
@@ -513,7 +532,6 @@ const wideContainer =
               hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
             "
           >
-            {/* soft fill */}
             <div className="pointer-events-none absolute inset-0">
               <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
               <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
@@ -539,12 +557,11 @@ const wideContainer =
         ))}
     </div>
 
-    {/* Load more */}
-    {visibleCategoryCount < 12 && (
+    {visibleCategoryCount < 16 && (
       <div className="mt-6 flex justify-center">
         <button
           type="button"
-          onClick={() => setVisibleCategoryCount((prev) => prev + 6)}
+          onClick={() => setVisibleCategoryCount((prev) => Math.min(prev + 4, 16))}
           className="
             rounded-full border border-slate-200
             bg-white px-6 py-2.5 text-sm font-semibold text-slate-700
@@ -558,8 +575,125 @@ const wideContainer =
     )}
   </div>
 </section>
+{/* ================= CATEGORIES ================= */}
+<section className="relative overflow-hidden bg-white py-10 sm:py-12">
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
+    <div
+      className="absolute inset-0 opacity-[0.08]"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.05) 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
+        maskImage:
+          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
+      }}
+    />
+    <div className="absolute right-[-60px] top-[-30px] h-36 w-36 rounded-full bg-emerald-200/30 blur-3xl" />
+    <div className="absolute left-[-50px] bottom-[-50px] h-40 w-40 rounded-full bg-indigo-100/35 blur-3xl" />
+  </div>
 
+  <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
+    <div className="mb-6 flex items-center justify-between gap-4">
+      <h2 className="text-2xl font-bold tracking-tight text-[#0B1222]">
+        Popular Category
+      </h2>
 
+      <button
+        type="button"
+        onClick={() => router.push("/all-jobs")}
+        className="text-sm font-semibold text-sky-600 transition hover:text-sky-700"
+      >
+        All jobs →
+      </button>
+    </div>
+
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {[
+        "Engineering",
+        "Architecture & Design",
+        "Information Technology",
+        "Data, AI & Cybersecurity",
+        "Telecom & Network Infrastructure",
+        "Construction & Field Engineering",
+        "Manufacturing & Industrial",
+        "Energy & Utilities",
+        "Skilled Trades & Technical Services",
+        "Technical Project & Operations Management",
+        "Healthcare & Medical Technology",
+        "Science & Research",
+        "Cloud & DevOps",
+        "Product & Technical Support",
+        "QA & Compliance",
+        "Automation & Control Systems",
+      ]
+        .slice(0, visibleCategoryCount)
+        .map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            onClick={() =>
+              router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+            }
+            className="
+              group relative flex items-start justify-between gap-3
+              overflow-hidden rounded-[24px]
+              border border-slate-200/90 bg-white/95
+              px-4 py-4 text-left
+              shadow-[0_6px_18px_rgba(15,23,42,0.035)]
+              transition duration-200
+              hover:-translate-y-[2px]
+              hover:border-slate-300
+              hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
+            "
+          >
+            <div className="pointer-events-none absolute inset-0">
+              <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
+              <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
+            </div>
+
+            <div className="relative min-w-0">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
+                <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
+                  {cat}
+                </h3>
+              </div>
+
+              <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
+                0 Jobs
+              </p>
+            </div>
+
+            <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
+              →
+            </span>
+          </button>
+        ))}
+    </div>
+
+    {visibleCategoryCount < 16 && (
+      <div className="mt-6 flex justify-center">
+        <button
+          type="button"
+          onClick={() =>
+            setVisibleCategoryCount((prev) => Math.min(prev + 4, 16))
+          }
+          className="
+            rounded-full border border-slate-200
+            bg-white px-6 py-2.5 text-sm font-semibold text-slate-700
+            shadow-sm transition duration-200
+            hover:border-slate-300 hover:bg-slate-50
+          "
+        >
+          Load More
+        </button>
+      </div>
+    )}
+  </div>
+</section>
       {/* ================= EMPOWERING ================= */}
       <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
         <div className="pointer-events-none absolute inset-0">
