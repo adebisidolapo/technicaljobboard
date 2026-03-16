@@ -1,50 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
-
-const ALL_CATEGORIES = [
-  "Engineering",
-  "Architecture & Design",
-  "Information Technology",
-  "Data, AI & Cybersecurity",
-  "Telecom & Network Infrastructure",
-  "Construction & Field Engineering",
-  "Manufacturing & Industrial",
-  "Energy & Utilities",
-  "Skilled Trades & Technical Services",
-  "Technical Project & Operations Management",
-  "Healthcare & Medical Technology",
-  "Science & Research",
-  "Cloud Computing",
-  "Systems Analysis",
-  "Quality Assurance",
-  "Database Administration",
-  "Automation & Controls",
-  "Embedded Systems",
-];
-
-const [visibleCategoryCount, setVisibleCategoryCount] = useState(12);
-const [initialCategoryCount, setInitialCategoryCount] = useState(12);
-
-useEffect(() => {
-  const setResponsiveCategoryCount = () => {
-    const isMobile = window.innerWidth < 640;
-    const nextCount = isMobile ? 6 : 12;
-
-    setInitialCategoryCount(nextCount);
-    setVisibleCategoryCount((prev) => (prev < nextCount ? nextCount : prev));
-  };
-
-  setResponsiveCategoryCount();
-  window.addEventListener("resize", setResponsiveCategoryCount);
-
-  return () => {
-    window.removeEventListener("resize", setResponsiveCategoryCount);
-  };
-}, []);
 
 const CATEGORIES = [
   {
@@ -429,7 +388,7 @@ const wideContainer =
         </div>
       </section>
 
-  {/* ================= CATEGORIES ================= */}
+   {/* ================= CATEGORIES ================= */}
 <section className="relative overflow-hidden bg-white py-10 sm:py-12">
   {/* subtle tech background */}
   <div className="pointer-events-none absolute inset-0">
@@ -460,59 +419,76 @@ const wideContainer =
       <button
         type="button"
         onClick={() => router.push("/all-jobs")}
-        className="shrink-0 text-sm font-semibold text-sky-600 transition hover:text-sky-700"
+        className="text-sm font-semibold text-sky-600 transition hover:text-sky-700"
       >
         All jobs →
       </button>
     </div>
 
     {/* Grid */}
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {ALL_CATEGORIES.slice(0, visibleCategoryCount).map((cat) => (
-        <button
-          key={cat}
-          type="button"
-          onClick={() => router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)}
-          className="
-            group relative flex items-start justify-between gap-3
-            overflow-hidden rounded-[22px]
-            border border-slate-200/90 bg-white/95
-            px-4 py-4 text-left
-            shadow-[0_6px_18px_rgba(15,23,42,0.035)]
-            transition duration-200
-            hover:-translate-y-[2px]
-            hover:border-slate-300
-            hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
-          "
-        >
-          {/* soft fill */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
-            <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
-          </div>
-
-          <div className="relative min-w-0">
-            <div className="flex items-center gap-2.5">
-              <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
-              <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
-                {cat}
-              </h3>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {[
+        "Engineering",
+        "Architecture & Design",
+        "Information Technology",
+        "Data, AI & Cybersecurity",
+        "Telecom & Network Infrastructure",
+        "Construction & Field Engineering",
+        "Manufacturing & Industrial",
+        "Energy & Utilities",
+        "Skilled Trades & Technical Services",
+        "Technical Project & Operations Management",
+        "Healthcare & Medical Technology",
+        "Science & Research",
+      ]
+        .slice(0, visibleCategoryCount)
+        .map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            onClick={() =>
+              router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+            }
+            className="
+              group relative flex items-start justify-between gap-3
+              overflow-hidden rounded-[24px]
+              border border-slate-200/90 bg-white/95
+              px-4 py-4 text-left
+              shadow-[0_6px_18px_rgba(15,23,42,0.035)]
+              transition duration-200
+              hover:-translate-y-[2px]
+              hover:border-slate-300
+              hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
+            "
+          >
+            {/* soft fill */}
+            <div className="pointer-events-none absolute inset-0">
+              <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
+              <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
             </div>
 
-            <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
-              0 Jobs
-            </p>
-          </div>
+            <div className="relative min-w-0">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
+                <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
+                  {cat}
+                </h3>
+              </div>
 
-          <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
-            →
-          </span>
-        </button>
-      ))}
+              <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
+                0 Jobs
+              </p>
+            </div>
+
+            <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
+              →
+            </span>
+          </button>
+        ))}
     </div>
 
     {/* Load more */}
-    {visibleCategoryCount < ALL_CATEGORIES.length && (
+    {visibleCategoryCount < 12 && (
       <div className="mt-6 flex justify-center">
         <button
           type="button"
@@ -525,19 +501,6 @@ const wideContainer =
           "
         >
           Load More
-        </button>
-      </div>
-    )}
-
-    {/* Optional collapse button after expanding */}
-    {visibleCategoryCount > initialCategoryCount && (
-      <div className="mt-3 flex justify-center">
-        <button
-          type="button"
-          onClick={() => setVisibleCategoryCount(initialCategoryCount)}
-          className="text-sm font-semibold text-slate-500 transition hover:text-slate-700"
-        >
-          Show Less
         </button>
       </div>
     )}
