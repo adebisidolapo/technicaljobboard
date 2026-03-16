@@ -51,8 +51,8 @@ function MobileStripLink({
     <Link
       href={href}
       className={[
-        "mobile-strip-link shrink-0 whitespace-nowrap text-[12px]",
-        active ? "active text-[var(--brand-purple)]" : "",
+        "mobile-strip-link shrink-0 whitespace-nowrap text-[12px] font-semibold",
+        active ? "text-[var(--brand-purple)]" : "text-slate-700",
       ].join(" ")}
     >
       {children}
@@ -134,7 +134,8 @@ export default function SiteHeader() {
         ].join(" ")}
       >
         <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
-          {/* DESKTOP HEADER */}
+
+          {/* ================= DESKTOP ================= */}
           <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
             <Link href="/" className="flex items-center">
               <img
@@ -167,8 +168,10 @@ export default function SiteHeader() {
             </nav>
           </div>
 
-          {/* MOBILE HEADER */}
+          {/* ================= MOBILE ================= */}
           <div className="md:hidden">
+
+            {/* top row */}
             <div className="mx-auto flex h-24 items-center justify-between px-4">
               <Link href="/" className="flex items-center">
                 <img
@@ -220,36 +223,44 @@ export default function SiteHeader() {
               </div>
             </div>
 
-            {/* MOBILE STRIP (REDUCED SIZE) */}
-            <div className="border-t border-slate-100 px-4 py-2">
-              <div className="no-scrollbar flex items-center gap-1 overflow-x-auto text-[11px]">
+            {/* MOBILE STRIP */}
+            <div className="border-t border-slate-100 px-4 py-2.5">
+              <div className="no-scrollbar flex items-center gap-2 overflow-x-auto text-[12px]">
+
                 <MobileStripLink href="/#categories" active>
-                  Engineering
+                  Tech
                 </MobileStripLink>
 
-                <span className="shrink-0 text-slate-300">•</span>
+                <span className="text-slate-300">•</span>
 
                 <MobileStripLink href="/#categories">
-                  Architecture
+                  Engineer
                 </MobileStripLink>
 
-                <span className="shrink-0 text-slate-300">•</span>
+                <span className="text-slate-300">•</span>
 
                 <MobileStripLink href="/#categories">
-                  Cloud
+                  PM
+                </MobileStripLink>
+
+                <span className="text-slate-300">•</span>
+
+                <MobileStripLink href="/#categories">
+                  Energy
                 </MobileStripLink>
 
                 <Link
                   href="/employer/jobs/new"
-                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-2 py-1 text-[11px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-3 py-1.5 text-[12px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
                 >
-                  Post a Job
+                  Post Job
                 </Link>
               </div>
             </div>
           </div>
         </div>
 
+        {/* ================= MOBILE MENU ================= */}
         {open && (
           <div className="md:hidden">
             <button
