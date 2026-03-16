@@ -169,93 +169,91 @@ const wideContainer =
   return (
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
      
-  {/* ================= HERO ================= */}
+{/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-  {/* Background Layer */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
-  {/* base */}
-  <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-{/* top animated AWS-style color band */}
-<div className="absolute inset-x-0 top-0 h-[230px] overflow-hidden">
-  <div className="hero-top-band-clean absolute inset-0" />
-  <div className="hero-top-band-clean-2 absolute inset-0" />
-  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
-</div>
+  {/* AWS style animated background */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
 
-  {/* subtle grid */}
-  <div
-    className="absolute inset-0 opacity-[0.08]"
-    style={{
-      backgroundImage:
-        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-      backgroundSize: "30px 30px",
-    }}
-  />
+    {/* base */}
+    <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* right shape */}
-  <svg
-    className="absolute right-0 top-0 h-full w-[65%] opacity-80"
-    viewBox="0 0 720 520"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient
-        id="awsHeroGradient"
-        x1="720"
-        y1="0"
-        x2="260"
-        y2="520"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#D8EBFF" stopOpacity="0.75" />
-        <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
-        <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
-      </linearGradient>
-    </defs>
+    {/* animated color band */}
+    <div className="absolute inset-x-0 top-0 h-[260px] overflow-hidden">
+      <div className="hero-band absolute inset-0" />
+      <div className="hero-band2 absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+    </div>
 
-    <path
-      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-      fill="url(#awsHeroGradient)"
+    {/* subtle grid */}
+    <div
+      className="absolute inset-0 opacity-[0.07]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
+        backgroundSize: "30px 30px",
+      }}
     />
-  </svg>
 
-  {/* very soft extra glow */}
-  <div className="absolute right-[12%] top-[36px] h-[180px] w-[240px] rounded-full bg-[#dff1ff]/70 blur-3xl" />
-</div>
+    {/* right soft shape */}
+    <svg
+      className="absolute right-0 top-0 h-full w-[65%] opacity-90"
+      viewBox="0 0 720 520"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient
+          id="awsHeroGradient"
+          x1="720"
+          y1="0"
+          x2="260"
+          y2="520"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#D8EBFF" stopOpacity="0.75" />
+          <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
+          <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
+        </linearGradient>
+      </defs>
 
-  {/* floating glow 1 */}
-  <div className="hero-glow-float absolute right-[12%] top-[8%] h-[220px] w-[220px] rounded-full bg-[#DCEEFF]/70 blur-3xl" />
+      <path
+        d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
+        fill="url(#awsHeroGradient)"
+      />
+    </svg>
 
-  {/* floating glow 2 */}
-  <div className="hero-glow-float absolute left-[-100px] top-[160px] h-[260px] w-[260px] rounded-full bg-white/60 blur-3xl [animation-delay:-5s]" />
+    {/* glow */}
+    <div className="absolute right-[12%] top-[8%] h-[220px] w-[220px] rounded-full bg-[#DCEEFF]/70 blur-3xl animate-[floatHero_12s_ease-in-out_infinite]" />
 
-  {/* soft center fade */}
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
+    <div className="absolute left-[-100px] top-[160px] h-[260px] w-[260px] rounded-full bg-white/60 blur-3xl animate-[floatHero_14s_ease-in-out_infinite]" />
 
+    {/* soft fade */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_42%)]" />
+  </div>
 
-  {/* Content */}
+  {/* ================= HERO CONTENT ================= */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-5xl py-16 text-center sm:py-18 md:py-20 lg:py-24">
+
       {/* Badge */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-         Technical Roles • Remote Jobs • Fast Apply
+        Technical Roles • Remote Jobs • Fast Apply
       </div>
 
-     {/* Title */}
-<h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
-  Powering{" "}
-  <span className="relative inline-block">
-    <span
-      aria-hidden
-      className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 blur-2xl"
-    />
-    <span className="relative text-emerald-600">Technical</span>
-  </span>{" "}
-  Careers
-</h1>
+      {/* Title */}
+      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
+        Powering{" "}
+        <span className="relative inline-block">
+          <span
+            aria-hidden
+            className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 blur-2xl"
+          />
+          <span className="relative text-emerald-600">Technical</span>
+        </span>{" "}
+        Careers
+      </h1>
 
       {/* Subtitle */}
       <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">
@@ -267,14 +265,12 @@ const wideContainer =
       {/* Search */}
       <div className="mt-9">
         <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-white/70 bg-white/88 p-3 sm:p-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-md">
+
           <div className="mb-3 text-center text-[13px] font-medium text-slate-500">
             Start with a title, keyword, or location
           </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
-            <label className="sr-only" htmlFor="hero-q">
-              Job title, skill, or keyword
-            </label>
 
             <input
               id="hero-q"
@@ -287,10 +283,6 @@ const wideContainer =
                 if (e.key === "Enter") runHeroSearch();
               }}
             />
-
-            <label className="sr-only" htmlFor="hero-loc">
-              City, state, remote, or hybrid
-            </label>
 
             <input
               id="hero-loc"
@@ -311,26 +303,9 @@ const wideContainer =
             >
               Search Jobs
             </button>
+
           </div>
 
-          {/* Popular Tags */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
-            <span className="mr-1 font-medium">Popular</span>
-
-            {["Frontend", "DevOps", "Data", "Security", "Cloud"].map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => {
-                  setHeroQ(t);
-                  setTimeout(runHeroSearch, 0);
-                }}
-                className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white"
-              >
-                {t}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -351,10 +326,52 @@ const wideContainer =
       >
         Jump To Jobs <span aria-hidden>↓</span>
       </button>
+
     </div>
   </div>
-</section>
 
+  {/* animation styles */}
+  <style jsx>{`
+    .hero-band {
+      background: linear-gradient(
+        90deg,
+        #f4f8fc,
+        #e8f3ff,
+        #dceeff,
+        #eaf4ff,
+        #f4f8fc
+      );
+      animation: heroShift 16s ease-in-out infinite alternate;
+    }
+
+    .hero-band2 {
+      background: radial-gradient(
+        circle at 70% 0%,
+        rgba(176,216,255,0.35),
+        transparent 70%
+      );
+      mix-blend-mode: screen;
+      animation: heroDrift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroShift {
+      0% { transform: translateX(0) scale(1); }
+      100% { transform: translateX(-3%) scale(1.05); }
+    }
+
+    @keyframes heroDrift {
+      0% { transform: translateX(-2%) scale(1); }
+      100% { transform: translateX(3%) scale(1.04); }
+    }
+
+    @keyframes floatHero {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+  `}</style>
+
+</section>
 
       {/* ================= TRUSTED BY TEAMS ================= */}
       <section className={`bg-white ${sectionPadding}`}>
