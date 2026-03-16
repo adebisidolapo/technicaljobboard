@@ -29,8 +29,8 @@ function NavLink({
       className={[
         "rounded-xl px-3 py-2 text-sm font-semibold transition",
         active
-          ? "text-[var(--brand-purple)] bg-[rgba(106,111,242,0.12)]"
-          : "text-slate-900 hover:text-[var(--brand-purple)] hover:bg-slate-50",
+          ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
+          : "text-slate-900 hover:bg-slate-50 hover:text-[var(--brand-purple)]",
       ].join(" ")}
     >
       {children}
@@ -72,6 +72,7 @@ export default function SiteHeader() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
@@ -82,8 +83,10 @@ export default function SiteHeader() {
 
   useEffect(() => {
     if (!open) return;
+
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     return () => {
       document.body.style.overflow = prev;
     };
@@ -115,6 +118,7 @@ export default function SiteHeader() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (stopTimer.current) window.clearTimeout(stopTimer.current);
@@ -125,8 +129,7 @@ export default function SiteHeader() {
     <>
       <header
         className={[
-          "fixed top-0 left-0 right-0 z-50 w-full",
-          "transition-transform duration-200 ease-out",
+          "fixed left-0 right-0 top-0 z-50 w-full transition-transform duration-200 ease-out",
           hidden ? "-translate-y-full" : "translate-y-0",
         ].join(" ")}
       >
@@ -137,17 +140,17 @@ export default function SiteHeader() {
               <img
                 src="/Technicaljoblogo-removebg-preview.png"
                 alt="TechnicalJobboard"
-                className="h-20 sm:h-24 md:h-28 w-auto object-contain"
+                className="h-20 w-auto object-contain sm:h-24 md:h-28"
               />
             </Link>
 
-            <nav className="hidden md:flex items-center gap-2">
+            <nav className="hidden items-center gap-2 md:flex">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/all-jobs">All Jobs</NavLink>
 
               <Link
                 href="/#categories"
-                className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-900 transition hover:text-[var(--brand-purple)] hover:bg-slate-50"
+                className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
               >
                 Categories
               </Link>
@@ -164,101 +167,86 @@ export default function SiteHeader() {
             </nav>
           </div>
 
-         {/* MOBILE HEADER */}
-<div className="md:hidden">
+          {/* MOBILE HEADER */}
+          <div className="md:hidden">
+            <div className="mx-auto flex h-24 items-center justify-between px-4">
+              <Link href="/" className="flex items-center">
+                <img
+                  src="/Technicaljoblogo-removebg-preview.png"
+                  alt="TechnicalJobboard"
+                  className="h-20 w-auto object-contain"
+                />
+              </Link>
 
-  {/* top row */}
-  <div className="mx-auto flex h-24 items-center justify-between px-4">
-    <Link href="/" className="flex items-center">
-      <img
-        src="/Technicaljoblogo-removebg-preview.png"
-        alt="TechnicalJobboard"
-        className="h-20 w-auto object-contain"
-      />
-    </Link>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  aria-label="Search"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-7 w-7"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.5-3.5" />
+                  </svg>
+                </button>
 
-    <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setOpen((v) => !v)}
+                  aria-label="Toggle menu"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-8 w-8"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                  >
+                    <path d="M4 7h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 17h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
 
-      {/* search icon returned */}
-      <button
-        type="button"
-        aria-label="Search"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          className="h-7 w-7"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.5-3.5" />
-        </svg>
-      </button>
+            <div className="border-t border-slate-100 px-4 py-3">
+              <div className="no-scrollbar flex items-center gap-3 overflow-x-auto">
+                <MobileStripLink href="/#categories" active>
+                  Engineering
+                </MobileStripLink>
 
-      {/* menu button */}
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Toggle menu"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          className="h-8 w-8"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-        >
-          <path d="M4 7h16" />
-          <path d="M4 12h16" />
-          <path d="M4 17h16" />
-        </svg>
-      </button>
+                <span className="shrink-0 text-slate-300">•</span>
 
-    </div>
-  </div>
+                <MobileStripLink href="/#categories">
+                  Architecture
+                </MobileStripLink>
 
+                <span className="shrink-0 text-slate-300">•</span>
 
-  {/* quick strip */}
-  <div className="border-t border-slate-100 px-4 py-3">
-    <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
+                <MobileStripLink href="/#categories">Cloud</MobileStripLink>
 
-      <MobileStripLink href="/#categories" active>
-        Engineering
-      </MobileStripLink>
+                <Link
+                  href="/employer/jobs/new"
+                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+                >
+                  Post a Job
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <span className="shrink-0 text-slate-300">•</span>
-
-      <MobileStripLink href="/#categories">
-        Architecture
-      </MobileStripLink>
-
-      <span className="shrink-0 text-slate-300">•</span>
-
-      <MobileStripLink href="/#categories">
-        Cloud
-      </MobileStripLink>
-
-
-      {/* smaller post job button */}
-      <Link
-        href="/employer/jobs/new"
-        className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
-      >
-        Post a Job
-      </Link>
-
-    </div>
-  </div>
-
-</div>
-
-        {/* MOBILE MENU */}
         {open && (
           <div className="md:hidden">
             <button
