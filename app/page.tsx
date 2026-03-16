@@ -382,29 +382,29 @@ const wideContainer =
   </div>
 
   <style jsx>{`
-    @keyframes awsBandMove {
-      0% {
-        transform: translateX(-18%) scaleX(1.08);
-      }
-      50% {
-        transform: translateX(7%) scaleX(1.18);
-      }
-      100% {
-        transform: translateX(-10%) scaleX(1.12);
-      }
-    }
+   @keyframes awsBandMove {
+  0% {
+    transform: translateY(-30%) scaleY(1.1);
+  }
+  50% {
+    transform: translateY(10%) scaleY(1.2);
+  }
+  100% {
+    transform: translateY(-15%) scaleY(1.15);
+  }
+}
 
-    @keyframes awsBandMove2 {
-      0% {
-        transform: translateX(10%) scaleX(1);
-      }
-      50% {
-        transform: translateX(-12%) scaleX(1.12);
-      }
-      100% {
-        transform: translateX(4%) scaleX(1.03);
-      }
-    }
+   @keyframes awsBandMove2 {
+  0% {
+    transform: translateY(-20%) scaleY(1);
+  }
+  50% {
+    transform: translateY(12%) scaleY(1.15);
+  }
+  100% {
+    transform: translateY(-10%) scaleY(1.05);
+  }
+}
   `}</style>
 </section>
 
