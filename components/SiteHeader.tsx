@@ -38,28 +38,6 @@ function NavLink({
   );
 }
 
-function MobileStripLink({
-  href,
-  children,
-  active = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  active?: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      className={[
-        "mobile-strip-link shrink-0 whitespace-nowrap text-[15px]",
-        active ? "active text-[var(--brand-purple)]" : "",
-      ].join(" ")}
-    >
-      {children}
-    </Link>
-  );
-}
-
 export default function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -184,18 +162,7 @@ export default function SiteHeader() {
                   aria-label="Search"
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-7 w-7"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="m20 20-3.5-3.5" />
-                  </svg>
+                  🔍
                 </button>
 
                 <button
@@ -204,53 +171,50 @@ export default function SiteHeader() {
                   aria-label="Toggle menu"
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                  >
-                    <path d="M4 7h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 17h16" />
-                  </svg>
+                  ☰
                 </button>
               </div>
             </div>
 
+            {/* ===== MOBILE CATEGORY STRIP (UPDATED) ===== */}
             <div className="border-t border-slate-100 px-4 py-3">
-              <div className="no-scrollbar flex items-center gap-3 overflow-x-auto">
-                <MobileStripLink href="/#categories" active>
-                  Tech
-                </MobileStripLink>
+              <div className="flex items-center justify-between gap-2">
 
-                <span className="shrink-0 text-slate-300">•</span>
+                {/* pill */}
+                <div className="flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-[13px] font-medium text-slate-700">
 
-                <MobileStripLink href="/#categories">
-                  Engineer
-                </MobileStripLink>
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
 
-                <span className="shrink-0 text-slate-300">•</span>
+                  <span>Tech</span>
 
-                <MobileStripLink href="/#categories">PM</MobileStripLink>
+                  <span className="text-slate-400">•</span>
 
-                <span className="shrink-0 text-slate-300">•</span>
+                  <span>Engineer</span>
 
-                <MobileStripLink href="/#categories">Energy</MobileStripLink>
+                  <span className="text-slate-400">•</span>
 
+                  <span>PM</span>
+
+                  <span className="text-slate-400">•</span>
+
+                  <span>Energy</span>
+
+                </div>
+
+                {/* post job */}
                 <Link
                   href="/employer/jobs/new"
-                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+                  className="shrink-0 rounded-full bg-[var(--brand-purple)] px-4 py-1.5 text-[13px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
                 >
                   Post a Job
                 </Link>
+
               </div>
             </div>
           </div>
         </div>
 
+        {/* MOBILE MENU */}
         {open && (
           <div className="md:hidden">
             <button
@@ -269,14 +233,6 @@ export default function SiteHeader() {
                 <NavLink href="/all-jobs" onClick={() => setOpen(false)}>
                   All Jobs
                 </NavLink>
-
-                <Link
-                  href="/#categories"
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
-                >
-                  Categories
-                </Link>
 
                 <NavLink href="/jobseeker/login" onClick={() => setOpen(false)}>
                   Jobseeker
