@@ -51,7 +51,7 @@ function MobileStripLink({
     <Link
       href={href}
       className={[
-        "mobile-strip-link shrink-0 whitespace-nowrap text-[12px]",
+        "mobile-strip-link shrink-0 whitespace-nowrap text-[13px] font-semibold",
         active ? "active text-[var(--brand-purple)]" : "",
       ].join(" ")}
     >
@@ -220,9 +220,9 @@ export default function SiteHeader() {
               </div>
             </div>
 
-            {/* MOBILE STRIP (REDUCED SIZE) */}
-            <div className="border-t border-slate-100 px-4 py-2">
-              <div className="no-scrollbar flex items-center gap-1 overflow-x-auto text-[11px]">
+            {/* MOBILE STRIP */}
+            <div className="border-t border-slate-100 px-4 py-3">
+              <div className="no-scrollbar flex items-center gap-2 overflow-x-auto text-[13px]">
                 <MobileStripLink href="/#categories" active>
                   Tech
                 </MobileStripLink>
@@ -238,14 +238,16 @@ export default function SiteHeader() {
                 <MobileStripLink href="/#categories">
                   Cloud
                 </MobileStripLink>
-                 
+
+                <span className="shrink-0 text-slate-300">•</span>
+
                 <MobileStripLink href="/#categories">
                   Energy
                 </MobileStripLink>
 
                 <Link
                   href="/employer/jobs/new"
-                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-2 py-1 text-[11px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-3 py-1.5 text-[12px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
                 >
                   Post a Job
                 </Link>
