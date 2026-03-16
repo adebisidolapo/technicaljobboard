@@ -1,97 +1,296 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+
+function NavLink({
+  href,
+  children,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  const pathname = usePathname();
+
+  const active =
+    href === "/"
+      ? pathname === "/"
+      : href.startsWith("/#")
+      ? false
+      : pathname === href || pathname?.startsWith(href + "/");
+
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={[
+        "rounded-xl px-3 py-2 text-sm font-semibold transition",
+        active
+          ? "bg-[rgba(106,111,242,0.12)] text-[var(--brand-purple)]"
+          : "text-slate-900 hover:bg-slate-50 hover:text-[var(--brand-purple)]",
+      ].join(" ")}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function MobileStripLink({
+  href,
+  children,
+  active = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  active?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={[
+        "mobile-strip-link shrink-0 whitespace-nowrap text-[12px]",
+        active ? "active text-[var(--brand-purple)]" : "",
+      ].join(" ")}
+    >
+      {children}
+    </Link>
+  );
+}
 
 export default function SiteHeader() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+  const stopTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    lastY.current = window.scrollY;
+
+    const onScroll = () => {
+      if (open) return;
+
+      const y = window.scrollY;
+      const delta = y - lastY.current;
+
+      if (Math.abs(delta) < 6) return;
+
+      if (delta > 0 && y > 80) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      lastY.current = y;
+
+      if (stopTimer.current) window.clearTimeout(stopTimer.current);
+      stopTimer.current = window.setTimeout(() => {
+        setHidden(false);
+      }, 180);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (stopTimer.current) window.clearTimeout(stopTimer.current);
+    };
+  }, [open]);
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4">
-
-          {/* TOP ROW */}
-          <div className="flex items-center justify-between h-14">
-
-            {/* LOGO */}
-            <Link href="/" className="font-bold text-lg">
-              TJB
+      <header
+        className={[
+          "fixed left-0 right-0 top-0 z-50 w-full transition-transform duration-200 ease-out",
+          hidden ? "-translate-y-full" : "translate-y-0",
+        ].join(" ")}
+      >
+        <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
+          {/* DESKTOP HEADER */}
+          <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
+            <Link href="/" className="flex items-center">
+              <img
+                src="/Technicaljoblogo-removebg-preview.png"
+                alt="TechnicalJobboard"
+                className="h-20 w-auto object-contain sm:h-24 md:h-28"
+              />
             </Link>
 
-            {/* DESKTOP NAV */}
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-              <Link href="/jobs">Jobs</Link>
-              <Link href="/categories">Categories</Link>
-              <Link href="/companies">Companies</Link>
+            <nav className="hidden items-center gap-2 md:flex">
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/all-jobs">All Jobs</NavLink>
 
               <Link
-                href="/post-job"
-                className="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+                href="/#categories"
+                className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
+              >
+                Categories
+              </Link>
+
+              <NavLink href="/jobseeker/login">Jobseeker</NavLink>
+              <NavLink href="/employer">Employer</NavLink>
+
+              <Link
+                href="/employer/jobs/new"
+                className="ml-2 inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
               >
                 Post Job
               </Link>
             </nav>
-
-            {/* MOBILE MENU BUTTON */}
-            <button
-              className="md:hidden"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
           </div>
 
-          {/* MOBILE CATEGORY ROW */}
-          <div className="md:hidden flex items-center gap-1 text-[10px] py-2 overflow-x-auto whitespace-nowrap">
+          {/* MOBILE HEADER */}
+          <div className="md:hidden">
+            <div className="mx-auto flex h-24 items-center justify-between px-4">
+              <Link href="/" className="flex items-center">
+                <img
+                  src="/Technicaljoblogo-removebg-preview.png"
+                  alt="TechnicalJobboard"
+                  className="h-20 w-auto object-contain"
+                />
+              </Link>
 
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded">
-              Engineering
-            </span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  aria-label="Search"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-7 w-7"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.5-3.5" />
+                  </svg>
+                </button>
 
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded">
-              Cloud
-            </span>
+                <button
+                  type="button"
+                  onClick={() => setOpen((v) => !v)}
+                  aria-label="Toggle menu"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-8 w-8"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                  >
+                    <path d="M4 7h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 17h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
 
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded">
-              Remote
-            </span>
+            {/* MOBILE STRIP (REDUCED SIZE) */}
+            <div className="border-t border-slate-100 px-4 py-2">
+              <div className="no-scrollbar flex items-center gap-1 overflow-x-auto text-[11px]">
+                <MobileStripLink href="/#categories" active>
+                  Engineering
+                </MobileStripLink>
 
-            <Link
-              href="/post-job"
-              className="px-1.5 py-0.5 bg-green-600 text-white rounded font-medium"
-            >
-              Post Job
-            </Link>
+                <span className="shrink-0 text-slate-300">•</span>
 
+                <MobileStripLink href="/#categories">
+                  Architecture
+                </MobileStripLink>
+
+                <span className="shrink-0 text-slate-300">•</span>
+
+                <MobileStripLink href="/#categories">
+                  Cloud
+                </MobileStripLink>
+
+                <Link
+                  href="/employer/jobs/new"
+                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-2 py-1 text-[11px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+                >
+                  Post a Job
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* MOBILE MENU */}
         {open && (
-          <div className="md:hidden border-t bg-white">
-            <div className="flex flex-col p-4 gap-4 text-sm">
+          <div className="md:hidden">
+            <button
+              type="button"
+              className="fixed inset-0 z-40 bg-black/30"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+            />
 
-              <Link href="/jobs" onClick={() => setOpen(false)}>
-                Jobs
-              </Link>
+            <div className="relative z-50 border-t border-slate-200 bg-white">
+              <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
+                <NavLink href="/" onClick={() => setOpen(false)}>
+                  Home
+                </NavLink>
 
-              <Link href="/categories" onClick={() => setOpen(false)}>
-                Categories
-              </Link>
+                <NavLink href="/all-jobs" onClick={() => setOpen(false)}>
+                  All Jobs
+                </NavLink>
 
-              <Link href="/companies" onClick={() => setOpen(false)}>
-                Companies
-              </Link>
+                <Link
+                  href="/#categories"
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
+                >
+                  Categories
+                </Link>
 
+                <NavLink href="/jobseeker/login" onClick={() => setOpen(false)}>
+                  Jobseeker
+                </NavLink>
+
+                <NavLink href="/employer/login" onClick={() => setOpen(false)}>
+                  Employer
+                </NavLink>
+              </div>
             </div>
           </div>
         )}
       </header>
 
-      {/* HEADER SPACER */}
-      <div className="h-[96px] md:h-14" />
+      <div className="h-[136px] md:h-28" />
     </>
   );
 }
