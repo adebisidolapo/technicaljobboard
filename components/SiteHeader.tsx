@@ -38,7 +38,7 @@ function NavLink({
   );
 }
 
-function MobileQuickLink({
+function MobileStripLink({
   href,
   children,
   active = false,
@@ -133,8 +133,8 @@ export default function SiteHeader() {
         ].join(" ")}
       >
         <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
-          {/* DESKTOP HEADER */}
-          <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
+          {/* DESKTOP HEADER — left as your original sizing/structure */}
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-24 md:h-28 hidden md:flex items-center justify-between">
             <Link href="/" className="flex items-center">
               <img
                 src="/Technicaljoblogo-removebg-preview.png"
@@ -166,10 +166,10 @@ export default function SiteHeader() {
             </nav>
           </div>
 
-          {/* MOBILE HEADER */}
+          {/* MOBILE HEADER ONLY */}
           <div className="md:hidden">
-            {/* TOP ROW */}
-            <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-4">
+            {/* top row */}
+            <div className="mx-auto flex h-24 items-center justify-between px-4">
               <Link href="/" className="flex items-center">
                 <img
                   src="/Technicaljoblogo-removebg-preview.png"
@@ -178,7 +178,7 @@ export default function SiteHeader() {
                 />
               </Link>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <button
                   type="button"
                   aria-label="Search"
@@ -220,32 +220,34 @@ export default function SiteHeader() {
               </div>
             </div>
 
-            {/* QUICK STRIP */}
+            {/* quick strip — Post a Job is part of the same strip */}
             <div className="border-t border-slate-100 px-4 py-3">
               <div className="no-scrollbar flex items-center gap-3 overflow-x-auto">
-                <MobileQuickLink href="/all-jobs?type=remote" active>
+                <MobileStripLink href="/all-jobs?type=remote" active>
                   Remote
-                </MobileQuickLink>
+                </MobileStripLink>
 
                 <span className="shrink-0 text-slate-300">•</span>
 
-                <MobileQuickLink href="/#categories">
+                <MobileStripLink href="/#categories">
                   Engineering
-                </MobileQuickLink>
+                </MobileStripLink>
 
                 <span className="shrink-0 text-slate-300">•</span>
 
-                <MobileQuickLink href="/#categories">
+                <MobileStripLink href="/#categories">
                   Architecture
-                </MobileQuickLink>
+                </MobileStripLink>
 
                 <span className="shrink-0 text-slate-300">•</span>
 
-                <MobileQuickLink href="/#categories">Cloud</MobileQuickLink>
+                <MobileStripLink href="/#categories">Cloud</MobileStripLink>
+
+                <span className="shrink-0 text-slate-300">•</span>
 
                 <Link
                   href="/employer/jobs/new"
-                  className="ml-2 shrink-0 rounded-full bg-[var(--brand-purple)] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
+                  className="shrink-0 rounded-full bg-[var(--brand-purple)] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
                 >
                   Post a Job
                 </Link>
@@ -259,80 +261,51 @@ export default function SiteHeader() {
           <div className="md:hidden">
             <button
               type="button"
-              className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-[2px]"
+              className="fixed inset-0 z-40 bg-black/30"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
             />
 
-            <div className="relative z-50 border-t border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]">
-              <div className="mx-auto max-w-7xl px-4 py-5">
-                <div className="rounded-[28px] border border-slate-200 bg-white p-3 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
-                  <div className="mb-2 px-3 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-                    Explore
-                  </div>
+            <div className="relative z-50 border-t border-slate-200 bg-white">
+              <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-2">
+                <NavLink href="/" onClick={() => setOpen(false)}>
+                  Home
+                </NavLink>
 
-                  <div className="flex flex-col gap-1">
-                    <NavLink href="/" onClick={() => setOpen(false)}>
-                      Home
-                    </NavLink>
+                <NavLink href="/all-jobs" onClick={() => setOpen(false)}>
+                  All Jobs
+                </NavLink>
 
-                    <NavLink href="/all-jobs" onClick={() => setOpen(false)}>
-                      All Jobs
-                    </NavLink>
+                <Link
+                  href="/#categories"
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl px-3 py-3 text-sm font-semibold transition hover:bg-slate-50 hover:text-[var(--brand-purple)] text-slate-900"
+                >
+                  Categories
+                </Link>
 
-                    <Link
-                      href="/#categories"
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl px-3 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
-                    >
-                      Categories
-                    </Link>
+                <NavLink href="/jobseeker/login" onClick={() => setOpen(false)}>
+                  Jobseeker
+                </NavLink>
 
-                    <NavLink
-                      href="/jobseeker/login"
-                      onClick={() => setOpen(false)}
-                    >
-                      Jobseeker
-                    </NavLink>
+                <NavLink href="/employer/login" onClick={() => setOpen(false)}>
+                  Employer
+                </NavLink>
 
-                    <NavLink href="/employer/login" onClick={() => setOpen(false)}>
-                      Employer
-                    </NavLink>
-                  </div>
-
-                  <div className="mt-4 grid grid-cols-2 gap-3">
-                    <Link
-                      href="/all-jobs?type=remote"
-                      onClick={() => setOpen(false)}
-                      className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-100"
-                    >
-                      Remote Jobs
-                    </Link>
-
-                    <Link
-                      href="/#categories"
-                      onClick={() => setOpen(false)}
-                      className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-100"
-                    >
-                      Categories
-                    </Link>
-                  </div>
-
-                  <Link
-                    href="/employer/jobs/new"
-                    onClick={() => setOpen(false)}
-                    className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-[var(--brand-purple)] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
-                  >
-                    Post Job
-                  </Link>
-                </div>
+                <Link
+                  href="/employer/jobs/new"
+                  onClick={() => setOpen(false)}
+                  className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] text-white font-semibold shadow-sm transition"
+                >
+                  Post Job
+                </Link>
               </div>
             </div>
           </div>
         )}
       </header>
 
-      {/* Spacer so content doesn't go under fixed header */}
+      {/* spacer — desktop unchanged, mobile slightly taller because of strip */}
       <div className="h-[136px] md:h-28" />
     </>
   );
