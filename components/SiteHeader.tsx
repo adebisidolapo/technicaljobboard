@@ -166,66 +166,99 @@ export default function SiteHeader() {
             </nav>
           </div>
 
-          {/* MOBILE HEADER */}
-          <div className="md:hidden">
-            {/* top row */}
-            <div className="mx-auto flex h-24 items-center justify-between px-4">
-              <Link href="/" className="flex items-center">
-                <img
-                  src="/Technicaljoblogo-removebg-preview.png"
-                  alt="TechnicalJobboard"
-                  className="h-20 w-auto object-contain"
-                />
-              </Link>
+         {/* MOBILE HEADER */}
+<div className="md:hidden">
 
-              <button
-                type="button"
-                onClick={() => setOpen((v) => !v)}
-                aria-label="Toggle menu"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-8 w-8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                >
-                  <path d="M4 7h16" />
-                  <path d="M4 12h16" />
-                  <path d="M4 17h16" />
-                </svg>
-              </button>
-            </div>
+  {/* top row */}
+  <div className="mx-auto flex h-24 items-center justify-between px-4">
+    <Link href="/" className="flex items-center">
+      <img
+        src="/Technicaljoblogo-removebg-preview.png"
+        alt="TechnicalJobboard"
+        className="h-20 w-auto object-contain"
+      />
+    </Link>
 
-            {/* quick strip */}
-            <div className="border-t border-slate-100 px-4 py-3">
-              <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
-                <MobileStripLink href="/#categories" active>
-                  Engineering
-                </MobileStripLink>
+    <div className="flex items-center gap-1">
 
-                <span className="shrink-0 text-slate-300">•</span>
+      {/* search icon returned */}
+      <button
+        type="button"
+        aria-label="Search"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          className="h-7 w-7"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+      </button>
 
-                <MobileStripLink href="/#categories">
-                  Architecture
-                </MobileStripLink>
+      {/* menu button */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Toggle menu"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          className="h-8 w-8"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+        >
+          <path d="M4 7h16" />
+          <path d="M4 12h16" />
+          <path d="M4 17h16" />
+        </svg>
+      </button>
 
-                <span className="shrink-0 text-slate-300">•</span>
+    </div>
+  </div>
 
-                <MobileStripLink href="/#categories">Cloud</MobileStripLink>
 
-                <Link
-                  href="/employer/jobs/new"
-                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
-                >
-                  Post a Job
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+  {/* quick strip */}
+  <div className="border-t border-slate-100 px-4 py-3">
+    <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
+
+      <MobileStripLink href="/#categories" active>
+        Engineering
+      </MobileStripLink>
+
+      <span className="shrink-0 text-slate-300">•</span>
+
+      <MobileStripLink href="/#categories">
+        Architecture
+      </MobileStripLink>
+
+      <span className="shrink-0 text-slate-300">•</span>
+
+      <MobileStripLink href="/#categories">
+        Cloud
+      </MobileStripLink>
+
+
+      {/* smaller post job button */}
+      <Link
+        href="/employer/jobs/new"
+        className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+      >
+        Post a Job
+      </Link>
+
+    </div>
+  </div>
+
+</div>
 
         {/* MOBILE MENU */}
         {open && (
