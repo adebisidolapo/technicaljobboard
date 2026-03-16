@@ -229,13 +229,12 @@ function JobCard({
   return (
     <article
       className="
-        group relative flex min-h-[156px] w-[88vw] max-w-[372px] flex-none snap-center flex-col
-        overflow-hidden rounded-[20px] border border-slate-200
-        bg-white
+        group relative flex min-h-[156px] w-[86vw] max-w-[372px] flex-none snap-start flex-col
+        overflow-hidden rounded-[20px] border border-slate-200 bg-white
         shadow-[0_4px_14px_rgba(15,23,42,0.035)]
         transition duration-200
         hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]
-        sm:w-[360px] lg:w-full lg:max-w-none
+        sm:w-[340px] lg:w-[360px] xl:w-[372px]
       "
     >
       <div className="pointer-events-none absolute inset-0">
@@ -324,11 +323,12 @@ export default function FeaturedJobsSection() {
   const [items, setItems] = useState<FeaturedCardJob[]>([]);
   const [selectedJob, setSelectedJob] = useState<FeaturedCardJob | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const railRef = useRef<HTMLDivElement | null>(null);
 
-  const allJobs = useMemo(() => {
+  const displayJobs = useMemo(() => {
     if (!items.length) return FALLBACK_FEATURED_JOBS;
 
     const existingIds = new Set(items.map((job) => job.id));
@@ -338,10 +338,6 @@ export default function FeaturedJobsSection() {
 
     return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
-
-  const displayJobs = useMemo(() => {
-    return allJobs.slice(0, visibleCount);
-  }, [allJobs, visibleCount]);
 
   useEffect(() => {
     let cancelled = false;
@@ -375,6 +371,27 @@ export default function FeaturedJobsSection() {
     };
   }, []);
 
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const updateScrollState = () => {
+      const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
+      setCanScrollLeft(rail.scrollLeft > 4);
+      setCanScrollRight(rail.scrollLeft < maxScrollLeft - 4);
+    };
+
+    updateScrollState();
+
+    rail.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      rail.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [displayJobs]);
+
   const openDetails = (job: FeaturedCardJob) => {
     setSelectedJob(job);
     setDetailsOpen(true);
@@ -384,12 +401,21 @@ export default function FeaturedJobsSection() {
     setDetailsOpen(false);
   };
 
-  const scrollRail = (amount: number) => {
+  const scrollRail = (direction: "left" | "right") => {
     const rail = railRef.current;
     if (!rail) return;
 
+    const firstCard = rail.querySelector("article");
+    const gap = 16;
+
+    let amount = 320;
+
+    if (firstCard instanceof HTMLElement) {
+      amount = firstCard.offsetWidth + gap;
+    }
+
     rail.scrollBy({
-      left: amount,
+      left: direction === "left" ? -amount : amount,
       behavior: "smooth",
     });
   };
@@ -421,16 +447,19 @@ export default function FeaturedJobsSection() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => scrollRail(-320)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
+                onClick={() => scrollRail("left")}
+                disabled={!canScrollLeft}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Scroll left"
               >
                 ←
               </button>
+
               <button
                 type="button"
-                onClick={() => scrollRail(320)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
+                onClick={() => scrollRail("right")}
+                disabled={!canScrollRight}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Scroll right"
               >
                 →
@@ -445,7 +474,6 @@ export default function FeaturedJobsSection() {
                 no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 pt-1
                 scroll-smooth snap-x snap-mandatory
                 [scrollbar-width:none] [-ms-overflow-style:none]
-                lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-hidden lg:px-0 lg:pb-0
               "
               style={{
                 WebkitOverflowScrolling: "touch",
@@ -456,25 +484,6 @@ export default function FeaturedJobsSection() {
               ))}
             </div>
           </div>
-
-          {visibleCount < allJobs.length && (
-            <div className="mt-6 flex justify-center">
-              <button
-                type="button"
-                onClick={() =>
-                  setVisibleCount((prev) => Math.min(prev + 3, allJobs.length))
-                }
-                className="
-                  rounded-full border border-slate-200
-                  bg-white px-6 py-2.5 text-sm font-semibold text-slate-700
-                  shadow-sm transition duration-200
-                  hover:border-slate-300 hover:bg-slate-50
-                "
-              >
-                Load More
-              </button>
-            </div>
-          )}
         </div>
       </section>
 
