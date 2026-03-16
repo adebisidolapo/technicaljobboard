@@ -229,12 +229,13 @@ function JobCard({
   return (
     <article
       className="
-        group relative flex min-h-[156px] w-[86vw] max-w-[372px] flex-none snap-start flex-col
-        overflow-hidden rounded-[20px] border border-slate-200 bg-white
+        group relative flex min-h-[156px] w-[88vw] max-w-[372px] flex-none snap-start flex-col
+        overflow-hidden rounded-[20px] border border-slate-200
+        bg-white
         shadow-[0_4px_14px_rgba(15,23,42,0.035)]
         transition duration-200
         hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]
-        sm:w-[340px] lg:w-[360px] xl:w-[372px]
+        sm:w-[360px] lg:w-full lg:max-w-none
       "
     >
       <div className="pointer-events-none absolute inset-0">
@@ -298,11 +299,7 @@ function JobCard({
         <div className="mt-auto flex items-center justify-between pt-4">
           <button
             onClick={() => onOpen(job)}
-            className="
-              inline-flex h-8 items-center justify-center rounded-full
-              bg-[#0B1222] px-4 text-xs font-semibold text-white
-              transition duration-200 hover:bg-[#111827]
-            "
+            className="inline-flex h-8 items-center justify-center rounded-full bg-[#0B1222] px-4 text-xs font-semibold text-white transition duration-200 hover:bg-[#111827]"
           >
             Apply
           </button>
@@ -323,12 +320,13 @@ export default function FeaturedJobsSection() {
   const [items, setItems] = useState<FeaturedCardJob[]>([]);
   const [selectedJob, setSelectedJob] = useState<FeaturedCardJob | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  // desktop page: 0 = first 6, 1 = next 6
+  const [desktopPage, setDesktopPage] = useState(0);
 
   const railRef = useRef<HTMLDivElement | null>(null);
 
-  const displayJobs = useMemo(() => {
+  const allJobs = useMemo(() => {
     if (!items.length) return FALLBACK_FEATURED_JOBS;
 
     const existingIds = new Set(items.map((job) => job.id));
@@ -338,6 +336,14 @@ export default function FeaturedJobsSection() {
 
     return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
+
+  const isDesktop =
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : false;
+
+  const desktopJobs = useMemo(() => {
+    const start = desktopPage * 6;
+    return allJobs.slice(start, start + 6);
+  }, [allJobs, desktopPage]);
 
   useEffect(() => {
     let cancelled = false;
@@ -371,27 +377,6 @@ export default function FeaturedJobsSection() {
     };
   }, []);
 
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const updateScrollState = () => {
-      const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
-      setCanScrollLeft(rail.scrollLeft > 4);
-      setCanScrollRight(rail.scrollLeft < maxScrollLeft - 4);
-    };
-
-    updateScrollState();
-
-    rail.addEventListener("scroll", updateScrollState, { passive: true });
-    window.addEventListener("resize", updateScrollState);
-
-    return () => {
-      rail.removeEventListener("scroll", updateScrollState);
-      window.removeEventListener("resize", updateScrollState);
-    };
-  }, [displayJobs]);
-
   const openDetails = (job: FeaturedCardJob) => {
     setSelectedJob(job);
     setDetailsOpen(true);
@@ -407,7 +392,6 @@ export default function FeaturedJobsSection() {
 
     const firstCard = rail.querySelector("article");
     const gap = 16;
-
     let amount = 320;
 
     if (firstCard instanceof HTMLElement) {
@@ -418,6 +402,14 @@ export default function FeaturedJobsSection() {
       left: direction === "left" ? -amount : amount,
       behavior: "smooth",
     });
+  };
+
+  const handleDesktopArrow = (direction: "left" | "right") => {
+    if (direction === "left") {
+      setDesktopPage(0);
+    } else {
+      setDesktopPage(1);
+    }
   };
 
   return (
@@ -447,8 +439,12 @@ export default function FeaturedJobsSection() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => scrollRail("left")}
-                disabled={!canScrollLeft}
+                onClick={() =>
+                  typeof window !== "undefined" && window.innerWidth >= 1024
+                    ? handleDesktopArrow("left")
+                    : scrollRail("left")
+                }
+                disabled={desktopPage === 0 && typeof window !== "undefined" && window.innerWidth >= 1024}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Scroll left"
               >
@@ -457,8 +453,12 @@ export default function FeaturedJobsSection() {
 
               <button
                 type="button"
-                onClick={() => scrollRail("right")}
-                disabled={!canScrollRight}
+                onClick={() =>
+                  typeof window !== "undefined" && window.innerWidth >= 1024
+                    ? handleDesktopArrow("right")
+                    : scrollRail("right")
+                }
+                disabled={desktopPage === 1 && typeof window !== "undefined" && window.innerWidth >= 1024}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Scroll right"
               >
@@ -467,7 +467,8 @@ export default function FeaturedJobsSection() {
             </div>
           </div>
 
-          <div className="w-full overflow-hidden">
+          {/* mobile / tablet */}
+          <div className="w-full overflow-hidden lg:hidden">
             <div
               ref={railRef}
               className="
@@ -475,14 +476,19 @@ export default function FeaturedJobsSection() {
                 scroll-smooth snap-x snap-mandatory
                 [scrollbar-width:none] [-ms-overflow-style:none]
               "
-              style={{
-                WebkitOverflowScrolling: "touch",
-              }}
+              style={{ WebkitOverflowScrolling: "touch" }}
             >
-              {displayJobs.map((job) => (
+              {allJobs.map((job) => (
                 <JobCard key={job.id} job={job} onOpen={openDetails} />
               ))}
             </div>
+          </div>
+
+          {/* desktop: exactly 3 x 2 */}
+          <div className="hidden lg:grid lg:grid-cols-3 lg:gap-6">
+            {desktopJobs.map((job) => (
+              <JobCard key={job.id} job={job} onOpen={openDetails} />
+            ))}
           </div>
         </div>
       </section>
