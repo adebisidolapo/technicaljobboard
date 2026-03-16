@@ -324,10 +324,11 @@ export default function FeaturedJobsSection() {
   const [items, setItems] = useState<FeaturedCardJob[]>([]);
   const [selectedJob, setSelectedJob] = useState<FeaturedCardJob | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const railRef = useRef<HTMLDivElement | null>(null);
 
-  const displayJobs = useMemo(() => {
+  const allJobs = useMemo(() => {
     if (!items.length) return FALLBACK_FEATURED_JOBS;
 
     const existingIds = new Set(items.map((job) => job.id));
@@ -337,6 +338,10 @@ export default function FeaturedJobsSection() {
 
     return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
+
+  const displayJobs = useMemo(() => {
+    return allJobs.slice(0, visibleCount);
+  }, [allJobs, visibleCount]);
 
   useEffect(() => {
     let cancelled = false;
@@ -413,10 +418,10 @@ export default function FeaturedJobsSection() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => scrollRail(-280)}
+                onClick={() => scrollRail(-320)}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
                 aria-label="Scroll left"
               >
@@ -424,7 +429,7 @@ export default function FeaturedJobsSection() {
               </button>
               <button
                 type="button"
-                onClick={() => scrollRail(280)}
+                onClick={() => scrollRail(320)}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:border-slate-300 hover:bg-white"
                 aria-label="Scroll right"
               >
@@ -440,7 +445,7 @@ export default function FeaturedJobsSection() {
                 no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 pt-1
                 scroll-smooth snap-x snap-mandatory
                 [scrollbar-width:none] [-ms-overflow-style:none]
-                lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0
+                lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-hidden lg:px-0 lg:pb-0
               "
               style={{
                 WebkitOverflowScrolling: "touch",
@@ -451,6 +456,25 @@ export default function FeaturedJobsSection() {
               ))}
             </div>
           </div>
+
+          {visibleCount < allJobs.length && (
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={() =>
+                  setVisibleCount((prev) => Math.min(prev + 3, allJobs.length))
+                }
+                className="
+                  rounded-full border border-slate-200
+                  bg-white px-6 py-2.5 text-sm font-semibold text-slate-700
+                  shadow-sm transition duration-200
+                  hover:border-slate-300 hover:bg-slate-50
+                "
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
