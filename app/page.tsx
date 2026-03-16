@@ -132,12 +132,31 @@ export default function Home() {
 
   const [categoryQuery, setCategoryQuery] = useState("");
 const [selectedCategory, setSelectedCategory] = useState("");
+const ALL_CATEGORIES = [
+  "Engineering",
+  "Architecture & Design",
+  "Information Technology",
+  "Data, AI & Cybersecurity",
+  "Telecom & Network Infrastructure",
+  "Construction & Field Engineering",
+  "Manufacturing & Industrial",
+  "Energy & Utilities",
+  "Skilled Trades & Technical Services",
+  "Technical Project & Operations Management",
+  "Healthcare & Medical Technology",
+  "Science & Research",
+  "Cloud & DevOps",
+  "Product & Technical Support",
+  "QA & Compliance",
+  "Automation & Control Systems",
+];
+
 const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
 
 useEffect(() => {
   const updateCategoryCount = () => {
     if (window.innerWidth >= 1024) {
-      setVisibleCategoryCount(16);
+      setVisibleCategoryCount(12);
     } else if (window.innerWidth >= 640) {
       setVisibleCategoryCount(8);
     } else {
@@ -494,75 +513,58 @@ const wideContainer =
     </div>
 
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {[
-        "Engineering",
-        "Architecture & Design",
-        "Information Technology",
-        "Data, AI & Cybersecurity",
-        "Telecom & Network Infrastructure",
-        "Construction & Field Engineering",
-        "Manufacturing & Industrial",
-        "Energy & Utilities",
-        "Skilled Trades & Technical Services",
-        "Technical Project & Operations Management",
-        "Healthcare & Medical Technology",
-        "Science & Research",
-        "Cloud & DevOps",
-        "Product & Technical Support",
-        "QA & Compliance",
-        "Automation & Control Systems",
-      ]
-        .slice(0, visibleCategoryCount)
-        .map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() =>
-              router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
-            }
-            className="
-              group relative flex items-start justify-between gap-3
-              overflow-hidden rounded-[24px]
-              border border-slate-200/90 bg-white/95
-              px-4 py-4 text-left
-              shadow-[0_6px_18px_rgba(15,23,42,0.035)]
-              transition duration-200
-              hover:-translate-y-[2px]
-              hover:border-slate-300
-              hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
-            "
-          >
-            <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
-              <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
+      {ALL_CATEGORIES.slice(0, visibleCategoryCount).map((cat) => (
+        <button
+          key={cat}
+          type="button"
+          onClick={() =>
+            router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
+          }
+          className="
+            group relative flex items-start justify-between gap-3
+            overflow-hidden rounded-[24px]
+            border border-slate-200/90 bg-white/95
+            px-4 py-4 text-left
+            shadow-[0_6px_18px_rgba(15,23,42,0.035)]
+            transition duration-200
+            hover:-translate-y-[2px]
+            hover:border-slate-300
+            hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
+          "
+        >
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
+            <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
+          </div>
+
+          <div className="relative min-w-0">
+            <div className="flex items-center gap-2.5">
+              <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
+              <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
+                {cat}
+              </h3>
             </div>
 
-            <div className="relative min-w-0">
-              <div className="flex items-center gap-2.5">
-                <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
-                <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
-                  {cat}
-                </h3>
-              </div>
+            <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
+              0 Jobs
+            </p>
+          </div>
 
-              <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
-                0 Jobs
-              </p>
-            </div>
-
-            <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
-              →
-            </span>
-          </button>
-        ))}
+          <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
+            →
+          </span>
+        </button>
+      ))}
     </div>
 
-    {visibleCategoryCount < 16 && (
+    {visibleCategoryCount < ALL_CATEGORIES.length && (
       <div className="mt-6 flex justify-center">
         <button
           type="button"
           onClick={() =>
-            setVisibleCategoryCount((prev) => Math.min(prev + 4, 16))
+            setVisibleCategoryCount((prev) =>
+              Math.min(prev + 4, ALL_CATEGORIES.length)
+            )
           }
           className="
             rounded-full border border-slate-200
@@ -577,6 +579,8 @@ const wideContainer =
     )}
   </div>
 </section>
+
+
       {/* ================= EMPOWERING ================= */}
       <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
         <div className="pointer-events-none absolute inset-0">
