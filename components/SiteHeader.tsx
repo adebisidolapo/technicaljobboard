@@ -51,10 +51,8 @@ function MobileStripLink({
     <Link
       href={href}
       className={[
-        "shrink-0 whitespace-nowrap pb-2 text-[15px] font-medium transition",
-        active
-          ? "border-b-[3px] border-[var(--brand-purple)] text-slate-950"
-          : "text-slate-900 hover:text-[var(--brand-purple)]",
+        "mobile-strip-link shrink-0 whitespace-nowrap text-[15px]",
+        active ? "active text-[var(--brand-purple)]" : "",
       ].join(" ")}
     >
       {children}
