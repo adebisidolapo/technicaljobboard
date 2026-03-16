@@ -38,16 +38,38 @@ function NavLink({
   );
 }
 
+function MobileQuickLink({
+  href,
+  children,
+  active = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  active?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={[
+        "shrink-0 whitespace-nowrap pb-2 text-[15px] font-medium transition",
+        active
+          ? "border-b-[3px] border-[var(--brand-purple)] text-slate-950"
+          : "text-slate-900 hover:text-[var(--brand-purple)]",
+      ].join(" ")}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  // Hide on scroll down, show on scroll up / stop
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
   const stopTimer = useRef<number | null>(null);
 
-  // Close on ESC
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -56,12 +78,10 @@ export default function SiteHeader() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  // Close menu on route change
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Lock scroll when mobile menu is open
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -75,25 +95,21 @@ export default function SiteHeader() {
     lastY.current = window.scrollY;
 
     const onScroll = () => {
-      if (open) return; // don't hide while menu is open
+      if (open) return;
 
       const y = window.scrollY;
       const delta = y - lastY.current;
 
-      // small threshold to avoid jitter
       if (Math.abs(delta) < 6) return;
 
       if (delta > 0 && y > 80) {
-        // scrolling down
         setHidden(true);
       } else {
-        // scrolling up
         setHidden(false);
       }
 
       lastY.current = y;
 
-      // when user stops scrolling, show header
       if (stopTimer.current) window.clearTimeout(stopTimer.current);
       stopTimer.current = window.setTimeout(() => {
         setHidden(false);
@@ -116,11 +132,9 @@ export default function SiteHeader() {
           hidden ? "-translate-y-full" : "translate-y-0",
         ].join(" ")}
       >
-        {/* Only visible when header is visible (no overlay while hidden) */}
         <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
-          {/* Give the logo room to look premium */}
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-24 md:h-28 flex items-center justify-between">
-            {/* LOGO (bigger than your original, not smaller) */}
+          {/* DESKTOP HEADER */}
+          <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
             <Link href="/" className="flex items-center">
               <img
                 src="/Technicaljoblogo-removebg-preview.png"
@@ -129,12 +143,10 @@ export default function SiteHeader() {
               />
             </Link>
 
-            {/* DESKTOP NAV */}
             <nav className="hidden md:flex items-center gap-2">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/all-jobs">All Jobs</NavLink>
 
-              {/* Hash link */}
               <Link
                 href="/#categories"
                 className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-900 transition hover:text-[var(--brand-purple)] hover:bg-slate-50"
@@ -152,16 +164,93 @@ export default function SiteHeader() {
                 Post Job
               </Link>
             </nav>
+          </div>
 
-            {/* MOBILE TOGGLE */}
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
-              className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--brand-purple)]/30 bg-white text-[var(--brand-purple)] shadow-sm transition hover:bg-[#EEF0FF]"
-            >
-              ☰
-            </button>
+          {/* MOBILE HEADER */}
+          <div className="md:hidden">
+            {/* TOP ROW */}
+            <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-4">
+              <Link href="/" className="flex items-center">
+                <img
+                  src="/Technicaljoblogo-removebg-preview.png"
+                  alt="TechnicalJobboard"
+                  className="h-20 w-auto object-contain"
+                />
+              </Link>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label="Search"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-7 w-7"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.5-3.5" />
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setOpen((v) => !v)}
+                  aria-label="Toggle menu"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-8 w-8"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                  >
+                    <path d="M4 7h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 17h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* QUICK STRIP */}
+            <div className="border-t border-slate-100 px-4 py-3">
+              <div className="no-scrollbar flex items-center gap-3 overflow-x-auto">
+                <MobileQuickLink href="/all-jobs?type=remote" active>
+                  Remote
+                </MobileQuickLink>
+
+                <span className="shrink-0 text-slate-300">•</span>
+
+                <MobileQuickLink href="/#categories">
+                  Engineering
+                </MobileQuickLink>
+
+                <span className="shrink-0 text-slate-300">•</span>
+
+                <MobileQuickLink href="/#categories">
+                  Architecture
+                </MobileQuickLink>
+
+                <span className="shrink-0 text-slate-300">•</span>
+
+                <MobileQuickLink href="/#categories">Cloud</MobileQuickLink>
+
+                <Link
+                  href="/employer/jobs/new"
+                  className="ml-2 shrink-0 rounded-full bg-[var(--brand-purple)] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
+                >
+                  Post a Job
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -170,44 +259,73 @@ export default function SiteHeader() {
           <div className="md:hidden">
             <button
               type="button"
-              className="fixed inset-0 z-40 bg-black/30"
+              className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-[2px]"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
             />
 
-            <div className="relative z-50 border-t border-slate-200 bg-white">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-2">
-                <NavLink href="/" onClick={() => setOpen(false)}>
-                  Home
-                </NavLink>
+            <div className="relative z-50 border-t border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]">
+              <div className="mx-auto max-w-7xl px-4 py-5">
+                <div className="rounded-[28px] border border-slate-200 bg-white p-3 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+                  <div className="mb-2 px-3 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                    Explore
+                  </div>
 
-                <NavLink href="/all-jobs" onClick={() => setOpen(false)}>
-                  All Jobs
-                </NavLink>
+                  <div className="flex flex-col gap-1">
+                    <NavLink href="/" onClick={() => setOpen(false)}>
+                      Home
+                    </NavLink>
 
-                <Link
-                  href="/#categories"
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-3 py-3 text-sm font-semibold transition hover:bg-slate-50 hover:text-[var(--brand-purple)] text-slate-900"
-                >
-                  Categories
-                </Link>
+                    <NavLink href="/all-jobs" onClick={() => setOpen(false)}>
+                      All Jobs
+                    </NavLink>
 
-                <NavLink href="/jobseeker/login" onClick={() => setOpen(false)}>
-                  Jobseeker
-                </NavLink>
+                    <Link
+                      href="/#categories"
+                      onClick={() => setOpen(false)}
+                      className="rounded-2xl px-3 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-[var(--brand-purple)]"
+                    >
+                      Categories
+                    </Link>
 
-                <NavLink href="/employer/login" onClick={() => setOpen(false)}>
-                  Employer
-                </NavLink>
+                    <NavLink
+                      href="/jobseeker/login"
+                      onClick={() => setOpen(false)}
+                    >
+                      Jobseeker
+                    </NavLink>
 
-                <Link
-                  href="/employer/jobs/new"
-                  onClick={() => setOpen(false)}
-                  className="mt-2 inline-flex items-center justify-center py-3 rounded-2xl bg-[var(--brand-purple)] hover:bg-[var(--brand-purple-dark)] text-white font-semibold shadow-sm transition"
-                >
-                  Post Job
-                </Link>
+                    <NavLink href="/employer/login" onClick={() => setOpen(false)}>
+                      Employer
+                    </NavLink>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <Link
+                      href="/all-jobs?type=remote"
+                      onClick={() => setOpen(false)}
+                      className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-100"
+                    >
+                      Remote Jobs
+                    </Link>
+
+                    <Link
+                      href="/#categories"
+                      onClick={() => setOpen(false)}
+                      className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-100"
+                    >
+                      Categories
+                    </Link>
+                  </div>
+
+                  <Link
+                    href="/employer/jobs/new"
+                    onClick={() => setOpen(false)}
+                    className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-[var(--brand-purple)] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
+                  >
+                    Post Job
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -215,7 +333,7 @@ export default function SiteHeader() {
       </header>
 
       {/* Spacer so content doesn't go under fixed header */}
-      <div className="h-24 md:h-28" />
+      <div className="h-[136px] md:h-28" />
     </>
   );
 }
