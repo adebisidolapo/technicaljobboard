@@ -133,7 +133,7 @@ export default function SiteHeader() {
         ].join(" ")}
       >
         <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
-          {/* DESKTOP HEADER — unchanged structure and logo breathing space */}
+          {/* DESKTOP HEADER */}
           <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
             <Link href="/" className="flex items-center">
               <img
@@ -166,9 +166,9 @@ export default function SiteHeader() {
             </nav>
           </div>
 
-          {/* MOBILE HEADER ONLY */}
+          {/* MOBILE HEADER */}
           <div className="md:hidden">
-            {/* TOP ROW */}
+            {/* top row */}
             <div className="mx-auto flex h-24 items-center justify-between px-4">
               <Link href="/" className="flex items-center">
                 <img
@@ -178,58 +178,31 @@ export default function SiteHeader() {
                 />
               </Link>
 
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  aria-label="Search"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+              <button
+                type="button"
+                onClick={() => setOpen((v) => !v)}
+                aria-label="Toggle menu"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-8 w-8"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-7 w-7"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="m20 20-3.5-3.5" />
-                  </svg>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setOpen((v) => !v)}
-                  aria-label="Toggle menu"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-950 transition hover:bg-slate-100"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                  >
-                    <path d="M4 7h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 17h16" />
-                  </svg>
-                </button>
-              </div>
+                  <path d="M4 7h16" />
+                  <path d="M4 12h16" />
+                  <path d="M4 17h16" />
+                </svg>
+              </button>
             </div>
 
-            {/* QUICK STRIP — Post Job stays in same row */}
+            {/* quick strip */}
             <div className="border-t border-slate-100 px-4 py-3">
-              <div className="no-scrollbar flex items-center gap-3 overflow-x-auto">
-                <MobileStripLink href="/all-jobs?type=remote" active>
-                  Remote
-                </MobileStripLink>
-
-                <span className="shrink-0 text-slate-300">•</span>
-
-                <MobileStripLink href="/#categories">
+              <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
+                <MobileStripLink href="/#categories" active>
                   Engineering
                 </MobileStripLink>
 
@@ -243,11 +216,9 @@ export default function SiteHeader() {
 
                 <MobileStripLink href="/#categories">Cloud</MobileStripLink>
 
-                <span className="shrink-0 text-slate-300">•</span>
-
                 <Link
                   href="/employer/jobs/new"
-                  className="shrink-0 rounded-full bg-[var(--brand-purple)] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
+                  className="ml-auto shrink-0 rounded-full bg-[var(--brand-purple)] px-5 py-3 text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(106,111,242,0.24)] transition hover:bg-[var(--brand-purple-dark)]"
                 >
                   Post a Job
                 </Link>
@@ -291,21 +262,12 @@ export default function SiteHeader() {
                 <NavLink href="/employer/login" onClick={() => setOpen(false)}>
                   Employer
                 </NavLink>
-
-                <Link
-                  href="/employer/jobs/new"
-                  onClick={() => setOpen(false)}
-                  className="mt-2 inline-flex items-center justify-center rounded-2xl bg-[var(--brand-purple)] py-3 font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
-                >
-                  Post Job
-                </Link>
               </div>
             </div>
           </div>
         )}
       </header>
 
-      {/* spacer only for header height; does not touch hero content */}
       <div className="h-[136px] md:h-28" />
     </>
   );
