@@ -1,22 +1,44 @@
 import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import JobDetailClient from "./JobDetailClient";
+
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function JobDetailsPage({ params }: Props) {
+export async function generateMetadata({ params }: Props) {
   const { id } = await params;
 
-  if (!id) return notFound();
+  const job = await prisma.job.findUnique({
+    where: { id },
+    include: { company: true },
+  });
 
-  return (
-    <main className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold">Job Details</h1>
-      <p className="mt-2 text-slate-600">Job ID: {id}</p>
+  if (!job) return { title: "Job Not Found — TechnicalJobBoard" };
 
-      <p className="mt-6 text-sm text-slate-500">
-        This page will show full job info later.
-      </p>
-    </main>
-  );
+  return {
+    title: `${job.title} at ${job.company?.name ?? "Company"} — TechnicalJobBoard`,
+    description: job.description?.slice(0, 160) ?? "",
+  };
+}
+
+export default async function JobDetailPage({ params }: Props) {
+  const { id } = await params;
+
+  const job = await prisma.job.findUnique({
+    where: { id },
+    include: {
+      company: true,
+      locations: true,
+      skills: true,
+    },
+  });
+
+  if (!job || job.status !== "PUBLISHED") {
+    notFound();
+  }
+
+  return <JobDetailClient job={job} />;
 }

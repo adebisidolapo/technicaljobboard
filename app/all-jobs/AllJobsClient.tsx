@@ -369,13 +369,13 @@ export default function AllJobsClient({ initial }: { initial: Initial }) {
       </div>
 
       <div className="grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={clearAll}
-          className="h-11 rounded-2xl border border-slate-200 bg-white text-slate-900 text-sm font-extrabold hover:bg-slate-50 transition"
-        >
-          Clear
-        </button>
+     <button
+  type="button"
+  onClick={() => setFiltersOpen(false)}
+  className="h-11 rounded-2xl bg-[#0B1222] text-white text-sm font-extrabold inline-flex items-center justify-center hover:bg-slate-900 transition"
+>
+  Apply filters
+</button>
 
         <Link
           href="/"
