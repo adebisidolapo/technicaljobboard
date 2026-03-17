@@ -1,658 +1,419 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompanyLogoCarousel from "@/components/CompanyLogoCarousel";
 import FeaturedJobsSection from "@/components/home/FeaturedJobsSection";
 
-
 const CATEGORIES = [
-  {
-    name: "Engineering",
-    roles: ["Mechanical", "Electrical", "Civil", "Structural", "Industrial"],
-  },
-  {
-    name: "Architecture & Design",
-    roles: [
-      "Architect",
-      "Architectural Designer",
-      "BIM / Revit Specialist",
-      "Urban Planner",
-      "CAD / Drafting",
-    ],
-  },
-  {
-    name: "Information Technology",
-    roles: [
-      "Software Development",
-      "Systems Administration",
-      "Network Engineering",
-      "Cloud / DevOps",
-      "IT Support",
-    ],
-  },
-  {
-    name: "Data, AI & Cybersecurity",
-    roles: [
-      "Data Scientist",
-      "Machine Learning Engineer",
-      "Cybersecurity Analyst",
-      "AI Engineer",
-      "Data Engineer",
-    ],
-  },
-  {
-    name: "Telecom & Network Infrastructure",
-    roles: [
-      "Fiber Technician",
-      "OSP Engineer",
-      "RF Engineer",
-      "Tower Technician",
-      "Broadband Network Engineer",
-    ],
-  },
-  {
-    name: "Construction & Field Engineering",
-    roles: [
-      "Field Engineer",
-      "Construction Manager",
-      "Surveyor",
-      "Site Engineer",
-      "Project Engineer",
-    ],
-  },
-  {
-    name: "Manufacturing & Industrial",
-    roles: [
-      "Manufacturing Engineer",
-      "Process Engineer",
-      "CNC Programmer",
-      "Automation Technician",
-      "Quality Engineer",
-    ],
-  },
-  {
-    name: "Energy & Utilities",
-    roles: [
-      "Power Systems Engineer",
-      "Substation Technician",
-      "Renewable Energy Engineer",
-      "Grid Infrastructure Engineer",
-      "Utility Technician",
-    ],
-  },
-  {
-    name: "Skilled Trades & Technical Services",
-    roles: [
-      "Electrician",
-      "HVAC Technician",
-      "Maintenance Technician",
-      "Controls Technician",
-      "Industrial Technician",
-    ],
-  },
-  {
-    name: "Technical Project & Operations Management",
-    roles: [
-      "Technical Project Manager",
-      "Engineering Manager",
-      "Operations Manager",
-      "Program Manager",
-      "Technical Director",
-    ],
-  },
-  {
-    name: "Healthcare & Medical Technology",
-    roles: [
-      "Biomedical Engineer",
-      "Medical Device Engineer",
-      "Radiology Technician",
-      "Lab Technician",
-      "Clinical Systems Specialist",
-    ],
-  },
-  {
-    name: "Science & Research",
-    roles: [
-      "Chemist",
-      "Physicist",
-      "Environmental Scientist",
-      "Materials Scientist",
-      "Laboratory Researcher",
-    ],
-  },
+  { name: "Engineering", count: "1,200+", icon: "⚙️" },
+  { name: "Information Technology", count: "980+", icon: "💻" },
+  { name: "Data, AI & Cybersecurity", count: "740+", icon: "🔐" },
+  { name: "Cloud & DevOps", count: "620+", icon: "☁️" },
+  { name: "Architecture & Design", count: "310+", icon: "📐" },
+  { name: "Construction & Field Engineering", count: "450+", icon: "🏗️" },
+  { name: "Manufacturing & Industrial", count: "390+", icon: "🏭" },
+  { name: "Energy & Utilities", count: "280+", icon: "⚡" },
+  { name: "Telecom & Network Infrastructure", count: "220+", icon: "📡" },
+  { name: "Healthcare & Medical Technology", count: "190+", icon: "🏥" },
+  { name: "Skilled Trades & Technical Services", count: "350+", icon: "🔧" },
+  { name: "Science & Research", count: "160+", icon: "🔬" },
+];
+
+const POPULAR_TAGS = ["Frontend", "DevOps", "Data", "Security", "Cloud", "React", "Python"];
+
+const STATS = [
+  { value: "12,000+", label: "Active Jobs" },
+  { value: "3,400+", label: "Companies" },
+  { value: "98%", label: "Technical Roles" },
+  { value: "Free", label: "To Apply" },
 ];
 
 export default function Home() {
   const router = useRouter();
-
   const [heroQ, setHeroQ] = useState("");
   const [heroLoc, setHeroLoc] = useState("");
-   
+  const [visibleCount, setVisibleCount] = useState(8);
 
-  const [categoryQuery, setCategoryQuery] = useState("");
-const [selectedCategory, setSelectedCategory] = useState("");
-const ALL_CATEGORIES = [
-  "Engineering",
-  "Architecture & Design",
-  "Information Technology",
-  "Data, AI & Cybersecurity",
-  "Telecom & Network Infrastructure",
-  "Construction & Field Engineering",
-  "Manufacturing & Industrial",
-  "Energy & Utilities",
-  "Skilled Trades & Technical Services",
-  "Technical Project & Operations Management",
-  "Healthcare & Medical Technology",
-  "Science & Research",
-  "Cloud & DevOps",
-  "Product & Technical Support",
-  "QA & Compliance",
-  "Automation & Control Systems",
-];
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth >= 1024) setVisibleCount(12);
+      else if (window.innerWidth >= 640) setVisibleCount(8);
+      else setVisibleCount(6);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
-const [visibleCategoryCount, setVisibleCategoryCount] = useState(6);
+  function runSearch() {
+    const p = new URLSearchParams();
+    if (heroQ.trim()) p.set("q", heroQ.trim());
+    if (heroLoc.trim()) p.set("loc", heroLoc.trim());
+    const qs = p.toString();
+    router.push(qs ? "/all-jobs?" + qs : "/all-jobs");
+  }
 
-useEffect(() => {
-  const updateCategoryCount = () => {
-    if (window.innerWidth >= 1024) {
-      setVisibleCategoryCount(12);
-    } else if (window.innerWidth >= 640) {
-      setVisibleCategoryCount(8);
-    } else {
-      setVisibleCategoryCount(6);
-    }
-  };
-
-  updateCategoryCount();
-  window.addEventListener("resize", updateCategoryCount);
-
-  return () => window.removeEventListener("resize", updateCategoryCount);
-}, []);
-
-  const runHeroSearch = () => {
-    const params = new URLSearchParams();
-    if (heroQ.trim()) params.set("q", heroQ.trim());
-    if (heroLoc.trim()) params.set("loc", heroLoc.trim());
-    const qs = params.toString();
-    router.push(qs ? `/all-jobs?${qs}` : "/all-jobs");
-  };
-
-  const jumpToFeatured = () => {
-    const el = document.getElementById("featured");
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const container =
-  "mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8 xl:px-10";
-const wideContainer =
-  "mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8 xl:px-10";
-  const sectionPadding = "py-14 sm:py-16 md:py-20";
-
-  const eyebrow =
-    "text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500";
-  const sectionTitle =
-    "mt-3 text-[clamp(1.6rem,3.2vw,2.35rem)] font-extrabold tracking-tight text-[#0F172A]";
-
- const inputBase =
-  "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 placeholder:text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] outline-none transition focus:border-indigo-200 focus:ring-4 focus:ring-indigo-50";
-  const secondaryButton =
-    "inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50";
-
-  const textButton =
-    "inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition hover:text-emerald-800 hover:underline";
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "Enter") runSearch();
+  }
 
   return (
-    <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
+    <main className="min-h-screen bg-white text-[#0F172A]">
 
-{/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-      {/* Background Layer */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-[#F4F8FC]" />
+      {/* ── HERO ── */}
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-slate-50 to-white">
 
-    {/* AWS-style moving color band */}
-    <div className="absolute inset-x-0 top-0 h-[260px] overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-100 blur-[36px]"
-        style={{
-          background: `
-            linear-gradient(
-              100deg,
-              rgba(255,255,255,0) 0%,
-              rgba(161, 242, 181, 0.85) 18%,
-              rgba(168, 210, 255, 0.92) 38%,
-              rgba(196, 167, 255, 0.88) 58%,
-              rgba(255,255,255,0) 80%
-            )
-          `,
-          backgroundSize: "180% 100%",
-          animation: "awsBandMove 10s ease-in-out infinite",
-        }}
-      />
-
-      <div
-        className="absolute inset-0 opacity-95 blur-[70px]"
-        style={{
-          background: `
-            linear-gradient(
-              90deg,
-              rgba(255,255,255,0) 0%,
-              rgba(184, 255, 196, 0.40) 16%,
-              rgba(177, 214, 255, 0.55) 42%,
-              rgba(213, 188, 255, 0.42) 66%,
-              rgba(255,255,255,0) 86%
-            )
-          `,
-          backgroundSize: "200% 100%",
-          animation: "awsBandMove2 15s ease-in-out infinite",
-        }}
-      />
-
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
-    </div>
-
-    {/* subtle grid */}
-    <div
-      className="absolute inset-0 opacity-[0.08]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-        backgroundSize: "30px 30px",
-      }}
-    />
-
-    {/* right shape */}
-    <svg
-      className="absolute right-0 top-0 h-full w-[65%] opacity-80"
-      viewBox="0 0 720 520"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient
-          id="awsHeroGradient"
-          x1="720"
-          y1="0"
-          x2="260"
-          y2="520"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#D8EBFF" stopOpacity="0.75" />
-          <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
-          <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      <path
-        d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-        fill="url(#awsHeroGradient)"
-      />
-    </svg>
-
-    {/* top glows */}
-    <div className="absolute right-[10%] top-[18px] h-[180px] w-[260px] rounded-full bg-[#cfe6ff]/80 blur-[80px]" />
-    <div className="absolute left-[10%] top-[10px] h-[140px] w-[220px] rounded-full bg-[#e8ffe8]/55 blur-[70px]" />
-
-    {/* soft center fade */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_42%)]" />
-  </div>
-
-  {/* Content */}
-  <div className={`relative ${container}`}>
-    <div className="mx-auto max-w-5xl py-16 text-center sm:py-18 md:py-20 lg:py-24">
-      {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
-        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        Technical Roles • Remote Jobs • Fast Apply
-      </div>
-
-      {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
-        Powering{" "}
-        <span className="relative inline-block">
-          <span
-            aria-hidden
-            className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 blur-2xl"
+        {/* Background decoration */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute right-0 top-0 h-[500px] w-[500px] translate-x-1/3 -translate-y-1/4 rounded-full bg-indigo-100/60 blur-3xl" />
+          <div className="absolute left-0 bottom-0 h-[400px] w-[400px] -translate-x-1/3 translate-y-1/4 rounded-full bg-emerald-100/50 blur-3xl" />
+          <div
+            className="absolute inset-0 opacity-[0.025]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, #0f172a 1px, transparent 0)",
+              backgroundSize: "32px 32px",
+            }}
           />
-          <span className="relative text-emerald-600">Technical</span>
-        </span>{" "}
-        Careers
-      </h1>
+        </div>
 
-      {/* Subtitle */}
-      <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">
-        Browse Curated Opportunities Across Engineering, Infrastructure, Cloud,
-        Security, Data, and Skilled Technical Fields — Including Remote and
-        On-Site Roles.
-      </p>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl py-20 text-center sm:py-24 lg:py-28">
 
-      {/* Search */}
-      <div className="mt-9">
-        <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-white/70 bg-white/88 p-3 sm:p-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-md">
-          <div className="mb-3 text-center text-[13px] font-medium text-slate-500">
-            Start with a title, keyword, or location
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold text-emerald-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Curated Technical Roles — Remote and On-Site
+            </div>
+
+            {/* Headline */}
+            <h1 className="mt-6 text-[clamp(2.2rem,5vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
+              Find Your Next{" "}
+              <span className="relative whitespace-nowrap text-[var(--brand-purple)]">
+                Technical Role
+                <svg
+                  className="absolute -bottom-1 left-0 h-3 w-full"
+                  viewBox="0 0 300 12"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  aria-hidden
+                >
+                  <path
+                    d="M2 10 Q75 2 150 8 Q225 14 298 6"
+                    stroke="var(--brand-purple)"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    fill="none"
+                    opacity="0.4"
+                  />
+                </svg>
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-500 sm:text-lg">
+              Browse verified opportunities across Engineering, Cloud, Security,
+              Data, and more — with transparent salary ranges and trusted employers.
+            </p>
+
+            {/* Search box */}
+            <div className="mx-auto mt-10 w-full max-w-3xl">
+              <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_8px_32px_rgba(15,23,42,0.08)] sm:flex-row sm:items-center">
+                <div className="flex flex-1 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4">
+                  <svg className="h-4 w-4 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg>
+                  <input
+                    value={heroQ}
+                    onChange={(e) => setHeroQ(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    type="text"
+                    placeholder="Job title, skill, or keyword"
+                    className="h-11 w-full bg-transparent text-sm text-slate-700 placeholder:text-slate-400 outline-none"
+                  />
+                </div>
+
+                <div className="flex flex-1 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4">
+                  <svg className="h-4 w-4 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <input
+                    value={heroLoc}
+                    onChange={(e) => setHeroLoc(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    type="text"
+                    placeholder="City, state, or Remote"
+                    className="h-11 w-full bg-transparent text-sm text-slate-700 placeholder:text-slate-400 outline-none"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={runSearch}
+                  className="h-11 w-full shrink-0 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-bold text-white shadow-sm transition hover:opacity-90 sm:w-auto"
+                >
+                  Search Jobs
+                </button>
+              </div>
+
+              {/* Popular tags */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                <span className="text-xs font-medium text-slate-400">Popular:</span>
+                {POPULAR_TAGS.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => { setHeroQ(tag); setTimeout(runSearch, 0); }}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
-            <label className="sr-only" htmlFor="hero-q">
-              Job title, skill, or keyword
-            </label>
-
-            <input
-              id="hero-q"
-              value={heroQ}
-              onChange={(e) => setHeroQ(e.target.value)}
-              type="text"
-              placeholder="Job title, skill, or keyword"
-              className={inputBase}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") runHeroSearch();
-              }}
-            />
-
-            <label className="sr-only" htmlFor="hero-loc">
-              City, state, remote, or hybrid
-            </label>
-
-            <input
-              id="hero-loc"
-              value={heroLoc}
-              onChange={(e) => setHeroLoc(e.target.value)}
-              type="text"
-              placeholder="City, state, remote, or hybrid"
-              className={inputBase}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") runHeroSearch();
-              }}
-            />
-
-            <button
-              type="button"
-              onClick={runHeroSearch}
-              className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-[1px] hover:bg-[#111827] md:col-span-2 xl:col-span-1 xl:w-auto"
-            >
-              Search Jobs
-            </button>
-          </div>
-
-          {/* Popular Tags */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
-            <span className="mr-1 font-medium">Popular</span>
-
-            {["Frontend", "DevOps", "Data", "Security", "Cloud"].map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => {
-                  setHeroQ(t);
-                  setTimeout(runHeroSearch, 0);
-                }}
-                className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white"
-              >
-                {t}
-              </button>
+      {/* ── STATS BAR ── */}
+      <section className="border-y border-slate-100 bg-slate-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 divide-x divide-slate-100 sm:grid-cols-4">
+            {STATS.map((s) => (
+              <div key={s.label} className="px-6 py-6 text-center">
+                <p className="text-2xl font-extrabold text-[var(--brand-purple)]">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-xs font-medium text-slate-500">{s.label}</p>
+              </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Trust micro-copy */}
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[13px] text-slate-500 sm:gap-x-5">
-        <span>Trusted employers</span>
-        <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
-        <span>Remote and on-site roles</span>
-        <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
-        <span>Fast applications</span>
-      </div>
-
-      {/* Jump */}
-      <button
-        type="button"
-        onClick={jumpToFeatured}
-        className={`mt-7 ${textButton}`}
-      >
-        Jump To Jobs <span aria-hidden>↓</span>
-      </button>
-    </div>
-  </div>
-
-  <style jsx>{`
-    @keyframes awsBandMove {
-      0% {
-        transform: translateX(-18%) scaleX(1.08);
-      }
-      50% {
-        transform: translateX(7%) scaleX(1.18);
-      }
-      100% {
-        transform: translateX(-10%) scaleX(1.12);
-      }
-    }
-
-    @keyframes awsBandMove2 {
-      0% {
-        transform: translateX(10%) scaleX(1);
-      }
-      50% {
-        transform: translateX(-12%) scaleX(1.12);
-      }
-      100% {
-        transform: translateX(4%) scaleX(1.03);
-      }
-    }
-  `}</style>
-</section>
-
-      {/* ================= TRUSTED BY TEAMS ================= */}
-      <section className={`bg-white ${sectionPadding}`}>
-        <div className={container}>
+      {/* ── TRUSTED BY ── */}
+      <section className="bg-white py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className={eyebrow}>Trusted By Teams</p>
-            <h2 className={sectionTitle}>Companies Hiring Through Us</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-7 text-slate-600">
-              Trusted by teams hiring technical talent across high-value roles.
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              Trusted by teams
+            </p>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-[#0F172A] sm:text-3xl">
+              Companies Hiring Through Us
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
+              From fast-growing startups to established enterprises — technical
+              teams trust us to find great candidates.
             </p>
           </div>
-        </div>
-
-        <div className="mt-10 sm:mt-12 md:mt-14">
-          <div className={wideContainer}>
+          <div className="mt-10">
             <CompanyLogoCarousel />
           </div>
         </div>
       </section>
 
-      {/* ================= FEATURED JOBS ================= */}
-      <section id="featured" className="bg-[#F2F4F8] py-14 sm:py-16 md:py-20">
-        <div className={container}>
-          <div className="mb-8 sm:mb-10">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500">
-              Featured Jobs
-            </p>
+      {/* ── FEATURED JOBS ── */}
+      <section id="featured" className="bg-slate-50 py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Featured Jobs
+              </p>
+              <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#0F172A] sm:text-3xl">
+                Roles Worth Exploring
+              </h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Curated picks with transparent salaries and trusted employers.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => router.push("/all-jobs")}
+              className="hidden shrink-0 text-sm font-semibold text-[var(--brand-purple)] transition hover:underline sm:block"
+            >
+              View all jobs
+            </button>
           </div>
-
-          <FeaturedJobsSection />
+          <div className="mt-8">
+            <FeaturedJobsSection />
+          </div>
+          <div className="mt-6 flex justify-center sm:hidden">
+            <button
+              type="button"
+              onClick={() => router.push("/all-jobs")}
+              className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              View all jobs
+            </button>
+          </div>
         </div>
       </section>
 
-{/* ================= CATEGORIES ================= */}
-<section className="relative overflow-hidden bg-white py-10 sm:py-12">
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
-    <div
-      className="absolute inset-0 opacity-[0.08]"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.05) 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-        maskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
-        WebkitMaskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
-      }}
-    />
-    <div className="absolute right-[-60px] top-[-30px] h-36 w-36 rounded-full bg-emerald-200/30 blur-3xl" />
-    <div className="absolute left-[-50px] bottom-[-50px] h-40 w-40 rounded-full bg-indigo-100/35 blur-3xl" />
-  </div>
-
-  <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
-    <div className="mb-6 flex items-center justify-between gap-4">
-      <h2 className="text-2xl font-bold tracking-tight text-[#0B1222]">
-        Popular Category
-      </h2>
-
-      <button
-        type="button"
-        onClick={() => router.push("/all-jobs")}
-        className="text-sm font-semibold text-sky-600 transition hover:text-sky-700"
-      >
-        All jobs →
-      </button>
-    </div>
-
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {ALL_CATEGORIES.slice(0, visibleCategoryCount).map((cat) => (
-        <button
-          key={cat}
-          type="button"
-          onClick={() =>
-            router.push(`/all-jobs?cat=${encodeURIComponent(cat)}`)
-          }
-          className="
-            group relative flex items-start justify-between gap-3
-            overflow-hidden rounded-[24px]
-            border border-slate-200/90 bg-white/95
-            px-4 py-4 text-left
-            shadow-[0_6px_18px_rgba(15,23,42,0.035)]
-            transition duration-200
-            hover:-translate-y-[2px]
-            hover:border-slate-300
-            hover:shadow-[0_12px_26px_rgba(15,23,42,0.06)]
-          "
-        >
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -right-5 -top-5 h-14 w-14 rounded-full bg-emerald-100/60 blur-2xl transition duration-300 group-hover:bg-emerald-100/80" />
-            <div className="absolute left-0 top-0 h-full w-[1px] bg-gradient-to-b from-emerald-400/70 via-emerald-300/20 to-transparent" />
-          </div>
-
-          <div className="relative min-w-0">
-            <div className="flex items-center gap-2.5">
-              <span className="inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.10)]" />
-              <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-[#0B1222]">
-                {cat}
-              </h3>
+      {/* ── CATEGORIES ── */}
+      <section id="categories" className="bg-white py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Browse by field
+              </p>
+              <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#0F172A] sm:text-3xl">
+                Explore Categories
+              </h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Find roles in the technical fields that match your skills.
+              </p>
             </div>
-
-            <p className="mt-2 pl-5 text-sm font-medium text-slate-700">
-              0 Jobs
-            </p>
+            <button
+              type="button"
+              onClick={() => router.push("/all-jobs")}
+              className="hidden shrink-0 text-sm font-semibold text-[var(--brand-purple)] transition hover:underline sm:block"
+            >
+              All jobs
+            </button>
           </div>
 
-          <span className="relative mt-1 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-slate-500">
-            →
-          </span>
-        </button>
-      ))}
-    </div>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {CATEGORIES.slice(0, visibleCount).map((cat) => (
+              <button
+                key={cat.name}
+                type="button"
+                onClick={() => router.push("/all-jobs?cat=" + encodeURIComponent(cat.name))}
+                className="group flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-xl transition group-hover:bg-indigo-50">
+                  {cat.icon}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-slate-800 group-hover:text-[var(--brand-purple)]">
+                    {cat.name}
+                  </p>
+                  <p className="mt-0.5 text-xs text-slate-400">{cat.count}</p>
+                </div>
+              </button>
+            ))}
+          </div>
 
-    {visibleCategoryCount < ALL_CATEGORIES.length && (
-      <div className="mt-6 flex justify-center">
-        <button
-          type="button"
-          onClick={() =>
-            setVisibleCategoryCount((prev) =>
-              Math.min(prev + 4, ALL_CATEGORIES.length)
-            )
-          }
-          className="
-            rounded-full border border-slate-200
-            bg-white px-6 py-2.5 text-sm font-semibold text-slate-700
-            shadow-sm transition duration-200
-            hover:border-slate-300 hover:bg-slate-50
-          "
-        >
-          Load More
-        </button>
-      </div>
-    )}
-  </div>
-</section>
-
-
-      {/* ================= EMPOWERING ================= */}
-      <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
-          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
+          {visibleCount < CATEGORIES.length && (
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((v) => Math.min(v + 4, CATEGORIES.length))}
+                className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Load more categories
+              </button>
+            </div>
+          )}
         </div>
+      </section>
 
-        <div className={`relative ${container}`}>
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+      {/* ── WHY US ── */}
+      <section className="bg-slate-50 py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+
+            {/* Image */}
             <div className="flex justify-center lg:justify-start">
-              <div className="rounded-3xl border border-slate-200 bg-[#F8FAFC] p-3 shadow-[0_12px_28px_rgba(15,23,42,0.07)]">
+              <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-200 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
                 <img
                   src="/empower-platform.png"
-                  alt="Job Platform Dashboard Illustration"
-                  className="w-full max-w-[560px] rounded-2xl"
+                  alt="TechnicalJobBoard platform"
+                  className="w-full rounded-2xl"
                 />
               </div>
             </div>
 
+            {/* Text */}
             <div>
-              <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-xs font-semibold text-[var(--brand-purple)]">
-                Built For Technical Careers
+              <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-[var(--brand-purple)]">
+                Built for Technical Careers
               </span>
-
-              <h3 className="mt-4 text-[clamp(1.55rem,3vw,2rem)] font-extrabold tracking-tight text-slate-900">
+              <h2 className="mt-4 text-[clamp(1.5rem,3vw,2.2rem)] font-extrabold tracking-tight text-[#0F172A]">
                 Empowering Job Seekers
-              </h3>
-
-              <p className="mt-3 max-w-xl text-[15px] leading-7 text-slate-600">
-                Discover vetted technical roles, transparent salary ranges, and
-                trusted employers in one focused experience.
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-slate-500 sm:text-base">
+                We focus exclusively on technical roles — so every job you see is
+                relevant. No noise, no generic listings. Just verified roles with
+                transparent salary ranges and trusted employers.
               </p>
 
-              <ul className="mt-6 space-y-3 text-sm text-slate-700">
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
-                  Verified Technical Opportunities
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
-                  Clearer Expectations And Visibility
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
-                  Roles Built For Long-Term Growth
-                </li>
-              </ul>
+              <div className="mt-6 space-y-3">
+                {[
+                  { title: "Verified Opportunities", desc: "Every role reviewed for quality before it goes live." },
+                  { title: "Salary Transparency", desc: "See pay ranges upfront — no surprises after an interview." },
+                  { title: "Built for Long-Term Growth", desc: "Roles designed for engineers who want to advance." },
+                ].map((item) => (
+                  <div key={item.title} className="flex items-start gap-3">
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-purple)]">
+                      <svg className="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">{item.title}</p>
+                      <p className="text-sm text-slate-500">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <button
                   type="button"
                   onClick={() => router.push("/all-jobs")}
-                  className="inline-flex h-12 items-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+                  className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
                 >
-                  Get Started
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-                    →
-                  </span>
+                  Browse Jobs
                 </button>
-
                 <button
                   type="button"
-                  onClick={() => router.push("/all-jobs?loc=Remote")}
-                  className={secondaryButton}
+                  onClick={() => router.push("/all-jobs?remote=true")}
+                  className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
                 >
-                  Remote Roles
+                  Remote Only
                 </button>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* ── FOR EMPLOYERS ── */}
+      <section className="bg-[var(--brand-purple)] py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+              Hiring technical talent?
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-indigo-200">
+              Post your job and reach thousands of qualified engineers, developers,
+              and technical specialists actively looking for their next role.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => router.push("/employer/jobs/new")}
+                className="inline-flex h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-bold text-[var(--brand-purple)] shadow-sm transition hover:bg-slate-50"
+              >
+                Post a Job
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push("/employer")}
+                className="inline-flex h-11 items-center justify-center rounded-xl border border-white/25 bg-white/10 px-6 text-sm font-bold text-white transition hover:bg-white/20"
+              >
+                View Employer Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }
