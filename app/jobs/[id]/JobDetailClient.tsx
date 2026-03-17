@@ -58,40 +58,38 @@ function getCompanyLogo(companyName: string) {
 }
 
 function fmtMoney(
-  min?: number | null,
-  max?: number | null,
-  currency?: string | null
+  min: number | null | undefined,
+  max: number | null | undefined,
+  currency: string | null | undefined
 ) {
-  const symbol =
-    currency === "GBP" ? "£" : currency === "EUR" ? "€" : "$";
+  const symbol = currency === "GBP" ? "GBP " : currency === "EUR" ? "EUR " : "$";
   const a = typeof min === "number" ? min : null;
   const b = typeof max === "number" ? max : null;
-  if (a != null && b != null)
-    return symbol + a.toLocaleString() + " – " + symbol + b.toLocaleString();
-  if (a != null) return "From " + symbol + a.toLocaleString();
-  if (b != null) return "Up to " + symbol + b.toLocaleString();
+
+  if (a !== null && b !== null) {
+    return symbol + a.toLocaleString() + " - " + symbol + b.toLocaleString();
+  }
+  if (a !== null) return "From " + symbol + a.toLocaleString();
+  if (b !== null) return "Up to " + symbol + b.toLocaleString();
   return "Salary not listed";
 }
 
 function pickLocation(job: Job) {
   if (job.remote) return "Remote";
-  const l = job.locations?.[0];
-  return (
-    l?.label ||
-    [l?.city, l?.country].filter(Boolean).join(", ") ||
-    "United States"
-  );
+  const l = job.locations && job.locations[0];
+  if (!l) return "United States";
+  if (l.label) return l.label;
+  const parts = [l.city, l.country].filter(Boolean);
+  return parts.length > 0 ? parts.join(", ") : "United States";
 }
 
 function timeAgo(date: Date | null) {
   if (!date) return "Recently";
-  const seconds = Math.floor(
-    (Date.now() - new Date(date).getTime()) / 1000
-  );
+  const seconds = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
   if (seconds < 60) return "Just now";
-  if (seconds < 3600) return Math.floor(seconds / 60) + "m ago";
-  if (seconds < 86400) return Math.floor(seconds / 3600) + "h ago";
-  if (seconds < 604800) return Math.floor(seconds / 86400) + "d ago";
+  if (seconds < 3600) return Math.floor(seconds / 60).toString() + "m ago";
+  if (seconds < 86400) return Math.floor(seconds / 3600).toString() + "h ago";
+  if (seconds < 604800) return Math.floor(seconds / 86400).toString() + "d ago";
   return new Date(date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -117,12 +115,12 @@ const REQUIREMENTS = [
 ];
 
 const BENEFITS = [
-  { icon: "🏥", label: "Health Insurance" },
-  { icon: "🏖️", label: "Paid Time Off" },
-  { icon: "🏠", label: "Flexible / Remote Work" },
-  { icon: "📈", label: "Career Growth" },
-  { icon: "💻", label: "Equipment Stipend" },
-  { icon: "🎓", label: "Learning Budget" },
+  { icon: "Health", label: "Health Insurance" },
+  { icon: "Time", label: "Paid Time Off" },
+  { icon: "Remote", label: "Flexible / Remote Work" },
+  { icon: "Growth", label: "Career Growth" },
+  { icon: "Equip", label: "Equipment Stipend" },
+  { icon: "Learn", label: "Learning Budget" },
 ];
 
 export default function JobDetailClient({ job }: Props) {
@@ -137,14 +135,18 @@ export default function JobDetailClient({ job }: Props) {
 
   const paragraphs = (job.description ?? "")
     .split(/\n+/)
-    .map((p) => p.trim())
+    .map(function (p) {
+      return p.trim();
+    })
     .filter(Boolean);
 
   function handleCopyLink() {
     if (typeof window !== "undefined") {
-      navigator.clipboard.writeText(window.location.href).then(() => {
+      navigator.clipboard.writeText(window.location.href).then(function () {
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        setTimeout(function () {
+          setCopied(false);
+        }, 2000);
       });
     }
   }
@@ -157,20 +159,37 @@ export default function JobDetailClient({ job }: Props) {
     );
   }
 
+  const companyName = job.company?.name ?? "Company";
+  const companyInitial = companyName.charAt(0).toUpperCase();
+
+  const applyButtonClass = applied
+    ? "h-12 px-8 rounded-2xl text-sm font-extrabold transition shadow-sm bg-emerald-500 text-white cursor-default"
+    : "h-12 px-8 rounded-2xl text-sm font-extrabold transition shadow-sm bg-[var(--brand-purple)] text-white hover:opacity-90";
+
+  const applyButtonSmallClass = applied
+    ? "mt-5 h-11 w-full rounded-2xl text-sm font-extrabold transition shadow-sm bg-emerald-500 text-white cursor-default"
+    : "mt-5 h-11 w-full rounded-2xl text-sm font-extrabold transition shadow-sm bg-[var(--brand-purple)] text-white hover:opacity-90";
+
+  const saveButtonClass = saved
+    ? "mt-2 h-11 w-full rounded-2xl border text-sm font-extrabold transition border-[var(--brand-purple)] text-[var(--brand-purple)] bg-indigo-50"
+    : "mt-2 h-11 w-full rounded-2xl border text-sm font-extrabold transition border-slate-200 text-slate-700 hover:bg-slate-50";
+
+  const heartButtonClass = saved
+    ? "flex-none h-10 w-10 rounded-full border flex items-center justify-center transition border-[var(--brand-purple)] bg-[var(--brand-purple)] text-white"
+    : "flex-none h-10 w-10 rounded-full border flex items-center justify-center transition border-slate-200 bg-white text-slate-400 hover:border-slate-300";
+
   return (
     <main className="min-h-screen bg-[#F3F6FB]">
-
-      {/* Breadcrumb */}
       <div className="border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-2 text-sm text-slate-500">
           <Link href="/" className="hover:text-slate-800 transition">
             Home
           </Link>
-          <span>›</span>
+          <span className="text-slate-300">/</span>
           <Link href="/all-jobs" className="hover:text-slate-800 transition">
             All Jobs
           </Link>
-          <span>›</span>
+          <span className="text-slate-300">/</span>
           <span className="text-slate-800 font-semibold truncate max-w-[200px]">
             {job.title}
           </span>
@@ -179,15 +198,9 @@ export default function JobDetailClient({ job }: Props) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-          {/* ── LEFT: Main content ── */}
           <div className="lg:col-span-8 space-y-6">
-
-            {/* Job header card */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
               <div className="flex items-start gap-4">
-
-                {/* Company logo */}
                 <div className="flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                   {logo ? (
                     <Image
@@ -199,12 +212,11 @@ export default function JobDetailClient({ job }: Props) {
                     />
                   ) : (
                     <span className="text-xl font-extrabold text-[var(--brand-purple)]">
-                      {(job.company?.name ?? "C").charAt(0).toUpperCase()}
+                      {companyInitial}
                     </span>
                   )}
                 </div>
 
-                {/* Title + company */}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -212,39 +224,34 @@ export default function JobDetailClient({ job }: Props) {
                         {job.title}
                       </h1>
                       <p className="mt-1 text-base text-slate-600">
-                        <span className="font-semibold text-slate-800">
-                          {job.company?.name ?? "Company"}
-                        </span>
-                        {" • "}
-                        {location}
+                        <span className="font-semibold text-slate-800">{companyName}</span>
+                        <span className="mx-2 text-slate-300">•</span>
+                        <span>{location}</span>
                         {job.remote && (
-                          <>
-                            {" • "}
+                          <span>
+                            <span className="mx-2 text-slate-300">•</span>
                             <span className="text-[var(--brand-purple)] font-semibold">
                               Remote
                             </span>
-                          </>
+                          </span>
                         )}
                       </p>
                     </div>
 
-                    {/* Save button */}
                     <button
                       type="button"
-                      onClick={() => setSaved((v) => !v)}
-                      className={
-                        "flex-none h-10 w-10 rounded-full border flex items-center justify-center transition " +
-                        (saved
-                          ? "border-[var(--brand-purple)] bg-[var(--brand-purple)] text-white"
-                          : "border-slate-200 bg-white text-slate-400 hover:border-slate-300")
-                      }
+                      onClick={function () {
+                        setSaved(function (v) {
+                          return !v;
+                        });
+                      }}
+                      className={heartButtonClass}
                       aria-label="Save job"
                     >
-                      {saved ? "♥" : "♡"}
+                      {saved ? "Saved" : "Save"}
                     </button>
                   </div>
 
-                  {/* Tags */}
                   <div className="mt-4 flex flex-wrap gap-2">
                     {job.jobType && (
                       <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
@@ -265,165 +272,144 @@ export default function JobDetailClient({ job }: Props) {
                       {salary}
                     </span>
                     <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500">
-                      Posted {postedAt}
+                      {"Posted " + postedAt}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Apply CTA */}
               <div className="mt-6 flex items-center gap-3 pt-6 border-t border-slate-100">
                 <button
                   type="button"
-                  onClick={() => setApplied(true)}
+                  onClick={function () {
+                    setApplied(true);
+                  }}
                   disabled={applied}
-                  className={
-                    "h-12 px-8 rounded-2xl text-sm font-extrabold transition shadow-sm " +
-                    (applied
-                      ? "bg-emerald-500 text-white cursor-default"
-                      : "bg-[var(--brand-purple)] text-white hover:opacity-90")
-                  }
+                  className={applyButtonClass}
                 >
-                  {applied ? "✓ Application Sent" : "Apply Now"}
+                  {applied ? "Application Sent" : "Apply Now"}
                 </button>
 
                 <Link
                   href="/all-jobs"
                   className="h-12 px-6 rounded-2xl border border-slate-200 bg-white text-sm font-extrabold text-slate-700 inline-flex items-center hover:bg-slate-50 transition"
                 >
-                  ← Back to jobs
+                  Back to jobs
                 </Link>
               </div>
             </div>
 
-            {/* Skills */}
-            {job.skills?.length > 0 && (
+            {job.skills && job.skills.length > 0 && (
               <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
                 <h2 className="text-base font-extrabold text-[#0B1222]">
-                  Skills &amp; Technologies
+                  Skills and Technologies
                 </h2>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {job.skills.map((s) => (
-                    <span
-                      key={s.id}
-                      className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition"
-                    >
-                      {s.name}
-                    </span>
-                  ))}
+                  {job.skills.map(function (s) {
+                    return (
+                      <span
+                        key={s.id}
+                        className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition"
+                      >
+                        {s.name}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             )}
 
-            {/* Job description */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-base font-extrabold text-[#0B1222]">
-                Job Description
-              </h2>
+              <h2 className="text-base font-extrabold text-[#0B1222]">Job Description</h2>
               <div className="mt-4 space-y-4">
                 {paragraphs.length > 0 ? (
-                  paragraphs.map((p, i) => (
-                    <p
-                      key={i}
-                      className="text-sm sm:text-[15px] leading-7 text-slate-600"
-                    >
-                      {p}
-                    </p>
-                  ))
+                  paragraphs.map(function (p, i) {
+                    return (
+                      <p key={i} className="text-sm sm:text-[15px] leading-7 text-slate-600">
+                        {p}
+                      </p>
+                    );
+                  })
                 ) : (
-                  <p className="text-sm text-slate-500">
-                    No description provided.
-                  </p>
+                  <p className="text-sm text-slate-500">No description provided.</p>
                 )}
               </div>
             </div>
 
-            {/* Responsibilities */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-base font-extrabold text-[#0B1222]">
-                Responsibilities
-              </h2>
+              <h2 className="text-base font-extrabold text-[#0B1222]">Responsibilities</h2>
               <ul className="mt-4 space-y-3">
-                {RESPONSIBILITIES.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-sm sm:text-[15px] text-slate-600"
-                  >
-                    <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-[var(--brand-purple)]" />
-                    {item}
-                  </li>
-                ))}
+                {RESPONSIBILITIES.map(function (item) {
+                  return (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm sm:text-[15px] text-slate-600"
+                    >
+                      <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-[var(--brand-purple)]" />
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
-            {/* Requirements */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-base font-extrabold text-[#0B1222]">
-                Requirements
-              </h2>
+              <h2 className="text-base font-extrabold text-[#0B1222]">Requirements</h2>
               <ul className="mt-4 space-y-3">
-                {REQUIREMENTS.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-sm sm:text-[15px] text-slate-600"
-                  >
-                    <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-slate-400" />
-                    {item}
-                  </li>
-                ))}
+                {REQUIREMENTS.map(function (item) {
+                  return (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm sm:text-[15px] text-slate-600"
+                    >
+                      <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-slate-400" />
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
-            {/* Benefits */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-base font-extrabold text-[#0B1222]">
-                Benefits
-              </h2>
+              <h2 className="text-base font-extrabold text-[#0B1222]">Benefits</h2>
               <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {BENEFITS.map((b) => (
-                  <div
-                    key={b.label}
-                    className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3"
-                  >
-                    <span className="text-lg">{b.icon}</span>
-                    <span className="text-xs font-semibold text-slate-700">
-                      {b.label}
-                    </span>
-                  </div>
-                ))}
+                {BENEFITS.map(function (b) {
+                  return (
+                    <div
+                      key={b.label}
+                      className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3"
+                    >
+                      <span className="text-xs font-bold text-[var(--brand-purple)]">
+                        {b.icon}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-700">{b.label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Bottom apply CTA */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-base font-extrabold text-[#0B1222]">
-                Ready to apply?
-              </h2>
+              <h2 className="text-base font-extrabold text-[#0B1222]">Ready to apply?</h2>
               <p className="mt-2 text-sm text-slate-600">
-                Submit your application for{" "}
-                <span className="font-semibold text-slate-800">
-                  {job.title}
-                </span>{" "}
-                at{" "}
-                <span className="font-semibold text-slate-800">
-                  {job.company?.name ?? "this company"}
-                </span>
-                . Make sure your profile and resume are up to date before
-                applying.
+                {"Submit your application for "}
+                <span className="font-semibold text-slate-800">{job.title}</span>
+                {" at "}
+                <span className="font-semibold text-slate-800">{companyName}</span>
+                {
+                  ". Make sure your profile and resume are up to date before applying."
+                }
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <button
                   type="button"
-                  onClick={() => setApplied(true)}
+                  onClick={function () {
+                    setApplied(true);
+                  }}
                   disabled={applied}
-                  className={
-                    "h-12 px-8 rounded-2xl text-sm font-extrabold transition shadow-sm " +
-                    (applied
-                      ? "bg-emerald-500 text-white cursor-default"
-                      : "bg-[var(--brand-purple)] text-white hover:opacity-90")
-                  }
+                  className={applyButtonClass}
                 >
-                  {applied ? "✓ Application Sent" : "Apply Now"}
+                  {applied ? "Application Sent" : "Apply Now"}
                 </button>
                 <Link
                   href="/all-jobs"
@@ -433,63 +419,45 @@ export default function JobDetailClient({ job }: Props) {
                 </Link>
               </div>
             </div>
-
           </div>
 
-          {/* ── RIGHT: Sidebar ── */}
           <aside className="lg:col-span-4 space-y-6">
             <div className="sticky top-24 space-y-5">
-
-              {/* Job summary */}
               <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h2 className="text-sm font-extrabold text-[#0B1222]">
-                  Job Summary
-                </h2>
+                <h2 className="text-sm font-extrabold text-[#0B1222]">Job Summary</h2>
                 <dl className="mt-4 space-y-3">
                   <div className="flex items-start justify-between gap-2">
-                    <dt className="text-xs font-semibold text-slate-500 shrink-0">
-                      Salary
-                    </dt>
+                    <dt className="text-xs font-semibold text-slate-500 shrink-0">Salary</dt>
                     <dd className="text-xs font-extrabold text-emerald-700 text-right">
                       {salary}
                     </dd>
                   </div>
                   <div className="flex items-start justify-between gap-2">
-                    <dt className="text-xs font-semibold text-slate-500 shrink-0">
-                      Job type
-                    </dt>
+                    <dt className="text-xs font-semibold text-slate-500 shrink-0">Job type</dt>
                     <dd className="text-xs font-semibold text-slate-800 text-right">
-                      {job.jobType ?? "—"}
+                      {job.jobType ?? "Not specified"}
                     </dd>
                   </div>
                   <div className="flex items-start justify-between gap-2">
-                    <dt className="text-xs font-semibold text-slate-500 shrink-0">
-                      Level
-                    </dt>
+                    <dt className="text-xs font-semibold text-slate-500 shrink-0">Level</dt>
                     <dd className="text-xs font-semibold text-slate-800 text-right">
-                      {job.level ?? "—"}
+                      {job.level ?? "Not specified"}
                     </dd>
                   </div>
                   <div className="flex items-start justify-between gap-2">
-                    <dt className="text-xs font-semibold text-slate-500 shrink-0">
-                      Location
-                    </dt>
+                    <dt className="text-xs font-semibold text-slate-500 shrink-0">Location</dt>
                     <dd className="text-xs font-semibold text-slate-800 text-right">
                       {location}
                     </dd>
                   </div>
                   <div className="flex items-start justify-between gap-2">
-                    <dt className="text-xs font-semibold text-slate-500 shrink-0">
-                      Remote
-                    </dt>
+                    <dt className="text-xs font-semibold text-slate-500 shrink-0">Remote</dt>
                     <dd className="text-xs font-semibold text-slate-800 text-right">
                       {job.remote ? "Yes" : "No"}
                     </dd>
                   </div>
                   <div className="flex items-start justify-between gap-2">
-                    <dt className="text-xs font-semibold text-slate-500 shrink-0">
-                      Posted
-                    </dt>
+                    <dt className="text-xs font-semibold text-slate-500 shrink-0">Posted</dt>
                     <dd className="text-xs font-semibold text-slate-800 text-right">
                       {postedAt}
                     </dd>
@@ -498,36 +466,31 @@ export default function JobDetailClient({ job }: Props) {
 
                 <button
                   type="button"
-                  onClick={() => setApplied(true)}
+                  onClick={function () {
+                    setApplied(true);
+                  }}
                   disabled={applied}
-                  className={
-                    "mt-5 h-11 w-full rounded-2xl text-sm font-extrabold transition shadow-sm " +
-                    (applied
-                      ? "bg-emerald-500 text-white cursor-default"
-                      : "bg-[var(--brand-purple)] text-white hover:opacity-90")
-                  }
+                  className={applyButtonSmallClass}
                 >
-                  {applied ? "✓ Applied" : "Apply Now"}
+                  {applied ? "Applied" : "Apply Now"}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setSaved((v) => !v)}
-                  className={
-                    "mt-2 h-11 w-full rounded-2xl border text-sm font-extrabold transition " +
-                    (saved
-                      ? "border-[var(--brand-purple)] text-[var(--brand-purple)] bg-indigo-50"
-                      : "border-slate-200 text-slate-700 hover:bg-slate-50")
-                  }
+                  onClick={function () {
+                    setSaved(function (v) {
+                      return !v;
+                    });
+                  }}
+                  className={saveButtonClass}
                 >
-                  {saved ? "♥ Saved" : "♡ Save Job"}
+                  {saved ? "Saved" : "Save Job"}
                 </button>
               </div>
 
-              {/* About company */}
               <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
                 <h2 className="text-sm font-extrabold text-[#0B1222]">
-                  About {job.company?.name ?? "Company"}
+                  {"About " + companyName}
                 </h2>
 
                 <div className="mt-4 flex items-center gap-3">
@@ -542,18 +505,14 @@ export default function JobDetailClient({ job }: Props) {
                       />
                     ) : (
                       <span className="text-lg font-extrabold text-[var(--brand-purple)]">
-                        {(job.company?.name ?? "C").charAt(0).toUpperCase()}
+                        {companyInitial}
                       </span>
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-extrabold text-slate-900">
-                      {job.company?.name}
-                    </p>
+                    <p className="text-sm font-extrabold text-slate-900">{companyName}</p>
                     {job.company?.industry && (
-                      <p className="text-xs text-slate-500">
-                        {job.company.industry}
-                      </p>
+                      <p className="text-xs text-slate-500">{job.company.industry}</p>
                     )}
                   </div>
                 </div>
@@ -563,10 +522,11 @@ export default function JobDetailClient({ job }: Props) {
                     <div className="flex items-center justify-between">
                       <dt className="text-xs text-slate-500">Company size</dt>
                       <dd className="text-xs font-semibold text-slate-800">
-                        {job.company.size} employees
+                        {job.company.size + " employees"}
                       </dd>
                     </div>
                   )}
+
                   {job.company?.hqLocation && (
                     <div className="flex items-center justify-between">
                       <dt className="text-xs text-slate-500">Headquarters</dt>
@@ -575,17 +535,18 @@ export default function JobDetailClient({ job }: Props) {
                       </dd>
                     </div>
                   )}
+
                   {job.company?.website && (
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-3">
                       <dt className="text-xs text-slate-500">Website</dt>
                       <dd className="text-xs font-semibold text-[var(--brand-purple)]">
-                        
+                        <a
                           href={job.company.website}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:underline"
                         >
-                          Visit site →
+                          Visit site
                         </a>
                       </dd>
                     </div>
@@ -599,30 +560,27 @@ export default function JobDetailClient({ job }: Props) {
                 )}
               </div>
 
-              {/* Share */}
               <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h2 className="text-sm font-extrabold text-[#0B1222]">
-                  Share this job
-                </h2>
+                <h2 className="text-sm font-extrabold text-[#0B1222]">Share this job</h2>
                 <div className="mt-3 flex gap-2">
                   <button
                     type="button"
                     onClick={handleCopyLink}
                     className="flex-1 h-10 rounded-2xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition"
                   >
-                    {copied ? "✓ Copied!" : "📋 Copy link"}
+                    {copied ? "Copied!" : "Copy link"}
                   </button>
-                  
+
+                  <a
                     href={getLinkedInUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 h-10 rounded-2xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition inline-flex items-center justify-center"
                   >
-                    in Share
+                    Share on LinkedIn
                   </a>
                 </div>
               </div>
-
             </div>
           </aside>
         </div>
