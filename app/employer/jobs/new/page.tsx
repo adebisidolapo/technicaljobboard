@@ -1,6 +1,443 @@
-import Link from "next/link";
+"use client";
 
-export const dynamic = "force-dynamic";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+
+const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"];
+const LEVELS = ["Entry", "Junior", "Mid-level", "Senior", "Lead"];
+const REMOTE_OPTIONS = ["Remote", "Hybrid", "On-site"];
+const SUGGESTED_SKILLS = [
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "Tailwind CSS",
+  "AWS",
+  "PostgreSQL",
+  "GraphQL",
+];
+
+export default function EmployerPostJobPage() {
+  const [jobTitle, setJobTitle] = useState("");
+  const [location, setLocation] = useState("Austin, TX");
+  const [jobType, setJobType] = useState("Full-time");
+  const [level, setLevel] = useState("Entry");
+  const [remotePolicy, setRemotePolicy] = useState("Remote");
+  const [salaryMin, setSalaryMin] = useState("100000");
+  const [salaryMax, setSalaryMax] = useState("160000");
+  const [skills, setSkills] = useState<string[]>([
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+  ]);
+  const [skillInput, setSkillInput] = useState("");
+  const [responsibilities, setResponsibilities] = useState("");
+  const [requirements, setRequirements] = useState("");
+
+  const progress = useMemo(() => {
+    let score = 0;
+    if (jobTitle.trim()) score += 20;
+    if (location.trim()) score += 10;
+    if (jobType.trim()) score += 10;
+    if (level.trim()) score += 10;
+    if (remotePolicy.trim()) score += 10;
+    if (salaryMin.trim() && salaryMax.trim()) score += 15;
+    if (skills.length >= 3) score += 10;
+    if (responsibilities.trim().length > 60) score += 10;
+    if (requirements.trim().length > 40) score += 5;
+    return Math.min(score, 100);
+  }, [
+    jobTitle,
+    location,
+    jobType,
+    level,
+    remotePolicy,
+    salaryMin,
+    salaryMax,
+    skills,
+    responsibilities,
+    requirements,
+  ]);
+
+  function addSkill(skill: string) {
+    const value = skill.trim();
+    if (!value) return;
+    if (skills.includes(value)) return;
+    if (skills.length >= 8) return;
+    setSkills((prev) => [...prev, value]);
+    setSkillInput("");
+  }
+
+  function removeSkill(skill: string) {
+    setSkills((prev) => prev.filter((item) => item !== skill));
+  }
+
+  function handleSkillKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      addSkill(skillInput);
+    }
+  }
+
+  return (
+    <main className="min-h-screen bg-[var(--background,#f6f7fb)] text-slate-900">
+      <header className="border-b border-slate-200/70 bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <div>
+            <p className="text-xl font-extrabold tracking-tight text-slate-950">
+              Employer
+            </p>
+            <p className="text-sm text-slate-500">Hiring dashboard</p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="inline-flex h-11 items-center justify-center rounded-2xl border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
+            >
+              Home
+            </Link>
+            <button
+              type="button"
+              className="inline-flex h-11 items-center justify-center rounded-2xl bg-[var(--brand-purple,#6a6ff2)] px-4 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.28)]"
+            >
+              Post a job
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <section className="relative overflow-hidden border-b border-slate-200/70 bg-[linear-gradient(135deg,rgba(106,111,242,0.10),rgba(124,114,255,0.06),rgba(255,255,255,0.96))]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(106,111,242,0.10),transparent_35%),radial-gradient(circle_at_top_right,rgba(124,114,255,0.10),transparent_30%)]" />
+        <div className="relative mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand-purple,#6a6ff2)]">
+                Employer hiring
+              </p>
+              <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl xl:text-5xl">
+                Post a job that attracts serious technical candidates
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+                Clear structure, strong details, and a polished experience help
+                your listing convert better.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/jobs"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
+              >
+                Back to jobs
+              </Link>
+              <button
+                type="button"
+                className="inline-flex h-12 items-center justify-center rounded-2xl bg-[var(--brand-purple,#6a6ff2)] px-5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(106,111,242,0.30)] transition hover:translate-y-[-1px] hover:opacity-95"
+              >
+                Save draft
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-8 max-w-6xl">
+            <div className="rounded-[28px] border border-white/80 bg-white/88 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-[var(--brand-purple,#6a6ff2)]">
+                    Step 1 of 3
+                  </p>
+                  <h2 className="text-lg font-bold text-slate-950 sm:text-xl">
+                    Job Details
+                  </h2>
+                  <p className="mt-1 text-sm text-slate-600">
+                    Build a premium-looking post with the essentials done well.
+                  </p>
+                </div>
+
+                <div className="min-w-[180px]">
+                  <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <span>Completion</span>
+                    <span>{progress}%</span>
+                  </div>
+                  <div className="h-2.5 rounded-full bg-slate-200">
+                    <div
+                      className="h-2.5 rounded-full bg-[var(--brand-purple,#6a6ff2)] transition-all duration-300"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+        <div className="mx-auto max-w-6xl space-y-6">
+          <div className="grid gap-6 xl:grid-cols-2">
+            <FormCard
+              title="Role basics"
+              description="Give candidates the most important details first."
+            >
+              <div className="grid grid-cols-1 gap-5">
+                <Field
+                  label="Job title"
+                  hint="Use a clear and standard role title."
+                >
+                  <Input
+                    value={jobTitle}
+                    onChange={(e) => setJobTitle(e.target.value)}
+                    placeholder="e.g. Senior Frontend Engineer"
+                  />
+                </Field>
+
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <Field
+                    label="Location"
+                    hint="City / state or remote hiring market."
+                  >
+                    <Input
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="Austin, TX"
+                    />
+                  </Field>
+
+                  <Field label="Job type" hint="Pick the engagement type.">
+                    <Select
+                      value={jobType}
+                      onChange={(e) => setJobType(e.target.value)}
+                      options={JOB_TYPES}
+                    />
+                  </Field>
+
+                  <Field label="Level" hint="Seniority for the role.">
+                    <Select
+                      value={level}
+                      onChange={(e) => setLevel(e.target.value)}
+                      options={LEVELS}
+                    />
+                  </Field>
+
+                  <Field
+                    label="Remote policy"
+                    hint="How candidates will work."
+                  >
+                    <Select
+                      value={remotePolicy}
+                      onChange={(e) => setRemotePolicy(e.target.value)}
+                      options={REMOTE_OPTIONS}
+                    />
+                  </Field>
+                </div>
+              </div>
+            </FormCard>
+
+            <FormCard
+              title="Compensation"
+              description="Salary transparency usually improves trust and listing quality."
+            >
+              <div className="grid grid-cols-1 gap-5">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <Field
+                    label="Salary minimum"
+                    hint="Recommended for U.S. candidates."
+                  >
+                    <Input
+                      type="number"
+                      value={salaryMin}
+                      onChange={(e) => setSalaryMin(e.target.value)}
+                      placeholder="100000"
+                    />
+                  </Field>
+
+                  <Field
+                    label="Salary maximum"
+                    hint="Give a realistic upper range."
+                  >
+                    <Input
+                      type="number"
+                      value={salaryMax}
+                      onChange={(e) => setSalaryMax(e.target.value)}
+                      placeholder="160000"
+                    />
+                  </Field>
+                </div>
+
+                <div className="rounded-[24px] border border-[rgba(106,111,242,0.12)] bg-[rgba(106,111,242,0.05)] p-4">
+                  <p className="text-sm font-medium text-slate-700">
+                    Transparent salary ranges help candidates self-qualify
+                    faster and make your post look more credible.
+                  </p>
+                </div>
+              </div>
+            </FormCard>
+          </div>
+
+          <FormCard
+            title="Skills"
+            description="Keep this focused. Five to eight strong skills is usually enough."
+          >
+            <Field
+              label="Core skills"
+              hint="Add skills candidates must already have."
+            >
+              <div className="rounded-[24px] border border-slate-200 bg-slate-50 p-4">
+                <div className="flex flex-wrap gap-2.5">
+                  {skills.map((skill) => (
+                    <button
+                      key={skill}
+                      type="button"
+                      onClick={() => removeSkill(skill)}
+                      className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.12)] bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-[var(--brand-purple,#6a6ff2)] hover:text-[var(--brand-purple,#6a6ff2)]"
+                    >
+                      {skill}
+                      <span className="ml-2 text-slate-400">×</span>
+                    </button>
+                  ))}
+
+                  <input
+                    value={skillInput}
+                    onChange={(e) => setSkillInput(e.target.value)}
+                    onKeyDown={handleSkillKeyDown}
+                    placeholder="Add skill"
+                    className="min-w-[160px] flex-1 rounded-full border border-dashed border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple,#6a6ff2)]"
+                  />
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {SUGGESTED_SKILLS.filter((item) => !skills.includes(item)).map(
+                    (item) => (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => addSkill(item)}
+                        className="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 transition hover:border-[var(--brand-purple,#6a6ff2)] hover:text-[var(--brand-purple,#6a6ff2)]"
+                      >
+                        + {item}
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
+            </Field>
+          </FormCard>
+
+          <div className="grid gap-6 xl:grid-cols-2">
+            <FormCard
+              title="Responsibilities"
+              description="Describe what this person will own, build, support, and deliver."
+            >
+              <textarea
+                value={responsibilities}
+                onChange={(e) => setResponsibilities(e.target.value)}
+                rows={10}
+                placeholder="Outline the role responsibilities, team context, day-to-day work, collaboration expectations, and what success looks like in this position..."
+                className="w-full rounded-[24px] border border-slate-200 bg-white px-4 py-4 text-base text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple,#6a6ff2)] focus:ring-4 focus:ring-[rgba(106,111,242,0.10)]"
+              />
+            </FormCard>
+
+            <FormCard
+              title="Requirements"
+              description="List the experience, tools, and qualifications candidates should already have."
+            >
+              <textarea
+                value={requirements}
+                onChange={(e) => setRequirements(e.target.value)}
+                rows={10}
+                placeholder="List the must-have experience, technologies, certifications, communication expectations, and any preferred qualifications..."
+                className="w-full rounded-[24px] border border-slate-200 bg-white px-4 py-4 text-base text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple,#6a6ff2)] focus:ring-4 focus:ring-[rgba(106,111,242,0.10)]"
+              />
+            </FormCard>
+          </div>
+
+          <div className="rounded-[32px] border border-slate-200/80 bg-white p-6 shadow-[0_16px_50px_rgba(15,23,42,0.06)]">
+            <h3 className="text-lg font-bold text-slate-950">
+              Listing checklist
+            </h3>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ChecklistItem done={!!jobTitle.trim()} text="Clear job title" />
+              <ChecklistItem done={!!location.trim()} text="Location provided" />
+              <ChecklistItem
+                done={!!salaryMin.trim() && !!salaryMax.trim()}
+                text="Salary range added"
+              />
+              <ChecklistItem
+                done={skills.length >= 3}
+                text="At least 3 skills added"
+              />
+              <ChecklistItem
+                done={responsibilities.trim().length > 60}
+                text="Responsibilities written"
+              />
+              <ChecklistItem
+                done={requirements.trim().length > 40}
+                text="Requirements written"
+              />
+            </div>
+          </div>
+
+          <div className="sticky bottom-4 z-20">
+            <div className="rounded-[28px] border border-white/80 bg-white/95 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.12)] backdrop-blur">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">
+                    Ready to publish?
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    A strong title, salary, skills, responsibilities, and
+                    requirements make the post feel complete.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <button
+                    type="button"
+                    className="inline-flex h-12 items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                  >
+                    Save draft
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex h-12 items-center justify-center rounded-2xl bg-[var(--brand-purple,#6a6ff2)] px-6 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(106,111,242,0.32)] transition hover:translate-y-[-1px] hover:opacity-95"
+                  >
+                    Post Job · Get Candidates
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function FormCard({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-[32px] border border-slate-200/80 bg-white p-5 shadow-[0_16px_50px_rgba(15,23,42,0.06)] sm:p-6 lg:p-8">
+      <div>
+        <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">
+          {title}
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">
+          {description}
+        </p>
+      </div>
+      <div className="mt-6">{children}</div>
+    </div>
+  );
+}
 
 function Field({
   label,
@@ -8,160 +445,70 @@ function Field({
   children,
 }: {
   label: string;
-  hint: string;
+  hint?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-2">
-      <div>
-        <div className="text-sm font-extrabold text-slate-900">{label}</div>
-        <div className="text-xs text-slate-600">{hint}</div>
+    <label className="block">
+      <div className="mb-2">
+        <span className="block text-sm font-bold tracking-wide text-slate-900 sm:text-[15px]">
+          {label}
+        </span>
+        {hint ? (
+          <span className="mt-1 block text-sm text-slate-500">{hint}</span>
+        ) : null}
       </div>
       {children}
-    </div>
+    </label>
   );
 }
 
-export default function NewEmployerJobPage() {
+function Input({
+  className = "",
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-            Post a Job
-          </h1>
-          <p className="mt-2 text-sm text-slate-600">
-            Create a clear, high-quality job post for technical candidates.
-          </p>
-        </div>
+    <input
+      {...props}
+      className={`w-full rounded-[20px] border border-slate-200 bg-white px-4 py-3.5 text-base text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple,#6a6ff2)] focus:ring-4 focus:ring-[rgba(106,111,242,0.10)] ${className}`}
+    />
+  );
+}
 
-        <Link
-          href="/employer/jobs"
-          className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-        >
-          Back to jobs
-        </Link>
+function Select({
+  options,
+  className = "",
+  ...props
+}: React.SelectHTMLAttributes<HTMLSelectElement> & {
+  options: string[];
+}) {
+  return (
+    <select
+      {...props}
+      className={`w-full rounded-[20px] border border-slate-200 bg-white px-4 py-3.5 text-base text-slate-900 outline-none transition focus:border-[var(--brand-purple,#6a6ff2)] focus:ring-4 focus:ring-[rgba(106,111,242,0.10)] ${className}`}
+    >
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+function ChecklistItem({ done, text }: { done: boolean; text: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+      <div
+        className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+          done
+            ? "bg-[var(--brand-purple,#6a6ff2)] text-white"
+            : "bg-white text-slate-400 ring-1 ring-slate-300"
+        }`}
+      >
+        {done ? "✓" : ""}
       </div>
-
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        <section className="xl:col-span-8 rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-          <div className="px-6 py-5 border-b border-slate-200">
-            <div className="text-sm font-extrabold text-slate-900">Job details</div>
-            <div className="mt-1 text-xs text-slate-600">
-              Make it specific, useful, and easy to understand.
-            </div>
-          </div>
-
-          <div className="p-6 space-y-5">
-            <Field label="Job title" hint="Use a clear role title.">
-              <input
-                placeholder="e.g. Senior Frontend Engineer"
-                className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]"
-              />
-            </Field>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Location" hint="City / State or Remote.">
-                <input
-                  placeholder="Austin, TX"
-                  className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]"
-                />
-              </Field>
-
-              <Field label="Job type" hint="Select the engagement type.">
-                <select className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]">
-                  <option>Full-time</option>
-                  <option>Part-time</option>
-                  <option>Contract</option>
-                  <option>Internship</option>
-                </select>
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Level" hint="Seniority for the role.">
-                <select className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]">
-                  <option>Entry</option>
-                  <option>Mid</option>
-                  <option>Senior</option>
-                  <option>Lead</option>
-                </select>
-              </Field>
-
-              <Field label="Remote policy" hint="Choose how candidates can work.">
-                <select className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]">
-                  <option>Remote</option>
-                  <option>Hybrid</option>
-                  <option>On-site</option>
-                </select>
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Salary min" hint="Recommended for U.S. candidates.">
-                <input
-                  placeholder="100000"
-                  className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]"
-                />
-              </Field>
-
-              <Field label="Salary max" hint="Give a real range when possible.">
-                <input
-                  placeholder="160000"
-                  className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]"
-                />
-              </Field>
-            </div>
-
-            <Field label="Skills" hint="Comma-separated skills candidates should have.">
-              <input
-                placeholder="React, Next.js, TypeScript, Tailwind"
-                className="w-full h-11 px-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]"
-              />
-            </Field>
-
-            <Field label="Description" hint="Responsibilities, expectations, and impact.">
-              <textarea
-                placeholder="Describe the role, responsibilities, team context, and what success looks like."
-                className="w-full min-h-[180px] p-4 rounded-2xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-purple)]"
-              />
-            </Field>
-
-            <div className="flex flex-wrap gap-2">
-              <button className="h-11 px-6 rounded-2xl bg-[var(--brand-purple)] text-white font-semibold text-sm hover:bg-[var(--brand-purple-dark)] transition shadow-sm">
-                Save draft
-              </button>
-              <button className="h-11 px-6 rounded-2xl bg-[#0B1222] text-white font-semibold text-sm hover:bg-slate-900 transition shadow-sm">
-                Publish job
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <div className="xl:col-span-4 space-y-6">
-          <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-200">
-              <div className="text-sm font-extrabold text-slate-900">Posting tips</div>
-              <div className="mt-1 text-xs text-slate-600">
-                Better listings attract better candidates.
-              </div>
-            </div>
-
-            <div className="p-6 space-y-4">
-              {[
-                { title: "Use salary ranges", note: "Improves trust and conversion." },
-                { title: "Keep titles standard", note: "Avoid vague internal names." },
-                { title: "Be clear about remote", note: "Candidates filter by this heavily." },
-              ].map((x) => (
-                <div key={x.title} className="rounded-2xl border border-slate-200 bg-[#F4F6FB] p-4">
-                  <div className="text-sm font-extrabold text-slate-900">{x.title}</div>
-                  <div className="mt-1 text-xs text-slate-600">{x.note}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
+      <span className="text-sm font-medium text-slate-700">{text}</span>
     </div>
   );
 }
