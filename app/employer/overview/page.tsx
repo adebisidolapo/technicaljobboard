@@ -7,106 +7,65 @@ function StatCard({
   label,
   value,
   hint,
+  icon,
   tone = "neutral",
 }: {
   label: string;
   value: string | number;
   hint: string;
-  tone?: "purple" | "accent" | "neutral";
+  icon: string;
+  tone?: "purple" | "green" | "blue" | "neutral";
 }) {
-  const top =
-    tone === "purple"
-      ? "bg-[var(--brand-purple)]"
-      : tone === "accent"
-      ? "bg-[var(--brand-accent)]"
-      : "bg-slate-200";
+  const iconBg =
+    tone === "purple" ? "bg-indigo-100 text-[var(--brand-purple)]" :
+    tone === "green"  ? "bg-emerald-100 text-emerald-600" :
+    tone === "blue"   ? "bg-sky-100 text-sky-600" :
+    "bg-slate-100 text-slate-500";
 
-  const glow =
-    tone === "purple"
-      ? "bg-[color:var(--brand-purple)/0.12]"
-      : tone === "accent"
-      ? "bg-[color:var(--brand-accent)/0.10]"
-      : "bg-slate-100";
+  const valueColor =
+    tone === "purple" ? "text-[var(--brand-purple)]" :
+    tone === "green"  ? "text-emerald-600" :
+    tone === "blue"   ? "text-sky-600" :
+    "text-slate-900";
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className={`absolute inset-x-0 top-0 h-1 ${top}`} />
-      <div className={`absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl ${glow}`} />
-
-      <div className="relative">
-        <div className="text-xs font-extrabold tracking-wide text-slate-500 uppercase">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
           {label}
-        </div>
-        <div className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
-          {value}
-        </div>
-        <div className="mt-1 text-xs text-slate-600">{hint}</div>
+        </p>
+        <span className={"flex h-9 w-9 items-center justify-center rounded-xl text-lg " + iconBg}>
+          {icon}
+        </span>
       </div>
+      <p className={"mt-3 text-3xl font-extrabold tracking-tight " + valueColor}>
+        {value}
+      </p>
+      <p className="mt-1 text-xs text-slate-500">{hint}</p>
     </div>
-  );
-}
-
-function Panel({
-  title,
-  subtitle,
-  actionLabel,
-  actionHref,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  actionLabel?: string;
-  actionHref?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div className="px-6 py-5 border-b border-slate-200 flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-sm font-extrabold text-slate-900 tracking-tight">
-            {title}
-          </h2>
-          {subtitle ? (
-            <p className="mt-1 text-xs text-slate-600">{subtitle}</p>
-          ) : null}
-        </div>
-
-        {actionLabel && actionHref ? (
-          <Link
-            href={actionHref}
-            className="shrink-0 text-sm font-semibold text-[var(--brand-purple)] hover:underline"
-          >
-            {actionLabel}
-          </Link>
-        ) : null}
-      </div>
-
-      <div className="p-6">{children}</div>
-    </section>
   );
 }
 
 function StatusBadge({ status }: { status: string }) {
   const s = String(status || "").toUpperCase();
-
   const cls =
-    s === "APPLIED" || s === "NEW"
-      ? "bg-[color:var(--brand-purple)/0.10] border-[color:var(--brand-purple)/0.22] text-[var(--brand-purple-dark)]"
-      : s === "SHORTLISTED" || s === "HIRED"
-      ? "bg-[color:var(--brand-accent)/0.10] border-[color:var(--brand-accent)/0.22] text-[var(--brand-accent-dark)]"
-      : "bg-slate-100 border-slate-200 text-slate-700";
+    s === "SHORTLISTED" || s === "HIRED"
+      ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+      : s === "REVIEWING"
+      ? "bg-sky-50 border-sky-200 text-sky-700"
+      : s === "REJECTED"
+      ? "bg-red-50 border-red-200 text-red-700"
+      : "bg-indigo-50 border-indigo-200 text-[var(--brand-purple)]";
 
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold border ${cls}`}>
+    <span className={"inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold " + cls}>
       {s}
     </span>
   );
 }
 
 export default async function EmployerOverviewPage() {
-  // Later: derive from logged-in employer
   const companyId = "cmlkxmg130000tnn0av04lkpg";
-
   const { metrics } = await getEmployerDashboard(companyId);
 
   const totalJobs = metrics?.totalJobs ?? 0;
@@ -115,206 +74,251 @@ export default async function EmployerOverviewPage() {
   const recent = (metrics?.recentApplications ?? []) as any[];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <div className="min-w-0">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-            Overview
+    <div className="space-y-8">
+
+      {/* Welcome header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+            Welcome back!
           </h1>
-          <p className="mt-2 text-sm text-slate-600">
-            A clear snapshot of jobs and candidate activity — built for U.S. hiring.
+          <p className="mt-1 text-sm text-slate-500">
+            Here is a snapshot of your hiring activity today.
           </p>
         </div>
-
-        <div className="flex flex-wrap gap-2">
-          <Link
-            href="/employer/jobs"
-            className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-          >
-            View jobs
-          </Link>
-          <Link
-            href="/employer/candidates"
-            className="h-10 px-4 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition text-sm font-semibold"
-          >
-            View candidates
-          </Link>
-        </div>
+        <Link
+          href="/employer/jobs/new"
+          className="inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90"
+        >
+          + Post a Job
+        </Link>
       </div>
 
-      {/* KPI row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard label="Total jobs" value={totalJobs} hint="All listings" tone="neutral" />
-        <StatCard label="Active jobs" value={activeJobs} hint="Live on the board" tone="purple" />
-        <StatCard label="Applications" value={totalApplications} hint="All-time total" tone="accent" />
-        <StatCard label="Recent applicants" value={recent.length} hint="Latest submissions" tone="neutral" />
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatCard label="Total Jobs" value={totalJobs} hint="All listings posted" icon="📋" tone="neutral" />
+        <StatCard label="Active Jobs" value={activeJobs} hint="Currently live" icon="✅" tone="green" />
+        <StatCard label="Applications" value={totalApplications} hint="All time total" icon="📨" tone="purple" />
+        <StatCard label="New Today" value={recent.length} hint="Latest submissions" icon="🔔" tone="blue" />
       </div>
 
       {/* Main grid */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* Left */}
-        <div className="xl:col-span-8 space-y-6">
-          <Panel
-            title="Recent applicants"
-            subtitle="Newest candidates across your published jobs"
-            actionLabel="View all"
-            actionHref="/employer/candidates"
-          >
-            {recent.length ? (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-left text-xs font-extrabold text-slate-500 uppercase tracking-wide">
-                      <th className="py-2 pr-3">Candidate</th>
-                      <th className="py-2 pr-3">Role</th>
-                      <th className="py-2 pr-3">Stage</th>
-                      <th className="py-2 pr-3">Applied</th>
-                      <th className="py-2 text-right">Action</th>
-                    </tr>
-                  </thead>
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
 
-                  <tbody className="text-slate-700">
-                    {recent.slice(0, 8).map((a: any) => {
-                      const name =
-                        a.user?.jobseekerProfile?.fullName ||
-                        a.user?.email ||
-                        "Applicant";
-
-                      const role = a.job?.title || "—";
-                      const stage = a.status || "APPLIED";
-                      const appliedAt = a.createdAt
-                        ? new Date(a.createdAt).toLocaleDateString()
-                        : "—";
-
-                      return (
-                        <tr key={a.id} className="border-t border-slate-200">
-                          <td className="py-3 pr-3 font-semibold text-slate-900 whitespace-nowrap">
-                            {name}
-                          </td>
-                          <td className="py-3 pr-3 min-w-[220px]">{role}</td>
-                          <td className="py-3 pr-3">
-                            <StatusBadge status={stage} />
-                          </td>
-                          <td className="py-3 pr-3 text-slate-600 whitespace-nowrap">
-                            {appliedAt}
-                          </td>
-                          <td className="py-3 text-right">
-                            <Link
-                              href="/employer/candidates"
-                              className="inline-flex items-center justify-center h-9 px-4 rounded-xl bg-white border border-slate-200 text-slate-900 font-semibold text-xs hover:bg-slate-50 transition"
-                            >
-                              Review
-                            </Link>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-slate-200 bg-[#F4F6FB] p-6">
-                <div className="text-sm font-extrabold text-slate-900">No applications yet</div>
-                <p className="mt-1 text-sm text-slate-600">
-                  Publish jobs to start receiving candidates.
+        {/* Candidates table — takes 2/3 */}
+        <div className="xl:col-span-2">
+          <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+              <div>
+                <h2 className="text-sm font-extrabold text-slate-900">
+                  Recent Applicants
+                </h2>
+                <p className="mt-0.5 text-xs text-slate-400">
+                  Newest candidates across your published jobs
                 </p>
-                <Link
-                  href="/employer/jobs/new"
-                  className="mt-4 inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-white text-sm font-semibold hover:bg-[var(--brand-purple-dark)] transition shadow-sm"
-                >
-                  Post a job
-                </Link>
               </div>
-            )}
-          </Panel>
+              <Link
+                href="/employer/candidates"
+                className="text-xs font-semibold text-[var(--brand-purple)] transition hover:underline"
+              >
+                View all
+              </Link>
+            </div>
 
-          <Panel
-            title="Hiring checklist"
-            subtitle="Glassdoor-style quick guidance to improve response rates"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="p-6">
+              {recent.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-slate-100">
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+                          Candidate
+                        </th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+                          Role
+                        </th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+                          Status
+                        </th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+                          Applied
+                        </th>
+                        <th className="pb-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50">
+                      {recent.slice(0, 8).map((a: any) => {
+                        const name =
+                          a.user?.jobseekerProfile?.fullName ||
+                          a.user?.email ||
+                          "Applicant";
+                        const role = a.job?.title || "—";
+                        const appliedAt = a.createdAt
+                          ? new Date(a.createdAt).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                            })
+                          : "—";
+
+                        return (
+                          <tr key={a.id} className="group">
+                            <td className="py-3 pr-4">
+                              <div className="flex items-center gap-2.5">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-extrabold text-[var(--brand-purple)]">
+                                  {name.charAt(0).toUpperCase()}
+                                </div>
+                                <span className="text-sm font-semibold text-slate-900">
+                                  {name}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="py-3 pr-4 text-sm text-slate-600">
+                              {role}
+                            </td>
+                            <td className="py-3 pr-4">
+                              <StatusBadge status={a.status} />
+                            </td>
+                            <td className="py-3 pr-4 text-xs text-slate-400">
+                              {appliedAt}
+                            </td>
+                            <td className="py-3 text-right">
+                              <Link
+                                href="/employer/candidates"
+                                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+                              >
+                                Review
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center">
+                  <p className="text-2xl">📭</p>
+                  <p className="mt-2 text-sm font-semibold text-slate-900">
+                    No applications yet
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Publish jobs to start receiving candidates.
+                  </p>
+                  <Link
+                    href="/employer/jobs/new"
+                    className="mt-4 inline-flex h-9 items-center justify-center rounded-lg bg-[var(--brand-purple)] px-4 text-xs font-extrabold text-white shadow-sm transition hover:opacity-90"
+                  >
+                    Post your first job
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right sidebar panels — 1/3 */}
+        <div className="space-y-5">
+
+          {/* Quick actions */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="text-sm font-extrabold text-slate-900">
+              Quick Actions
+            </h3>
+            <div className="mt-3 space-y-2">
               {[
-                { title: "Add salary range", note: "Boosts qualified applies (U.S. market expects it)" },
-                { title: "Use clear job titles", note: "Avoid internal titles; keep it searchable" },
-                { title: "Remote policy clarity", note: "Remote / hybrid / on-site — say it upfront" },
-                { title: "Fast follow-up", note: "Respond within 48 hours to win top talent" },
-              ].map((x) => (
-                <div key={x.title} className="rounded-2xl border border-slate-200 bg-white p-4">
-                  <div className="text-sm font-extrabold text-slate-900">{x.title}</div>
-                  <div className="mt-1 text-xs text-slate-600">{x.note}</div>
+                { href: "/employer/jobs/new", label: "Post a new job", icon: "+" },
+                { href: "/employer/candidates", label: "Review candidates", icon: "👤" },
+                { href: "/employer/jobs", label: "Manage listings", icon: "≡" },
+                { href: "/employer/settings", label: "Company settings", icon: "⚙" },
+              ].map((action) => (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-200 hover:bg-white hover:text-slate-900"
+                >
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-sm shadow-sm">
+                    {action.icon}
+                  </span>
+                  {action.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Hiring tips */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="text-sm font-extrabold text-slate-900">
+              Hiring Tips
+            </h3>
+            <div className="mt-3 space-y-3">
+              {[
+                { tip: "Add salary ranges", desc: "Gets 3x more qualified applicants" },
+                { tip: "Clear job titles", desc: "Avoid internal jargon — keep it searchable" },
+                { tip: "State remote policy", desc: "Remote / hybrid / on-site upfront" },
+                { tip: "Respond in 48hrs", desc: "Top candidates move fast" },
+              ].map((item) => (
+                <div key={item.tip} className="flex items-start gap-2">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[10px] font-extrabold text-emerald-600">
+                    ✓
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-800">{item.tip}</p>
+                    <p className="text-xs text-slate-400">{item.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
-          </Panel>
-        </div>
+          </div>
 
-        {/* Right */}
-        <div className="xl:col-span-4 space-y-6">
-          <Panel title="At a glance" subtitle="Keep your pipeline healthy">
-            <div className="grid gap-3">
-              <div className="rounded-2xl border border-slate-200 bg-[#F4F6FB] p-4">
-                <div className="text-xs font-extrabold text-slate-500 uppercase tracking-wide">
-                  Recommended actions
-                </div>
-                <ul className="mt-3 space-y-2 text-sm text-slate-700">
-                  <li className="flex gap-2">
-                    <span className="mt-[6px] h-2 w-2 rounded-full bg-[var(--brand-purple)]" />
-                    Review new applicants daily
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="mt-[6px] h-2 w-2 rounded-full bg-[var(--brand-accent)]" />
-                    Refresh posts older than 14 days
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="mt-[6px] h-2 w-2 rounded-full bg-slate-400" />
-                    Add 5–8 key skills to improve matching
-                  </li>
-                </ul>
-              </div>
-
-              <Link
-                href="/employer/jobs"
-                className="h-11 rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
-              >
-                Manage jobs
-              </Link>
-
-              <Link
-                href="/employer/candidates"
-                className="h-11 rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
-              >
-                Review candidates
-              </Link>
-
-              <Link
-                href="/employer/settings"
-                className="h-11 rounded-2xl bg-white border border-slate-200 text-slate-900 font-semibold text-sm inline-flex items-center justify-center hover:bg-slate-50 transition"
-              >
-                Company settings
-              </Link>
-            </div>
-          </Panel>
-
-          <Panel title="Employer tips" subtitle="Zip-style best practices">
-            <div className="space-y-3 text-sm text-slate-700">
-              <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                <div className="font-extrabold text-slate-900">Short job descriptions win</div>
-                <p className="mt-1 text-xs text-slate-600">
-                  Lead with impact, tools, and salary. Keep requirements tight.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                <div className="font-extrabold text-slate-900">Make location obvious</div>
-                <p className="mt-1 text-xs text-slate-600">
-                  U.S. candidates filter heavily by state/city and remote policy.
-                </p>
-              </div>
-            </div>
-          </Panel>
+          {/* Featured job upsell */}
+          <div className="rounded-2xl bg-gradient-to-br from-[var(--brand-purple)] to-indigo-700 p-5 text-white shadow-sm">
+            <p className="text-sm font-extrabold">Feature your listing</p>
+            <p className="mt-1 text-xs text-indigo-200 leading-5">
+              Get 10x more visibility and reach pre-vetted technical candidates faster.
+            </p>
+            <Link
+              href="/employer/jobs/new"
+              className="mt-4 inline-flex h-9 w-full items-center justify-center rounded-xl bg-white text-xs font-extrabold text-[var(--brand-purple)] transition hover:bg-indigo-50"
+            >
+              Upgrade your post
+            </Link>
+          </div>
         </div>
       </div>
+
+      {/* Checklist */}
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 className="text-sm font-extrabold text-slate-900">
+          Getting started checklist
+        </h3>
+        <p className="mt-1 text-xs text-slate-400">
+          Complete these steps to get the most out of TechnicalJobBoard.
+        </p>
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { label: "Post your first job", done: totalJobs > 0, href: "/employer/jobs/new" },
+            { label: "Complete company profile", done: false, href: "/employer/settings" },
+            { label: "Review first applicant", done: totalApplications > 0, href: "/employer/candidates" },
+            { label: "Feature a listing", done: false, href: "/employer/jobs/new" },
+          ].map((step) => (
+            <Link
+              key={step.label}
+              href={step.href}
+              className={"flex items-center gap-3 rounded-xl border p-3 transition hover:shadow-sm " + (step.done ? "border-emerald-200 bg-emerald-50" : "border-slate-200 bg-slate-50 hover:bg-white")}
+            >
+              <span className={"flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-extrabold " + (step.done ? "bg-emerald-500 text-white" : "bg-white border border-slate-200 text-slate-400")}>
+                {step.done ? "✓" : "○"}
+              </span>
+              <span className={"text-xs font-semibold " + (step.done ? "text-emerald-700" : "text-slate-700")}>
+                {step.label}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 }
