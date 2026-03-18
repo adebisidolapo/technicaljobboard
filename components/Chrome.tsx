@@ -7,9 +7,17 @@ import Footer from "@/components/Footer";
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  const isEmployer = pathname?.startsWith("/employer");
-  const isJobseeker = pathname?.startsWith("/jobseeker");
-  const isDashboard = isEmployer || isJobseeker;
+  const isEmployerDashboard =
+    pathname?.startsWith("/employer") &&
+    !pathname?.includes("/login") &&
+    !pathname?.includes("/register");
+
+  const isJobseekerDashboard =
+    pathname?.startsWith("/jobseeker") &&
+    !pathname?.includes("/login") &&
+    !pathname?.includes("/register");
+
+  const isDashboard = isEmployerDashboard || isJobseekerDashboard;
 
   return (
     <>
