@@ -13,7 +13,7 @@ function StatCard({
   label: string;
   value: string | number;
   hint: string;
-  icon: string;
+  icon: React.ReactNode;
   tone?: "purple" | "green" | "blue" | "neutral";
 }) {
   const iconBg =
@@ -34,14 +34,14 @@ function StatCard({
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
           {label}
         </p>
-        <span className={"flex h-9 w-9 items-center justify-center rounded-xl text-lg " + iconBg}>
+        <span className={"flex h-9 w-9 items-center justify-center rounded-xl " + iconBg}>
           {icon}
         </span>
       </div>
       <p className={"mt-3 text-3xl font-extrabold tracking-tight " + valueColor}>
         {value}
       </p>
-      <p className="mt-1 text-xs text-slate-500">{hint}</p>
+      <p className="mt-1 text-xs text-slate-400">{hint}</p>
     </div>
   );
 }
@@ -83,7 +83,7 @@ export default async function EmployerOverviewPage() {
             Welcome back!
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            Here is a snapshot of your hiring activity today.
+            Here is a snapshot of your hiring activity.
           </p>
         </div>
         <Link
@@ -94,18 +94,62 @@ export default async function EmployerOverviewPage() {
         </Link>
       </div>
 
-      {/* Stats */}
+      {/* Stats row */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Total Jobs" value={totalJobs} hint="All listings posted" icon="📋" tone="neutral" />
-        <StatCard label="Active Jobs" value={activeJobs} hint="Currently live" icon="✅" tone="green" />
-        <StatCard label="Applications" value={totalApplications} hint="All time total" icon="📨" tone="purple" />
-        <StatCard label="New Today" value={recent.length} hint="Latest submissions" icon="🔔" tone="blue" />
+        <StatCard
+          label="Total Jobs"
+          value={totalJobs}
+          hint="All listings posted"
+          tone="neutral"
+          icon={
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+              <rect x="9" y="3" width="6" height="4" rx="1" />
+            </svg>
+          }
+        />
+        <StatCard
+          label="Active Jobs"
+          value={activeJobs}
+          hint="Currently live on the board"
+          tone="green"
+          icon={
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <path d="M22 4 12 14.01l-3-3" />
+            </svg>
+          }
+        />
+        <StatCard
+          label="Applications"
+          value={totalApplications}
+          hint="All time total received"
+          tone="purple"
+          icon={
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <path d="m22 6-10 7L2 6" />
+            </svg>
+          }
+        />
+        <StatCard
+          label="New Today"
+          value={recent.length}
+          hint="Latest submissions"
+          tone="blue"
+          icon={
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+          }
+        />
       </div>
 
-      {/* Main grid */}
+      {/* Main content grid */}
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
 
-        {/* Candidates table — takes 2/3 */}
+        {/* Left — candidates table */}
         <div className="xl:col-span-2">
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
@@ -131,21 +175,11 @@ export default async function EmployerOverviewPage() {
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-slate-100">
-                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
-                          Candidate
-                        </th>
-                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
-                          Role
-                        </th>
-                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
-                          Status
-                        </th>
-                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
-                          Applied
-                        </th>
-                        <th className="pb-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
-                          Action
-                        </th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Candidate</th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Role</th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Status</th>
+                        <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Applied</th>
+                        <th className="pb-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50">
@@ -163,24 +197,24 @@ export default async function EmployerOverviewPage() {
                           : "—";
 
                         return (
-                          <tr key={a.id} className="group">
+                          <tr key={a.id}>
                             <td className="py-3 pr-4">
                               <div className="flex items-center gap-2.5">
                                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-extrabold text-[var(--brand-purple)]">
                                   {name.charAt(0).toUpperCase()}
                                 </div>
-                                <span className="text-sm font-semibold text-slate-900">
+                                <span className="text-sm font-semibold text-slate-900 whitespace-nowrap">
                                   {name}
                                 </span>
                               </div>
                             </td>
-                            <td className="py-3 pr-4 text-sm text-slate-600">
+                            <td className="py-3 pr-4 text-sm text-slate-600 min-w-[160px]">
                               {role}
                             </td>
                             <td className="py-3 pr-4">
                               <StatusBadge status={a.status} />
                             </td>
-                            <td className="py-3 pr-4 text-xs text-slate-400">
+                            <td className="py-3 pr-4 text-xs text-slate-400 whitespace-nowrap">
                               {appliedAt}
                             </td>
                             <td className="py-3 text-right">
@@ -199,8 +233,14 @@ export default async function EmployerOverviewPage() {
                 </div>
               ) : (
                 <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center">
-                  <p className="text-2xl">📭</p>
-                  <p className="mt-2 text-sm font-semibold text-slate-900">
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
+                    <svg viewBox="0 0 24 24" className="h-6 w-6 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </div>
+                  <p className="mt-3 text-sm font-semibold text-slate-900">
                     No applications yet
                   </p>
                   <p className="mt-1 text-xs text-slate-500">
@@ -218,27 +258,60 @@ export default async function EmployerOverviewPage() {
           </div>
         </div>
 
-        {/* Right sidebar panels — 1/3 */}
+        {/* Right sidebar panels */}
         <div className="space-y-5">
 
           {/* Quick actions */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-sm font-extrabold text-slate-900">
-              Quick Actions
-            </h3>
+            <h3 className="text-sm font-extrabold text-slate-900">Quick Actions</h3>
             <div className="mt-3 space-y-2">
               {[
-                { href: "/employer/jobs/new", label: "Post a new job", icon: "+" },
-                { href: "/employer/candidates", label: "Review candidates", icon: "👤" },
-                { href: "/employer/jobs", label: "Manage listings", icon: "≡" },
-                { href: "/employer/settings", label: "Company settings", icon: "⚙" },
+                {
+                  href: "/employer/jobs/new",
+                  label: "Post a new job",
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  ),
+                },
+                {
+                  href: "/employer/candidates",
+                  label: "Review candidates",
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                    </svg>
+                  ),
+                },
+                {
+                  href: "/employer/jobs",
+                  label: "Manage listings",
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                      <rect x="9" y="3" width="6" height="4" rx="1" />
+                    </svg>
+                  ),
+                },
+                {
+                  href: "/employer/settings",
+                  label: "Company settings",
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="3" />
+                      <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+                    </svg>
+                  ),
+                },
               ].map((action) => (
                 <Link
                   key={action.href}
                   href={action.href}
                   className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-200 hover:bg-white hover:text-slate-900"
                 >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-sm shadow-sm">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm text-slate-500">
                     {action.icon}
                   </span>
                   {action.label}
@@ -249,17 +322,15 @@ export default async function EmployerOverviewPage() {
 
           {/* Hiring tips */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-sm font-extrabold text-slate-900">
-              Hiring Tips
-            </h3>
+            <h3 className="text-sm font-extrabold text-slate-900">Hiring Tips</h3>
             <div className="mt-3 space-y-3">
               {[
                 { tip: "Add salary ranges", desc: "Gets 3x more qualified applicants" },
-                { tip: "Clear job titles", desc: "Avoid internal jargon — keep it searchable" },
+                { tip: "Clear job titles", desc: "Avoid jargon — keep it searchable" },
                 { tip: "State remote policy", desc: "Remote / hybrid / on-site upfront" },
                 { tip: "Respond in 48hrs", desc: "Top candidates move fast" },
               ].map((item) => (
-                <div key={item.tip} className="flex items-start gap-2">
+                <div key={item.tip} className="flex items-start gap-2.5">
                   <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[10px] font-extrabold text-emerald-600">
                     ✓
                   </span>
@@ -272,10 +343,10 @@ export default async function EmployerOverviewPage() {
             </div>
           </div>
 
-          {/* Featured job upsell */}
+          {/* Featured upsell */}
           <div className="rounded-2xl bg-gradient-to-br from-[var(--brand-purple)] to-indigo-700 p-5 text-white shadow-sm">
             <p className="text-sm font-extrabold">Feature your listing</p>
-            <p className="mt-1 text-xs text-indigo-200 leading-5">
+            <p className="mt-1 text-xs leading-5 text-indigo-200">
               Get 10x more visibility and reach pre-vetted technical candidates faster.
             </p>
             <Link
@@ -288,13 +359,13 @@ export default async function EmployerOverviewPage() {
         </div>
       </div>
 
-      {/* Checklist */}
+      {/* Getting started checklist */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h3 className="text-sm font-extrabold text-slate-900">
           Getting started checklist
         </h3>
         <p className="mt-1 text-xs text-slate-400">
-          Complete these steps to get the most out of TechnicalJobBoard.
+          Complete these to get the most out of TechnicalJobBoard.
         </p>
         <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
@@ -306,12 +377,29 @@ export default async function EmployerOverviewPage() {
             <Link
               key={step.label}
               href={step.href}
-              className={"flex items-center gap-3 rounded-xl border p-3 transition hover:shadow-sm " + (step.done ? "border-emerald-200 bg-emerald-50" : "border-slate-200 bg-slate-50 hover:bg-white")}
+              className={
+                "flex items-center gap-3 rounded-xl border p-3 transition hover:shadow-sm " +
+                (step.done
+                  ? "border-emerald-200 bg-emerald-50"
+                  : "border-slate-200 bg-slate-50 hover:bg-white")
+              }
             >
-              <span className={"flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-extrabold " + (step.done ? "bg-emerald-500 text-white" : "bg-white border border-slate-200 text-slate-400")}>
+              <span
+                className={
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-extrabold " +
+                  (step.done
+                    ? "bg-emerald-500 text-white"
+                    : "border border-slate-200 bg-white text-slate-400")
+                }
+              >
                 {step.done ? "✓" : "○"}
               </span>
-              <span className={"text-xs font-semibold " + (step.done ? "text-emerald-700" : "text-slate-700")}>
+              <span
+                className={
+                  "text-xs font-semibold " +
+                  (step.done ? "text-emerald-700" : "text-slate-700")
+                }
+              >
                 {step.label}
               </span>
             </Link>
