@@ -7,17 +7,15 @@ import Footer from "@/components/Footer";
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  const isEmployerDashboard =
-    pathname?.startsWith("/employer") &&
-    !pathname?.includes("/login") &&
-    !pathname?.includes("/register");
-
-  const isJobseekerDashboard =
-    pathname?.startsWith("/jobseeker") &&
-    !pathname?.includes("/login") &&
-    !pathname?.includes("/register");
-
-  const isDashboard = isEmployerDashboard || isJobseekerDashboard;
+  // Only hide header/footer inside the actual dashboard pages
+  // Auth pages (login/register) still get the site header
+  const isDashboard =
+    (pathname?.startsWith("/employer") &&
+      !pathname?.includes("/login") &&
+      !pathname?.includes("/register")) ||
+    (pathname?.startsWith("/jobseeker") &&
+      !pathname?.includes("/login") &&
+      !pathname?.includes("/register"));
 
   return (
     <>
