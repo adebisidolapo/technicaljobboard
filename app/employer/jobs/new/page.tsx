@@ -3,17 +3,15 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { supabaseBrowser } from "@/lib/supabase/browser";
 
 type Plan = "free" | "featured" | "premium";
 type PayType = "annual" | "hourly" | "daily" | "monthly";
+type Screen = "form" | "preview" | "auth" | "checkout";
 
 type FormData = {
-  plan: Plan;
   title: string;
   category: string;
-  description: string;
-  responsibilities: string;
-  requirements: string;
   jobType: string;
   level: string;
   remote: string;
@@ -21,39 +19,35 @@ type FormData = {
   salaryMin: string;
   salaryMax: string;
   skills: string[];
+  description: string;
+  responsibilities: string;
+  requirements: string;
   companyName: string;
   companyWebsite: string;
   companySize: string;
   companyIndustry: string;
   companyLocation: string;
   companyDescription: string;
+  plan: Plan;
 };
 
 const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship", "Freelance"];
 const LEVELS = ["Entry", "Junior", "Mid-level", "Senior", "Lead", "Executive"];
 const REMOTE_OPTIONS = ["Remote", "Hybrid", "On-site"];
 const COMPANY_SIZES = ["1-10", "11-50", "51-200", "201-500", "501-1000", "1000+"];
-const PAY_TYPES: { value: PayType; label: string; placeholder: string }[] = [
-  { value: "annual", label: "Annual salary", placeholder: "e.g. 120000" },
-  { value: "hourly", label: "Hourly rate", placeholder: "e.g. 65" },
-  { value: "daily", label: "Daily rate", placeholder: "e.g. 500" },
-  { value: "monthly", label: "Monthly", placeholder: "e.g. 8000" },
+const PAY_TYPES: { value: PayType; label: string; suffix: string }[] = [
+  { value: "annual", label: "Annual", suffix: "/yr" },
+  { value: "hourly", label: "Hourly", suffix: "/hr" },
+  { value: "daily", label: "Daily", suffix: "/day" },
+  { value: "monthly", label: "Monthly", suffix: "/mo" },
 ];
 const CATEGORIES = [
-  "Engineering",
-  "Information Technology",
-  "Data, AI & Cybersecurity",
-  "Cloud & DevOps",
-  "Architecture & Design",
-  "Construction & Field Engineering",
-  "Manufacturing & Industrial",
-  "Energy & Utilities",
-  "Telecom & Network Infrastructure",
-  "Healthcare & Medical Technology",
-  "Skilled Trades & Technical Services",
-  "Science & Research",
-  "Technical Project & Operations Management",
-  "Product & Technical Support",
+  "Engineering", "Information Technology", "Data, AI & Cybersecurity",
+  "Cloud & DevOps", "Architecture & Design", "Construction & Field Engineering",
+  "Manufacturing & Industrial", "Energy & Utilities",
+  "Telecom & Network Infrastructure", "Healthcare & Medical Technology",
+  "Skilled Trades & Technical Services", "Science & Research",
+  "Technical Project & Operations Management", "Product & Technical Support",
   "QA & Compliance",
 ];
 const INDUSTRIES = [
@@ -64,70 +58,30 @@ const INDUSTRIES = [
 const SUGGESTED_SKILLS = [
   "React", "Next.js", "TypeScript", "Node.js", "Python",
   "AWS", "Docker", "Kubernetes", "PostgreSQL", "GraphQL",
-  "Tailwind CSS", "Go", "Java", "C++", "Terraform",
+  "Tailwind CSS", "Go", "Java", "Terraform", "C++",
 ];
 const PLANS: {
-  id: Plan;
-  name: string;
-  price: string;
-  sub: string;
-  features: string[];
-  badge?: string;
+  id: Plan; name: string; price: string; sub: string;
+  features: string[]; badge?: string;
 }[] = [
   {
-    id: "free",
-    name: "Basic",
-    price: "Free",
-    sub: "No card needed",
-    features: [
-      "1 active listing",
-      "Standard visibility",
-      "30-day duration",
-      "Candidate applications",
-    ],
+    id: "free", name: "Basic", price: "Free", sub: "No card needed",
+    features: ["1 active listing", "Standard placement", "30-day duration", "Candidate applications"],
   },
   {
-    id: "featured",
-    name: "Featured",
-    price: "$99",
-    sub: "per listing",
-    badge: "Most Popular",
-    features: [
-      "Featured badge",
-      "Priority placement",
-      "3x more visibility",
-      "60-day duration",
-      "Analytics dashboard",
-    ],
+    id: "featured", name: "Featured", price: "$99", sub: "per listing", badge: "Most Popular",
+    features: ["Featured badge on listing", "Priority search placement", "3x more visibility", "60-day duration", "Analytics dashboard"],
   },
   {
-    id: "premium",
-    name: "Premium",
-    price: "$199",
-    sub: "per listing",
-    badge: "Best Value",
-    features: [
-      "Everything in Featured",
-      "Homepage spotlight",
-      "Email to matched candidates",
-      "90-day duration",
-      "Bulk CSV upload",
-      "Dedicated support",
-    ],
+    id: "premium", name: "Premium", price: "$199", sub: "per listing", badge: "Best Value",
+    features: ["Everything in Featured", "Homepage spotlight", "Email blast to matched candidates", "90-day duration", "Bulk CSV upload", "Dedicated support"],
   },
-];
-
-const STEPS = [
-  { id: 1, label: "Plan" },
-  { id: 2, label: "Job" },
-  { id: 3, label: "Company" },
-  { id: 4, label: "Review" },
 ];
 
 const inputCls = "w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple)] focus:ring-2 focus:ring-[var(--brand-purple)]/10";
 const textareaCls = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple)] focus:ring-2 focus:ring-[var(--brand-purple)]/10 resize-none leading-6";
 
-function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {
+function FL({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
     <p className="mb-1.5 text-sm font-semibold text-slate-800">
       {children}
@@ -136,45 +90,52 @@ function Label({ children, required }: { children: React.ReactNode; required?: b
   );
 }
 
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="border-b border-slate-100 px-5 py-4">
         <h3 className="text-sm font-extrabold text-slate-900">{title}</h3>
       </div>
-      <div className="p-5 space-y-4">{children}</div>
+      <div className="space-y-4 p-5">{children}</div>
     </div>
   );
 }
 
-function StepDots({ current }: { current: number }) {
+function StepBar({ current }: { current: Screen }) {
+  const steps: { id: Screen; label: string }[] = [
+    { id: "form", label: "Details" },
+    { id: "preview", label: "Preview" },
+    { id: "auth", label: "Account" },
+    { id: "checkout", label: "Payment" },
+  ];
+  const currentIdx = steps.findIndex((s) => s.id === current);
   return (
-    <div className="flex items-center justify-center gap-2 mb-8">
-      {STEPS.map((s, i) => {
-        const done = current > s.id;
-        const active = current === s.id;
+    <div className="flex items-center gap-0">
+      {steps.map((s, i) => {
+        const done = i < currentIdx;
+        const active = i === currentIdx;
         return (
-          <div key={s.id} className="flex items-center gap-2">
+          <div key={s.id} className="flex items-center">
             <div className="flex flex-col items-center gap-1">
               <div className={
-                "flex h-7 w-7 items-center justify-center rounded-full text-xs font-extrabold transition-all " +
+                "flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold transition " +
                 (done ? "bg-[var(--brand-purple)] text-white" :
                   active ? "border-2 border-[var(--brand-purple)] text-[var(--brand-purple)] bg-white" :
                     "border-2 border-slate-200 text-slate-300 bg-white")
               }>
-                {done ? "✓" : s.id}
+                {done ? "✓" : i + 1}
               </div>
               <span className={
-                "text-[10px] font-semibold " +
+                "hidden text-[10px] font-semibold sm:block " +
                 (active ? "text-[var(--brand-purple)]" : done ? "text-slate-400" : "text-slate-300")
               }>
                 {s.label}
               </span>
             </div>
-            {i < STEPS.length - 1 && (
+            {i < steps.length - 1 && (
               <div className={
-                "mb-4 h-px w-8 sm:w-12 " +
-                (current > s.id ? "bg-[var(--brand-purple)]" : "bg-slate-200")
+                "mx-1.5 mb-4 h-px w-8 sm:w-14 " +
+                (i < currentIdx ? "bg-[var(--brand-purple)]" : "bg-slate-200")
               } />
             )}
           </div>
@@ -184,629 +145,834 @@ function StepDots({ current }: { current: number }) {
   );
 }
 
-// ── Step 1: Plan ───────────────────────────────────────────────────────────
-function StepPlan({ plan, setPlan }: { plan: Plan; setPlan: (p: Plan) => void }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-xl font-extrabold text-slate-900">Choose a plan</h2>
-        <p className="mt-1 text-sm text-slate-400">Select the listing that fits your needs.</p>
-      </div>
-
-      {/* Dark background pricing section */}
-      <div className="rounded-2xl bg-[#0C1120] p-5 sm:p-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {PLANS.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setPlan(p.id)}
-              className={
-                "relative flex flex-col rounded-xl p-5 text-left transition-all " +
-                (plan === p.id
-                  ? "bg-white ring-2 ring-[var(--brand-purple)] shadow-lg"
-                  : "bg-white/8 border border-white/10 hover:bg-white/12")
-              }
-            >
-              {p.badge && (
-                <span className="absolute -top-2.5 left-4 rounded-full bg-[var(--brand-purple)] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
-                  {p.badge}
-                </span>
-              )}
-
-              {plan === p.id && (
-                <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand-purple)] text-[10px] text-white font-extrabold">
-                  ✓
-                </span>
-              )}
-
-              <p className={
-                "text-[10px] font-extrabold uppercase tracking-widest mb-2 " +
-                (plan === p.id ? "text-[var(--brand-purple)]" : "text-white/40")
-              }>
-                {p.name}
-              </p>
-
-              <p className={
-                "text-2xl font-extrabold mb-0.5 " +
-                (plan === p.id ? "text-slate-900" : "text-white")
-              }>
-                {p.price}
-              </p>
-
-              <p className={
-                "text-xs mb-4 " +
-                (plan === p.id ? "text-slate-400" : "text-white/40")
-              }>
-                {p.sub}
-              </p>
-
-              <ul className="space-y-2">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-xs">
-                    <span className={
-                      "h-4 w-4 shrink-0 rounded-full flex items-center justify-center text-[9px] font-extrabold " +
-                      (plan === p.id
-                        ? "bg-[var(--brand-purple)]/10 text-[var(--brand-purple)]"
-                        : "bg-white/10 text-white/60")
-                    }>
-                      ✓
-                    </span>
-                    <span className={plan === p.id ? "text-slate-600" : "text-white/60"}>
-                      {f}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-          {["Secure checkout via Stripe", "Cancel anytime", "Goes live instantly"].map((t) => (
-            <p key={t} className="text-xs text-white/40">{t}</p>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Step 2: Job Details ────────────────────────────────────────────────────
-function StepJobDetails({ data, setData }: { data: FormData; setData: (d: Partial<FormData>) => void }) {
-  const [skillInput, setSkillInput] = useState("");
-
-  const payType = PAY_TYPES.find((p) => p.value === data.payType) || PAY_TYPES[0];
-
-  function addSkill(skill: string) {
-    const v = skill.trim();
-    if (!v || data.skills.includes(v) || data.skills.length >= 10) return;
-    setData({ skills: [...data.skills, v] });
-    setSkillInput("");
-  }
-
-  function removeSkill(skill: string) {
-    setData({ skills: data.skills.filter((s) => s !== skill) });
-  }
-
-  return (
-    <div className="space-y-4">
-      <div>
-        <h2 className="text-xl font-extrabold text-slate-900">Job details</h2>
-        <p className="mt-1 text-sm text-slate-400">Fill in the key information about this role.</p>
-      </div>
-
-      {/* Role */}
-      <Card title="Role">
-        <div>
-          <Label required>Job title</Label>
-          <input
-            value={data.title}
-            onChange={(e) => setData({ title: e.target.value })}
-            placeholder="e.g. Senior Frontend Engineer"
-            className={inputCls}
-          />
-        </div>
-
-        <div>
-          <Label required>Category</Label>
-          <select
-            value={data.category}
-            onChange={(e) => setData({ category: e.target.value })}
-            className={inputCls}
-          >
-            <option value="">Select a category</option>
-            {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
-          </select>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div>
-            <Label required>Job type</Label>
-            <select value={data.jobType} onChange={(e) => setData({ jobType: e.target.value })} className={inputCls}>
-              {JOB_TYPES.map((t) => <option key={t}>{t}</option>)}
-            </select>
-          </div>
-          <div>
-            <Label required>Level</Label>
-            <select value={data.level} onChange={(e) => setData({ level: e.target.value })} className={inputCls}>
-              {LEVELS.map((l) => <option key={l}>{l}</option>)}
-            </select>
-          </div>
-          <div>
-            <Label required>Work policy</Label>
-            <select value={data.remote} onChange={(e) => setData({ remote: e.target.value })} className={inputCls}>
-              {REMOTE_OPTIONS.map((r) => <option key={r}>{r}</option>)}
-            </select>
-          </div>
-        </div>
-      </Card>
-
-      {/* Compensation */}
-      <Card title="Compensation">
-        <div>
-          <Label>Pay structure</Label>
-          <div className="flex flex-wrap gap-2">
-            {PAY_TYPES.map((pt) => (
-              <button
-                key={pt.value}
-                type="button"
-                onClick={() => setData({ payType: pt.value })}
-                className={
-                  "rounded-lg border px-3 py-1.5 text-xs font-semibold transition " +
-                  (data.payType === pt.value
-                    ? "border-[var(--brand-purple)] bg-[var(--brand-purple)]/8 text-[var(--brand-purple)]"
-                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300")
-                }
-              >
-                {pt.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label>Minimum</Label>
-            <input
-              type="number"
-              value={data.salaryMin}
-              onChange={(e) => setData({ salaryMin: e.target.value })}
-              placeholder={payType.placeholder}
-              className={inputCls}
-            />
-          </div>
-          <div>
-            <Label>Maximum</Label>
-            <input
-              type="number"
-              value={data.salaryMax}
-              onChange={(e) => setData({ salaryMax: e.target.value })}
-              placeholder={payType.placeholder}
-              className={inputCls}
-            />
-          </div>
-        </div>
-
-        {data.salaryMin && data.salaryMax && (
-          <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-2.5">
-            <p className="text-xs font-semibold text-[var(--brand-purple)]">
-              {payType.label}: {data.payType === "annual" ? "$" : ""}{Number(data.salaryMin).toLocaleString()} — {data.payType === "annual" ? "$" : ""}{Number(data.salaryMax).toLocaleString()}
-              {data.payType === "hourly" ? "/hr" : data.payType === "daily" ? "/day" : data.payType === "monthly" ? "/mo" : "/yr"}
-            </p>
-          </div>
-        )}
-      </Card>
-
-      {/* Skills */}
-      <Card title="Skills and technologies">
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-          <div className="flex flex-wrap gap-2">
-            {data.skills.map((skill) => (
-              <span
-                key={skill}
-                className="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-white px-3 py-1 text-xs font-semibold text-[var(--brand-purple)]"
-              >
-                {skill}
-                <button
-                  type="button"
-                  onClick={() => removeSkill(skill)}
-                  className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-400 text-[10px]"
-                >
-                  x
-                </button>
-              </span>
-            ))}
-            <input
-              value={skillInput}
-              onChange={(e) => setSkillInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === ",") {
-                  e.preventDefault();
-                  addSkill(skillInput);
-                }
-              }}
-              placeholder={data.skills.length < 10 ? "Add a skill, press Enter" : "Max 10 skills"}
-              disabled={data.skills.length >= 10}
-              className="min-w-[160px] flex-1 rounded-full border border-dashed border-slate-300 bg-white px-3 py-1 text-xs outline-none placeholder:text-slate-400 focus:border-[var(--brand-purple)] disabled:opacity-50"
-            />
-          </div>
-
-          {SUGGESTED_SKILLS.filter((s) => !data.skills.includes(s)).length > 0 && (
-            <div className="mt-3 border-t border-slate-200 pt-3">
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Suggested</p>
-              <div className="flex flex-wrap gap-1.5">
-                {SUGGESTED_SKILLS.filter((s) => !data.skills.includes(s)).slice(0, 8).map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => addSkill(s)}
-                    className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 transition hover:border-[var(--brand-purple)] hover:text-[var(--brand-purple)]"
-                  >
-                    + {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </Card>
-
-      {/* Description */}
-      <Card title="Job description">
-        <div>
-          <Label required>Overview</Label>
-          <textarea
-            value={data.description}
-            onChange={(e) => setData({ description: e.target.value })}
-            rows={5}
-            placeholder="Describe the role, the team, and what success looks like..."
-            className={textareaCls}
-          />
-        </div>
-
-        <div>
-          <Label>Responsibilities</Label>
-          <textarea
-            value={data.responsibilities}
-            onChange={(e) => setData({ responsibilities: e.target.value })}
-            rows={4}
-            placeholder={"Own and deliver key product features\nCollaborate with design and product\nParticipate in code reviews"}
-            className={textareaCls}
-          />
-        </div>
-
-        <div>
-          <Label>Requirements</Label>
-          <textarea
-            value={data.requirements}
-            onChange={(e) => setData({ requirements: e.target.value })}
-            rows={4}
-            placeholder={"3+ years of relevant experience\nStrong knowledge of TypeScript\nExperience with cloud platforms"}
-            className={textareaCls}
-          />
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-// ── Step 3: Company ────────────────────────────────────────────────────────
-function StepCompany({ data, setData }: { data: FormData; setData: (d: Partial<FormData>) => void }) {
-  return (
-    <div className="space-y-4">
-      <div>
-        <h2 className="text-xl font-extrabold text-slate-900">Company profile</h2>
-        <p className="mt-1 text-sm text-slate-400">Help candidates learn about where they would be working.</p>
-      </div>
-
-      <Card title="Company details">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <Label required>Company name</Label>
-            <input
-              value={data.companyName}
-              onChange={(e) => setData({ companyName: e.target.value })}
-              placeholder="Acme Corp"
-              className={inputCls}
-            />
-          </div>
-          <div>
-            <Label>Website</Label>
-            <input
-              value={data.companyWebsite}
-              onChange={(e) => setData({ companyWebsite: e.target.value })}
-              placeholder="https://acme.com"
-              type="url"
-              className={inputCls}
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <Label>Industry</Label>
-            <select value={data.companyIndustry} onChange={(e) => setData({ companyIndustry: e.target.value })} className={inputCls}>
-              <option value="">Select industry</option>
-              {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
-            </select>
-          </div>
-          <div>
-            <Label>Company size</Label>
-            <select value={data.companySize} onChange={(e) => setData({ companySize: e.target.value })} className={inputCls}>
-              <option value="">Select size</option>
-              {COMPANY_SIZES.map((s) => <option key={s}>{s} employees</option>)}
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <Label>Location</Label>
-          <input
-            value={data.companyLocation}
-            onChange={(e) => setData({ companyLocation: e.target.value })}
-            placeholder="Austin, TX or Remote"
-            className={inputCls}
-          />
-        </div>
-
-        <div>
-          <Label>About the company</Label>
-          <textarea
-            value={data.companyDescription}
-            onChange={(e) => setData({ companyDescription: e.target.value })}
-            rows={3}
-            placeholder="What does your company do and why is it a great place to work?"
-            className={textareaCls}
-          />
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-// ── Step 4: Review ─────────────────────────────────────────────────────────
-function StepReview({ data, onSubmit, submitting }: { data: FormData; onSubmit: () => void; submitting: boolean }) {
-  const plan = PLANS.find((p) => p.id === data.plan)!;
-  const payType = PAY_TYPES.find((p) => p.value === data.payType) || PAY_TYPES[0];
-
-  return (
-    <div className="space-y-4">
-      <div>
-        <h2 className="text-xl font-extrabold text-slate-900">Review and publish</h2>
-        <p className="mt-1 text-sm text-slate-400">Check everything before your job goes live.</p>
-      </div>
-
-      {/* Preview */}
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-100 px-5 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Listing preview</p>
-        </div>
-        <div className="p-5">
-          <div className="flex items-start gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-indigo-50 text-base font-extrabold text-[var(--brand-purple)]">
-              {(data.companyName || "C").charAt(0).toUpperCase()}
-            </div>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-base font-extrabold text-slate-900">
-                {data.title || "Untitled position"}
-              </h3>
-              <p className="mt-0.5 text-xs text-slate-500">
-                {data.companyName || "Your Company"} • {data.remote} • {data.category || "Uncategorised"}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {data.jobType && <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-600">{data.jobType}</span>}
-                {data.level && <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-600">{data.level}</span>}
-                {data.salaryMin && data.salaryMax && (
-                  <span className="rounded-full border border-emerald-100 bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
-                    {data.salaryMin} — {data.salaryMax}
-                    {data.payType === "hourly" ? "/hr" : data.payType === "daily" ? "/day" : data.payType === "monthly" ? "/mo" : "/yr"}
-                  </span>
-                )}
-                {data.plan !== "free" && (
-                  <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold text-[var(--brand-purple)]">Featured</span>
-                )}
-              </div>
-              {data.skills.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-1">
-                  {data.skills.map((s) => (
-                    <span key={s} className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-600">{s}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          {data.description && (
-            <p className="mt-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-500 line-clamp-3">
-              {data.description}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Plan + order */}
-      <div className="rounded-2xl bg-[#0C1120] p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-widest text-white/40">Selected plan</p>
-            <p className="mt-1 text-lg font-extrabold text-white">{plan.name} — {plan.price}</p>
-            <p className="text-xs text-white/40">{plan.sub}</p>
-          </div>
-          <Link
-            href="#"
-            onClick={(e) => { e.preventDefault(); }}
-            className="rounded-lg border border-white/10 bg-white/8 px-3 py-1.5 text-xs font-semibold text-white/60 transition hover:bg-white/12"
-          >
-            Change plan
-          </Link>
-        </div>
-
-        <div className="mt-4 border-t border-white/8 pt-4">
-          <div className="flex justify-between text-sm">
-            <span className="text-white/60">{plan.name} listing</span>
-            <span className="font-extrabold text-white">{plan.price}</span>
-          </div>
-          <div className="mt-3 flex justify-between text-sm">
-            <span className="font-extrabold text-white">Total due today</span>
-            <span className="font-extrabold text-[var(--brand-purple)]">{plan.price}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Submit */}
-      <button
-        type="button"
-        onClick={onSubmit}
-        disabled={submitting}
-        className="w-full rounded-2xl bg-[var(--brand-purple)] py-4 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 disabled:opacity-60"
-      >
-        {submitting
-          ? "Publishing..."
-          : data.plan === "free"
-          ? "Publish job"
-          : "Continue to payment — " + plan.price}
-      </button>
-
-      <p className="text-center text-xs text-slate-400">
-        {data.plan === "free"
-          ? "Your job goes live immediately."
-          : "You will be taken to Stripe for secure payment."}
-      </p>
-    </div>
-  );
-}
-
-// ── Completion score ───────────────────────────────────────────────────────
 function useScore(data: FormData) {
   return useMemo(() => {
     let s = 0;
     if (data.title.trim()) s += 20;
-    if (data.category) s += 10;
+    if (data.category) s += 5;
     if (data.salaryMin && data.salaryMax) s += 15;
     if (data.skills.length >= 3) s += 15;
     if (data.description.trim().length > 80) s += 20;
     if (data.requirements.trim().length > 40) s += 10;
     if (data.companyName.trim()) s += 10;
+    if (data.companyDescription.trim()) s += 5;
     return Math.min(s, 100);
   }, [data]);
+}
+
+// ── Preview screen ─────────────────────────────────────────────────────────
+function PreviewScreen({
+  data,
+  onBack,
+  onContinue,
+}: {
+  data: FormData;
+  onBack: () => void;
+  onContinue: () => void;
+}) {
+  const payType = PAY_TYPES.find((p) => p.value === data.payType) || PAY_TYPES[0];
+  const hasSalary = data.salaryMin && data.salaryMax;
+  const salaryText = hasSalary
+    ? "$" + Number(data.salaryMin).toLocaleString() + " — $" + Number(data.salaryMax).toLocaleString() + payType.suffix
+    : null;
+
+  const paragraphs = data.description
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const responsibilities = data.responsibilities
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const requirements = data.requirements
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  return (
+    <div className="min-h-screen bg-[#F3F6FB]">
+
+      {/* Header */}
+      <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+          >
+            Edit
+          </button>
+          <span className="text-sm font-extrabold text-slate-900">Preview listing</span>
+        </div>
+        <StepBar current="preview" />
+      </header>
+
+      <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
+
+        {/* Preview notice */}
+        <div className="mb-5 flex items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50 px-4 py-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--brand-purple)] text-[10px] font-extrabold text-white">
+            P
+          </span>
+          <p className="text-xs font-semibold text-[var(--brand-purple)]">
+            This is exactly how your job listing will appear to candidates. Review it carefully before continuing.
+          </p>
+        </div>
+
+        {/* Job listing preview — matches real job detail page */}
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+          {/* Header band */}
+          <div className="h-20 bg-gradient-to-r from-[var(--brand-purple)] to-indigo-600" />
+
+          <div className="px-6 pb-6">
+
+            {/* Company + title */}
+            <div className="flex items-start gap-4 -mt-7">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 border-white bg-white text-xl font-extrabold text-[var(--brand-purple)] shadow-sm">
+                {(data.companyName || "C").charAt(0).toUpperCase()}
+              </div>
+              <div className="min-w-0 pt-8">
+                <h1 className="text-xl font-extrabold text-slate-900 sm:text-2xl">
+                  {data.title || "Untitled position"}
+                </h1>
+                <p className="mt-0.5 text-sm text-slate-500">
+                  {data.companyName || "Your company"}
+                  {data.companyLocation ? " • " + data.companyLocation : ""}
+                  {data.remote ? " • " + data.remote : ""}
+                </p>
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {data.jobType && (
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
+                  {data.jobType}
+                </span>
+              )}
+              {data.level && (
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
+                  {data.level}
+                </span>
+              )}
+              {data.remote && (
+                <span className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-[var(--brand-purple)]">
+                  {data.remote}
+                </span>
+              )}
+              {data.category && (
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
+                  {data.category}
+                </span>
+              )}
+              {salaryText && (
+                <span className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                  {salaryText}
+                </span>
+              )}
+            </div>
+
+            {/* Skills */}
+            {data.skills.length > 0 && (
+              <div className="mt-5">
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                  Skills
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {data.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Divider */}
+            <div className="my-5 border-t border-slate-100" />
+
+            {/* Description */}
+            {paragraphs.length > 0 && (
+              <div className="mb-5">
+                <h2 className="text-sm font-extrabold text-slate-900 mb-3">
+                  Job Description
+                </h2>
+                <div className="space-y-3">
+                  {paragraphs.map((p, i) => (
+                    <p key={i} className="text-sm leading-6 text-slate-600">{p}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Responsibilities */}
+            {responsibilities.length > 0 && (
+              <div className="mb-5">
+                <h2 className="text-sm font-extrabold text-slate-900 mb-3">
+                  Responsibilities
+                </h2>
+                <ul className="space-y-2">
+                  {responsibilities.map((r, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-slate-600">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand-purple)]" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Requirements */}
+            {requirements.length > 0 && (
+              <div className="mb-5">
+                <h2 className="text-sm font-extrabold text-slate-900 mb-3">
+                  Requirements
+                </h2>
+                <ul className="space-y-2">
+                  {requirements.map((r, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-slate-600">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Company */}
+            {data.companyName && (
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <h2 className="text-sm font-extrabold text-slate-900 mb-2">
+                  About {data.companyName}
+                </h2>
+                {data.companyIndustry && (
+                  <p className="text-xs text-slate-400 mb-1">{data.companyIndustry}{data.companySize ? " • " + data.companySize + " employees" : ""}</p>
+                )}
+                {data.companyDescription && (
+                  <p className="text-sm leading-6 text-slate-600">{data.companyDescription}</p>
+                )}
+                {data.companyWebsite && (
+                  <p className="mt-2 text-xs font-semibold text-[var(--brand-purple)]">
+                    {data.companyWebsite}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom actions */}
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div>
+            <p className="text-sm font-extrabold text-slate-900">
+              Looks good?
+            </p>
+            <p className="text-xs text-slate-400">
+              You can go back and edit, or continue to create your account.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              Edit listing
+            </button>
+            <button
+              type="button"
+              onClick={onContinue}
+              className="inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90"
+            >
+              Looks good, continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Auth screen ────────────────────────────────────────────────────────────
+function AuthScreen({
+  data,
+  onBack,
+  onAuthed,
+}: {
+  data: FormData;
+  onBack: () => void;
+  onAuthed: () => void;
+}) {
+  const supabase = supabaseBrowser();
+  const [mode, setMode] = useState<"signin" | "register">("register");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit() {
+    setError(null);
+    setBusy(true);
+    if (mode === "register") {
+      const { error: err } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: { data: { full_name: name.trim(), role: "EMPLOYER" } },
+      });
+      if (err) { setBusy(false); setError(err.message); return; }
+    } else {
+      const { error: err } = await supabase.auth.signInWithPassword({
+        email: email.trim(), password,
+      });
+      if (err) { setBusy(false); setError(err.message); return; }
+    }
+    setBusy(false);
+    onAuthed();
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F3F6FB]">
+      <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+          >
+            Back
+          </button>
+          <span className="text-sm font-extrabold text-slate-900">Create your account</span>
+        </div>
+        <StepBar current="auth" />
+      </header>
+
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
+          {/* Value prop */}
+          <div className="rounded-2xl bg-[#0C1120] p-6 text-white">
+            <h2 className="text-xl font-extrabold leading-tight">
+              Your job is ready to go live
+            </h2>
+            <p className="mt-2 text-sm text-white/60 leading-6">
+              Create a free account to publish your listing and manage your hiring pipeline.
+            </p>
+
+            {/* Mini job card */}
+            <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+              <p className="text-sm font-extrabold text-white">
+                {data.title || "Untitled position"}
+              </p>
+              <p className="mt-0.5 text-xs text-white/50">
+                {data.companyName || "Your company"} • {data.remote}
+              </p>
+              {data.salaryMin && data.salaryMax && (
+                <p className="mt-2 text-sm font-extrabold text-emerald-400">
+                  ${Number(data.salaryMin).toLocaleString()} — ${Number(data.salaryMax).toLocaleString()}
+                </p>
+              )}
+              {data.skills.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {data.skills.slice(0, 4).map((s) => (
+                    <span key={s} className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-white/60">{s}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <ul className="mt-5 space-y-2.5">
+              {[
+                "Free to create an account",
+                "Goes live in under 2 minutes",
+                "Manage applications in one place",
+                "Edit or cancel anytime",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2 text-sm text-white/60">
+                  <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-[9px] font-extrabold text-emerald-400">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Auth form */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex rounded-xl border border-slate-200 bg-slate-50 p-1 mb-5">
+              {(["register", "signin"] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  className={
+                    "flex-1 rounded-lg py-2 text-xs font-extrabold transition " +
+                    (mode === m ? "bg-white text-slate-900 shadow-sm" : "text-slate-400 hover:text-slate-600")
+                  }
+                >
+                  {m === "register" ? "Create account" : "Sign in"}
+                </button>
+              ))}
+            </div>
+
+            <div className="space-y-3">
+              {mode === "register" && (
+                <div>
+                  <FL>Full name</FL>
+                  <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={inputCls} />
+                </div>
+              )}
+              <div>
+                <FL required>Work email</FL>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" type="email" className={inputCls} />
+              </div>
+              <div>
+                <FL required>Password</FL>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder={mode === "register" ? "Min 8 characters" : "Your password"} type="password" className={inputCls} />
+              </div>
+
+              {error && (
+                <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-2.5 text-xs font-semibold text-red-600">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={busy || !email.trim() || !password.trim()}
+                className="w-full rounded-xl bg-[var(--brand-purple)] py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-50"
+              >
+                {busy ? "Please wait..." : mode === "register" ? "Create account and continue" : "Sign in and continue"}
+              </button>
+
+              <p className="text-center text-xs text-slate-400">
+                By continuing you agree to our{" "}
+                <Link href="/terms" className="underline hover:text-slate-700">Terms</Link>
+                {" "}and{" "}
+                <Link href="/privacy" className="underline hover:text-slate-700">Privacy</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Checkout screen ────────────────────────────────────────────────────────
+function CheckoutScreen({
+  data, set, onBack, onPublish, submitting,
+}: {
+  data: FormData; set: (d: Partial<FormData>) => void;
+  onBack: () => void; onPublish: () => void; submitting: boolean;
+}) {
+  const selectedPlan = PLANS.find((p) => p.id === data.plan) || PLANS[1];
+  return (
+    <div className="min-h-screen bg-[#F3F6FB]">
+      <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+        <div className="flex items-center gap-3">
+          <button type="button" onClick={onBack} className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50">
+            Back
+          </button>
+          <span className="text-sm font-extrabold text-slate-900">Choose a plan</span>
+        </div>
+        <StepBar current="checkout" />
+      </header>
+
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 space-y-5">
+
+        {/* Job summary */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your listing</p>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-sm font-extrabold text-[var(--brand-purple)]">
+              {(data.companyName || "C").charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p className="text-sm font-extrabold text-slate-900">{data.title || "Untitled"}</p>
+              <p className="text-xs text-slate-400">{data.companyName} • {data.remote} • {data.category}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Plans */}
+        <div className="rounded-2xl bg-[#0C1120] p-5 sm:p-6">
+          <h2 className="text-base font-extrabold text-white mb-4">Select your plan</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {PLANS.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => set({ plan: p.id })}
+                className={
+                  "relative flex flex-col rounded-xl p-4 text-left transition-all " +
+                  (data.plan === p.id
+                    ? "bg-white ring-2 ring-[var(--brand-purple)] shadow-lg"
+                    : "border border-white/10 bg-white/8 hover:bg-white/12")
+                }
+              >
+                {p.badge && (
+                  <span className="absolute -top-2.5 left-4 rounded-full bg-[var(--brand-purple)] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
+                    {p.badge}
+                  </span>
+                )}
+                {data.plan === p.id && (
+                  <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand-purple)] text-[10px] text-white">✓</span>
+                )}
+                <p className={"text-[10px] font-extrabold uppercase tracking-widest mb-1 " + (data.plan === p.id ? "text-[var(--brand-purple)]" : "text-white/40")}>{p.name}</p>
+                <p className={"text-xl font-extrabold mb-0.5 " + (data.plan === p.id ? "text-slate-900" : "text-white")}>{p.price}</p>
+                <p className={"text-xs mb-3 " + (data.plan === p.id ? "text-slate-400" : "text-white/40")}>{p.sub}</p>
+                <ul className="space-y-1.5">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex items-start gap-1.5 text-[11px]">
+                      <span className={"mt-0.5 h-3.5 w-3.5 shrink-0 rounded-full flex items-center justify-center text-[8px] " + (data.plan === p.id ? "bg-[var(--brand-purple)]/10 text-[var(--brand-purple)]" : "bg-white/10 text-white/50")}>✓</span>
+                      <span className={data.plan === p.id ? "text-slate-600" : "text-white/50"}>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </button>
+            ))}
+          </div>
+          <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {["Secure checkout via Stripe", "Goes live instantly", "Cancel anytime"].map((t) => (
+              <p key={t} className="text-xs text-white/40">{t}</p>
+            ))}
+          </div>
+        </div>
+
+        {/* Order summary */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-extrabold text-slate-900 mb-3">Order summary</p>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-slate-500">{selectedPlan.name} listing</span>
+              <span className="font-semibold">{selectedPlan.price}</span>
+            </div>
+            <div className="flex justify-between border-t border-slate-100 pt-2 font-extrabold">
+              <span>Total due today</span>
+              <span className="text-[var(--brand-purple)]">{selectedPlan.price}</span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={onPublish}
+          disabled={submitting}
+          className="w-full rounded-2xl bg-[var(--brand-purple)] py-4 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 disabled:opacity-60"
+        >
+          {submitting ? "Publishing..." : data.plan === "free" ? "Publish for free" : "Continue to payment — " + selectedPlan.price}
+        </button>
+
+        <p className="text-center text-xs text-slate-400">
+          {data.plan === "free" ? "Your job goes live immediately." : "You will be taken to Stripe for secure payment."}
+        </p>
+      </div>
+    </div>
+  );
 }
 
 // ── Main ───────────────────────────────────────────────────────────────────
 export default function PostJobPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
+  const [screen, setScreen] = useState<Screen>("form");
+  const [skillInput, setSkillInput] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const [data, setDataState] = useState<FormData>({
-    plan: "featured",
-    title: "",
-    category: "",
-    description: "",
-    responsibilities: "",
-    requirements: "",
-    jobType: "Full-time",
-    level: "Mid-level",
-    remote: "Remote",
-    payType: "annual",
-    salaryMin: "",
-    salaryMax: "",
-    skills: [],
-    companyName: "",
-    companyWebsite: "",
-    companySize: "",
-    companyIndustry: "",
-    companyLocation: "",
-    companyDescription: "",
+    title: "", category: "", jobType: "Full-time", level: "Mid-level",
+    remote: "Remote", payType: "annual", salaryMin: "", salaryMax: "",
+    skills: [], description: "", responsibilities: "", requirements: "",
+    companyName: "", companyWebsite: "", companySize: "", companyIndustry: "",
+    companyLocation: "", companyDescription: "", plan: "featured",
   });
 
-  function setData(partial: Partial<FormData>) {
+  function set(partial: Partial<FormData>) {
     setDataState((prev) => ({ ...prev, ...partial }));
   }
 
-  const score = useScore(data);
-
-  function canProceed() {
-    if (step === 1) return true;
-    if (step === 2) return data.title.trim().length > 0 && data.description.trim().length > 50;
-    if (step === 3) return data.companyName.trim().length > 0;
-    return true;
+  function addSkill(s: string) {
+    const v = s.trim();
+    if (!v || data.skills.includes(v) || data.skills.length >= 10) return;
+    set({ skills: [...data.skills, v] });
+    setSkillInput("");
   }
 
-  async function handleSubmit() {
+  function removeSkill(s: string) {
+    set({ skills: data.skills.filter((x) => x !== s) });
+  }
+
+  const score = useScore(data);
+  const payType = PAY_TYPES.find((p) => p.value === data.payType) || PAY_TYPES[0];
+  const canContinue = data.title.trim().length > 0 &&
+    data.description.trim().length > 50 &&
+    data.companyName.trim().length > 0;
+
+  async function handleContinue() {
+    const supabase = supabaseBrowser();
+    const { data: authData } = await supabase.auth.getUser();
+    if (authData?.user) {
+      setScreen("checkout");
+    } else {
+      setScreen("auth");
+    }
+  }
+
+  async function handlePublish() {
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 1500));
     setSubmitting(false);
     router.push("/employer/jobs");
   }
 
+  if (screen === "preview") {
+    return (
+      <PreviewScreen
+        data={data}
+        onBack={() => setScreen("form")}
+        onContinue={handleContinue}
+      />
+    );
+  }
+
+  if (screen === "auth") {
+    return (
+      <AuthScreen
+        data={data}
+        onBack={() => setScreen("preview")}
+        onAuthed={() => setScreen("checkout")}
+      />
+    );
+  }
+
+  if (screen === "checkout") {
+    return (
+      <CheckoutScreen
+        data={data}
+        set={set}
+        onBack={() => setScreen("auth")}
+        onPublish={handlePublish}
+        submitting={submitting}
+      />
+    );
+  }
+
+  // ── Form ──────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-[#F3F6FB]">
 
-      {/* Top bar */}
-      <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/employer/overview"
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
-          >
-            Dashboard
-          </Link>
-          <span className="text-sm font-extrabold text-slate-900">Post a Job</span>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-2 sm:flex">
-            <div className="h-1.5 w-20 overflow-hidden rounded-full bg-slate-100">
-              <div
-                className="h-full rounded-full bg-[var(--brand-purple)] transition-all duration-300"
-                style={{ width: score + "%" }}
-              />
-            </div>
-            <span className="text-xs font-extrabold text-[var(--brand-purple)]">{score}%</span>
+      <div className="bg-[var(--brand-purple)] px-4 py-4 sm:px-6">
+        <div className="mx-auto max-w-2xl flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-base font-extrabold text-white sm:text-lg">Post your job in 2 minutes</h1>
+            <p className="text-xs text-indigo-200">Get qualified engineers in 24-48 hours</p>
           </div>
-          <button
-            type="button"
-            className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
-          >
-            Save draft
-          </button>
+          <div className="hidden items-center gap-4 text-xs text-indigo-200 sm:flex">
+            <span>500+ companies hiring</span>
+            <span>|</span>
+            <span>Avg. 12 applicants per post</span>
+          </div>
         </div>
+      </div>
+
+      <div className="border-b border-slate-200 bg-white px-4 py-3 sm:px-6">
+        <div className="mx-auto max-w-2xl flex items-center gap-3">
+          <div className="flex-1 overflow-hidden rounded-full bg-slate-100 h-1.5">
+            <div className="h-full rounded-full bg-[var(--brand-purple)] transition-all duration-500" style={{ width: score + "%" }} />
+          </div>
+          <span className="shrink-0 text-xs font-extrabold text-[var(--brand-purple)]">{score}%</span>
+        </div>
+      </div>
+
+      <header className="sticky top-0 z-40 flex h-12 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+        <div className="flex items-center gap-3">
+          <Link href="/" className="inline-flex h-7 items-center rounded-lg border border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50">
+            Home
+          </Link>
+          <span className="text-xs font-semibold text-slate-400">Post a Job</span>
+        </div>
+        <StepBar current="form" />
       </header>
 
-      <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
-        <StepDots current={step} />
+      <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 space-y-5">
 
-        <div className="space-y-5">
-          {step === 1 && <StepPlan plan={data.plan} setPlan={(p) => setData({ plan: p })} />}
-          {step === 2 && <StepJobDetails data={data} setData={setData} />}
-          {step === 3 && <StepCompany data={data} setData={setData} />}
-          {step === 4 && <StepReview data={data} onSubmit={handleSubmit} submitting={submitting} />}
-        </div>
+        <Section title="Job Details">
+          <div>
+            <FL required>Job title</FL>
+            <input value={data.title} onChange={(e) => set({ title: e.target.value })} placeholder="e.g. Senior Frontend Engineer" className={inputCls} />
+          </div>
+          <div>
+            <FL required>Category</FL>
+            <select value={data.category} onChange={(e) => set({ category: e.target.value })} className={inputCls}>
+              <option value="">Select a category</option>
+              {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+            </select>
+          </div>
+        </Section>
 
-        {/* Nav bar */}
-        <div className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-          <button
-            type="button"
-            onClick={() => setStep((s) => Math.max(1, s - 1))}
-            disabled={step === 1}
-            className="inline-flex h-9 items-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-40"
-          >
-            Back
-          </button>
+        <Section title="Job Basics">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <FL>Job type</FL>
+              <select value={data.jobType} onChange={(e) => set({ jobType: e.target.value })} className={inputCls}>
+                {JOB_TYPES.map((t) => <option key={t}>{t}</option>)}
+              </select>
+            </div>
+            <div>
+              <FL>Level</FL>
+              <select value={data.level} onChange={(e) => set({ level: e.target.value })} className={inputCls}>
+                {LEVELS.map((l) => <option key={l}>{l}</option>)}
+              </select>
+            </div>
+            <div>
+              <FL>Work policy</FL>
+              <select value={data.remote} onChange={(e) => set({ remote: e.target.value })} className={inputCls}>
+                {REMOTE_OPTIONS.map((r) => <option key={r}>{r}</option>)}
+              </select>
+            </div>
+          </div>
+        </Section>
 
-          <span className="text-xs text-slate-400">Step {step} of {STEPS.length}</span>
+        <Section title="Compensation">
+          <div>
+            <FL>Pay structure</FL>
+            <div className="flex flex-wrap gap-2">
+              {PAY_TYPES.map((pt) => (
+                <button key={pt.value} type="button" onClick={() => set({ payType: pt.value })}
+                  className={"rounded-lg border px-3 py-1.5 text-xs font-semibold transition " +
+                    (data.payType === pt.value ? "border-[var(--brand-purple)] bg-[var(--brand-purple)] text-white" : "border-slate-200 bg-white text-slate-600 hover:border-slate-300")}>
+                  {pt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <FL>Salary range</FL>
+            <div className="flex items-center gap-3">
+              <div className="relative flex-1">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">$</span>
+                <input type="number" value={data.salaryMin} onChange={(e) => set({ salaryMin: e.target.value })} placeholder="Min" className={inputCls + " pl-7"} />
+              </div>
+              <span className="shrink-0 text-sm text-slate-400">to</span>
+              <div className="relative flex-1">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">$</span>
+                <input type="number" value={data.salaryMax} onChange={(e) => set({ salaryMax: e.target.value })} placeholder="Max" className={inputCls + " pl-7"} />
+              </div>
+              <span className="shrink-0 text-xs font-semibold text-slate-400">{payType.suffix}</span>
+            </div>
+          </div>
+        </Section>
 
-          {step < STEPS.length ? (
+        <Section title="Skills">
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <div className="flex flex-wrap gap-2">
+              {data.skills.map((skill) => (
+                <span key={skill} className="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-white px-3 py-1 text-xs font-semibold text-[var(--brand-purple)]">
+                  {skill}
+                  <button type="button" onClick={() => removeSkill(skill)} className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-100 text-[10px] text-slate-400 hover:bg-red-50 hover:text-red-400">x</button>
+                </span>
+              ))}
+              <input value={skillInput} onChange={(e) => setSkillInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); addSkill(skillInput); } }}
+                placeholder={data.skills.length < 10 ? "Add skill, press Enter" : "Max 10"}
+                disabled={data.skills.length >= 10}
+                className="min-w-[140px] flex-1 rounded-full border border-dashed border-slate-300 bg-white px-3 py-1 text-xs outline-none placeholder:text-slate-400 focus:border-[var(--brand-purple)] disabled:opacity-50" />
+            </div>
+            {SUGGESTED_SKILLS.filter((s) => !data.skills.includes(s)).length > 0 && (
+              <div className="mt-3 border-t border-slate-200 pt-3">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Suggested</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {SUGGESTED_SKILLS.filter((s) => !data.skills.includes(s)).slice(0, 8).map((s) => (
+                    <button key={s} type="button" onClick={() => addSkill(s)} className="rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-[11px] font-medium text-slate-600 transition hover:border-[var(--brand-purple)] hover:text-[var(--brand-purple)]">
+                      + {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </Section>
+
+        <Section title="Description">
+          <div>
+            <FL required>Overview</FL>
+            <textarea value={data.description} onChange={(e) => set({ description: e.target.value })} rows={5} placeholder="Describe the role, team, and what success looks like..." className={textareaCls} />
+          </div>
+          <div>
+            <FL>Responsibilities</FL>
+            <textarea value={data.responsibilities} onChange={(e) => set({ responsibilities: e.target.value })} rows={4} placeholder={"Own and deliver key features\nCollaborate with design and product\nParticipate in code reviews"} className={textareaCls} />
+          </div>
+          <div>
+            <FL>Requirements</FL>
+            <textarea value={data.requirements} onChange={(e) => set({ requirements: e.target.value })} rows={4} placeholder={"3+ years of relevant experience\nStrong TypeScript knowledge\nCloud platform experience"} className={textareaCls} />
+          </div>
+        </Section>
+
+        <Section title="Company">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <FL required>Company name</FL>
+              <input value={data.companyName} onChange={(e) => set({ companyName: e.target.value })} placeholder="Acme Corp" className={inputCls} />
+            </div>
+            <div>
+              <FL>Website</FL>
+              <input value={data.companyWebsite} onChange={(e) => set({ companyWebsite: e.target.value })} placeholder="https://acme.com" type="url" className={inputCls} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <FL>Industry</FL>
+              <select value={data.companyIndustry} onChange={(e) => set({ companyIndustry: e.target.value })} className={inputCls}>
+                <option value="">Select industry</option>
+                {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
+              </select>
+            </div>
+            <div>
+              <FL>Company size</FL>
+              <select value={data.companySize} onChange={(e) => set({ companySize: e.target.value })} className={inputCls}>
+                <option value="">Select size</option>
+                {COMPANY_SIZES.map((s) => <option key={s}>{s} employees</option>)}
+              </select>
+            </div>
+          </div>
+          <div>
+            <FL>Location</FL>
+            <input value={data.companyLocation} onChange={(e) => set({ companyLocation: e.target.value })} placeholder="Austin, TX or Remote" className={inputCls} />
+          </div>
+          <div>
+            <FL>About the company</FL>
+            <textarea value={data.companyDescription} onChange={(e) => set({ companyDescription: e.target.value })} rows={3} placeholder="What does your company do and why is it a great place to work?" className={textareaCls} />
+          </div>
+        </Section>
+
+        {/* CTA */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-extrabold text-slate-900">
+                {canContinue ? "Ready to preview your listing?" : "Fill in required fields to continue"}
+              </p>
+              <p className="text-xs text-slate-400">
+                {score}% complete{!canContinue && " — title, description, and company name required"}
+              </p>
+            </div>
             <button
               type="button"
-              onClick={() => setStep((s) => Math.min(STEPS.length, s + 1))}
-              disabled={!canProceed()}
-              className="inline-flex h-9 items-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 disabled:opacity-40"
+              onClick={() => setScreen("preview")}
+              disabled={!canContinue}
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 disabled:opacity-40 whitespace-nowrap"
             >
-              Continue
+              Preview listing
             </button>
-          ) : null}
+          </div>
         </div>
+
       </div>
     </div>
   );
