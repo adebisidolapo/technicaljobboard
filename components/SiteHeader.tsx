@@ -156,7 +156,7 @@ export default function SiteHeader() {
                 Categories
               </Link>
               <NavLink href="/jobseeker/login">Jobseeker</NavLink>
-              <NavLink href="/employer">Employer</NavLink>
+             <NavLink href="/employer/login">Employer</NavLink>
               <button
                 type="button"
                 onClick={handlePostJob}
