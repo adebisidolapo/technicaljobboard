@@ -1,42 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabaseBrowser } from "@/lib/supabase/browser";
 
 export const dynamic = "force-dynamic";
 
-const inputCls = "w-full h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple)] focus:bg-white focus:ring-2 focus:ring-[var(--brand-purple)]/10";
+const inputCls =
+  "w-full h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple)] focus:bg-white focus:ring-2 focus:ring-[var(--brand-purple)]/10";
 
 export default function EmployerLoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next") || "/employer/overview";
   const supabase = supabaseBrowser();
 
+  const [nextPath, setNextPath] = useState("/employer/overview");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get("next");
+
+    if (next && next.startsWith("/")) {
+      setNextPath(next);
+    }
+  }, []);
+
   async function submit() {
     setMsg(null);
     setBusy(true);
+
     const { error } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
     });
+
     setBusy(false);
-    if (error) return setMsg(error.message);
-    router.push(next);
+
+    if (error) {
+      setMsg(error.message);
+      return;
+    }
+
+    router.push(nextPath);
     router.refresh();
   }
 
   return (
     <div className="flex min-h-[calc(100vh-136px)] items-center justify-center bg-[#F3F6FB] px-4 py-12 sm:px-6 md:min-h-[calc(100vh-112px)]">
       <div className="w-full max-w-md">
-
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
             Employer sign in
@@ -48,7 +65,6 @@ export default function EmployerLoginPage() {
 
         <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
           <div className="space-y-4">
-
             <div>
               <label className="mb-1.5 block text-xs font-semibold text-slate-700">
                 Email
@@ -95,7 +111,7 @@ export default function EmployerLoginPage() {
               type="button"
               onClick={submit}
               disabled={busy || !email.trim() || !password.trim()}
-              className="w-full h-12 rounded-xl bg-[var(--brand-purple)] text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-50"
+              className="h-12 w-full rounded-xl bg-[var(--brand-purple)] text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-50"
             >
               {busy ? "Signing in..." : "Sign in"}
             </button>
@@ -116,9 +132,13 @@ export default function EmployerLoginPage() {
 
           <p className="mt-6 text-center text-xs text-slate-400">
             By continuing you agree to our{" "}
-            <Link href="/terms" className="underline hover:text-slate-600">Terms</Link>
-            {" "}and{" "}
-            <Link href="/privacy" className="underline hover:text-slate-600">Privacy Policy</Link>
+            <Link href="/terms" className="underline hover:text-slate-600">
+              Terms
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy" className="underline hover:text-slate-600">
+              Privacy Policy
+            </Link>
           </p>
         </div>
 
