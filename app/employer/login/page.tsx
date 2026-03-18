@@ -1,18 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabaseBrowser } from "@/lib/supabase/browser";
 
-export const dynamic = "force-dynamic";
-
 const inputCls = "w-full h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--brand-purple)] focus:bg-white focus:ring-2 focus:ring-[var(--brand-purple)]/10";
 
-export default function EmployerLoginPage() {
+export default function JobseekerLoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next") || "/employer/overview";
   const supabase = supabaseBrowser();
 
   const [email, setEmail] = useState("");
@@ -29,7 +25,7 @@ export default function EmployerLoginPage() {
     });
     setBusy(false);
     if (error) return setMsg(error.message);
-    router.push(next);
+    router.push("/jobseeker/overview");
     router.refresh();
   }
 
@@ -45,9 +41,9 @@ export default function EmployerLoginPage() {
           />
         </Link>
         <div className="flex items-center gap-2 text-sm">
-          <span className="text-slate-400">New employer?</span>
-          <Link href="/employer/register" className="font-semibold text-[var(--brand-purple)] hover:underline">
-            Create account
+          <span className="text-slate-400">No account?</span>
+          <Link href="/jobseeker/register" className="font-semibold text-[var(--brand-purple)] hover:underline">
+            Create one
           </Link>
         </div>
       </div>
@@ -56,34 +52,34 @@ export default function EmployerLoginPage() {
         <div className="w-full max-w-5xl">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-            <div className="hidden lg:flex flex-col rounded-3xl bg-[#0C1120] p-10 text-white overflow-hidden relative">
+            <div className="hidden lg:flex flex-col rounded-3xl bg-gradient-to-br from-[var(--brand-purple)] to-indigo-700 p-10 text-white overflow-hidden relative">
               <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[var(--brand-purple)]/20 blur-3xl" />
-                <div className="absolute -bottom-16 right-0 h-64 w-64 rounded-full bg-indigo-600/10 blur-3xl" />
+                <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+                <div className="absolute -bottom-16 right-0 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
               </div>
               <div className="relative flex flex-col h-full justify-between">
                 <div>
-                  <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/60">
-                    Employer Portal
+                  <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white/70">
+                    Job Seeker Portal
                   </span>
                   <h2 className="mt-6 text-3xl font-extrabold leading-tight">
-                    Manage your hiring pipeline
+                    Your next role is here
                   </h2>
                 </div>
-                <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-white/70 leading-6">
-                    "Hired 3 engineers in under 2 weeks."
+                <div className="mt-10 rounded-2xl border border-white/20 bg-white/10 p-5">
+                  <p className="text-sm text-white/80 leading-6">
+                    "Found my senior engineering role in less than a week."
                   </p>
-                  <p className="mt-2 text-xs text-white/30">— Engineering Manager, NovaTech</p>
+                  <p className="mt-2 text-xs text-white/40">— Senior Frontend Engineer</p>
                 </div>
               </div>
             </div>
 
             <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
               <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-                Employer sign in
+                Jobseeker sign in
               </h1>
-              <p className="mt-1 text-sm text-slate-400">Sign in to your hiring dashboard.</p>
+              <p className="mt-1 text-sm text-slate-400">Welcome back.</p>
 
               <div className="mt-8 space-y-4">
                 <div>
@@ -91,7 +87,7 @@ export default function EmployerLoginPage() {
                   <input
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@company.com"
+                    placeholder="you@example.com"
                     type="email"
                     className={inputCls}
                     onKeyDown={(e) => e.key === "Enter" && submit()}
@@ -101,7 +97,7 @@ export default function EmployerLoginPage() {
                 <div>
                   <div className="mb-1.5 flex items-center justify-between">
                     <label className="text-xs font-semibold text-slate-700">Password</label>
-                    <Link href="/employer/forgot-password" className="text-xs text-[var(--brand-purple)] hover:underline">
+                    <Link href="/jobseeker/forgot-password" className="text-xs text-[var(--brand-purple)] hover:underline">
                       Forgot password?
                     </Link>
                   </div>
@@ -137,10 +133,10 @@ export default function EmployerLoginPage() {
                 </div>
 
                 <Link
-                  href="/employer/register"
+                  href="/jobseeker/register"
                   className="flex h-12 w-full items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                 >
-                  Create employer account
+                  Create account
                 </Link>
               </div>
 
@@ -151,9 +147,9 @@ export default function EmployerLoginPage() {
               </p>
 
               <div className="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-center text-xs text-slate-400">
-                Looking for jobs?{" "}
-                <Link href="/jobseeker/login" className="font-semibold text-[var(--brand-purple)] hover:underline">
-                  Jobseeker sign in
+                Are you hiring?{" "}
+                <Link href="/employer/login" className="font-semibold text-[var(--brand-purple)] hover:underline">
+                  Employer sign in
                 </Link>
               </div>
             </div>
