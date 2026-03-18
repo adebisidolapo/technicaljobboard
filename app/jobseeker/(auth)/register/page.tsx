@@ -39,12 +39,12 @@ export default function JobseekerRegisterPage() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-136px)] items-center justify-center bg-[#F3F6FB] px-4 py-10 sm:px-6 md:min-h-[calc(100vh-112px)]">
-      <div className="w-full max-w-4xl">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-stretch">
+    <div className="min-h-[calc(100vh-136px)] bg-[#F3F6FB] px-4 py-10 sm:px-6 md:min-h-[calc(100vh-112px)]">
+      <div className="mx-auto w-full max-w-5xl">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-stretch">
 
-          {/* Left card — desktop only */}
-          <div className="hidden lg:flex flex-col justify-between rounded-3xl bg-gradient-to-br from-[var(--brand-purple)] to-indigo-700 p-10 text-white overflow-hidden relative min-h-[520px]">
+          {/* Left card — tablet and desktop */}
+          <div className="relative hidden flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--brand-purple)] to-indigo-700 p-10 text-white md:flex min-h-[520px]">
             <div className="pointer-events-none absolute inset-0">
               <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
               <div className="absolute -bottom-16 right-0 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
@@ -72,7 +72,7 @@ export default function JobseekerRegisterPage() {
                 ))}
               </div>
             </div>
-            <div className="relative mt-8 rounded-2xl border border-white/20 bg-white/10 p-5">
+            <div className="relative rounded-2xl border border-white/20 bg-white/10 p-5">
               <p className="text-sm text-white/80 leading-6">
                 "Found my senior engineering role in less than a week."
               </p>
