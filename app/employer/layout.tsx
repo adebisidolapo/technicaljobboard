@@ -151,7 +151,9 @@ function SidebarLink({
       <span
         className={clsx(
           "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg",
-          active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+          active
+            ? "bg-white/20 text-white"
+            : "bg-slate-100 text-slate-500"
         )}
       >
         {icon}
@@ -165,7 +167,7 @@ function Sidebar({ close }: { close?: () => void }) {
   return (
     <div className="flex h-full flex-col overflow-hidden bg-white">
 
-      {/* Brand header */}
+      {/* Brand */}
       <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-purple)]">
           <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -183,7 +185,7 @@ function Sidebar({ close }: { close?: () => void }) {
         </div>
       </div>
 
-      {/* User row */}
+      {/* User */}
       <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-3">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-extrabold text-[var(--brand-purple)]">
           E
@@ -196,10 +198,10 @@ function Sidebar({ close }: { close?: () => void }) {
         </div>
       </div>
 
-      {/* Nav items */}
+      {/* Nav */}
       <div className="flex-1 overflow-y-auto px-3 py-4">
         {NAV.map((group) => (
-          <div key={group.section} className="mb-6">
+          <div key={group.section} className="mb-5">
             <p className="mb-1.5 px-3 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
               {group.section}
             </p>
@@ -218,7 +220,7 @@ function Sidebar({ close }: { close?: () => void }) {
         ))}
       </div>
 
-      {/* Upgrade card + back to site */}
+      {/* Upgrade card */}
       <div className="border-t border-slate-100 p-4 space-y-2">
         <div className="rounded-2xl bg-gradient-to-br from-[var(--brand-purple)] to-indigo-700 p-4 text-white">
           <p className="text-sm font-extrabold">Go Featured</p>
@@ -268,49 +270,43 @@ export default function EmployerLayout({
   return (
     <div className="flex min-h-screen bg-[#F3F6FB]">
 
-      {/* ── Fixed desktop sidebar ── */}
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-slate-200 bg-white lg:flex lg:flex-col">
+      {/* Fixed desktop sidebar */}
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-slate-200 shadow-sm lg:flex lg:flex-col">
         <Sidebar />
       </aside>
 
-      {/* ── Content area pushed right by sidebar width ── */}
+      {/* Main — pushed right on desktop */}
       <div className="flex min-h-screen w-full flex-col lg:pl-64">
 
-        {/* Top bar */}
-        <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+        {/* Top bar — NO post job button here, it's in the sidebar */}
+        <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
           <div className="flex items-center gap-3">
-
-            {/* Hamburger — mobile only */}
+            {/* Mobile hamburger */}
             <button
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 lg:hidden"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 lg:hidden"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M4 7h16M4 12h16M4 17h16" />
               </svg>
             </button>
-
-            <div>
-              <p className="text-sm font-extrabold text-slate-900">
-                Employer Dashboard
-              </p>
-              <p className="hidden text-[11px] text-slate-400 sm:block">
-                Manage your jobs and candidates
-              </p>
-            </div>
+            <p className="text-sm font-extrabold text-slate-900">
+              Employer Dashboard
+            </p>
           </div>
 
+          {/* Only show on mobile — desktop uses sidebar */}
           <Link
             href="/employer/jobs/new"
-            className="inline-flex h-9 items-center justify-center rounded-lg bg-[var(--brand-purple)] px-4 text-xs font-extrabold text-white shadow-sm transition hover:opacity-90"
+            className="inline-flex h-8 items-center justify-center rounded-lg bg-[var(--brand-purple)] px-3 text-xs font-extrabold text-white shadow-sm transition hover:opacity-90 lg:hidden"
           >
-            + Post a Job
+            + Post Job
           </Link>
         </header>
 
-        {/* Page */}
+        {/* Page content */}
         <main className="flex-1 px-4 py-6 sm:px-6 sm:py-8">
           <div className="mx-auto max-w-5xl">
             {children}
@@ -318,7 +314,7 @@ export default function EmployerLayout({
         </main>
       </div>
 
-      {/* ── Mobile drawer ── */}
+      {/* Mobile drawer */}
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <button
@@ -334,7 +330,7 @@ export default function EmployerLayout({
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Close"
-            className="absolute left-[268px] top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-md text-slate-600 hover:bg-slate-50"
+            className="absolute left-[276px] top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-md text-slate-600 hover:bg-slate-50"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M18 6 6 18M6 6l12 12" />
