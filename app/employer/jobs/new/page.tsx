@@ -573,11 +573,18 @@ function CheckoutScreen({
   onBack: () => void; onPublish: () => void; submitting: boolean;
 }) {
   const selectedPlan = PLANS.find((p) => p.id === data.plan) || PLANS[1];
+
   return (
     <div className="min-h-screen bg-[#F3F6FB]">
+
+      {/* Header */}
       <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
         <div className="flex items-center gap-3">
-          <button type="button" onClick={onBack} className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+          >
             Back
           </button>
           <span className="text-sm font-extrabold text-slate-900">Choose a plan</span>
@@ -585,93 +592,173 @@ function CheckoutScreen({
         <StepBar current="checkout" />
       </header>
 
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 space-y-5">
+      {/* Pricing hero — matches Image 1 style */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[var(--brand-purple)] via-indigo-600 to-violet-700 px-4 pb-32 pt-12 sm:px-6">
 
-        {/* Job summary */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your listing</p>
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-sm font-extrabold text-[var(--brand-purple)]">
+        {/* Background blobs */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute -right-20 top-0 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-48 w-96 -translate-x-1/2 rounded-full bg-indigo-400/20 blur-3xl" />
+        </div>
+
+        <div className="relative mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl font-extrabold text-white sm:text-3xl">
+            Your job is ready to go live
+          </h2>
+          <p className="mt-2 text-sm text-white/70">
+            Choose a plan and reach thousands of qualified technical candidates.
+          </p>
+
+          {/* Job summary pill */}
+          <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-xs font-extrabold text-[var(--brand-purple)]">
               {(data.companyName || "C").charAt(0).toUpperCase()}
             </div>
-            <div>
-              <p className="text-sm font-extrabold text-slate-900">{data.title || "Untitled"}</p>
-              <p className="text-xs text-slate-400">{data.companyName} • {data.remote} • {data.category}</p>
+            <div className="text-left">
+              <p className="text-xs font-extrabold text-white">
+                {data.title || "Untitled position"}
+              </p>
+              <p className="text-[10px] text-white/60">
+                {data.companyName} • {data.remote}
+              </p>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Plans */}
-        <div className="rounded-2xl bg-[#0C1120] p-5 sm:p-6">
-          <h2 className="text-base font-extrabold text-white mb-4">Select your plan</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {PLANS.map((p) => (
+      {/* Cards — pulled up over the hero */}
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
+        <div className="-mt-24 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {PLANS.map((p) => {
+            const selected = data.plan === p.id;
+            const isMiddle = p.id === "featured";
+            return (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => set({ plan: p.id })}
                 className={
-                  "relative flex flex-col rounded-xl p-4 text-left transition-all " +
-                  (data.plan === p.id
-                    ? "bg-white ring-2 ring-[var(--brand-purple)] shadow-lg"
-                    : "border border-white/10 bg-white/8 hover:bg-white/12")
+                  "relative flex flex-col rounded-2xl bg-white p-6 text-left shadow-xl transition-all " +
+                  (selected
+                    ? "ring-2 ring-[var(--brand-purple)] scale-[1.02]"
+                    : "hover:shadow-2xl hover:scale-[1.01]") +
+                  (isMiddle && !selected ? " ring-1 ring-slate-200" : "")
                 }
               >
                 {p.badge && (
-                  <span className="absolute -top-2.5 left-4 rounded-full bg-[var(--brand-purple)] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
+                  <span className={
+                    "absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-[10px] font-extrabold text-white whitespace-nowrap " +
+                    (p.id === "featured" ? "bg-[var(--brand-purple)]" : "bg-indigo-900")
+                  }>
                     {p.badge}
                   </span>
                 )}
-                {data.plan === p.id && (
-                  <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand-purple)] text-[10px] text-white">✓</span>
-                )}
-                <p className={"text-[10px] font-extrabold uppercase tracking-widest mb-1 " + (data.plan === p.id ? "text-[var(--brand-purple)]" : "text-white/40")}>{p.name}</p>
-                <p className={"text-xl font-extrabold mb-0.5 " + (data.plan === p.id ? "text-slate-900" : "text-white")}>{p.price}</p>
-                <p className={"text-xs mb-3 " + (data.plan === p.id ? "text-slate-400" : "text-white/40")}>{p.sub}</p>
-                <ul className="space-y-1.5">
+
+                {/* Plan name */}
+                <p className={
+                  "text-sm font-extrabold mb-1 " +
+                  (p.id === "free" ? "text-[var(--brand-purple)]" :
+                    p.id === "featured" ? "text-amber-500" :
+                      "text-indigo-600")
+                }>
+                  {p.name}
+                </p>
+
+                {/* Price */}
+                <p className="text-4xl font-extrabold text-slate-900 mb-1">
+                  {p.price}
+                </p>
+                <p className="text-xs text-slate-400 mb-4">{p.sub}</p>
+
+                {/* Description */}
+                <p className="text-xs text-slate-500 mb-5 leading-5">
+                  {p.id === "free"
+                    ? "For employers who want to try the platform and post their first role."
+                    : p.id === "featured"
+                    ? "For teams and employers who need their listing to stand out and get noticed fast."
+                    : "For organisations hiring multiple roles with maximum reach and priority support."}
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-2.5 mb-6 flex-1">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-1.5 text-[11px]">
-                      <span className={"mt-0.5 h-3.5 w-3.5 shrink-0 rounded-full flex items-center justify-center text-[8px] " + (data.plan === p.id ? "bg-[var(--brand-purple)]/10 text-[var(--brand-purple)]" : "bg-white/10 text-white/50")}>✓</span>
-                      <span className={data.plan === p.id ? "text-slate-600" : "text-white/50"}>{f}</span>
+                    <li key={f} className="flex items-start gap-2 text-xs text-slate-600">
+                      <span className={
+                        "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-extrabold " +
+                        (p.id === "free" ? "bg-slate-100 text-slate-500" :
+                          p.id === "featured" ? "bg-amber-100 text-amber-600" :
+                            "bg-indigo-100 text-indigo-600")
+                      }>
+                        ✓
+                      </span>
+                      {f}
                     </li>
                   ))}
                 </ul>
+
+                {/* CTA button */}
+                <div className={
+                  "w-full rounded-xl py-3 text-center text-sm font-extrabold transition " +
+                  (selected
+                    ? "bg-[var(--brand-purple)] text-white"
+                    : "bg-[var(--brand-purple)]/10 text-[var(--brand-purple)] hover:bg-[var(--brand-purple)]/20")
+                }>
+                  {selected ? "Selected" : "Get started"}
+                </div>
               </button>
-            ))}
-          </div>
-          <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {["Secure checkout via Stripe", "Goes live instantly", "Cancel anytime"].map((t) => (
-              <p key={t} className="text-xs text-white/40">{t}</p>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+
+        {/* Trust row */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+          {[
+            "Secure checkout via Stripe",
+            "Goes live instantly",
+            "Cancel anytime",
+            "Free plan available",
+          ].map((t) => (
+            <div key={t} className="flex items-center gap-1.5 text-xs text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-slate-300" />
+              {t}
+            </div>
+          ))}
         </div>
 
         {/* Order summary */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm font-extrabold text-slate-900 mb-3">Order summary</p>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-slate-500">{selectedPlan.name} listing</span>
-              <span className="font-semibold">{selectedPlan.price}</span>
+              <span className="font-semibold text-slate-900">{selectedPlan.price}</span>
             </div>
             <div className="flex justify-between border-t border-slate-100 pt-2 font-extrabold">
-              <span>Total due today</span>
+              <span className="text-slate-900">Total due today</span>
               <span className="text-[var(--brand-purple)]">{selectedPlan.price}</span>
             </div>
           </div>
         </div>
 
+        {/* Publish button */}
         <button
           type="button"
           onClick={onPublish}
           disabled={submitting}
-          className="w-full rounded-2xl bg-[var(--brand-purple)] py-4 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 disabled:opacity-60"
+          className="mt-4 w-full rounded-2xl bg-[var(--brand-purple)] py-4 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 disabled:opacity-60"
         >
-          {submitting ? "Publishing..." : data.plan === "free" ? "Publish for free" : "Continue to payment — " + selectedPlan.price}
+          {submitting
+            ? "Publishing..."
+            : data.plan === "free"
+            ? "Publish for free"
+            : "Continue to payment — " + selectedPlan.price}
         </button>
 
-        <p className="text-center text-xs text-slate-400">
-          {data.plan === "free" ? "Your job goes live immediately." : "You will be taken to Stripe for secure payment."}
+        <p className="mt-3 mb-8 text-center text-xs text-slate-400">
+          {data.plan === "free"
+            ? "Your job goes live immediately after publishing."
+            : "You will be taken to Stripe for secure checkout."}
         </p>
       </div>
     </div>
