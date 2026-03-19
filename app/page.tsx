@@ -208,95 +208,89 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-      {/* Background Layer */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-[#F4F8FC]" />
+     {/* Background Layer */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-    {/* AWS-style moving color band */}
-    <div className="absolute inset-x-0 top-0 h-[260px] overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-100 blur-[36px]"
-        style={{
-          background: `
-          linear-gradient(
-    100deg,
-    rgba(255,255,255,0) 0%,
-    rgba(52, 211, 153, 0.95) 18%,
-    rgba(99, 179, 255, 0.98) 38%,
-    rgba(167, 139, 250, 0.95) 58%,
-    rgba(255,255,255,0) 80%
-  )
-`,
-          backgroundSize: "180% 100%",
-          animation: "awsBandMove 10s ease-in-out infinite",
-        }}
-      />
-
-      <div
-        className="absolute inset-0 opacity-95 blur-[70px]"
-        style={{
-          background: `
-          linear-gradient(
-    100deg,
-    rgba(255,255,255,0) 0%,
-    rgba(52, 211, 153, 0.95) 18%,
-    rgba(99, 179, 255, 0.98) 38%,
-    rgba(167, 139, 250, 0.95) 58%,
-    rgba(255,255,255,0) 80%
-  )
-`,
-          backgroundSize: "200% 100%",
-          animation: "awsBandMove2 15s ease-in-out infinite",
-        }}
-      />
-
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
-    </div>
-
-    {/* subtle grid */}
+  {/* AWS-style moving color band */}
+  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
     <div
-      className="absolute inset-0 opacity-[0.08]"
+      className="absolute inset-0 blur-[50px]"
       style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-        backgroundSize: "30px 30px",
+        background: `linear-gradient(
+          100deg,
+          rgba(255,255,255,0) 0%,
+          rgba(52, 211, 153, 0.55) 20%,
+          rgba(99, 179, 255, 0.70) 45%,
+          rgba(167, 139, 250, 0.65) 70%,
+          rgba(255,255,255,0) 90%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove 8s ease-in-out infinite",
       }}
     />
-
-    {/* right shape */}
-    <svg
-      className="absolute right-0 top-0 h-full w-[65%] opacity-80"
-      viewBox="0 0 720 520"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient
-          id="awsHeroGradient"
-          x1="720"
-          y1="0"
-          x2="260"
-          y2="520"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#D8EBFF" stopOpacity="0.75" />
-          <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
-          <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      <path
-        d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-        fill="url(#awsHeroGradient)"
-      />
-    </svg>
-
-    {/* top glows */}
-    <div className="absolute right-[10%] top-[18px] h-[180px] w-[260px] rounded-full bg-violet-400/60 blur-[80px]" />
-<div className="absolute left-[10%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/60 blur-[70px]" />
-    {/* soft center fade */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_42%)]" />
+    <div
+      className="absolute inset-0 blur-[80px]"
+      style={{
+        background: `linear-gradient(
+          90deg,
+          rgba(255,255,255,0) 0%,
+          rgba(167, 139, 250, 0.40) 25%,
+          rgba(99, 179, 255, 0.45) 55%,
+          rgba(52, 211, 153, 0.30) 75%,
+          rgba(255,255,255,0) 95%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove2 12s ease-in-out infinite",
+      }}
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
   </div>
+
+  {/* subtle grid */}
+  <div
+    className="absolute inset-0 opacity-[0.06]"
+    style={{
+      backgroundImage:
+        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
+      backgroundSize: "30px 30px",
+    }}
+  />
+
+  {/* right shape */}
+  <svg
+    className="absolute right-0 top-0 h-full w-[65%] opacity-80"
+    viewBox="0 0 720 520"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient
+        id="awsHeroGradient"
+        x1="720"
+        y1="0"
+        x2="260"
+        y2="520"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#D8EBFF" stopOpacity="0.75" />
+        <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
+        <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
+      fill="url(#awsHeroGradient)"
+    />
+  </svg>
+
+  {/* top glows — toned down */}
+  <div className="absolute right-[10%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/30 blur-[90px]" />
+  <div className="absolute left-[10%] top-[10px] h-[120px] w-[200px] rounded-full bg-emerald-400/25 blur-[90px]" />
+
+  {/* soft center fade */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.60),transparent_45%)]" />
+</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
@@ -417,32 +411,19 @@ const wideContainer =
     </div>
   </div>
 
-  <style jsx>{`
-    @keyframes awsBandMove {
-      0% {
-        transform: translateX(-18%) scaleX(1.08);
-      }
-      50% {
-        transform: translateX(7%) scaleX(1.18);
-      }
-      100% {
-        transform: translateX(-10%) scaleX(1.12);
-      }
-    }
-
-    @keyframes awsBandMove2 {
-      0% {
-        transform: translateX(10%) scaleX(1);
-      }
-      50% {
-        transform: translateX(-12%) scaleX(1.12);
-      }
-      100% {
-        transform: translateX(4%) scaleX(1.03);
-      }
-    }
-  `}</style>
-</section>
+<style jsx>{`
+  @keyframes awsBandMove {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes awsBandMove2 {
+    0%   { background-position: 100% 50%; }
+    50%  { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+`}</style>
+</section> 
 
       {/* ================= TRUSTED BY TEAMS ================= */}
       <section className={`bg-white ${sectionPadding}`}>
