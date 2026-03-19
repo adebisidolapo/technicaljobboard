@@ -390,18 +390,8 @@ const wideContainer =
         </div>
       </section>
 
-      {/* ================= FEATURED JOBS ================= */}
-      <section id="featured" className="bg-[#F2F4F8] py-14 sm:py-16 md:py-20">
-        <div className={container}>
-          <div className="mb-8 sm:mb-10">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500">
-              Featured Jobs
-            </p>
-          </div>
-
-          <FeaturedJobsSection />
-        </div>
-      </section>
+{/* ================= FEATURED JOBS ================= */}
+<FeaturedJobsSection />
 
 {/* ================= CATEGORIES ================= */}
 <section className="relative overflow-hidden bg-white py-10 sm:py-12">
