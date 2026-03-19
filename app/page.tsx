@@ -207,23 +207,21 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
 
 {/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-white">
+<section className="relative isolate overflow-hidden bg-[#F4F8FC]">
+
   {/* Background Layer */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    {/* true white base */}
-    <div className="absolute inset-0 bg-white" />
-
-    {/* top animated wash - softer so white still reads as white */}
-    <div className="absolute inset-x-0 top-0 h-[220px] overflow-hidden">
+    <div className="absolute inset-0 bg-[#F4F8FC]" />
+    <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
       <div
-        className="absolute inset-0 blur-[52px]"
+        className="absolute inset-0 blur-[50px]"
         style={{
           background: `linear-gradient(
             100deg,
             rgba(255,255,255,0) 0%,
-            rgba(52,211,153,0.20) 22%,
-            rgba(167,139,250,0.16) 52%,
-            rgba(52,211,153,0.12) 75%,
+            rgba(52, 211, 153, 0.55) 22%,
+            rgba(167, 139, 250, 0.45) 52%,
+            rgba(52, 211, 153, 0.35) 75%,
             rgba(255,255,255,0) 92%
           )`,
           backgroundSize: "300% 100%",
@@ -231,141 +229,119 @@ const wideContainer =
         }}
       />
       <div
-        className="absolute inset-0 blur-[84px]"
+        className="absolute inset-0 blur-[80px]"
         style={{
           background: `linear-gradient(
             90deg,
             rgba(255,255,255,0) 0%,
-            rgba(167,139,250,0.10) 28%,
-            rgba(52,211,153,0.08) 60%,
-            rgba(99,179,255,0.06) 78%,
+            rgba(167, 139, 250, 0.25) 30%,
+            rgba(52, 211, 153, 0.20) 62%,
+            rgba(99, 179, 255, 0.10) 78%,
             rgba(255,255,255,0) 95%
           )`,
           backgroundSize: "300% 100%",
           animation: "awsBandMove2 13s ease-in-out infinite",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
     </div>
-
-    {/* left mint side shade */}
-    <div className="absolute -left-24 top-0 h-[320px] w-[320px] rounded-full bg-emerald-300/18 blur-[115px]" />
-
-    {/* soft center top light */}
-    <div className="absolute left-1/2 top-[-40px] h-[180px] w-[760px] -translate-x-1/2 rounded-full bg-sky-100/50 blur-[110px]" />
-
-    {/* right violet side shade */}
-    <div className="absolute -right-24 top-[-10px] h-[340px] w-[340px] rounded-full bg-violet-300/16 blur-[120px]" />
-
-    {/* subtle aws-style right arc */}
-    <div className="absolute right-[-130px] top-[-30px] h-[420px] w-[420px] rounded-full border-[34px] border-violet-100/90" />
-
-    {/* soft white fade so center remains crisp */}
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_52%_at_50%_0%,rgba(255,255,255,0.78),transparent_58%)]" />
+    <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
+    <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
   </div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
-    <div className="mx-auto max-w-5xl px-4 py-14 text-center sm:py-16 lg:py-20">
+    <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
+
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/92 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_6px_18px_rgba(15,23,42,0.05)] backdrop-blur-sm">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        <span>Technical Roles</span>
-        <span className="text-emerald-500">•</span>
-        <span>Remote Jobs</span>
-        <span className="text-emerald-500">•</span>
-        <span>Fast Apply</span>
+        Technical Roles • Remote Jobs • Fast Apply
       </div>
 
-      {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-[980px] text-[clamp(2.2rem,5vw,4.15rem)] font-extrabold leading-[0.98] tracking-[-0.045em] text-[#0B1222]">
-        Discover Top <span className="text-emerald-600">Technical</span> Jobs
+      {/* Title — kept on one line on desktop */}
+      <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[#0F172A]">
+        Discover Top{" "}
+        <span className="text-emerald-600">Technical</span>{" "}
+        Jobs
       </h1>
 
       {/* Subtitle */}
-      <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px]">
-        Browse the best technical roles in engineering, cloud, security, data,
-        and infrastructure —{" "}
+      <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-slate-500 sm:text-base">
+        Browse the best technical roles in engineering, cloud, security,
+        data, and infrastructure —{" "}
         <strong className="font-semibold text-slate-700">
           remote and on-site.
         </strong>
       </p>
 
       {/* Search card */}
-      <div className="mx-auto mt-10 w-full max-w-[1040px] overflow-hidden rounded-[30px] border border-slate-200/90 bg-white/92 shadow-[0_22px_55px_rgba(15,23,42,0.08)] backdrop-blur-md">
-        <div className="p-4 sm:p-5">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center">
-            <input
-              id="hero-q"
-              value={heroQ}
-              onChange={(e) => setHeroQ(e.target.value)}
-              type="text"
-              placeholder="Job title, skill, or keyword"
-              className="h-14 min-w-0 flex-1 rounded-[18px] border border-slate-200 bg-white px-6 text-[15px] text-slate-700 placeholder:text-slate-400 outline-none transition focus:border-slate-300 focus:ring-2 focus:ring-slate-200/70"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") runHeroSearch();
-              }}
-            />
+      <div className="mt-10 mx-auto w-full max-w-3xl rounded-3xl border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backdrop-blur-md">
 
-            <input
-              id="hero-loc"
-              value={heroLoc}
-              onChange={(e) => setHeroLoc(e.target.value)}
-              type="text"
-              placeholder="City, state, remote, or hybrid"
-              className="h-14 min-w-0 flex-1 rounded-[18px] border border-slate-200 bg-white px-6 text-[15px] text-slate-700 placeholder:text-slate-400 outline-none transition focus:border-slate-300 focus:ring-2 focus:ring-slate-200/70"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") runHeroSearch();
-              }}
-            />
+        {/* Inputs + button row */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            id="hero-q"
+            value={heroQ}
+            onChange={(e) => setHeroQ(e.target.value)}
+            type="text"
+            placeholder="Job title, skill, or keyword"
+            className={inputBase}
+            onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
+          />
+          <input
+            id="hero-loc"
+            value={heroLoc}
+            onChange={(e) => setHeroLoc(e.target.value)}
+            type="text"
+            placeholder="City, state, remote, or hybrid"
+            className={inputBase}
+            onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
+          />
+          <button
+            type="button"
+            onClick={runHeroSearch}
+            className="h-12 w-full shrink-0 rounded-xl bg-[#0B1222] px-7 text-sm font-semibold text-white transition hover:bg-[#111827] sm:w-auto"
+          >
+            Search Jobs
+          </button>
+        </div>
 
+        {/* Tags */}
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <span className="mr-1 text-xs font-semibold text-emerald-600">
+            Popular
+          </span>
+          {[
+            "Engineering",
+            "DevOps",
+            "Project Management",
+            "Data",
+            "Security",
+            "Cloud",
+          ].map((t) => (
             <button
+              key={t}
               type="button"
-              onClick={runHeroSearch}
-              className="h-14 shrink-0 rounded-[18px] bg-[#081225] px-7 text-[15px] font-bold text-white shadow-[0_8px_20px_rgba(8,18,37,0.20),0_3px_0_rgba(16,185,129,0.38)] transition hover:bg-[#0f172a] md:min-w-[180px]"
+              onClick={() => {
+                setHeroQ(t);
+                setTimeout(runHeroSearch, 0);
+              }}
+              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-white"
             >
-              Search Jobs
+              {t}
             </button>
-          </div>
-
-          {/* Tags */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-[12px] font-semibold text-emerald-700">
-              Popular
-            </span>
-
-            {[
-              "Engineering",
-              "DevOps",
-              "Project Management",
-              "Data",
-              "Security",
-              "Cloud",
-            ].map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => {
-                  setHeroQ(t);
-                  setTimeout(runHeroSearch, 0);
-                }}
-                className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[12px] font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-              >
-                {t}
-              </button>
-            ))}
-          </div>
+          ))}
         </div>
 
         {/* Trust line */}
-        <div className="border-t border-slate-200/80 bg-slate-50/45 px-5 py-4">
-          <div className="flex flex-wrap items-center justify-center gap-3 text-[13px] text-slate-500 sm:gap-5">
-            <span>Trusted employers</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/70" />
-            <span>Remote + on-site</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/70" />
-            <span>Fast apply</span>
-          </div>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-100 pt-4 text-[12px] text-slate-400">
+          <span>Trusted employers</span>
+          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span>Remote + on-site</span>
+          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span>Fast apply</span>
         </div>
       </div>
 
@@ -373,35 +349,24 @@ const wideContainer =
       <button
         type="button"
         onClick={jumpToFeatured}
-        className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition hover:text-emerald-800"
+        className={`mt-8 ${textButton}`}
       >
         Jump To Jobs <span aria-hidden>↓</span>
       </button>
+
     </div>
   </div>
 
   <style jsx>{`
     @keyframes awsBandMove {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     @keyframes awsBandMove2 {
-      0% {
-        background-position: 100% 50%;
-      }
-      50% {
-        background-position: 0% 50%;
-      }
-      100% {
-        background-position: 100% 50%;
-      }
+      0%   { background-position: 100% 50%; }
+      50%  { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
   `}</style>
 </section>
@@ -536,28 +501,16 @@ const wideContainer =
 </section>
 
 
-   {/* ================= EMPOWERING ================= */}
+    {/* ================= EMPOWERING ================= */}
 <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
-  {/* Background (FIXED GLOW + TECH FEEL) */}
   <div className="pointer-events-none absolute inset-0">
-    {/* Top-left glow */}
-    <div className="absolute -top-32 -left-32 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.14)] blur-[120px]" />
-
-    {/* Bottom-right glow */}
-    <div className="absolute -bottom-40 right-[-160px] h-[520px] w-[520px] rounded-full bg-[rgba(16,185,129,0.12)] blur-[140px]" />
-
-    {/* Center soft wash */}
-    <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_50%_20%,rgba(106,111,242,0.08),transparent)]" />
-
-    {/* Subtle grid */}
-    <div className="absolute inset-0 opacity-[0.035] bg-[linear-gradient(to_right,#0B1222_1px,transparent_1px),linear-gradient(to_bottom,#0B1222_1px,transparent_1px)] bg-[size:36px_36px]" />
+    <div className="absolute -top-24 -left-24 h-[280px] w-[280px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl sm:h-[360px] sm:w-[360px]" />
+    <div className="absolute -bottom-28 right-[-100px] h-[320px] w-[320px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl sm:h-[440px] sm:w-[440px]" />
   </div>
 
   <div className={`relative ${container}`}>
     <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-      
-      {/* IMAGE */}
-      <div className="order-1 flex justify-center lg:justify-start">
+      <div className="order-1 flex justify-center lg:order-1 lg:justify-start">
         <div className="w-full max-w-[620px] rounded-[28px] border border-slate-200/80 bg-[#F8FAFC]/90 p-2 shadow-[0_14px_34px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:p-3">
           <img
             src="/empower-platform.png"
@@ -567,8 +520,7 @@ const wideContainer =
         </div>
       </div>
 
-      {/* TEXT */}
-      <div className="order-2 mx-auto w-full max-w-xl lg:mx-0">
+      <div className="order-2 mx-auto w-full max-w-xl lg:order-2 lg:mx-0">
         <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-purple)] sm:text-xs">
           Built For Technical Careers
         </span>
@@ -597,7 +549,6 @@ const wideContainer =
           </li>
         </ul>
 
-        {/* CTA */}
         <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <button
             type="button"
