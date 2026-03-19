@@ -117,13 +117,8 @@ export default function SiteHeader() {
     };
   }, [open]);
 
-  // ── Auth-aware Post Job handler ──────────────────────────────────────────
-  // Post Job goes to the standalone post job page — NOT the employer dashboard
-  // If logged in → /employer/jobs/new
-  // If not logged in → /employer/jobs/new (the page itself handles auth at step 4)
-  // We always go directly — the post job page handles auth internally
   function handlePostJob() {
-    router.push("/employer/jobs/new");
+    router.push("/post-job");
   }
 
   return (
@@ -135,8 +130,6 @@ export default function SiteHeader() {
         ].join(" ")}
       >
         <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
-
-          {/* ── DESKTOP HEADER ── */}
           <div className="mx-auto hidden h-24 max-w-7xl items-center justify-between px-4 sm:px-6 md:flex md:h-28 lg:px-8">
             <Link href="/" className="flex items-center">
               <img
@@ -156,7 +149,7 @@ export default function SiteHeader() {
                 Categories
               </Link>
               <NavLink href="/jobseeker/login">Jobseeker</NavLink>
-             <NavLink href="/employer/login">Employer</NavLink>
+              <NavLink href="/employer/login">Employer</NavLink>
               <button
                 type="button"
                 onClick={handlePostJob}
@@ -167,7 +160,6 @@ export default function SiteHeader() {
             </nav>
           </div>
 
-          {/* ── MOBILE HEADER ── */}
           <div className="md:hidden">
             <div className="mx-auto flex h-24 items-center justify-between px-4">
               <Link href="/" className="flex items-center">
@@ -205,7 +197,6 @@ export default function SiteHeader() {
               </div>
             </div>
 
-            {/* Mobile strip */}
             <div className="border-t border-slate-100 px-4 py-3">
               <div className="no-scrollbar flex items-center gap-2 overflow-x-auto text-[13px]">
                 <MobileStripLink href="/#categories" active>Tech</MobileStripLink>
@@ -228,7 +219,6 @@ export default function SiteHeader() {
           </div>
         </div>
 
-        {/* Mobile menu drawer */}
         {open && (
           <div className="md:hidden">
             <button
@@ -251,11 +241,14 @@ export default function SiteHeader() {
                 <NavLink href="/jobseeker/login" onClick={() => setOpen(false)}>Jobseeker</NavLink>
                 <NavLink href="/employer/login" onClick={() => setOpen(false)}>Employer Login</NavLink>
 
-                <div className="pt-2 border-t border-slate-100">
+                <div className="border-t border-slate-100 pt-2">
                   <button
                     type="button"
-                    onClick={() => { setOpen(false); handlePostJob(); }}
-                    className="w-full inline-flex h-11 items-center justify-center rounded-xl bg-[var(--brand-purple)] text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
+                    onClick={() => {
+                      setOpen(false);
+                      handlePostJob();
+                    }}
+                    className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[var(--brand-purple)] text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-purple-dark)]"
                   >
                     Post a Job
                   </button>
