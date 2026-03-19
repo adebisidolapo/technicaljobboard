@@ -252,7 +252,7 @@ const wideContainer =
 
   {/* Content */}
   <div className={`relative ${container}`}>
-    <div className="mx-auto max-w-4xl py-16 text-center sm:py-20 lg:py-24">
+    <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
 
       {/* Badge */}
       <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-sm backdrop-blur">
@@ -260,83 +260,88 @@ const wideContainer =
         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
-      {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[#0F172A]">
+      {/* Title — kept on one line on desktop */}
+      <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[#0F172A]">
         Discover Top{" "}
         <span className="text-emerald-600">Technical</span>{" "}
         Jobs
       </h1>
 
       {/* Subtitle */}
-      <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-slate-500 sm:text-[16px]">
+      <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-slate-500 sm:text-base">
         Browse the best technical roles in engineering, cloud, security,
         data, and infrastructure —{" "}
-        <strong className="font-semibold text-slate-700">remote and on-site.</strong>
+        <strong className="font-semibold text-slate-700">
+          remote and on-site.
+        </strong>
       </p>
 
       {/* Search card */}
-      <div className="mt-10">
-        <div className="mx-auto w-full max-w-3xl rounded-3xl border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backdrop-blur-md">
+      <div className="mt-10 mx-auto w-full max-w-3xl rounded-3xl border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backdrop-blur-md">
 
-          {/* Inputs + button */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <input
-              id="hero-q"
-              value={heroQ}
-              onChange={(e) => setHeroQ(e.target.value)}
-              type="text"
-              placeholder="Job title, skill, or keyword"
-              className={inputBase}
-              onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
-            />
-            <input
-              id="hero-loc"
-              value={heroLoc}
-              onChange={(e) => setHeroLoc(e.target.value)}
-              type="text"
-              placeholder="City, state, remote, or hybrid"
-              className={inputBase}
-              onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
-            />
+        {/* Inputs + button row */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            id="hero-q"
+            value={heroQ}
+            onChange={(e) => setHeroQ(e.target.value)}
+            type="text"
+            placeholder="Job title, skill, or keyword"
+            className={inputBase}
+            onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
+          />
+          <input
+            id="hero-loc"
+            value={heroLoc}
+            onChange={(e) => setHeroLoc(e.target.value)}
+            type="text"
+            placeholder="City, state, remote, or hybrid"
+            className={inputBase}
+            onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
+          />
+          <button
+            type="button"
+            onClick={runHeroSearch}
+            className="h-12 w-full shrink-0 rounded-xl bg-[#0B1222] px-7 text-sm font-semibold text-white transition hover:bg-[#111827] sm:w-auto"
+          >
+            Search Jobs
+          </button>
+        </div>
+
+        {/* Tags */}
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <span className="mr-1 text-xs font-semibold text-emerald-600">
+            Popular
+          </span>
+          {[
+            "Engineering",
+            "DevOps",
+            "Project Management",
+            "Data",
+            "Security",
+            "Cloud",
+          ].map((t) => (
             <button
+              key={t}
               type="button"
-              onClick={runHeroSearch}
-              className="h-12 w-full shrink-0 rounded-xl bg-[#0B1222] px-7 text-sm font-semibold text-white transition duration-200 hover:bg-[#111827] sm:w-auto"
+              onClick={() => {
+                setHeroQ(t);
+                setTimeout(runHeroSearch, 0);
+              }}
+              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-white"
             >
-              Search Jobs
+              {t}
             </button>
-          </div>
+          ))}
+        </div>
 
-          {/* Tags */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
-            <span className="mr-1 font-semibold text-emerald-600">Popular</span>
-            {[
-              "Engineering",
-              "DevOps",
-              "Project Management",
-              "Data",
-              "Security",
-              "Cloud",
-            ].map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => { setHeroQ(t); setTimeout(runHeroSearch, 0); }}
-                className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-white"
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-
-          {/* Trust line inside card */}
-          <div className="mt-4 flex items-center justify-center gap-3 border-t border-slate-100 pt-4 text-[12px] text-slate-400">
-            <span>Trusted employers</span>
-            <span className="h-1 w-1 rounded-full bg-slate-300" />
-            <span>Remote + on-site</span>
-            <span className="h-1 w-1 rounded-full bg-slate-300" />
-            <span>Fast apply</span>
-          </div>
+        {/* Trust line */}
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-100 pt-4 text-[12px] text-slate-400">
+          <span>Trusted employers</span>
+          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span>Remote + on-site</span>
+          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span>Fast apply</span>
         </div>
       </div>
 
