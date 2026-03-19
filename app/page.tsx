@@ -394,29 +394,7 @@ const wideContainer =
 <FeaturedJobsSection />
 
 
-{/* ── Section divider ── */}
-<div className="relative w-full overflow-hidden bg-white py-2">
-  {/* Top fade */}
-  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-  {/* Techy grid strip */}
-  <div
-    className="h-[60px] w-full"
-    style={{
-      backgroundImage: `
-        linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)
-      `,
-      backgroundSize: "32px 32px",
-    }}
-  />
-
-  {/* Center glow */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_100%_at_50%_50%,rgba(99,102,241,0.06),transparent)]" />
-
-  {/* Bottom fade */}
-  <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-</div>
 
 
 {/* ================= CATEGORIES ================= */}

@@ -232,13 +232,14 @@ function JobCard({
   const hasPay = job.pay !== "Compensation not listed";
 
   return (
-    <article className="group relative flex min-h-[156px] w-[88vw] max-w-[372px] flex-none snap-start flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-[0_4px_14px_rgba(15,23,42,0.035)] transition duration-200 hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:w-[360px] lg:w-full lg:max-w-none">
+    <article className="group relative flex min-h-[156px] w-[88vw] max-w-[372px] flex-none snap-start flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white/95 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-sm transition duration-300 hover:-translate-y-[2px] hover:border-slate-300 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)] sm:w-[360px] lg:w-full lg:max-w-none">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-10 -top-10 h-24 w-24 rounded-full bg-[var(--brand-purple)]/18 blur-2xl sm:h-20 sm:w-20 sm:bg-[var(--brand-purple)]/12" />
+        <div className="absolute -left-10 -top-10 h-24 w-24 rounded-full bg-[var(--brand-purple)]/14 blur-2xl" />
+        <div className="absolute bottom-0 right-0 h-20 w-20 rounded-full bg-emerald-400/10 blur-2xl" />
       </div>
 
       <div className="absolute left-0 top-5 h-10 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
-      <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-[var(--brand-purple)]/45" />
+      <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-emerald-400/50" />
 
       <div className="relative flex h-full flex-col p-4">
         <div className="flex items-start gap-3">
@@ -265,7 +266,7 @@ function JobCard({
                 onClick={() => onOpen(job)}
                 className="min-w-0 text-left"
               >
-                <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222] transition-colors group-hover:text-[var(--brand-purple)]">
+                <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222] transition-colors duration-200 group-hover:text-[var(--brand-purple)]">
                   {job.title}
                 </h3>
               </button>
@@ -300,7 +301,7 @@ function JobCard({
           <button
             type="button"
             onClick={() => onOpen(job)}
-            className="inline-flex h-8 items-center justify-center rounded-full bg-[#0B1222] px-4 text-xs font-semibold text-white transition duration-200 hover:bg-[#111827]"
+            className="inline-flex h-8 items-center justify-center rounded-full bg-[#0B1222] px-4 text-xs font-semibold text-white transition duration-200 hover:bg-[var(--brand-purple)]"
           >
             Apply
           </button>
@@ -329,7 +330,9 @@ export default function FeaturedJobsSection() {
     if (!items.length) return FALLBACK_FEATURED_JOBS;
 
     const existingIds = new Set(items.map((j) => j.id));
-    const fillerJobs = FALLBACK_FEATURED_JOBS.filter((j) => !existingIds.has(j.id));
+    const fillerJobs = FALLBACK_FEATURED_JOBS.filter(
+      (j) => !existingIds.has(j.id)
+    );
 
     return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
@@ -419,8 +422,17 @@ export default function FeaturedJobsSection() {
 
   return (
     <>
-      <section id="featured-jobs" className="w-full bg-white py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section
+        id="featured-jobs"
+        className="relative overflow-hidden bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_38%,#f8fafc_100%)] py-16 sm:py-20"
+      >
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_15%_-10%,rgba(124,58,237,0.14),transparent),radial-gradient(900px_500px_at_85%_0%,rgba(16,185,129,0.10),transparent)]" />
+          <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,#0B1222_1px,transparent_1px),linear-gradient(to_bottom,#0B1222_1px,transparent_1px)] bg-[size:34px_34px]" />
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/60 to-transparent" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex items-end justify-between gap-4">
             <div>
               <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--brand-purple)]">
@@ -440,7 +452,7 @@ export default function FeaturedJobsSection() {
                 type="button"
                 onClick={() => handleArrow("left")}
                 disabled={desktopPage === 0}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200/80 bg-white/90 text-slate-600 shadow-sm backdrop-blur-sm transition hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Previous"
               >
                 ←
@@ -450,7 +462,7 @@ export default function FeaturedJobsSection() {
                 type="button"
                 onClick={() => handleArrow("right")}
                 disabled={desktopPage >= desktopPageCount - 1}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200/80 bg-white/90 text-slate-600 shadow-sm backdrop-blur-sm transition hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Next"
               >
                 →
@@ -479,7 +491,7 @@ export default function FeaturedJobsSection() {
           <div className="mt-10 text-center">
             <Link
               href="/all-jobs"
-              className="inline-flex h-12 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-[14px] font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+              className="inline-flex h-12 items-center gap-2 rounded-xl border border-slate-200/80 bg-white/95 px-8 text-[14px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm transition hover:border-slate-300 hover:bg-white"
             >
               View all jobs →
             </Link>
