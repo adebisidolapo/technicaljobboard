@@ -208,131 +208,78 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-    {/* Background Layer */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
-  <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* Aurora sweep — green leads, purple accents, blue barely visible */}
-  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
-    <div
-      className="absolute inset-0 blur-[50px]"
-      style={{
-        background: `linear-gradient(
-          100deg,
-          rgba(255,255,255,0) 0%,
-          rgba(52, 211, 153, 0.55) 22%,
-          rgba(167, 139, 250, 0.45) 52%,
-          rgba(52, 211, 153, 0.35) 75%,
-          rgba(255,255,255,0) 92%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove 9s ease-in-out infinite",
-      }}
-    />
-    <div
-      className="absolute inset-0 blur-[80px]"
-      style={{
-        background: `linear-gradient(
-          90deg,
-          rgba(255,255,255,0) 0%,
-          rgba(167, 139, 250, 0.25) 30%,
-          rgba(52, 211, 153, 0.20) 62%,
-          rgba(99, 179, 255, 0.10) 78%,
-          rgba(255,255,255,0) 95%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove2 13s ease-in-out infinite",
-      }}
-    />
-    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+  {/* Background Layer */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 bg-[#F4F8FC]" />
+    <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+      <div
+        className="absolute inset-0 blur-[50px]"
+        style={{
+          background: `linear-gradient(
+            100deg,
+            rgba(255,255,255,0) 0%,
+            rgba(52, 211, 153, 0.55) 22%,
+            rgba(167, 139, 250, 0.45) 52%,
+            rgba(52, 211, 153, 0.35) 75%,
+            rgba(255,255,255,0) 92%
+          )`,
+          backgroundSize: "300% 100%",
+          animation: "awsBandMove 9s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute inset-0 blur-[80px]"
+        style={{
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0) 0%,
+            rgba(167, 139, 250, 0.25) 30%,
+            rgba(52, 211, 153, 0.20) 62%,
+            rgba(99, 179, 255, 0.10) 78%,
+            rgba(255,255,255,0) 95%
+          )`,
+          backgroundSize: "300% 100%",
+          animation: "awsBandMove2 13s ease-in-out infinite",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+    </div>
+    <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
+    <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
   </div>
-
-  {/* subtle grid */}
-  <div
-    className="absolute inset-0 opacity-[0.06]"
-    style={{
-      backgroundImage:
-        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-      backgroundSize: "30px 30px",
-    }}
-  />
-
-  {/* right shape — removed blue tones, kept neutral */}
-  <svg
-    className="absolute right-0 top-0 h-full w-[65%] opacity-60"
-    viewBox="0 0 720 520"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient
-        id="awsHeroGradient"
-        x1="720"
-        y1="0"
-        x2="260"
-        y2="520"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#E8F5EE" stopOpacity="0.60" />
-        <stop offset="0.45" stopColor="#F0F8F4" stopOpacity="0.25" />
-        <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
-      </linearGradient>
-    </defs>
-    <path
-      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-      fill="url(#awsHeroGradient)"
-    />
-  </svg>
-
-  {/* glows — green left, purple right, no blue */}
-  <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
-  <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
-
-  {/* soft center fade — keeps text crisp */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
-</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
-    <div className="mx-auto max-w-5xl py-16 text-center sm:py-18 md:py-20 lg:py-24">
+    <div className="mx-auto max-w-4xl py-16 text-center sm:py-20 lg:py-24">
+
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-sm backdrop-blur">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
       {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#0F172A]">
-        Powering{" "}
-        <span className="relative inline-block">
-          <span
-            aria-hidden
-            className="absolute left-1/2 top-1/2 h-[42px] w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 blur-2xl"
-          />
-          <span className="relative text-emerald-600">Technical</span>
-        </span>{" "}
-        Careers
+      <h1 className="mx-auto mt-6 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[#0F172A]">
+        Discover Top{" "}
+        <span className="text-emerald-600">Technical</span>{" "}
+        Jobs
       </h1>
 
       {/* Subtitle */}
-      <p className="mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:text-[16px] md:text-[17px]">
-        Browse Curated Opportunities Across Engineering, Infrastructure, Cloud,
-        Security, Data, and Skilled Technical Fields — Including Remote and
-        On-Site Roles.
+      <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-slate-500 sm:text-[16px]">
+        Browse the best technical roles in engineering, cloud, security,
+        data, and infrastructure —{" "}
+        <strong className="font-semibold text-slate-700">remote and on-site.</strong>
       </p>
 
-      {/* Search */}
-      <div className="mt-9">
-        <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-white/70 bg-white/88 p-3 sm:p-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-md">
-          <div className="mb-3 text-center text-[13px] font-medium text-slate-500">
-            Start with a title, keyword, or location
-          </div>
+      {/* Search card */}
+      <div className="mt-10">
+        <div className="mx-auto w-full max-w-3xl rounded-3xl border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backdrop-blur-md">
 
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_auto] xl:items-center">
-            <label className="sr-only" htmlFor="hero-q">
-              Job title, skill, or keyword
-            </label>
-
+          {/* Inputs + button */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <input
               id="hero-q"
               value={heroQ}
@@ -340,15 +287,8 @@ const wideContainer =
               type="text"
               placeholder="Job title, skill, or keyword"
               className={inputBase}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") runHeroSearch();
-              }}
+              onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
             />
-
-            <label className="sr-only" htmlFor="hero-loc">
-              City, state, remote, or hybrid
-            </label>
-
             <input
               id="hero-loc"
               value={heroLoc}
@@ -356,74 +296,75 @@ const wideContainer =
               type="text"
               placeholder="City, state, remote, or hybrid"
               className={inputBase}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") runHeroSearch();
-              }}
+              onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
             />
-
             <button
               type="button"
               onClick={runHeroSearch}
-              className="h-12 w-full rounded-xl bg-[#0B1222] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-[1px] hover:bg-[#111827] md:col-span-2 xl:col-span-1 xl:w-auto"
+              className="h-12 w-full shrink-0 rounded-xl bg-[#0B1222] px-7 text-sm font-semibold text-white transition duration-200 hover:bg-[#111827] sm:w-auto"
             >
               Search Jobs
             </button>
           </div>
 
-          {/* Popular Tags */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs text-slate-500">
-            <span className="mr-1 font-medium">Popular</span>
-
-            {["Frontend", "DevOps", "Data", "Security", "Cloud"].map((t) => (
+          {/* Tags */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
+            <span className="mr-1 font-semibold text-emerald-600">Popular</span>
+            {[
+              "Engineering",
+              "DevOps",
+              "Project Management",
+              "Data",
+              "Security",
+              "Cloud",
+            ].map((t) => (
               <button
                 key={t}
                 type="button"
-                onClick={() => {
-                  setHeroQ(t);
-                  setTimeout(runHeroSearch, 0);
-                }}
-                className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white"
+                onClick={() => { setHeroQ(t); setTimeout(runHeroSearch, 0); }}
+                className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-white"
               >
                 {t}
               </button>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Trust micro-copy */}
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[13px] text-slate-500 sm:gap-x-5">
-        <span>Trusted employers</span>
-        <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
-        <span>Remote and on-site roles</span>
-        <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block" />
-        <span>Fast applications</span>
+          {/* Trust line inside card */}
+          <div className="mt-4 flex items-center justify-center gap-3 border-t border-slate-100 pt-4 text-[12px] text-slate-400">
+            <span>Trusted employers</span>
+            <span className="h-1 w-1 rounded-full bg-slate-300" />
+            <span>Remote + on-site</span>
+            <span className="h-1 w-1 rounded-full bg-slate-300" />
+            <span>Fast apply</span>
+          </div>
+        </div>
       </div>
 
       {/* Jump */}
       <button
         type="button"
         onClick={jumpToFeatured}
-        className={`mt-7 ${textButton}`}
+        className={`mt-8 ${textButton}`}
       >
         Jump To Jobs <span aria-hidden>↓</span>
       </button>
+
     </div>
   </div>
 
-<style jsx>{`
-  @keyframes awsBandMove {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @keyframes awsBandMove2 {
-    0%   { background-position: 100% 50%; }
-    50%  { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-  }
-`}</style>
-</section> 
+  <style jsx>{`
+    @keyframes awsBandMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes awsBandMove2 {
+      0%   { background-position: 100% 50%; }
+      50%  { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+  `}</style>
+</section>
 
       {/* ================= TRUSTED BY TEAMS ================= */}
       <section className={`bg-white ${sectionPadding}`}>
