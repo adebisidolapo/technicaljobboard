@@ -501,16 +501,28 @@ const wideContainer =
 </section>
 
 
-    {/* ================= EMPOWERING ================= */}
+   {/* ================= EMPOWERING ================= */}
 <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
+  {/* Background (FIXED GLOW + TECH FEEL) */}
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute -top-24 -left-24 h-[280px] w-[280px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl sm:h-[360px] sm:w-[360px]" />
-    <div className="absolute -bottom-28 right-[-100px] h-[320px] w-[320px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl sm:h-[440px] sm:w-[440px]" />
+    {/* Top-left glow */}
+    <div className="absolute -top-32 -left-32 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.14)] blur-[120px]" />
+
+    {/* Bottom-right glow */}
+    <div className="absolute -bottom-40 right-[-160px] h-[520px] w-[520px] rounded-full bg-[rgba(16,185,129,0.12)] blur-[140px]" />
+
+    {/* Center soft wash */}
+    <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_50%_20%,rgba(106,111,242,0.08),transparent)]" />
+
+    {/* Subtle grid */}
+    <div className="absolute inset-0 opacity-[0.035] bg-[linear-gradient(to_right,#0B1222_1px,transparent_1px),linear-gradient(to_bottom,#0B1222_1px,transparent_1px)] bg-[size:36px_36px]" />
   </div>
 
   <div className={`relative ${container}`}>
     <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-      <div className="order-1 flex justify-center lg:order-1 lg:justify-start">
+      
+      {/* IMAGE */}
+      <div className="order-1 flex justify-center lg:justify-start">
         <div className="w-full max-w-[620px] rounded-[28px] border border-slate-200/80 bg-[#F8FAFC]/90 p-2 shadow-[0_14px_34px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:p-3">
           <img
             src="/empower-platform.png"
@@ -520,7 +532,8 @@ const wideContainer =
         </div>
       </div>
 
-      <div className="order-2 mx-auto w-full max-w-xl lg:order-2 lg:mx-0">
+      {/* TEXT */}
+      <div className="order-2 mx-auto w-full max-w-xl lg:mx-0">
         <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-purple)] sm:text-xs">
           Built For Technical Careers
         </span>
@@ -549,6 +562,7 @@ const wideContainer =
           </li>
         </ul>
 
+        {/* CTA */}
         <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <button
             type="button"
