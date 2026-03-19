@@ -207,22 +207,23 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
 
 {/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-[#F4F8FC]">
+<section className="relative isolate overflow-hidden bg-white">
   {/* Background Layer */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-[#F4F8FC]" />
+    {/* true white base */}
+    <div className="absolute inset-0 bg-white" />
 
-    {/* animated top band */}
-    <div className="absolute inset-x-0 top-0 h-[250px] overflow-hidden">
+    {/* top animated wash - softer so white still reads as white */}
+    <div className="absolute inset-x-0 top-0 h-[220px] overflow-hidden">
       <div
         className="absolute inset-0 blur-[52px]"
         style={{
           background: `linear-gradient(
             100deg,
             rgba(255,255,255,0) 0%,
-            rgba(52, 211, 153, 0.48) 22%,
-            rgba(167, 139, 250, 0.34) 52%,
-            rgba(52, 211, 153, 0.24) 75%,
+            rgba(52,211,153,0.20) 22%,
+            rgba(167,139,250,0.16) 52%,
+            rgba(52,211,153,0.12) 75%,
             rgba(255,255,255,0) 92%
           )`,
           backgroundSize: "300% 100%",
@@ -230,38 +231,44 @@ const wideContainer =
         }}
       />
       <div
-        className="absolute inset-0 blur-[82px]"
+        className="absolute inset-0 blur-[84px]"
         style={{
           background: `linear-gradient(
             90deg,
             rgba(255,255,255,0) 0%,
-            rgba(167, 139, 250, 0.18) 30%,
-            rgba(52, 211, 153, 0.14) 62%,
-            rgba(99, 179, 255, 0.08) 78%,
+            rgba(167,139,250,0.10) 28%,
+            rgba(52,211,153,0.08) 60%,
+            rgba(99,179,255,0.06) 78%,
             rgba(255,255,255,0) 95%
           )`,
           backgroundSize: "300% 100%",
           animation: "awsBandMove2 13s ease-in-out infinite",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
     </div>
 
-    {/* side glows */}
-    <div className="absolute left-[7%] top-[8px] h-[120px] w-[200px] rounded-full bg-emerald-400/20 blur-[88px]" />
-    <div className="absolute right-[8%] top-[10px] h-[135px] w-[220px] rounded-full bg-violet-400/16 blur-[88px]" />
+    {/* left mint side shade */}
+    <div className="absolute -left-24 top-0 h-[320px] w-[320px] rounded-full bg-emerald-300/18 blur-[115px]" />
 
-    {/* subtle right arc like the mockup */}
-    <div className="absolute right-[-150px] top-[-40px] h-[430px] w-[430px] rounded-full border-[34px] border-violet-200/35" />
+    {/* soft center top light */}
+    <div className="absolute left-1/2 top-[-40px] h-[180px] w-[760px] -translate-x-1/2 rounded-full bg-sky-100/50 blur-[110px]" />
 
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.62),transparent_55%)]" />
+    {/* right violet side shade */}
+    <div className="absolute -right-24 top-[-10px] h-[340px] w-[340px] rounded-full bg-violet-300/16 blur-[120px]" />
+
+    {/* subtle aws-style right arc */}
+    <div className="absolute right-[-130px] top-[-30px] h-[420px] w-[420px] rounded-full border-[34px] border-violet-100/90" />
+
+    {/* soft white fade so center remains crisp */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_52%_at_50%_0%,rgba(255,255,255,0.78),transparent_58%)]" />
   </div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-5xl px-4 py-14 text-center sm:py-16 lg:py-20">
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-sm backdrop-blur-sm">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/92 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_6px_18px_rgba(15,23,42,0.05)] backdrop-blur-sm">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         <span>Technical Roles</span>
         <span className="text-emerald-500">•</span>
@@ -271,7 +278,7 @@ const wideContainer =
       </div>
 
       {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-[980px] text-[clamp(2.35rem,5.1vw,4.4rem)] font-extrabold leading-[0.98] tracking-[-0.045em] text-[#0B1222]">
+      <h1 className="mx-auto mt-6 max-w-[980px] text-[clamp(2.2rem,5vw,4.15rem)] font-extrabold leading-[0.98] tracking-[-0.045em] text-[#0B1222]">
         Discover Top <span className="text-emerald-600">Technical</span> Jobs
       </h1>
 
@@ -285,7 +292,7 @@ const wideContainer =
       </p>
 
       {/* Search card */}
-      <div className="mx-auto mt-10 w-full max-w-5xl overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/88 shadow-[0_20px_48px_rgba(15,23,42,0.08)] backdrop-blur-md">
+      <div className="mx-auto mt-10 w-full max-w-[1040px] overflow-hidden rounded-[30px] border border-slate-200/90 bg-white/92 shadow-[0_22px_55px_rgba(15,23,42,0.08)] backdrop-blur-md">
         <div className="p-4 sm:p-5">
           <div className="flex flex-col gap-3 md:flex-row md:items-center">
             <input
@@ -315,7 +322,7 @@ const wideContainer =
             <button
               type="button"
               onClick={runHeroSearch}
-              className="h-14 shrink-0 rounded-[18px] bg-[#081225] px-7 text-[15px] font-bold text-white shadow-[0_8px_20px_rgba(8,18,37,0.22),0_3px_0_rgba(16,185,129,0.42)] transition hover:bg-[#0f172a] md:min-w-[180px]"
+              className="h-14 shrink-0 rounded-[18px] bg-[#081225] px-7 text-[15px] font-bold text-white shadow-[0_8px_20px_rgba(8,18,37,0.20),0_3px_0_rgba(16,185,129,0.38)] transition hover:bg-[#0f172a] md:min-w-[180px]"
             >
               Search Jobs
             </button>
@@ -342,7 +349,7 @@ const wideContainer =
                   setHeroQ(t);
                   setTimeout(runHeroSearch, 0);
                 }}
-                className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[12px] font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[12px] font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
               >
                 {t}
               </button>
@@ -351,7 +358,7 @@ const wideContainer =
         </div>
 
         {/* Trust line */}
-        <div className="border-t border-slate-200/70 bg-white/55 px-5 py-4">
+        <div className="border-t border-slate-200/80 bg-slate-50/45 px-5 py-4">
           <div className="flex flex-wrap items-center justify-center gap-3 text-[13px] text-slate-500 sm:gap-5">
             <span>Trusted employers</span>
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/70" />
