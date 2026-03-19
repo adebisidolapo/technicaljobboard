@@ -208,47 +208,89 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
+{/* Background Layer */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* Background Layer */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-[#F4F8FC]" />
-    <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
-      <div
-        className="absolute inset-0 blur-[50px]"
-        style={{
-          background: `linear-gradient(
-            100deg,
-            rgba(255,255,255,0) 0%,
-            rgba(52, 211, 153, 0.55) 22%,
-            rgba(167, 139, 250, 0.45) 52%,
-            rgba(52, 211, 153, 0.35) 75%,
-            rgba(255,255,255,0) 92%
-          )`,
-          backgroundSize: "300% 100%",
-          animation: "awsBandMove 9s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="absolute inset-0 blur-[80px]"
-        style={{
-          background: `linear-gradient(
-            90deg,
-            rgba(255,255,255,0) 0%,
-            rgba(167, 139, 250, 0.25) 30%,
-            rgba(52, 211, 153, 0.20) 62%,
-            rgba(99, 179, 255, 0.10) 78%,
-            rgba(255,255,255,0) 95%
-          )`,
-          backgroundSize: "300% 100%",
-          animation: "awsBandMove2 13s ease-in-out infinite",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
-    </div>
-    <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
-    <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
+  {/* Aurora sweep — green leads, purple accents, blue barely visible */}
+  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+    <div
+      className="absolute inset-0 blur-[50px]"
+      style={{
+        background: `linear-gradient(
+          100deg,
+          rgba(255,255,255,0) 0%,
+          rgba(52, 211, 153, 0.55) 22%,
+          rgba(167, 139, 250, 0.45) 52%,
+          rgba(52, 211, 153, 0.35) 75%,
+          rgba(255,255,255,0) 92%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove 9s ease-in-out infinite",
+      }}
+    />
+    <div
+      className="absolute inset-0 blur-[80px]"
+      style={{
+        background: `linear-gradient(
+          90deg,
+          rgba(255,255,255,0) 0%,
+          rgba(167, 139, 250, 0.25) 30%,
+          rgba(52, 211, 153, 0.20) 62%,
+          rgba(99, 179, 255, 0.10) 78%,
+          rgba(255,255,255,0) 95%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove2 13s ease-in-out infinite",
+      }}
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
   </div>
+
+  {/* subtle grid */}
+  <div
+    className="absolute inset-0 opacity-[0.06]"
+    style={{
+      backgroundImage:
+        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
+      backgroundSize: "30px 30px",
+    }}
+  />
+
+  {/* right shape — removed blue tones, kept neutral */}
+  <svg
+    className="absolute right-0 top-0 h-full w-[65%] opacity-60"
+    viewBox="0 0 720 520"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient
+        id="awsHeroGradient"
+        x1="720"
+        y1="0"
+        x2="260"
+        y2="520"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#E8F5EE" stopOpacity="0.60" />
+        <stop offset="0.45" stopColor="#F0F8F4" stopOpacity="0.25" />
+        <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
+      fill="url(#awsHeroGradient)"
+    />
+  </svg>
+
+  {/* glows — green left, purple right, no blue */}
+  <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
+  <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
+
+  {/* soft center fade — keeps text crisp */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
+</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
@@ -394,9 +436,6 @@ const wideContainer =
 <FeaturedJobsSection />
 
 
-
-
-
 {/* ================= CATEGORIES ================= */}
 <section className="relative overflow-hidden bg-white py-10 sm:py-12">
   <div className="pointer-events-none absolute inset-0">
@@ -501,78 +540,78 @@ const wideContainer =
 </section>
 
 
-    {/* ================= EMPOWERING ================= */}
-<section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
-  <div className="pointer-events-none absolute inset-0">
-    <div className="absolute -top-24 -left-24 h-[280px] w-[280px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl sm:h-[360px] sm:w-[360px]" />
-    <div className="absolute -bottom-28 right-[-100px] h-[320px] w-[320px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl sm:h-[440px] sm:w-[440px]" />
-  </div>
-
-  <div className={`relative ${container}`}>
-    <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-      <div className="order-1 flex justify-center lg:order-1 lg:justify-start">
-        <div className="w-full max-w-[620px] rounded-[28px] border border-slate-200/80 bg-[#F8FAFC]/90 p-2 shadow-[0_14px_34px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:p-3">
-          <img
-            src="/empower-platform.png"
-            alt="Job Platform Dashboard Illustration"
-            className="block w-full rounded-[22px]"
-          />
+      {/* ================= EMPOWERING ================= */}
+      <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
+          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
         </div>
-      </div>
 
-      <div className="order-2 mx-auto w-full max-w-xl lg:order-2 lg:mx-0">
-        <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-purple)] sm:text-xs">
-          Built For Technical Careers
-        </span>
+        <div className={`relative ${container}`}>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+            <div className="flex justify-center lg:justify-start">
+              <div className="rounded-3xl border border-slate-200 bg-[#F8FAFC] p-3 shadow-[0_12px_28px_rgba(15,23,42,0.07)]">
+                <img
+                  src="/empower-platform.png"
+                  alt="Job Platform Dashboard Illustration"
+                  className="w-full max-w-[560px] rounded-2xl"
+                />
+              </div>
+            </div>
 
-        <h3 className="mt-4 text-[1.8rem] font-extrabold tracking-tight text-slate-900 sm:text-[2rem] lg:text-[2.15rem]">
-          Empowering Job Seekers
-        </h3>
+            <div>
+              <span className="inline-flex items-center rounded-full border border-[rgba(106,111,242,0.16)] bg-[rgba(106,111,242,0.08)] px-4 py-1.5 text-xs font-semibold text-[var(--brand-purple)]">
+                Built For Technical Careers
+              </span>
 
-        <p className="mt-3 max-w-xl text-[14px] leading-6 text-slate-600 sm:text-[15px] sm:leading-7">
-          Discover vetted technical roles, transparent salary ranges, and
-          trusted employers in one focused experience.
-        </p>
+              <h3 className="mt-4 text-[clamp(1.55rem,3vw,2rem)] font-extrabold tracking-tight text-slate-900">
+                Empowering Job Seekers
+              </h3>
 
-        <ul className="mt-6 space-y-3 text-[14px] text-slate-700 sm:text-sm">
-          <li className="flex items-start gap-3">
-            <span className="mt-1.5 h-2.5 w-2.5 flex-none rounded-full bg-indigo-500" />
-            <span>Verified Technical Opportunities</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="mt-1.5 h-2.5 w-2.5 flex-none rounded-full bg-indigo-500" />
-            <span>Clearer Expectations And Visibility</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="mt-1.5 h-2.5 w-2.5 flex-none rounded-full bg-indigo-500" />
-            <span>Roles Built For Long-Term Growth</span>
-          </li>
-        </ul>
+              <p className="mt-3 max-w-xl text-[15px] leading-7 text-slate-600">
+                Discover vetted technical roles, transparent salary ranges, and
+                trusted employers in one focused experience.
+              </p>
 
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button
-            type="button"
-            onClick={() => router.push("/all-jobs")}
-            className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95 sm:w-auto"
-          >
-            Get Started
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-              →
-            </span>
-          </button>
+              <ul className="mt-6 space-y-3 text-sm text-slate-700">
+                <li className="flex items-center gap-3">
+                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+                  Verified Technical Opportunities
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+                  Clearer Expectations And Visibility
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+                  Roles Built For Long-Term Growth
+                </li>
+              </ul>
 
-          <button
-            type="button"
-            onClick={() => router.push("/all-jobs?loc=Remote")}
-            className={`h-12 w-full justify-center sm:w-auto ${secondaryButton}`}
-          >
-            Remote Roles
-          </button>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => router.push("/all-jobs")}
+                  className="inline-flex h-12 items-center gap-3 rounded-xl bg-[var(--brand-purple)] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(106,111,242,0.24)] transition hover:opacity-95"
+                >
+                  Get Started
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                    →
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => router.push("/all-jobs?loc=Remote")}
+                  className={secondaryButton}
+                >
+                  Remote Roles
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
     </main>
   );
 }
