@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabaseBrowser } from "@/lib/supabase/browser";
 
 type Plan = "free" | "featured" | "premium";
 type PayType = "annual" | "hourly" | "daily" | "monthly";
@@ -317,11 +316,14 @@ function LivePreviewCard({ data }: { data: FormData }) {
           <div>
             <p className="text-sm font-extrabold text-slate-900">Responsibilities</p>
             <ul className="mt-2 space-y-2 text-sm text-slate-600">
-              {(responsibilityList.length ? responsibilityList : [
-                "Own and deliver key product features",
-                "Collaborate with design and product",
-                "Participate in code reviews",
-              ]).map((item) => (
+              {(responsibilityList.length
+                ? responsibilityList
+                : [
+                    "Own and deliver key product features",
+                    "Collaborate with design and product",
+                    "Participate in code reviews",
+                  ]
+              ).map((item) => (
                 <li key={item} className="flex items-start gap-2">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand-purple)]" />
                   <span>{item}</span>
@@ -333,11 +335,10 @@ function LivePreviewCard({ data }: { data: FormData }) {
           <div>
             <p className="text-sm font-extrabold text-slate-900">Requirements</p>
             <ul className="mt-2 space-y-2 text-sm text-slate-600">
-              {(requirementList.length ? requirementList : [
-                "3+ years experience",
-                "Strong TypeScript knowledge",
-                "Experience with cloud platforms",
-              ]).map((item) => (
+              {(requirementList.length
+                ? requirementList
+                : ["3+ years experience", "Strong TypeScript knowledge", "Experience with cloud platforms"]
+              ).map((item) => (
                 <li key={item} className="flex items-start gap-2">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
                   <span>{item}</span>
@@ -351,7 +352,6 @@ function LivePreviewCard({ data }: { data: FormData }) {
   );
 }
 
-// ── Preview screen ─────────────────────────────────────────────────────────
 function PreviewScreen({
   data,
   onBack,
@@ -532,7 +532,7 @@ function PreviewScreen({
         <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-extrabold text-slate-900">Looks good?</p>
-            <p className="text-xs text-slate-400">You can go back and edit, or continue to create your account.</p>
+            <p className="text-xs text-slate-400">Next you’ll create an employer account or sign in.</p>
           </div>
 
           <div className="flex gap-2">
@@ -548,7 +548,7 @@ function PreviewScreen({
               onClick={onContinue}
               className="inline-flex h-10 items-center justify-center rounded-xl bg-[var(--brand-purple)] px-5 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90"
             >
-              Looks good, continue
+              Continue
             </button>
           </div>
         </div>
@@ -557,7 +557,6 @@ function PreviewScreen({
   );
 }
 
-// ── Auth screen ────────────────────────────────────────────────────────────
 function AuthScreen({
   data,
   onBack,
@@ -567,43 +566,18 @@ function AuthScreen({
   onBack: () => void;
   onAuthed: () => void;
 }) {
-  const supabase = supabaseBrowser();
   const [mode, setMode] = useState<"signin" | "register">("register");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit() {
-    setError(null);
+  function handleSubmit() {
     setBusy(true);
-
-    if (mode === "register") {
-      const { error: err } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: { data: { full_name: name.trim(), role: "EMPLOYER" } },
-      });
-      if (err) {
-        setBusy(false);
-        setError(err.message);
-        return;
-      }
-    } else {
-      const { error: err } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
-      if (err) {
-        setBusy(false);
-        setError(err.message);
-        return;
-      }
-    }
-
-    setBusy(false);
-    onAuthed();
+    setTimeout(() => {
+      setBusy(false);
+      onAuthed();
+    }, 700);
   }
 
   return (
@@ -617,7 +591,7 @@ function AuthScreen({
           >
             Back
           </button>
-          <span className="text-sm font-extrabold text-slate-900">Create your account</span>
+          <span className="text-sm font-extrabold text-slate-900">Account</span>
         </div>
         <StepBar current="auth" />
       </header>
@@ -627,7 +601,7 @@ function AuthScreen({
           <div className="rounded-2xl bg-[#0C1120] p-6 text-white shadow-[0_16px_40px_rgba(15,23,42,0.20)]">
             <h2 className="text-xl font-extrabold leading-tight">Your job is ready to go live</h2>
             <p className="mt-2 text-sm leading-6 text-white/60">
-              Create a free account to publish your listing and manage your hiring pipeline.
+              Create an employer account or sign in to continue to pricing and payment.
             </p>
 
             <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
@@ -640,23 +614,14 @@ function AuthScreen({
                   ${Number(data.salaryMin).toLocaleString()} — ${Number(data.salaryMax).toLocaleString()}
                 </p>
               )}
-              {data.skills.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {data.skills.slice(0, 4).map((s) => (
-                    <span key={s} className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-white/60">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
 
             <ul className="mt-5 space-y-2.5">
               {[
-                "Free to create an account",
-                "Goes live in under 2 minutes",
-                "Manage applications in one place",
-                "Edit or cancel anytime",
+                "Create account in under 1 minute",
+                "Manage job applications in one place",
+                "Edit listings anytime",
+                "Continue to secure payment after this step",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-white/60">
                   <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-[9px] font-extrabold text-emerald-400">
@@ -715,12 +680,6 @@ function AuthScreen({
                 />
               </div>
 
-              {error && (
-                <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-2.5 text-xs font-semibold text-red-600">
-                  {error}
-                </div>
-              )}
-
               <button
                 type="button"
                 onClick={handleSubmit}
@@ -740,6 +699,10 @@ function AuthScreen({
                   Privacy
                 </Link>
               </p>
+
+              <p className="text-center text-xs text-slate-400">
+                Existing customers can just sign in and continue.
+              </p>
             </div>
           </div>
         </div>
@@ -748,7 +711,6 @@ function AuthScreen({
   );
 }
 
-// ── Checkout screen ────────────────────────────────────────────────────────
 function CheckoutScreen({
   data,
   set,
@@ -861,7 +823,7 @@ function CheckoutScreen({
           </div>
 
           <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {["Secure checkout via Stripe", "Goes live instantly", "Cancel anytime"].map((t) => (
+            {["Secure checkout", "Goes live instantly", "Cancel anytime"].map((t) => (
               <p key={t} className="text-xs text-white/40">
                 {t}
               </p>
@@ -893,15 +855,14 @@ function CheckoutScreen({
         </button>
 
         <p className="text-center text-xs text-slate-400">
-          {data.plan === "free" ? "Your job goes live immediately." : "You will be taken to Stripe for secure payment."}
+          {data.plan === "free" ? "Your job goes live immediately." : "You’ll be taken to secure payment next."}
         </p>
       </div>
     </div>
   );
 }
 
-// ── Main ───────────────────────────────────────────────────────────────────
-export default function PostJobPage() {
+export default function PublicPostJobPage() {
   const router = useRouter();
   const [screen, setScreen] = useState<Screen>("form");
   const [skillInput, setSkillInput] = useState("");
@@ -952,26 +913,15 @@ export default function PostJobPage() {
     data.description.trim().length > 50 &&
     data.companyName.trim().length > 0;
 
-  async function handleContinue() {
-    const supabase = supabaseBrowser();
-    const { data: authData } = await supabase.auth.getUser();
-
-    if (authData?.user) {
-      setScreen("checkout");
-    } else {
-      setScreen("auth");
-    }
-  }
-
   async function handlePublish() {
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 1500));
     setSubmitting(false);
-    router.push("/employer/jobs");
+    router.push("/employer/login");
   }
 
   if (screen === "preview") {
-    return <PreviewScreen data={data} onBack={() => setScreen("form")} onContinue={handleContinue} />;
+    return <PreviewScreen data={data} onBack={() => setScreen("form")} onContinue={() => setScreen("auth")} />;
   }
 
   if (screen === "auth") {
@@ -1022,9 +972,7 @@ export default function PostJobPage() {
               />
             </div>
           </div>
-          <p className="shrink-0 text-sm font-extrabold text-[var(--brand-purple)]">
-            {score}% complete
-          </p>
+          <p className="shrink-0 text-sm font-extrabold text-[var(--brand-purple)]">{score}% complete</p>
         </div>
       </div>
 
@@ -1060,7 +1008,7 @@ export default function PostJobPage() {
 
           <Section title="Job Basics">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <div className="xl:col-span-1">
+              <div>
                 <FL required>Category</FL>
                 <select value={data.category} onChange={(e) => set({ category: e.target.value })} className={inputCls}>
                   <option value="">Select a category</option>
