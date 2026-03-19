@@ -159,9 +159,12 @@ type ApiJob = {
   }>;
 };
 
+type LogoResult = { src: string; alt: string } | null;
+
 function pickLocation(j: ApiJob): string {
   if (j.remote) return "Remote";
   const l0 = j.locations?.[0];
+
   return (
     l0?.label ||
     [l0?.city, l0?.state].filter(Boolean).join(", ") ||
@@ -173,6 +176,7 @@ function pickLocation(j: ApiJob): string {
 function payText(j: ApiJob): string {
   const min = j.salaryMin ?? null;
   const max = j.salaryMax ?? null;
+
   if (min && max) {
     return `$${Number(min).toLocaleString()} – $${Number(max).toLocaleString()}`;
   }
@@ -195,10 +199,9 @@ function toCardJob(j: ApiJob): FeaturedCardJob {
   };
 }
 
-type LogoResult = { src: string; alt: string } | null;
-
 function getCompanyLogo(company: string): LogoResult {
   const key = company.toLowerCase().trim();
+
   if (key.includes("architect")) {
     return { src: "/Architects.png", alt: "Architects" };
   }
@@ -214,6 +217,7 @@ function getCompanyLogo(company: string): LogoResult {
   if (key.includes("redtail")) {
     return { src: "/redtail.png", alt: "Redtail" };
   }
+
   return null;
 }
 
@@ -226,99 +230,87 @@ function JobCard({
 }) {
   const logo = getCompanyLogo(job.company);
   const hasPay = job.pay !== "Compensation not listed";
-  const isRemote = job.location.toLowerCase().includes("remote");
 
   return (
-    <article
-      onClick={() => onOpen(job)}
-      className="group relative flex w-[88vw] max-w-[360px] flex-none cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-[2px] hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10)] snap-start lg:w-full lg:max-w-none"
-      style={{ boxShadow: "0 2px 12px rgba(15,23,42,0.06)" }}
-    >
-      <div className="h-[3px] w-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400" />
+    <article className="group relative flex min-h-[156px] w-[88vw] max-w-[372px] flex-none snap-start flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-[0_4px_14px_rgba(15,23,42,0.035)] transition duration-200 hover:-translate-y-[1px] hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:w-[360px] lg:w-full lg:max-w-none">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-10 -top-10 h-24 w-24 rounded-full bg-[var(--brand-purple)]/18 blur-2xl sm:h-20 sm:w-20 sm:bg-[var(--brand-purple)]/12" />
+      </div>
 
-      <div className="flex flex-col gap-4 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-              {logo ? (
-                <Image
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={40}
-                  height={40}
-                  className="h-8 w-8 object-contain"
-                />
-              ) : (
-                <span className="text-base font-bold text-[#0b1736]">
-                  {job.company.charAt(0).toUpperCase()}
+      <div className="absolute left-0 top-5 h-10 w-1.5 rounded-r-full bg-[var(--brand-purple)]" />
+      <div className="absolute right-0 top-5 h-10 w-1 rounded-l-full bg-[var(--brand-purple)]/45" />
+
+      <div className="relative flex h-full flex-col p-4">
+        <div className="flex items-start gap-3">
+          <div className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white">
+            {logo ? (
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={40}
+                height={40}
+                className="h-7 w-7 object-contain"
+              />
+            ) : (
+              <span className="text-sm font-bold text-[var(--brand-purple)]">
+                {job.company.charAt(0).toUpperCase()}
+              </span>
+            )}
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => onOpen(job)}
+                className="min-w-0 text-left"
+              >
+                <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-[#0B1222] transition-colors group-hover:text-[var(--brand-purple)]">
+                  {job.title}
+                </h3>
+              </button>
+
+              {hasPay && (
+                <span className="shrink-0 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-700">
+                  {job.pay}
                 </span>
               )}
             </div>
 
-            <div className="min-w-0">
-              <p className="truncate text-[13px] font-semibold text-slate-700">
-                {job.company}
-              </p>
-              <p className="truncate text-[12px] text-slate-400">
-                {job.location}
-              </p>
-            </div>
+            <p className="mt-1 truncate text-xs text-slate-500">
+              {job.company} • {job.location}
+            </p>
           </div>
-
-          {hasPay && (
-            <span className="shrink-0 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700">
-              {job.pay}
-            </span>
-          )}
         </div>
 
-        <h3 className="text-[16px] font-bold leading-snug text-[#0b1736] transition-colors duration-200 group-hover:text-emerald-700">
-          {job.title}
-        </h3>
-
-        <p className="line-clamp-2 text-[13px] leading-6 text-slate-500">
+        <p className="mt-3 line-clamp-2 text-[12px] leading-5 text-slate-600">
           {job.description}
         </p>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-600">
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-medium text-slate-700">
             {job.type}
           </span>
-          <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-600">
+          <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-medium text-slate-700">
             Posted {job.posted}
           </span>
-          {isRemote && (
-            <span className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-medium text-emerald-700">
-              Remote
-            </span>
-          )}
         </div>
 
-        <div className="flex items-center justify-between border-t border-slate-100 pt-3">
+        <div className="mt-auto flex items-center justify-between pt-4">
           <button
             type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpen(job);
-            }}
-            className="h-9 rounded-xl bg-[#0b1736] px-5 text-[13px] font-semibold text-white transition hover:bg-[#111827]"
-            style={{
-              boxShadow:
-                "0 4px 14px rgba(11,23,54,0.22), 0 2px 10px rgba(16,185,129,0.18)",
-            }}
+            onClick={() => onOpen(job)}
+            className="inline-flex h-8 items-center justify-center rounded-full bg-[#0B1222] px-4 text-xs font-semibold text-white transition duration-200 hover:bg-[#111827]"
           >
-            Apply now
+            Apply
           </button>
 
           <button
             type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpen(job);
-            }}
-            className="text-[13px] font-semibold text-emerald-600 transition hover:text-emerald-700"
+            onClick={() => onOpen(job)}
+            className="text-xs font-semibold text-[var(--brand-purple)] transition hover:opacity-80"
           >
-            View details →
+            View details
           </button>
         </div>
       </div>
@@ -342,6 +334,8 @@ export default function FeaturedJobsSection() {
     return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
 
+  const desktopPageCount = Math.max(1, Math.ceil(allJobs.length / 6));
+
   const desktopJobs = useMemo(() => {
     const start = desktopPage * 6;
     return allJobs.slice(start, start + 6);
@@ -364,9 +358,13 @@ export default function FeaturedJobsSection() {
 
         const mapped: FeaturedCardJob[] = (data?.items ?? []).map(toCardJob);
 
-        if (!cancelled) setItems(mapped);
+        if (!cancelled) {
+          setItems(mapped);
+        }
       } catch {
-        if (!cancelled) setItems([]);
+        if (!cancelled) {
+          setItems([]);
+        }
       }
     }
 
@@ -376,6 +374,12 @@ export default function FeaturedJobsSection() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (desktopPage > desktopPageCount - 1) {
+      setDesktopPage(0);
+    }
+  }, [desktopPage, desktopPageCount]);
 
   const openDetails = (job: FeaturedCardJob) => {
     setSelectedJob(job);
@@ -397,13 +401,20 @@ export default function FeaturedJobsSection() {
   };
 
   const handleArrow = (direction: "left" | "right") => {
-    const lg = typeof window !== "undefined" && window.innerWidth >= 1024;
+    const isDesktop =
+      typeof window !== "undefined" && window.innerWidth >= 1024;
 
-    if (lg) {
-      setDesktopPage(direction === "left" ? 0 : 1);
-    } else {
-      scrollRail(direction);
+    if (isDesktop) {
+      setDesktopPage((prev) => {
+        if (direction === "left") {
+          return Math.max(0, prev - 1);
+        }
+        return Math.min(desktopPageCount - 1, prev + 1);
+      });
+      return;
     }
+
+    scrollRail(direction);
   };
 
   return (
@@ -412,10 +423,10 @@ export default function FeaturedJobsSection() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex items-end justify-between gap-4">
             <div>
-              <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-600">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--brand-purple)]">
                 Featured Jobs
               </p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-[#0b1736] sm:text-4xl">
+              <h2 className="text-3xl font-extrabold tracking-tight text-[#0B1222] sm:text-4xl">
                 Roles Worth Exploring
               </h2>
               <p className="mt-3 max-w-xl text-[15px] leading-7 text-slate-500">
@@ -438,7 +449,7 @@ export default function FeaturedJobsSection() {
               <button
                 type="button"
                 onClick={() => handleArrow("right")}
-                disabled={desktopPage === 1}
+                disabled={desktopPage >= desktopPageCount - 1}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Next"
               >
