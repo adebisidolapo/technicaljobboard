@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import JobDetailsSheet, {
   FeaturedCardJob,
 } from "@/components/jobs/JobDetailsSheet";
@@ -172,8 +173,9 @@ function pickLocation(j: ApiJob): string {
 function payText(j: ApiJob): string {
   const min = j.salaryMin ?? null;
   const max = j.salaryMax ?? null;
-  if (min && max)
+  if (min && max) {
     return `$${Number(min).toLocaleString()} – $${Number(max).toLocaleString()}`;
+  }
   if (min) return `From $${Number(min).toLocaleString()}`;
   if (max) return `Up to $${Number(max).toLocaleString()}`;
   return "Compensation not listed";
@@ -197,11 +199,21 @@ type LogoResult = { src: string; alt: string } | null;
 
 function getCompanyLogo(company: string): LogoResult {
   const key = company.toLowerCase().trim();
-  if (key.includes("architect")) return { src: "/Architects.png", alt: "Architects" };
-  if (key.includes("vermot")) return { src: "/vermot.png", alt: "Vermot" };
-  if (key.includes("devops")) return { src: "/Devops.png", alt: "DevOps" };
-  if (key.includes("hired")) return { src: "/Hiredengineer.png", alt: "Hired Engineer" };
-  if (key.includes("redtail")) return { src: "/redtail.png", alt: "Redtail" };
+  if (key.includes("architect")) {
+    return { src: "/Architects.png", alt: "Architects" };
+  }
+  if (key.includes("vermot")) {
+    return { src: "/vermot.png", alt: "Vermot" };
+  }
+  if (key.includes("devops")) {
+    return { src: "/Devops.png", alt: "DevOps" };
+  }
+  if (key.includes("hired")) {
+    return { src: "/Hiredengineer.png", alt: "Hired Engineer" };
+  }
+  if (key.includes("redtail")) {
+    return { src: "/redtail.png", alt: "Redtail" };
+  }
   return null;
 }
 
@@ -219,15 +231,12 @@ function JobCard({
   return (
     <article
       onClick={() => onOpen(job)}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-[2px] hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10)] w-[88vw] max-w-[360px] flex-none snap-start lg:w-full lg:max-w-none"
+      className="group relative flex w-[88vw] max-w-[360px] flex-none cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-[2px] hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10)] snap-start lg:w-full lg:max-w-none"
       style={{ boxShadow: "0 2px 12px rgba(15,23,42,0.06)" }}
     >
-      {/* Green top accent */}
       <div className="h-[3px] w-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400" />
 
       <div className="flex flex-col gap-4 p-5">
-
-        {/* Company row */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
@@ -245,6 +254,7 @@ function JobCard({
                 </span>
               )}
             </div>
+
             <div className="min-w-0">
               <p className="truncate text-[13px] font-semibold text-slate-700">
                 {job.company}
@@ -262,17 +272,14 @@ function JobCard({
           )}
         </div>
 
-        {/* Title */}
         <h3 className="text-[16px] font-bold leading-snug text-[#0b1736] transition-colors duration-200 group-hover:text-emerald-700">
           {job.title}
         </h3>
 
-        {/* Description */}
         <p className="line-clamp-2 text-[13px] leading-6 text-slate-500">
           {job.description}
         </p>
 
-        {/* Tags */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-600">
             {job.type}
@@ -287,11 +294,13 @@ function JobCard({
           )}
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-between border-t border-slate-100 pt-3">
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); onOpen(job); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpen(job);
+            }}
             className="h-9 rounded-xl bg-[#0b1736] px-5 text-[13px] font-semibold text-white transition hover:bg-[#111827]"
             style={{
               boxShadow:
@@ -300,9 +309,13 @@ function JobCard({
           >
             Apply now
           </button>
+
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); onOpen(job); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpen(job);
+            }}
             className="text-[13px] font-semibold text-emerald-600 transition hover:text-emerald-700"
           >
             View details →
@@ -322,10 +335,10 @@ export default function FeaturedJobsSection() {
 
   const allJobs = useMemo(() => {
     if (!items.length) return FALLBACK_FEATURED_JOBS;
+
     const existingIds = new Set(items.map((j) => j.id));
-    const fillerJobs = FALLBACK_FEATURED_JOBS.filter(
-      (j) => !existingIds.has(j.id)
-    );
+    const fillerJobs = FALLBACK_FEATURED_JOBS.filter((j) => !existingIds.has(j.id));
+
     return [...items, ...fillerJobs].slice(0, 12);
   }, [items]);
 
@@ -336,6 +349,7 @@ export default function FeaturedJobsSection() {
 
   useEffect(() => {
     let cancelled = false;
+
     async function load() {
       try {
         const res = await fetch("/api/jobs/search?take=12&skip=0", {
@@ -343,17 +357,24 @@ export default function FeaturedJobsSection() {
         });
         const text = await res.text();
         const data = text ? JSON.parse(text) : null;
+
         if (!res.ok || data?.ok === false) {
           throw new Error(data?.error ?? "Failed to load");
         }
+
         const mapped: FeaturedCardJob[] = (data?.items ?? []).map(toCardJob);
+
         if (!cancelled) setItems(mapped);
       } catch {
         if (!cancelled) setItems([]);
       }
     }
+
     load();
-    return () => { cancelled = true; };
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const openDetails = (job: FeaturedCardJob) => {
@@ -364,9 +385,11 @@ export default function FeaturedJobsSection() {
   const scrollRail = (direction: "left" | "right") => {
     const rail = railRef.current;
     if (!rail) return;
+
     const firstCard = rail.querySelector("article");
     const amount =
       firstCard instanceof HTMLElement ? firstCard.offsetWidth + 16 : 320;
+
     rail.scrollBy({
       left: direction === "left" ? -amount : amount,
       behavior: "smooth",
@@ -374,8 +397,8 @@ export default function FeaturedJobsSection() {
   };
 
   const handleArrow = (direction: "left" | "right") => {
-    const lg =
-      typeof window !== "undefined" && window.innerWidth >= 1024;
+    const lg = typeof window !== "undefined" && window.innerWidth >= 1024;
+
     if (lg) {
       setDesktopPage(direction === "left" ? 0 : 1);
     } else {
@@ -387,8 +410,6 @@ export default function FeaturedJobsSection() {
     <>
       <section id="featured-jobs" className="w-full bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-          {/* Header */}
           <div className="mb-10 flex items-end justify-between gap-4">
             <div>
               <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-600">
@@ -413,6 +434,7 @@ export default function FeaturedJobsSection() {
               >
                 ←
               </button>
+
               <button
                 type="button"
                 onClick={() => handleArrow("right")}
@@ -425,11 +447,10 @@ export default function FeaturedJobsSection() {
             </div>
           </div>
 
-          {/* Mobile / tablet scroll rail */}
           <div className="lg:hidden">
             <div
               ref={railRef}
-              className="no-scrollbar -mx-4 flex gap-4 overflow-x-auto px-4 pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
+              className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 pt-1 scroll-smooth"
               style={{ WebkitOverflowScrolling: "touch" }}
             >
               {allJobs.map((job) => (
@@ -438,23 +459,20 @@ export default function FeaturedJobsSection() {
             </div>
           </div>
 
-          {/* Desktop 3x2 grid */}
           <div className="hidden lg:grid lg:grid-cols-3 lg:gap-6 xl:gap-8">
             {desktopJobs.map((job) => (
               <JobCard key={job.id} job={job} onOpen={openDetails} />
             ))}
           </div>
 
-          {/* View all */}
           <div className="mt-10 text-center">
-            
+            <Link
               href="/all-jobs"
               className="inline-flex h-12 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-[14px] font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
             >
               View all jobs →
-            </a>
+            </Link>
           </div>
-
         </div>
       </section>
 
