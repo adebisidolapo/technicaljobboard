@@ -12,52 +12,35 @@ const COMPANY_LOGOS: CompanyLogo[] = [
   { src: "/redtail.png", alt: "Redtail" },
 ];
 
-const LOOP_LOGOS = [...COMPANY_LOGOS, ...COMPANY_LOGOS];
-
 export default function CompanyLogoCarousel() {
   return (
-    <div
-      role="region"
-      aria-label="Companies hiring through us"
-      className="relative w-full overflow-hidden bg-white py-2"
-    >
-      {/* Edge fade */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent sm:w-32" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-white to-transparent sm:w-32" />
+    <div className="w-full bg-white py-12 sm:py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
-      {/* Carousel */}
-      <div className="py-4 sm:py-6">
-        <div className="company-logo-marquee flex w-max items-center gap-12 sm:gap-16 md:gap-20 lg:gap-24">
-          {LOOP_LOGOS.map((logo, i) => (
+        {/* Label */}
+        <p className="mb-10 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:mb-12">
+          Companies Hiring Through Us
+        </p>
+
+        {/* Logos */}
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 sm:gap-x-16 md:gap-x-20 lg:gap-x-24">
+          {COMPANY_LOGOS.map((logo) => (
             <div
-              key={`${logo.alt}-${i}`}
-              className="flex items-center justify-center opacity-50 grayscale transition duration-300 hover:opacity-90 hover:grayscale-0"
+              key={logo.alt}
+              className="flex items-center justify-center opacity-40 grayscale transition duration-300 hover:opacity-80 hover:grayscale-0"
             >
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={160}
-                height={60}
-                className="h-8 w-auto object-contain sm:h-10 md:h-12"
-                priority={i < COMPANY_LOGOS.length}
+                width={180}
+                height={70}
+                className="h-10 w-auto object-contain sm:h-12 md:h-14 lg:h-16"
               />
             </div>
           ))}
         </div>
-      </div>
 
-      <style jsx>{`
-        .company-logo-marquee {
-          animation: company-marquee 34s linear infinite;
-        }
-        .company-logo-marquee:hover {
-          animation-play-state: paused;
-        }
-        @keyframes company-marquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
+      </div>
     </div>
   );
 }
