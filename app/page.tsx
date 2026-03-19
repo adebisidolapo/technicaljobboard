@@ -208,11 +208,11 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-     {/* Background Layer */}
+    {/* Background Layer */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
   <div className="absolute inset-0 bg-[#F4F8FC]" />
 
-  {/* AWS-style moving color band */}
+  {/* Aurora sweep — green leads, purple accents, blue barely visible */}
   <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
     <div
       className="absolute inset-0 blur-[50px]"
@@ -220,13 +220,13 @@ const wideContainer =
         background: `linear-gradient(
           100deg,
           rgba(255,255,255,0) 0%,
-          rgba(52, 211, 153, 0.55) 20%,
-          rgba(99, 179, 255, 0.70) 45%,
-          rgba(167, 139, 250, 0.65) 70%,
-          rgba(255,255,255,0) 90%
+          rgba(52, 211, 153, 0.55) 22%,
+          rgba(167, 139, 250, 0.45) 52%,
+          rgba(52, 211, 153, 0.35) 75%,
+          rgba(255,255,255,0) 92%
         )`,
         backgroundSize: "300% 100%",
-        animation: "awsBandMove 8s ease-in-out infinite",
+        animation: "awsBandMove 9s ease-in-out infinite",
       }}
     />
     <div
@@ -235,13 +235,13 @@ const wideContainer =
         background: `linear-gradient(
           90deg,
           rgba(255,255,255,0) 0%,
-          rgba(167, 139, 250, 0.40) 25%,
-          rgba(99, 179, 255, 0.45) 55%,
-          rgba(52, 211, 153, 0.30) 75%,
+          rgba(167, 139, 250, 0.25) 30%,
+          rgba(52, 211, 153, 0.20) 62%,
+          rgba(99, 179, 255, 0.10) 78%,
           rgba(255,255,255,0) 95%
         )`,
         backgroundSize: "300% 100%",
-        animation: "awsBandMove2 12s ease-in-out infinite",
+        animation: "awsBandMove2 13s ease-in-out infinite",
       }}
     />
     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
@@ -257,9 +257,9 @@ const wideContainer =
     }}
   />
 
-  {/* right shape */}
+  {/* right shape — removed blue tones, kept neutral */}
   <svg
-    className="absolute right-0 top-0 h-full w-[65%] opacity-80"
+    className="absolute right-0 top-0 h-full w-[65%] opacity-60"
     viewBox="0 0 720 520"
     preserveAspectRatio="none"
     aria-hidden="true"
@@ -273,8 +273,8 @@ const wideContainer =
         y2="520"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#D8EBFF" stopOpacity="0.75" />
-        <stop offset="0.45" stopColor="#EAF4FF" stopOpacity="0.36" />
+        <stop stopColor="#E8F5EE" stopOpacity="0.60" />
+        <stop offset="0.45" stopColor="#F0F8F4" stopOpacity="0.25" />
         <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
       </linearGradient>
     </defs>
@@ -284,12 +284,12 @@ const wideContainer =
     />
   </svg>
 
-  {/* top glows — toned down */}
-  <div className="absolute right-[10%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/30 blur-[90px]" />
-  <div className="absolute left-[10%] top-[10px] h-[120px] w-[200px] rounded-full bg-emerald-400/25 blur-[90px]" />
+  {/* glows — green left, purple right, no blue */}
+  <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
+  <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
 
-  {/* soft center fade */}
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.60),transparent_45%)]" />
+  {/* soft center fade — keeps text crisp */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
 </div>
 
   {/* Content */}
