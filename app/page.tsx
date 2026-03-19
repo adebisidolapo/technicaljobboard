@@ -218,15 +218,15 @@ const wideContainer =
         className="absolute inset-0 opacity-100 blur-[36px]"
         style={{
           background: `
-            linear-gradient(
-              100deg,
-              rgba(255,255,255,0) 0%,
-              rgba(161, 242, 181, 0.85) 18%,
-              rgba(168, 210, 255, 0.92) 38%,
-              rgba(196, 167, 255, 0.88) 58%,
-              rgba(255,255,255,0) 80%
-            )
-          `,
+          linear-gradient(
+    100deg,
+    rgba(255,255,255,0) 0%,
+    rgba(52, 211, 153, 0.95) 18%,
+    rgba(99, 179, 255, 0.98) 38%,
+    rgba(167, 139, 250, 0.95) 58%,
+    rgba(255,255,255,0) 80%
+  )
+`,
           backgroundSize: "180% 100%",
           animation: "awsBandMove 10s ease-in-out infinite",
         }}
@@ -236,15 +236,15 @@ const wideContainer =
         className="absolute inset-0 opacity-95 blur-[70px]"
         style={{
           background: `
-            linear-gradient(
-              90deg,
-              rgba(255,255,255,0) 0%,
-              rgba(184, 255, 196, 0.40) 16%,
-              rgba(177, 214, 255, 0.55) 42%,
-              rgba(213, 188, 255, 0.42) 66%,
-              rgba(255,255,255,0) 86%
-            )
-          `,
+          linear-gradient(
+    100deg,
+    rgba(255,255,255,0) 0%,
+    rgba(52, 211, 153, 0.95) 18%,
+    rgba(99, 179, 255, 0.98) 38%,
+    rgba(167, 139, 250, 0.95) 58%,
+    rgba(255,255,255,0) 80%
+  )
+`,
           backgroundSize: "200% 100%",
           animation: "awsBandMove2 15s ease-in-out infinite",
         }}
@@ -292,9 +292,8 @@ const wideContainer =
     </svg>
 
     {/* top glows */}
-    <div className="absolute right-[10%] top-[18px] h-[180px] w-[260px] rounded-full bg-[#cfe6ff]/80 blur-[80px]" />
-    <div className="absolute left-[10%] top-[10px] h-[140px] w-[220px] rounded-full bg-[#e8ffe8]/55 blur-[70px]" />
-
+    <div className="absolute right-[10%] top-[18px] h-[180px] w-[260px] rounded-full bg-violet-400/60 blur-[80px]" />
+<div className="absolute left-[10%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/60 blur-[70px]" />
     {/* soft center fade */}
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_42%)]" />
   </div>
