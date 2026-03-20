@@ -425,18 +425,17 @@ export default function FeaturedJobsSection() {
  <section
   id="featured-jobs"
   className="relative overflow-hidden py-16 sm:py-20"
-style={{
-  background: "linear-gradient(180deg, #EEF0FF 0%, #F0F4FF 50%, #EEF0FF 100%)",
-  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.10)' stroke-width='0.8'/%3E%3C/svg%3E\")",
-  backgroundSize: "56px 100px",
-}}
+  style={{
+    background: "#ffffff",
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9z' fill='none' stroke='rgba(99%2C102%2C241%2C0.08)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+    backgroundSize: "28px 49px",
+  }}
 >
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_15%_-10%,rgba(124,58,237,0.10),transparent),radial-gradient(900px_500px_at_85%_0%,rgba(16,185,129,0.07),transparent)]" />
-    <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#F5F4FF]/80 to-transparent" />
-<div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#F5F4FF]/80 to-transparent" />
+    <div className="absolute inset-0 bg-[radial-gradient(900px_500px_at_15%_-10%,rgba(124,58,237,0.07),transparent),radial-gradient(700px_400px_at_85%_0%,rgba(16,185,129,0.06),transparent)]" />
+    <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white to-transparent" />
+    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
   </div>
-
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex items-end justify-between gap-4">
             <div>

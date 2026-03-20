@@ -208,96 +208,85 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F7F8FB]">
-  {/* Background Layer */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-[#F7F8FB]" />
+ {/* Background Layer */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  <div className="absolute inset-0 bg-white" />
 
-    {/* Aurora sweep — subtle, cleaner, more premium */}
-    <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
-      <div
-        className="absolute inset-0 blur-[54px]"
-        style={{
-          background: `linear-gradient(
-            100deg,
-            rgba(255,255,255,0) 0%,
-            rgba(52,211,153,0.30) 20%,
-            rgba(167,139,250,0.22) 48%,
-            rgba(52,211,153,0.18) 74%,
-            rgba(255,255,255,0) 92%
-          )`,
-          backgroundSize: "300% 100%",
-          animation: "awsBandMove 10s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="absolute inset-0 blur-[88px]"
-        style={{
-          background: `linear-gradient(
-            92deg,
-            rgba(255,255,255,0) 0%,
-            rgba(167,139,250,0.12) 28%,
-            rgba(52,211,153,0.10) 60%,
-            rgba(99,179,255,0.04) 78%,
-            rgba(255,255,255,0) 95%
-          )`,
-          backgroundSize: "300% 100%",
-          animation: "awsBandMove2 14s ease-in-out infinite",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F7F8FB]" />
-    </div>
+  {/* Hex grid */}
+  <div
+    className="absolute inset-0 opacity-100"
+    style={{
+      backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.07)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+      backgroundSize: "56px 100px",
+    }}
+  />
 
-    {/* subtle grid */}
+  {/* Aurora sweep on top of hex */}
+  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
     <div
-      className="absolute inset-0 opacity-[0.035]"
+      className="absolute inset-0 blur-[54px]"
       style={{
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
-        backgroundSize: "30px 30px",
+        background: `linear-gradient(
+          100deg,
+          rgba(255,255,255,0) 0%,
+          rgba(52,211,153,0.30) 20%,
+          rgba(167,139,250,0.22) 48%,
+          rgba(52,211,153,0.18) 74%,
+          rgba(255,255,255,0) 92%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove 10s ease-in-out infinite",
       }}
     />
-
-    {/* right shape / side sweep */}
-    <svg
-      className="absolute right-0 top-0 h-full w-[62%] opacity-70"
-      viewBox="0 0 720 520"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient
-          id="awsHeroGradient"
-          x1="720"
-          y1="0"
-          x2="260"
-          y2="520"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#EEE9FF" stopOpacity="0.82" />
-          <stop offset="0.35" stopColor="#F3EEFF" stopOpacity="0.32" />
-          <stop offset="0.75" stopColor="#F8FBFA" stopOpacity="0.10" />
-          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-        fill="url(#awsHeroGradient)"
-      />
-    </svg>
-
-    {/* glows — more controlled and elegant */}
-    <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/22 blur-[95px]" />
-    <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-violet-300/18 blur-[100px]" />
-
-    {/* center top softness */}
-    <div className="absolute left-1/2 top-[-24px] h-[160px] w-[760px] -translate-x-1/2 rounded-full bg-white/75 blur-[100px]" />
-
-    {/* soft center fade — keeps text crisp */}
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_52%_at_50%_0%,rgba(255,255,255,0.78),transparent_56%)]" />
-
-    {/* bottom lift into next white section */}
-    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
+    <div
+      className="absolute inset-0 blur-[88px]"
+      style={{
+        background: `linear-gradient(
+          92deg,
+          rgba(255,255,255,0) 0%,
+          rgba(167,139,250,0.12) 28%,
+          rgba(52,211,153,0.10) 60%,
+          rgba(99,179,255,0.04) 78%,
+          rgba(255,255,255,0) 95%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove2 14s ease-in-out infinite",
+      }}
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
   </div>
+
+  {/* right shape */}
+  <svg
+    className="absolute right-0 top-0 h-full w-[62%] opacity-70"
+    viewBox="0 0 720 520"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="awsHeroGradient" x1="720" y1="0" x2="260" y2="520" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#EEE9FF" stopOpacity="0.82" />
+        <stop offset="0.35" stopColor="#F3EEFF" stopOpacity="0.32" />
+        <stop offset="0.75" stopColor="#F8FBFA" stopOpacity="0.10" />
+        <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
+      fill="url(#awsHeroGradient)"
+    />
+  </svg>
+
+  {/* glows */}
+  <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/20 blur-[95px]" />
+  <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-violet-300/16 blur-[100px]" />
+
+  {/* center softness keeps text crisp */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_52%_at_50%_0%,rgba(255,255,255,0.85),transparent_56%)]" />
+
+  {/* bottom lift into white */}
+  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
+</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
@@ -461,15 +450,15 @@ const wideContainer =
 {/* ================= CATEGORIES ================= */}
 <section
   className="relative overflow-hidden py-10 sm:py-12"
-style={{
-  background: "linear-gradient(180deg, #F0F4FF 0%, #EDF0FF 100%)",
-  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.09)' stroke-width='0.8'/%3E%3C/svg%3E\")",
-  backgroundSize: "56px 100px",
-}}
+  style={{
+    background: "linear-gradient(180deg, #ffffff 0%, #F5F3FF 30%, #F5F3FF 70%, #ffffff 100%)",
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1.5' fill='rgba(99%2C102%2C241%2C0.12)'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='rgba(99%2C102%2C241%2C0.12)'/%3E%3Ccircle cx='40' cy='0' r='1.5' fill='rgba(99%2C102%2C241%2C0.12)'/%3E%3Ccircle cx='0' cy='40' r='1.5' fill='rgba(99%2C102%2C241%2C0.12)'/%3E%3Ccircle cx='40' cy='40' r='1.5' fill='rgba(99%2C102%2C241%2C0.12)'/%3E%3Cline x1='0' y1='0' x2='20' y2='20' stroke='rgba(99%2C102%2C241%2C0.04)' stroke-width='0.5'/%3E%3Cline x1='40' y1='0' x2='20' y2='20' stroke='rgba(99%2C102%2C241%2C0.04)' stroke-width='0.5'/%3E%3Cline x1='0' y1='40' x2='20' y2='20' stroke='rgba(99%2C102%2C241%2C0.04)' stroke-width='0.5'/%3E%3Cline x1='40' y1='40' x2='20' y2='20' stroke='rgba(99%2C102%2C241%2C0.04)' stroke-width='0.5'/%3E%3C/svg%3E\")",
+    backgroundSize: "40px 40px",
+  }}
 >
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
-    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#F7F8FB]/60 to-transparent" />
+    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent" />
+    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
     <div className="absolute right-[-60px] top-[-30px] h-36 w-36 rounded-full bg-emerald-200/20 blur-3xl" />
     <div className="absolute left-[-50px] bottom-[-50px] h-40 w-40 rounded-full bg-indigo-100/25 blur-3xl" />
   </div>
@@ -559,17 +548,19 @@ style={{
 
 
       {/* ================= EMPOWERING ================= */}
-    <section
+ <section
   className={`relative overflow-hidden ${sectionPadding}`}
-style={{
-  background: "linear-gradient(135deg, #EEF0FF 0%, #F3F0FF 50%, #EDF4FF 100%)",
-  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.09)' stroke-width='0.8'/%3E%3C/svg%3E\")",
-  backgroundSize: "56px 100px",
-}}
+  style={{
+    background: "#ffffff",
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0 L60 0 L60 60 L0 60 Z' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.5'/%3E%3Cpath d='M0 0 L60 60 M60 0 L0 60' stroke='rgba(99%2C102%2C241%2C0.04)' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='30' r='2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3C/svg%3E\")",
+    backgroundSize: "60px 60px",
+  }}
 >
   <div className="pointer-events-none absolute inset-0">
-    <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
-    <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.06)] blur-3xl" />
+    <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.07)] blur-3xl" />
+    <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.05)] blur-3xl" />
+    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent" />
+    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
   </div>
         <div className={`relative ${container}`}>
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
