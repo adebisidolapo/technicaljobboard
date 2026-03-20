@@ -227,14 +227,32 @@ const wideContainer =
       }}
     />
 
-    {/* right-side tech pattern zone */}
-    <div
-      className="absolute right-[-8%] top-[-2%] h-[78%] w-[62%] opacity-[0.22] sm:opacity-[0.26] lg:opacity-[0.32]"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='76' viewBox='0 0 88 76'%3E%3Cg fill='none' stroke='rgba(19,196,216,0.24)' stroke-width='1'%3E%3Cpath d='M22 2l20 11v22L22 46 2 35V13z'/%3E%3Cpath d='M66 2l20 11v22L66 46 46 35V13z'/%3E%3Cpath d='M44 20l20 11v22L44 64 24 53V31z'/%3E%3C/g%3E%3Cg fill='rgba(8,34,68,0.18)'%3E%3Ccircle cx='22' cy='2' r='1.8'/%3E%3Ccircle cx='42' cy='13' r='1.8'/%3E%3Ccircle cx='42' cy='35' r='1.8'/%3E%3Ccircle cx='22' cy='46' r='1.8'/%3E%3Ccircle cx='2' cy='35' r='1.8'/%3E%3Ccircle cx='2' cy='13' r='1.8'/%3E%3Ccircle cx='66' cy='2' r='1.8'/%3E%3Ccircle cx='86' cy='13' r='1.8'/%3E%3Ccircle cx='86' cy='35' r='1.8'/%3E%3Ccircle cx='66' cy='46' r='1.8'/%3E%3Ccircle cx='46' cy='35' r='1.8'/%3E%3Ccircle cx='46' cy='13' r='1.8'/%3E%3Ccircle cx='44' cy='20' r='1.8'/%3E%3Ccircle cx='64' cy='31' r='1.8'/%3E%3Ccircle cx='64' cy='53' r='1.8'/%3E%3Ccircle cx='44' cy='64' r='1.8'/%3E%3Ccircle cx='24' cy='53' r='1.8'/%3E%3Ccircle cx='24' cy='31' r='1.8'/%3E%3C/g%3E%3C/svg%3E")`,
-        backgroundSize: "88px 76px",
-      }}
-    />
+{/* right-side tech atmosphere */}
+<div
+  className="absolute right-[-10%] top-[-6%] h-[82%] w-[64%] opacity-60"
+  style={{
+    background: `
+      radial-gradient(circle at 30% 35%, rgba(19,196,216,0.10), transparent 22%),
+      radial-gradient(circle at 58% 42%, rgba(52,211,153,0.08), transparent 20%),
+      radial-gradient(circle at 78% 28%, rgba(8,34,68,0.07), transparent 24%)
+    `,
+    filter: "blur(6px)",
+  }}
+/>
+
+<div
+  className="absolute right-[4%] top-[10%] hidden h-[46%] w-[38%] lg:block"
+  style={{
+    backgroundImage:
+      "linear-gradient(rgba(8,34,68,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(8,34,68,0.07) 1px, transparent 1px)",
+    backgroundSize: "26px 26px",
+    maskImage:
+      "radial-gradient(circle at center, rgba(0,0,0,0.85), rgba(0,0,0,0.38) 58%, transparent 100%)",
+    WebkitMaskImage:
+      "radial-gradient(circle at center, rgba(0,0,0,0.85), rgba(0,0,0,0.38) 58%, transparent 100%)",
+    opacity: 0.45,
+  }}
+/>
 
     {/* soft top aurora - cleaner, no pink */}
     <div className="absolute inset-x-0 top-0 h-[260px] sm:h-[300px] overflow-hidden">
