@@ -207,108 +207,90 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
 
 {/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-white">
-  {/* Background Layer */}
+<section className="relative isolate overflow-hidden bg-[#F7F8FB]">
+{/* Background Layer */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
-  {/* base */}
-  <div className="absolute inset-0 bg-[linear-gradient(180deg,#fcfefd_0%,#f8fcfd_38%,#ffffff_74%,#ffffff_100%)]" />
+  <div className="absolute inset-0 bg-white" />
 
-  {/* soft full grid */}
+  {/* Techy grid — same idea, but cleaner and softly glowing */}
   <div
-    className="absolute inset-0 opacity-[0.22]"
+    className="absolute inset-0"
     style={{
       backgroundImage:
-        "linear-gradient(rgba(8,34,68,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(8,34,68,0.05) 1px, transparent 1px)",
-      backgroundSize: "36px 36px",
-      maskImage:
-        "linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.42) 68%, transparent 100%)",
-      WebkitMaskImage:
-        "linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.42) 68%, transparent 100%)",
+        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='40' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='0' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='40' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3C/svg%3E\")",
+      backgroundSize: "40px 40px",
+      opacity: 0.9,
     }}
   />
 
-  {/* spiro / orbital atmosphere */}
-  <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute right-[-12%] top-[-10%] h-[460px] w-[460px] rounded-full border border-cyan-200/30 opacity-60 blur-[1px]" />
-    <div className="absolute right-[-6%] top-[2%] h-[360px] w-[360px] rounded-full border border-sky-200/30 opacity-50 blur-[1px]" />
-    <div className="absolute right-[4%] top-[10%] h-[250px] w-[250px] rounded-full border border-emerald-100/40 opacity-40 blur-[0.5px]" />
-    <div className="absolute right-[16%] top-[18%] h-[140px] w-[140px] rounded-full border border-cyan-100/50 opacity-35" />
-  </div>
-
-  {/* soft orbital glow */}
+  {/* soft grid glow */}
   <div
-    className="absolute right-[-8%] top-[-4%] h-[76%] w-[58%]"
+    className="absolute inset-0"
     style={{
-      background: `
-        radial-gradient(circle at 66% 26%, rgba(34,211,238,0.14), transparent 16%),
-        radial-gradient(circle at 58% 36%, rgba(56,189,248,0.10), transparent 22%),
-        radial-gradient(circle at 72% 42%, rgba(15,23,42,0.07), transparent 28%),
-        radial-gradient(circle at 46% 30%, rgba(255,255,255,0.72), transparent 34%)
-      `,
-      filter: "blur(14px)",
+      background:
+        "radial-gradient(circle at 20% 12%, rgba(52,211,153,0.10), transparent 22%), radial-gradient(circle at 80% 14%, rgba(99,102,241,0.10), transparent 24%), radial-gradient(circle at 50% 0%, rgba(255,255,255,0.92), transparent 52%)",
+      filter: "blur(28px)",
     }}
   />
 
-  {/* flowing beam - very light */}
-  <div className="absolute inset-x-0 top-0 h-[250px] sm:h-[290px] overflow-hidden">
+  {/* Aurora sweep on top */}
+  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
     <div
-      className="absolute inset-0 blur-[68px]"
+      className="absolute inset-0 blur-[54px]"
       style={{
         background: `linear-gradient(
-          102deg,
+          100deg,
           rgba(255,255,255,0) 0%,
-          rgba(34,211,238,0.08) 24%,
-          rgba(125,211,252,0.10) 45%,
-          rgba(16,185,129,0.05) 67%,
-          rgba(255,255,255,0) 94%
-        )`,
-        backgroundSize: "220% 100%",
-        animation: "heroFlow 15s ease-in-out infinite",
-      }}
-    />
-    <div
-      className="absolute inset-0 blur-[110px]"
-      style={{
-        background: `linear-gradient(
-          88deg,
-          rgba(255,255,255,0) 0%,
-          rgba(14,165,233,0.05) 34%,
-          rgba(8,34,68,0.06) 58%,
+          rgba(52,211,153,0.24) 20%,
+          rgba(99,102,241,0.14) 48%,
+          rgba(52,211,153,0.14) 74%,
           rgba(255,255,255,0) 92%
         )`,
-        backgroundSize: "220% 100%",
-        animation: "heroFlowReverse 18s ease-in-out infinite",
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove 10s ease-in-out infinite",
       }}
     />
+    <div
+      className="absolute inset-0 blur-[88px]"
+      style={{
+        background: `linear-gradient(
+          92deg,
+          rgba(255,255,255,0) 0%,
+          rgba(99,102,241,0.08) 28%,
+          rgba(52,211,153,0.08) 60%,
+          rgba(99,179,255,0.04) 78%,
+          rgba(255,255,255,0) 95%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove2 14s ease-in-out infinite",
+      }}
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
   </div>
 
-  {/* 3d-ish glow accents */}
-  <div className="absolute left-[6%] top-[22px] h-[120px] w-[200px] rounded-full bg-cyan-200/10 blur-[90px] sm:h-[140px] sm:w-[220px]" />
-  <div className="absolute right-[8%] top-[34px] h-[170px] w-[260px] rounded-full bg-sky-300/12 blur-[110px] sm:h-[190px] sm:w-[300px]" />
-  <div className="absolute right-[20%] top-[110px] h-[90px] w-[130px] rounded-full bg-white/60 blur-[50px]" />
+  {/* glows */}
+  <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/16 blur-[95px]" />
+  <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-indigo-300/12 blur-[100px]" />
 
-  {/* continuous center softness - no hard separation */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_62%_at_50%_12%,rgba(255,255,255,0.82),rgba(255,255,255,0.68)_34%,rgba(255,255,255,0.34)_58%,transparent_78%)]" />
+  {/* center white keeps text sharp */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,rgba(255,255,255,0.90),transparent_60%)]" />
 
-  {/* blend into search zone */}
-  <div className="absolute inset-x-0 top-[34%] h-[220px] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.52),transparent_72%)]" />
-
-  {/* lower fade */}
-  <div className="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-b from-transparent to-white" />
+  {/* bottom fade to white */}
+  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
 </div>
   {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/88 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_8px_22px_rgba(15,23,42,0.05)] backdrop-blur-sm">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/82 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_8px_22px_rgba(15,23,42,0.05)] backdrop-blur-sm">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
       {/* Title */}
-      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
+      <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
         Discover Top{" "}
-        <span className="bg-gradient-to-r from-emerald-600 via-cyan-500 to-emerald-600 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent">
           Technical
         </span>{" "}
         Jobs
@@ -324,7 +306,7 @@ const wideContainer =
       </p>
 
       {/* Search card */}
-      <div className="mx-auto mt-10 w-full max-w-4xl rounded-[26px] border border-slate-200/80 bg-white/90 p-4 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-5">
+      <div className="mt-10 mx-auto w-full max-w-4xl rounded-[28px] border border-slate-200/80 bg-white/88 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl">
         {/* Inputs + button row */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
@@ -352,7 +334,7 @@ const wideContainer =
           <button
             type="button"
             onClick={runHeroSearch}
-            className="h-14 w-full shrink-0 rounded-[18px] bg-[#081225] px-7 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(8,18,37,0.18),0_3px_0_rgba(16,185,129,0.28)] transition hover:bg-[#0f172a] sm:w-auto"
+            className="h-14 w-full shrink-0 rounded-[18px] bg-[#081225] px-7 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(8,18,37,0.18),0_3px_0_rgba(16,185,129,0.36)] transition hover:bg-[#0f172a] sm:w-auto"
           >
             Search Jobs
           </button>
@@ -407,7 +389,7 @@ const wideContainer =
   </div>
 
   <style jsx>{`
-    @keyframes heroFlow {
+    @keyframes awsBandMove {
       0% {
         background-position: 0% 50%;
       }
@@ -418,7 +400,7 @@ const wideContainer =
         background-position: 0% 50%;
       }
     }
-    @keyframes heroFlowReverse {
+    @keyframes awsBandMove2 {
       0% {
         background-position: 100% 50%;
       }
