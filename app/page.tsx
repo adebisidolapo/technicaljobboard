@@ -208,20 +208,22 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F7F8FB]">
- {/* Background Layer */}
+{/* Background Layer */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
   <div className="absolute inset-0 bg-white" />
 
-  {/* Hex grid */}
+  {/* Honeycomb hex — hero's main techy element, fades from top-right */}
   <div
-    className="absolute inset-0 opacity-100"
+    className="absolute inset-0"
     style={{
-      backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.07)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+      backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.12)' stroke-width='1'/%3E%3C/svg%3E\")",
       backgroundSize: "56px 100px",
+      maskImage: "radial-gradient(ellipse 80% 80% at 85% 20%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)",
+      WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 85% 20%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)",
     }}
   />
 
-  {/* Aurora sweep on top of hex */}
+  {/* Aurora sweep on top */}
   <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
     <div
       className="absolute inset-0 blur-[54px]"
@@ -256,35 +258,14 @@ const wideContainer =
     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
   </div>
 
-  {/* right shape */}
-  <svg
-    className="absolute right-0 top-0 h-full w-[62%] opacity-70"
-    viewBox="0 0 720 520"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient id="awsHeroGradient" x1="720" y1="0" x2="260" y2="520" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#EEE9FF" stopOpacity="0.82" />
-        <stop offset="0.35" stopColor="#F3EEFF" stopOpacity="0.32" />
-        <stop offset="0.75" stopColor="#F8FBFA" stopOpacity="0.10" />
-        <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-      </linearGradient>
-    </defs>
-    <path
-      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-      fill="url(#awsHeroGradient)"
-    />
-  </svg>
-
   {/* glows */}
   <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/20 blur-[95px]" />
   <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-violet-300/16 blur-[100px]" />
 
-  {/* center softness keeps text crisp */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_52%_at_50%_0%,rgba(255,255,255,0.85),transparent_56%)]" />
+  {/* center white keeps text sharp */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,rgba(255,255,255,0.92),transparent_60%)]" />
 
-  {/* bottom lift into white */}
+  {/* bottom fade to white */}
   <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
 </div>
 
