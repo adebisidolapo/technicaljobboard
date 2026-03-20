@@ -208,76 +208,66 @@ const wideContainer =
 
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-[#F7F8FB]">
-{/* Background Layer */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
-  <div className="absolute inset-0 bg-white" />
+  {/* Background Layer */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 bg-white" />
 
-  {/* Techy grid — same idea, but cleaner and softly glowing */}
-  <div
-    className="absolute inset-0"
-    style={{
-      backgroundImage:
-        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='40' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='0' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='40' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3C/svg%3E\")",
-      backgroundSize: "40px 40px",
-      opacity: 0.9,
-    }}
-  />
-
-  {/* soft grid glow */}
-  <div
-    className="absolute inset-0"
-    style={{
-      background:
-        "radial-gradient(circle at 20% 12%, rgba(52,211,153,0.10), transparent 22%), radial-gradient(circle at 80% 14%, rgba(99,102,241,0.10), transparent 24%), radial-gradient(circle at 50% 0%, rgba(255,255,255,0.92), transparent 52%)",
-      filter: "blur(28px)",
-    }}
-  />
-
-  {/* Aurora sweep on top */}
-  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+    {/* Techy grid — full hero, similar to featured jobs but slightly different */}
     <div
-      className="absolute inset-0 blur-[54px]"
+      className="absolute inset-0"
       style={{
-        background: `linear-gradient(
-          100deg,
-          rgba(255,255,255,0) 0%,
-          rgba(52,211,153,0.24) 20%,
-          rgba(99,102,241,0.14) 48%,
-          rgba(52,211,153,0.14) 74%,
-          rgba(255,255,255,0) 92%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove 10s ease-in-out infinite",
+        backgroundImage:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.07)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='40' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='0' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='40' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3C/svg%3E\")",
+        backgroundSize: "40px 40px",
       }}
     />
-    <div
-      className="absolute inset-0 blur-[88px]"
-      style={{
-        background: `linear-gradient(
-          92deg,
-          rgba(255,255,255,0) 0%,
-          rgba(99,102,241,0.08) 28%,
-          rgba(52,211,153,0.08) 60%,
-          rgba(99,179,255,0.04) 78%,
-          rgba(255,255,255,0) 95%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove2 14s ease-in-out infinite",
-      }}
-    />
-    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
+
+    {/* Aurora sweep on top */}
+    <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+      <div
+        className="absolute inset-0 blur-[54px]"
+        style={{
+          background: `linear-gradient(
+            100deg,
+            rgba(255,255,255,0) 0%,
+            rgba(52,211,153,0.30) 20%,
+            rgba(167,139,250,0.22) 48%,
+            rgba(52,211,153,0.18) 74%,
+            rgba(255,255,255,0) 92%
+          )`,
+          backgroundSize: "300% 100%",
+          animation: "awsBandMove 10s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute inset-0 blur-[88px]"
+        style={{
+          background: `linear-gradient(
+            92deg,
+            rgba(255,255,255,0) 0%,
+            rgba(167,139,250,0.12) 28%,
+            rgba(52,211,153,0.10) 60%,
+            rgba(99,179,255,0.04) 78%,
+            rgba(255,255,255,0) 95%
+          )`,
+          backgroundSize: "300% 100%",
+          animation: "awsBandMove2 14s ease-in-out infinite",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
+    </div>
+
+    {/* glows */}
+    <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/20 blur-[95px]" />
+    <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-violet-300/16 blur-[100px]" />
+
+    {/* center white keeps text sharp */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,rgba(255,255,255,0.92),transparent_60%)]" />
+
+    {/* bottom fade to white */}
+    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
   </div>
 
-  {/* glows */}
-  <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/16 blur-[95px]" />
-  <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-indigo-300/12 blur-[100px]" />
-
-  {/* center white keeps text sharp */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,rgba(255,255,255,0.90),transparent_60%)]" />
-
-  {/* bottom fade to white */}
-  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
-</div>
   {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
@@ -290,9 +280,9 @@ const wideContainer =
       {/* Title */}
       <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
         Discover Top{" "}
-       <span className="bg-gradient-to-r from-[#0ea5e9] via-[#06b6d4] to-[#10b981] bg-clip-text text-transparent">
-  Technical
-</span>{" "}
+        <span className="bg-gradient-to-r from-[#14b8a6] via-[#06b6d4] to-[#10b981] bg-clip-text text-transparent">
+          Technical
+        </span>{" "}
         Jobs
       </h1>
 
@@ -400,6 +390,7 @@ const wideContainer =
         background-position: 0% 50%;
       }
     }
+
     @keyframes awsBandMove2 {
       0% {
         background-position: 100% 50%;
@@ -413,7 +404,6 @@ const wideContainer =
     }
   `}</style>
 </section>
-
       {/* ================= TRUSTED BY TEAMS ================= */}
       <section className={`bg-white ${sectionPadding}`}>
         <div className={container}>
