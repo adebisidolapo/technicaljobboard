@@ -209,97 +209,93 @@ const wideContainer =
 {/* ================= HERO ================= */}
 <section className="relative isolate overflow-hidden bg-white">
   {/* Background Layer */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    {/* clean base */}
-    <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbfefd_0%,#f8fcfb_34%,#ffffff_78%,#ffffff_100%)]" />
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  {/* base */}
+  <div className="absolute inset-0 bg-[linear-gradient(180deg,#fcfefd_0%,#f8fcfd_38%,#ffffff_74%,#ffffff_100%)]" />
 
-    {/* subtle full grid */}
-    <div
-      className="absolute inset-0 opacity-[0.38]"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(8,34,68,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(8,34,68,0.045) 1px, transparent 1px)",
-        backgroundSize: "34px 34px",
-        maskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.45) 62%, transparent 100%)",
-        WebkitMaskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.45) 62%, transparent 100%)",
-      }}
-    />
+  {/* soft full grid */}
+  <div
+    className="absolute inset-0 opacity-[0.22]"
+    style={{
+      backgroundImage:
+        "linear-gradient(rgba(8,34,68,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(8,34,68,0.05) 1px, transparent 1px)",
+      backgroundSize: "36px 36px",
+      maskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.42) 68%, transparent 100%)",
+      WebkitMaskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.42) 68%, transparent 100%)",
+    }}
+  />
 
-{/* right-side tech atmosphere */}
-<div
-  className="absolute right-[-10%] top-[-6%] h-[82%] w-[64%] opacity-60"
-  style={{
-    background: `
-      radial-gradient(circle at 30% 35%, rgba(19,196,216,0.10), transparent 22%),
-      radial-gradient(circle at 58% 42%, rgba(52,211,153,0.08), transparent 20%),
-      radial-gradient(circle at 78% 28%, rgba(8,34,68,0.07), transparent 24%)
-    `,
-    filter: "blur(6px)",
-  }}
-/>
-
-<div
-  className="absolute right-[4%] top-[10%] hidden h-[46%] w-[38%] lg:block"
-  style={{
-    backgroundImage:
-      "linear-gradient(rgba(8,34,68,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(8,34,68,0.07) 1px, transparent 1px)",
-    backgroundSize: "26px 26px",
-    maskImage:
-      "radial-gradient(circle at center, rgba(0,0,0,0.85), rgba(0,0,0,0.38) 58%, transparent 100%)",
-    WebkitMaskImage:
-      "radial-gradient(circle at center, rgba(0,0,0,0.85), rgba(0,0,0,0.38) 58%, transparent 100%)",
-    opacity: 0.45,
-  }}
-/>
-
-    {/* soft top aurora - cleaner, no pink */}
-    <div className="absolute inset-x-0 top-0 h-[260px] sm:h-[300px] overflow-hidden">
-      <div
-        className="absolute inset-0 blur-[58px]"
-        style={{
-          background: `linear-gradient(
-            102deg,
-            rgba(255,255,255,0) 4%,
-            rgba(52,211,153,0.16) 24%,
-            rgba(19,196,216,0.14) 46%,
-            rgba(52,211,153,0.11) 68%,
-            rgba(255,255,255,0) 92%
-          )`,
-          backgroundSize: "220% 100%",
-          animation: "heroFlow 14s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="absolute inset-0 blur-[96px]"
-        style={{
-          background: `linear-gradient(
-            90deg,
-            rgba(255,255,255,0) 0%,
-            rgba(19,196,216,0.08) 36%,
-            rgba(8,34,68,0.06) 58%,
-            rgba(255,255,255,0) 92%
-          )`,
-          backgroundSize: "220% 100%",
-          animation: "heroFlowReverse 18s ease-in-out infinite",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
-    </div>
-
-    {/* focused glows */}
-    <div className="absolute left-[8%] top-[12px] h-[130px] w-[220px] rounded-full bg-emerald-300/12 blur-[90px] sm:h-[150px] sm:w-[240px]" />
-    <div className="absolute right-[10%] top-[24px] h-[150px] w-[250px] rounded-full bg-cyan-300/14 blur-[100px] sm:h-[170px] sm:w-[290px]" />
-    <div className="absolute right-[14%] top-[72px] h-[120px] w-[180px] rounded-full bg-sky-200/12 blur-[80px]" />
-
-    {/* center clarity zone */}
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_62%_58%_at_50%_10%,rgba(255,255,255,0.94),rgba(255,255,255,0.86)_34%,rgba(255,255,255,0.52)_56%,transparent_74%)]" />
-
-    {/* lower fade */}
-    <div className="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-b from-transparent to-white" />
+  {/* spiro / orbital atmosphere */}
+  <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute right-[-12%] top-[-10%] h-[460px] w-[460px] rounded-full border border-cyan-200/30 opacity-60 blur-[1px]" />
+    <div className="absolute right-[-6%] top-[2%] h-[360px] w-[360px] rounded-full border border-sky-200/30 opacity-50 blur-[1px]" />
+    <div className="absolute right-[4%] top-[10%] h-[250px] w-[250px] rounded-full border border-emerald-100/40 opacity-40 blur-[0.5px]" />
+    <div className="absolute right-[16%] top-[18%] h-[140px] w-[140px] rounded-full border border-cyan-100/50 opacity-35" />
   </div>
 
+  {/* soft orbital glow */}
+  <div
+    className="absolute right-[-8%] top-[-4%] h-[76%] w-[58%]"
+    style={{
+      background: `
+        radial-gradient(circle at 66% 26%, rgba(34,211,238,0.14), transparent 16%),
+        radial-gradient(circle at 58% 36%, rgba(56,189,248,0.10), transparent 22%),
+        radial-gradient(circle at 72% 42%, rgba(15,23,42,0.07), transparent 28%),
+        radial-gradient(circle at 46% 30%, rgba(255,255,255,0.72), transparent 34%)
+      `,
+      filter: "blur(14px)",
+    }}
+  />
+
+  {/* flowing beam - very light */}
+  <div className="absolute inset-x-0 top-0 h-[250px] sm:h-[290px] overflow-hidden">
+    <div
+      className="absolute inset-0 blur-[68px]"
+      style={{
+        background: `linear-gradient(
+          102deg,
+          rgba(255,255,255,0) 0%,
+          rgba(34,211,238,0.08) 24%,
+          rgba(125,211,252,0.10) 45%,
+          rgba(16,185,129,0.05) 67%,
+          rgba(255,255,255,0) 94%
+        )`,
+        backgroundSize: "220% 100%",
+        animation: "heroFlow 15s ease-in-out infinite",
+      }}
+    />
+    <div
+      className="absolute inset-0 blur-[110px]"
+      style={{
+        background: `linear-gradient(
+          88deg,
+          rgba(255,255,255,0) 0%,
+          rgba(14,165,233,0.05) 34%,
+          rgba(8,34,68,0.06) 58%,
+          rgba(255,255,255,0) 92%
+        )`,
+        backgroundSize: "220% 100%",
+        animation: "heroFlowReverse 18s ease-in-out infinite",
+      }}
+    />
+  </div>
+
+  {/* 3d-ish glow accents */}
+  <div className="absolute left-[6%] top-[22px] h-[120px] w-[200px] rounded-full bg-cyan-200/10 blur-[90px] sm:h-[140px] sm:w-[220px]" />
+  <div className="absolute right-[8%] top-[34px] h-[170px] w-[260px] rounded-full bg-sky-300/12 blur-[110px] sm:h-[190px] sm:w-[300px]" />
+  <div className="absolute right-[20%] top-[110px] h-[90px] w-[130px] rounded-full bg-white/60 blur-[50px]" />
+
+  {/* continuous center softness - no hard separation */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_62%_at_50%_12%,rgba(255,255,255,0.82),rgba(255,255,255,0.68)_34%,rgba(255,255,255,0.34)_58%,transparent_78%)]" />
+
+  {/* blend into search zone */}
+  <div className="absolute inset-x-0 top-[34%] h-[220px] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.52),transparent_72%)]" />
+
+  {/* lower fade */}
+  <div className="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-b from-transparent to-white" />
+</div>
   {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
