@@ -207,110 +207,118 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
 
 {/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-[#F4F8FC]">
-{/* Background Layer */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
-  <div className="absolute inset-0 bg-[#F4F8FC]" />
+<section className="relative isolate overflow-hidden bg-[#F7F8FB]">
+  {/* Background Layer */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 bg-[#F7F8FB]" />
 
-  {/* Aurora sweep — green leads, purple accents, blue barely visible */}
-  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+    {/* Aurora sweep — subtle, cleaner, more premium */}
+    <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+      <div
+        className="absolute inset-0 blur-[54px]"
+        style={{
+          background: `linear-gradient(
+            100deg,
+            rgba(255,255,255,0) 0%,
+            rgba(52,211,153,0.30) 20%,
+            rgba(167,139,250,0.22) 48%,
+            rgba(52,211,153,0.18) 74%,
+            rgba(255,255,255,0) 92%
+          )`,
+          backgroundSize: "300% 100%",
+          animation: "awsBandMove 10s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute inset-0 blur-[88px]"
+        style={{
+          background: `linear-gradient(
+            92deg,
+            rgba(255,255,255,0) 0%,
+            rgba(167,139,250,0.12) 28%,
+            rgba(52,211,153,0.10) 60%,
+            rgba(99,179,255,0.04) 78%,
+            rgba(255,255,255,0) 95%
+          )`,
+          backgroundSize: "300% 100%",
+          animation: "awsBandMove2 14s ease-in-out infinite",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F7F8FB]" />
+    </div>
+
+    {/* subtle grid */}
     <div
-      className="absolute inset-0 blur-[50px]"
+      className="absolute inset-0 opacity-[0.035]"
       style={{
-        background: `linear-gradient(
-          100deg,
-          rgba(255,255,255,0) 0%,
-          rgba(52, 211, 153, 0.55) 22%,
-          rgba(167, 139, 250, 0.45) 52%,
-          rgba(52, 211, 153, 0.35) 75%,
-          rgba(255,255,255,0) 92%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove 9s ease-in-out infinite",
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
+        backgroundSize: "30px 30px",
       }}
     />
-    <div
-      className="absolute inset-0 blur-[80px]"
-      style={{
-        background: `linear-gradient(
-          90deg,
-          rgba(255,255,255,0) 0%,
-          rgba(167, 139, 250, 0.25) 30%,
-          rgba(52, 211, 153, 0.20) 62%,
-          rgba(99, 179, 255, 0.10) 78%,
-          rgba(255,255,255,0) 95%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove2 13s ease-in-out infinite",
-      }}
-    />
-    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F4F8FC]" />
+
+    {/* right shape / side sweep */}
+    <svg
+      className="absolute right-0 top-0 h-full w-[62%] opacity-70"
+      viewBox="0 0 720 520"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient
+          id="awsHeroGradient"
+          x1="720"
+          y1="0"
+          x2="260"
+          y2="520"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#EEE9FF" stopOpacity="0.82" />
+          <stop offset="0.35" stopColor="#F3EEFF" stopOpacity="0.32" />
+          <stop offset="0.75" stopColor="#F8FBFA" stopOpacity="0.10" />
+          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
+        fill="url(#awsHeroGradient)"
+      />
+    </svg>
+
+    {/* glows — more controlled and elegant */}
+    <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/22 blur-[95px]" />
+    <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-violet-300/18 blur-[100px]" />
+
+    {/* center top softness */}
+    <div className="absolute left-1/2 top-[-24px] h-[160px] w-[760px] -translate-x-1/2 rounded-full bg-white/75 blur-[100px]" />
+
+    {/* soft center fade — keeps text crisp */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_52%_at_50%_0%,rgba(255,255,255,0.78),transparent_56%)]" />
+
+    {/* bottom lift into next white section */}
+    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
   </div>
-
-  {/* subtle grid */}
-  <div
-    className="absolute inset-0 opacity-[0.06]"
-    style={{
-      backgroundImage:
-        "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0)",
-      backgroundSize: "30px 30px",
-    }}
-  />
-
-  {/* right shape — removed blue tones, kept neutral */}
-  <svg
-    className="absolute right-0 top-0 h-full w-[65%] opacity-60"
-    viewBox="0 0 720 520"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient
-        id="awsHeroGradient"
-        x1="720"
-        y1="0"
-        x2="260"
-        y2="520"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#E8F5EE" stopOpacity="0.60" />
-        <stop offset="0.45" stopColor="#F0F8F4" stopOpacity="0.25" />
-        <stop offset="1" stopColor="#F4F8FC" stopOpacity="0" />
-      </linearGradient>
-    </defs>
-    <path
-      d="M720 0C650 40 610 110 580 180C540 260 500 340 430 410C380 460 320 500 240 520H720V0Z"
-      fill="url(#awsHeroGradient)"
-    />
-  </svg>
-
-  {/* glows — green left, purple right, no blue */}
-  <div className="absolute left-[8%] top-[10px] h-[140px] w-[220px] rounded-full bg-emerald-400/25 blur-[90px]" />
-  <div className="absolute right-[8%] top-[18px] h-[160px] w-[240px] rounded-full bg-violet-400/20 blur-[90px]" />
-
-  {/* soft center fade — keeps text crisp */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.65),transparent_55%)]" />
-</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
-
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/75 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-sm backdrop-blur">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/82 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_8px_22px_rgba(15,23,42,0.05)] backdrop-blur-sm">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
-      {/* Title — kept on one line on desktop */}
-      <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[#0F172A]">
+      {/* Title */}
+      <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
         Discover Top{" "}
-        <span className="text-emerald-600">Technical</span>{" "}
+        <span className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent">
+          Technical
+        </span>{" "}
         Jobs
       </h1>
 
       {/* Subtitle */}
-      <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-slate-500 sm:text-base">
+      <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-slate-500 sm:text-base">
         Browse the best technical roles in engineering, cloud, security,
         data, and infrastructure —{" "}
         <strong className="font-semibold text-slate-700">
@@ -319,8 +327,7 @@ const wideContainer =
       </p>
 
       {/* Search card */}
-      <div className="mt-10 mx-auto w-full max-w-3xl rounded-3xl border border-slate-200/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backdrop-blur-md">
-
+      <div className="mt-10 mx-auto w-full max-w-4xl rounded-[28px] border border-slate-200/80 bg-white/88 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl">
         {/* Inputs + button row */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
@@ -329,8 +336,10 @@ const wideContainer =
             onChange={(e) => setHeroQ(e.target.value)}
             type="text"
             placeholder="Job title, skill, or keyword"
-            className={inputBase}
-            onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
+            className={`${inputBase} h-14 rounded-[18px] border-slate-200 bg-white/96 px-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] placeholder:text-slate-400`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") runHeroSearch();
+            }}
           />
           <input
             id="hero-loc"
@@ -338,13 +347,15 @@ const wideContainer =
             onChange={(e) => setHeroLoc(e.target.value)}
             type="text"
             placeholder="City, state, remote, or hybrid"
-            className={inputBase}
-            onKeyDown={(e) => { if (e.key === "Enter") runHeroSearch(); }}
+            className={`${inputBase} h-14 rounded-[18px] border-slate-200 bg-white/96 px-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] placeholder:text-slate-400`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") runHeroSearch();
+            }}
           />
           <button
             type="button"
             onClick={runHeroSearch}
-            className="h-12 w-full shrink-0 rounded-xl bg-[#0B1222] px-7 text-sm font-semibold text-white transition hover:bg-[#111827] sm:w-auto"
+            className="h-14 w-full shrink-0 rounded-[18px] bg-[#081225] px-7 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(8,18,37,0.18),0_3px_0_rgba(16,185,129,0.36)] transition hover:bg-[#0f172a] sm:w-auto"
           >
             Search Jobs
           </button>
@@ -352,7 +363,7 @@ const wideContainer =
 
         {/* Tags */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-          <span className="mr-1 text-xs font-semibold text-emerald-600">
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm">
             Popular
           </span>
           {[
@@ -370,7 +381,7 @@ const wideContainer =
                 setHeroQ(t);
                 setTimeout(runHeroSearch, 0);
               }}
-              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-white"
+              className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
             >
               {t}
             </button>
@@ -380,9 +391,9 @@ const wideContainer =
         {/* Trust line */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-100 pt-4 text-[12px] text-slate-400">
           <span>Trusted employers</span>
-          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span className="h-1 w-1 rounded-full bg-emerald-400" />
           <span>Remote + on-site</span>
-          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span className="h-1 w-1 rounded-full bg-emerald-400" />
           <span>Fast apply</span>
         </div>
       </div>
@@ -395,20 +406,31 @@ const wideContainer =
       >
         Jump To Jobs <span aria-hidden>↓</span>
       </button>
-
     </div>
   </div>
 
   <style jsx>{`
     @keyframes awsBandMove {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
     @keyframes awsBandMove2 {
-      0%   { background-position: 100% 50%; }
-      50%  { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+      0% {
+        background-position: 100% 50%;
+      }
+      50% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
     }
   `}</style>
 </section>
