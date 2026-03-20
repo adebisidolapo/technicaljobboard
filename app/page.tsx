@@ -207,79 +207,94 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
 
 {/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-[#F7F8FB]">
-{/* Background Layer */}
-<div className="pointer-events-none absolute inset-0 overflow-hidden">
-  <div className="absolute inset-0 bg-white" />
+<section className="relative isolate overflow-hidden bg-white">
+  {/* Background Layer */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    {/* clean base */}
+    <div className="absolute inset-0 bg-[linear-gradient(180deg,#fbfefd_0%,#f8fcfb_34%,#ffffff_78%,#ffffff_100%)]" />
 
-  {/* Techy grid — full hero, similar to featured jobs but slightly different */}
-<div
-  className="absolute inset-0"
-  style={{
-    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.07)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='40' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='0' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='40' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3C/svg%3E\")",
-    backgroundSize: "40px 40px",
-  }}
-/>
-
-  {/* Aurora sweep on top */}
-  <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
+    {/* subtle full grid */}
     <div
-      className="absolute inset-0 blur-[54px]"
+      className="absolute inset-0 opacity-[0.38]"
       style={{
-        background: `linear-gradient(
-          100deg,
-          rgba(255,255,255,0) 0%,
-          rgba(52,211,153,0.30) 20%,
-          rgba(167,139,250,0.22) 48%,
-          rgba(52,211,153,0.18) 74%,
-          rgba(255,255,255,0) 92%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove 10s ease-in-out infinite",
+        backgroundImage:
+          "linear-gradient(rgba(8,34,68,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(8,34,68,0.045) 1px, transparent 1px)",
+        backgroundSize: "34px 34px",
+        maskImage:
+          "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.45) 62%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.45) 62%, transparent 100%)",
       }}
     />
+
+    {/* right-side tech pattern zone */}
     <div
-      className="absolute inset-0 blur-[88px]"
+      className="absolute right-[-8%] top-[-2%] h-[78%] w-[62%] opacity-[0.22] sm:opacity-[0.26] lg:opacity-[0.32]"
       style={{
-        background: `linear-gradient(
-          92deg,
-          rgba(255,255,255,0) 0%,
-          rgba(167,139,250,0.12) 28%,
-          rgba(52,211,153,0.10) 60%,
-          rgba(99,179,255,0.04) 78%,
-          rgba(255,255,255,0) 95%
-        )`,
-        backgroundSize: "300% 100%",
-        animation: "awsBandMove2 14s ease-in-out infinite",
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='76' viewBox='0 0 88 76'%3E%3Cg fill='none' stroke='rgba(19,196,216,0.24)' stroke-width='1'%3E%3Cpath d='M22 2l20 11v22L22 46 2 35V13z'/%3E%3Cpath d='M66 2l20 11v22L66 46 46 35V13z'/%3E%3Cpath d='M44 20l20 11v22L44 64 24 53V31z'/%3E%3C/g%3E%3Cg fill='rgba(8,34,68,0.18)'%3E%3Ccircle cx='22' cy='2' r='1.8'/%3E%3Ccircle cx='42' cy='13' r='1.8'/%3E%3Ccircle cx='42' cy='35' r='1.8'/%3E%3Ccircle cx='22' cy='46' r='1.8'/%3E%3Ccircle cx='2' cy='35' r='1.8'/%3E%3Ccircle cx='2' cy='13' r='1.8'/%3E%3Ccircle cx='66' cy='2' r='1.8'/%3E%3Ccircle cx='86' cy='13' r='1.8'/%3E%3Ccircle cx='86' cy='35' r='1.8'/%3E%3Ccircle cx='66' cy='46' r='1.8'/%3E%3Ccircle cx='46' cy='35' r='1.8'/%3E%3Ccircle cx='46' cy='13' r='1.8'/%3E%3Ccircle cx='44' cy='20' r='1.8'/%3E%3Ccircle cx='64' cy='31' r='1.8'/%3E%3Ccircle cx='64' cy='53' r='1.8'/%3E%3Ccircle cx='44' cy='64' r='1.8'/%3E%3Ccircle cx='24' cy='53' r='1.8'/%3E%3Ccircle cx='24' cy='31' r='1.8'/%3E%3C/g%3E%3C/svg%3E")`,
+        backgroundSize: "88px 76px",
       }}
     />
-    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
+
+    {/* soft top aurora - cleaner, no pink */}
+    <div className="absolute inset-x-0 top-0 h-[260px] sm:h-[300px] overflow-hidden">
+      <div
+        className="absolute inset-0 blur-[58px]"
+        style={{
+          background: `linear-gradient(
+            102deg,
+            rgba(255,255,255,0) 4%,
+            rgba(52,211,153,0.16) 24%,
+            rgba(19,196,216,0.14) 46%,
+            rgba(52,211,153,0.11) 68%,
+            rgba(255,255,255,0) 92%
+          )`,
+          backgroundSize: "220% 100%",
+          animation: "heroFlow 14s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute inset-0 blur-[96px]"
+        style={{
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0) 0%,
+            rgba(19,196,216,0.08) 36%,
+            rgba(8,34,68,0.06) 58%,
+            rgba(255,255,255,0) 92%
+          )`,
+          backgroundSize: "220% 100%",
+          animation: "heroFlowReverse 18s ease-in-out infinite",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
+    </div>
+
+    {/* focused glows */}
+    <div className="absolute left-[8%] top-[12px] h-[130px] w-[220px] rounded-full bg-emerald-300/12 blur-[90px] sm:h-[150px] sm:w-[240px]" />
+    <div className="absolute right-[10%] top-[24px] h-[150px] w-[250px] rounded-full bg-cyan-300/14 blur-[100px] sm:h-[170px] sm:w-[290px]" />
+    <div className="absolute right-[14%] top-[72px] h-[120px] w-[180px] rounded-full bg-sky-200/12 blur-[80px]" />
+
+    {/* center clarity zone */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_62%_58%_at_50%_10%,rgba(255,255,255,0.94),rgba(255,255,255,0.86)_34%,rgba(255,255,255,0.52)_56%,transparent_74%)]" />
+
+    {/* lower fade */}
+    <div className="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-b from-transparent to-white" />
   </div>
-
-  {/* glows */}
-  <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/20 blur-[95px]" />
-  <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-violet-300/16 blur-[100px]" />
-
-  {/* center white keeps text sharp */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,rgba(255,255,255,0.92),transparent_60%)]" />
-
-  {/* bottom fade to white */}
-  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
-</div>
 
   {/* Content */}
   <div className={`relative ${container}`}>
     <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-24">
       {/* Badge */}
-      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/82 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_8px_22px_rgba(15,23,42,0.05)] backdrop-blur-sm">
+      <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/88 px-4 py-2 text-[11px] font-semibold text-slate-600 shadow-[0_8px_22px_rgba(15,23,42,0.05)] backdrop-blur-sm">
         <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
         Technical Roles • Remote Jobs • Fast Apply
       </div>
 
       {/* Title */}
-      <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
+      <h1 className="mx-auto mt-6 max-w-4xl text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
         Discover Top{" "}
-        <span className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-emerald-600 via-cyan-500 to-emerald-600 bg-clip-text text-transparent">
           Technical
         </span>{" "}
         Jobs
@@ -295,7 +310,7 @@ const wideContainer =
       </p>
 
       {/* Search card */}
-      <div className="mt-10 mx-auto w-full max-w-4xl rounded-[28px] border border-slate-200/80 bg-white/88 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl">
+      <div className="mx-auto mt-10 w-full max-w-4xl rounded-[26px] border border-slate-200/80 bg-white/90 p-4 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-5">
         {/* Inputs + button row */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
@@ -323,7 +338,7 @@ const wideContainer =
           <button
             type="button"
             onClick={runHeroSearch}
-            className="h-14 w-full shrink-0 rounded-[18px] bg-[#081225] px-7 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(8,18,37,0.18),0_3px_0_rgba(16,185,129,0.36)] transition hover:bg-[#0f172a] sm:w-auto"
+            className="h-14 w-full shrink-0 rounded-[18px] bg-[#081225] px-7 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(8,18,37,0.18),0_3px_0_rgba(16,185,129,0.28)] transition hover:bg-[#0f172a] sm:w-auto"
           >
             Search Jobs
           </button>
@@ -378,7 +393,7 @@ const wideContainer =
   </div>
 
   <style jsx>{`
-    @keyframes awsBandMove {
+    @keyframes heroFlow {
       0% {
         background-position: 0% 50%;
       }
@@ -389,7 +404,7 @@ const wideContainer =
         background-position: 0% 50%;
       }
     }
-    @keyframes awsBandMove2 {
+    @keyframes heroFlowReverse {
       0% {
         background-position: 100% 50%;
       }
