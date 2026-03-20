@@ -212,114 +212,70 @@ const wideContainer =
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
   <div className="absolute inset-0 bg-white" />
 
-  {/* light site grid */}
+  {/* Techy grid — same idea, but cleaner and softly glowing */}
   <div
     className="absolute inset-0"
     style={{
       backgroundImage:
-        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.05)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.1' fill='rgba(99%2C102%2C241%2C0.06)'/%3E%3Ccircle cx='40' cy='0' r='1.1' fill='rgba(99%2C102%2C241%2C0.06)'/%3E%3Ccircle cx='0' cy='40' r='1.1' fill='rgba(99%2C102%2C241%2C0.06)'/%3E%3Ccircle cx='40' cy='40' r='1.1' fill='rgba(99%2C102%2C241%2C0.06)'/%3E%3C/svg%3E\")",
+        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='40' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='0' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3Ccircle cx='40' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.08)'/%3E%3C/svg%3E\")",
       backgroundSize: "40px 40px",
-      opacity: 0.7,
+      opacity: 0.9,
     }}
   />
 
-  {/* big glowing tech panel */}
+  {/* soft grid glow */}
   <div
-    className="absolute right-[-10%] top-[18px] h-[360px] w-[78%] rounded-[42px] sm:right-[-6%] sm:top-[20px] sm:h-[400px] sm:w-[68%] lg:right-[-2%] lg:top-[24px] lg:h-[430px] lg:w-[56%]"
+    className="absolute inset-0"
     style={{
       background:
-        "radial-gradient(circle at 22% 38%, rgba(17,126,198,0.34) 0%, rgba(9,46,88,0.94) 34%, rgba(5,16,34,0.98) 72%, rgba(3,10,24,1) 100%)",
-      boxShadow:
-        "0 20px 80px rgba(8,23,49,0.20), inset 0 0 90px rgba(56,189,248,0.08), inset -40px 0 90px rgba(0,0,0,0.22)",
-      opacity: 0.98,
+        "radial-gradient(circle at 20% 12%, rgba(52,211,153,0.10), transparent 22%), radial-gradient(circle at 80% 14%, rgba(99,102,241,0.10), transparent 24%), radial-gradient(circle at 50% 0%, rgba(255,255,255,0.92), transparent 52%)",
+      filter: "blur(28px)",
     }}
   />
 
-  {/* soft left fade so it blends into the hero */}
-  <div
-    className="absolute right-[34%] top-[18px] h-[360px] w-[22%] sm:right-[38%] sm:h-[400px] sm:w-[18%] lg:right-[42%] lg:h-[430px] lg:w-[14%]"
-    style={{
-      background:
-        "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.78) 34%, rgba(255,255,255,0.18) 72%, rgba(255,255,255,0) 100%)",
-      filter: "blur(8px)",
-    }}
-  />
-
-  {/* inner glow */}
-  <div
-    className="absolute right-[2%] top-[42px] h-[250px] w-[42%] rounded-[36px] sm:right-[4%] sm:h-[270px] sm:w-[38%] lg:right-[6%] lg:h-[300px] lg:w-[30%]"
-    style={{
-      background:
-        "radial-gradient(circle at 30% 36%, rgba(56,189,248,0.28), rgba(56,189,248,0.12) 24%, rgba(15,23,42,0) 62%)",
-      filter: "blur(18px)",
-      opacity: 0.95,
-    }}
-  />
-
-  {/* hex pattern inside panel */}
-  <div
-    className="absolute right-[0%] top-[34px] h-[330px] w-[70%] sm:right-[1%] sm:h-[360px] sm:w-[62%] lg:right-[2%] lg:h-[390px] lg:w-[50%]"
-    style={{
-      backgroundImage:
-        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='84' viewBox='0 0 96 84'%3E%3Cg fill='none' stroke='rgba(96,210,255,0.44)' stroke-width='1.5'%3E%3Cpath d='M24 4l20 11.5v23L24 50 4 38.5v-23z'/%3E%3Cpath d='M72 4l20 11.5v23L72 50 52 38.5v-23z'/%3E%3Cpath d='M48 26l20 11.5v23L48 72 28 60.5v-23z'/%3E%3C/g%3E%3Cg fill='rgba(120,220,255,0.24)'%3E%3Ccircle cx='24' cy='4' r='2'/%3E%3Ccircle cx='44' cy='15.5' r='2'/%3E%3Ccircle cx='44' cy='38.5' r='2'/%3E%3Ccircle cx='24' cy='50' r='2'/%3E%3Ccircle cx='4' cy='38.5' r='2'/%3E%3Ccircle cx='4' cy='15.5' r='2'/%3E%3Ccircle cx='72' cy='4' r='2'/%3E%3Ccircle cx='92' cy='15.5' r='2'/%3E%3Ccircle cx='92' cy='38.5' r='2'/%3E%3Ccircle cx='72' cy='50' r='2'/%3E%3Ccircle cx='52' cy='38.5' r='2'/%3E%3Ccircle cx='52' cy='15.5' r='2'/%3E%3Ccircle cx='48' cy='26' r='2'/%3E%3Ccircle cx='68' cy='37.5' r='2'/%3E%3Ccircle cx='68' cy='60.5' r='2'/%3E%3Ccircle cx='48' cy='72' r='2'/%3E%3Ccircle cx='28' cy='60.5' r='2'/%3E%3Ccircle cx='28' cy='37.5' r='2'/%3E%3C/g%3E%3C/svg%3E\")",
-      backgroundSize: "96px 84px",
-      backgroundRepeat: "repeat",
-      opacity: 0.68,
-      filter: "drop-shadow(0 0 10px rgba(96,210,255,0.18))",
-      maskImage:
-        "radial-gradient(ellipse at 58% 40%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.86) 48%, rgba(0,0,0,0.34) 76%, transparent 100%)",
-      WebkitMaskImage:
-        "radial-gradient(ellipse at 58% 40%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.86) 48%, rgba(0,0,0,0.34) 76%, transparent 100%)",
-    }}
-  />
-
-  {/* brighter floating hexes */}
-  <div
-    className="absolute right-[4%] top-[54px] h-[300px] w-[52%] sm:right-[5%] sm:h-[320px] sm:w-[46%] lg:right-[6%] lg:h-[350px] lg:w-[38%]"
-    style={{
-      backgroundImage:
-        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cg fill='none' stroke='rgba(110,220,255,0.88)' stroke-width='2'%3E%3Cpath d='M120 8l20 11.5v23L120 54 100 42.5v-23z'/%3E%3Cpath d='M92 56l24 13.5v27L92 110 68 96.5v-27z'/%3E%3C/g%3E%3Cg fill='rgba(120,220,255,0.45)'%3E%3Cpath d='M34 18l18 10.5v21L34 60 16 49.5v-21z'/%3E%3Cpath d='M122 78l16 9v18l-16 9-16-9V87z'/%3E%3C/g%3E%3C/svg%3E\")",
-      backgroundSize: "160px 140px",
-      backgroundRepeat: "repeat",
-      opacity: 0.78,
-      filter: "drop-shadow(0 0 16px rgba(96,210,255,0.30))",
-      maskImage:
-        "radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0.95), rgba(0,0,0,0.4) 70%, transparent 100%)",
-      WebkitMaskImage:
-        "radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0.95), rgba(0,0,0,0.4) 70%, transparent 100%)",
-    }}
-  />
-
-  {/* top atmosphere */}
+  {/* Aurora sweep on top */}
   <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
     <div
-      className="absolute inset-0 blur-[56px]"
+      className="absolute inset-0 blur-[54px]"
       style={{
         background: `linear-gradient(
           100deg,
           rgba(255,255,255,0) 0%,
-          rgba(52,211,153,0.16) 22%,
-          rgba(99,102,241,0.10) 46%,
-          rgba(56,189,248,0.08) 70%,
-          rgba(255,255,255,0) 94%
+          rgba(52,211,153,0.24) 20%,
+          rgba(99,102,241,0.14) 48%,
+          rgba(52,211,153,0.14) 74%,
+          rgba(255,255,255,0) 92%
         )`,
         backgroundSize: "300% 100%",
         animation: "awsBandMove 10s ease-in-out infinite",
       }}
     />
     <div
-      className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"
+      className="absolute inset-0 blur-[88px]"
+      style={{
+        background: `linear-gradient(
+          92deg,
+          rgba(255,255,255,0) 0%,
+          rgba(99,102,241,0.08) 28%,
+          rgba(52,211,153,0.08) 60%,
+          rgba(99,179,255,0.04) 78%,
+          rgba(255,255,255,0) 95%
+        )`,
+        backgroundSize: "300% 100%",
+        animation: "awsBandMove2 14s ease-in-out infinite",
+      }}
     />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
   </div>
 
-  {/* supporting glows */}
-  <div className="absolute left-[7%] top-[8px] h-[150px] w-[240px] rounded-full bg-emerald-300/14 blur-[95px]" />
-  <div className="absolute right-[6%] top-[24px] h-[180px] w-[280px] rounded-full bg-sky-300/14 blur-[110px]" />
+  {/* glows */}
+  <div className="absolute left-[7%] top-[6px] h-[150px] w-[240px] rounded-full bg-emerald-300/16 blur-[95px]" />
+  <div className="absolute right-[7%] top-[12px] h-[165px] w-[250px] rounded-full bg-indigo-300/12 blur-[100px]" />
 
-  {/* text clarity */}
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_62%_54%_at_34%_4%,rgba(255,255,255,0.96),rgba(255,255,255,0.88)_34%,rgba(255,255,255,0.26)_62%,transparent_78%)]" />
+  {/* center white keeps text sharp */}
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,rgba(255,255,255,0.90),transparent_60%)]" />
 
-  {/* bottom fade */}
+  {/* bottom fade to white */}
   <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white" />
 </div>
   {/* Content */}
