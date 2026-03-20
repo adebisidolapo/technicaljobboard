@@ -461,11 +461,11 @@ const wideContainer =
 {/* ================= CATEGORIES ================= */}
 <section
   className="relative overflow-hidden py-10 sm:py-12"
-  style={{
-    background: "#F7F8FB",
-    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3C/svg%3E\")",
-    backgroundSize: "56px 100px",
-  }}
+style={{
+  background: "linear-gradient(180deg, #F0F4FF 0%, #EDF0FF 100%)",
+  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.09)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+  backgroundSize: "56px 100px",
+}}
 >
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
@@ -561,11 +561,11 @@ const wideContainer =
       {/* ================= EMPOWERING ================= */}
     <section
   className={`relative overflow-hidden ${sectionPadding}`}
-  style={{
-    background: "#F7F8FB",
-    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3C/svg%3E\")",
-    backgroundSize: "56px 100px",
-  }}
+style={{
+  background: "linear-gradient(135deg, #EEF0FF 0%, #F3F0FF 50%, #EDF4FF 100%)",
+  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.09)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+  backgroundSize: "56px 100px",
+}}
 >
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />

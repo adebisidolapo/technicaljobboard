@@ -70,12 +70,14 @@ style={{ minHeight: 100 }}>
 
       {/* ── DESKTOP — all logos in a row ── */}
 <div className="relative hidden py-12 sm:block" 
-style={{background:"#F7F8FB",
-  backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3C/svg%3E\")",
-  backgroundSize:"56px 100px"}}>        
+style={{
+  background: "#F5F4FF",
+  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.10)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+  backgroundSize: "56px 100px",
+}}>        
   <div className="relative w-full overflow-hidden">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#F7F8FB] to-transparent sm:w-32" />
-<div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#F7F8FB] to-transparent sm:w-32" />
+         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#F5F4FF] to-transparent sm:w-32" />
+<div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#F5F4FF] to-transparent sm:w-32" />
 
           <div className="company-logo-marquee flex w-max items-center gap-16 md:gap-24 lg:gap-28">
             {[...COMPANY_LOGOS, ...COMPANY_LOGOS].map((logo, i) => (
