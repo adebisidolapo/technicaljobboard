@@ -422,15 +422,20 @@ export default function FeaturedJobsSection() {
 
   return (
     <>
-      <section
-        id="featured-jobs"
-        className="relative overflow-hidden bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_38%,#f8fafc_100%)] py-16 sm:py-20"
-      >
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_15%_-10%,rgba(124,58,237,0.14),transparent),radial-gradient(900px_500px_at_85%_0%,rgba(16,185,129,0.10),transparent)]" />
-          <div className="absolute inset-0 opacity-[0.045] bg-[linear-gradient(to_right,#0B1222_1px,transparent_1px),linear-gradient(to_bottom,#0B1222_1px,transparent_1px)] bg-[size:34px_34px]" />
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/60 to-transparent" />
-        </div>
+ <section
+  id="featured-jobs"
+  className="relative overflow-hidden py-16 sm:py-20"
+  style={{
+    background: "#F7F8FB",
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.07)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+    backgroundSize: "56px 100px",
+  }}
+>
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_15%_-10%,rgba(124,58,237,0.10),transparent),radial-gradient(900px_500px_at_85%_0%,rgba(16,185,129,0.07),transparent)]" />
+    <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#F7F8FB]/80 to-transparent" />
+    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#F7F8FB]/80 to-transparent" />
+  </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex items-end justify-between gap-4">

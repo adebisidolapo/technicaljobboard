@@ -459,23 +459,19 @@ const wideContainer =
 
 
 {/* ================= CATEGORIES ================= */}
-<section className="relative overflow-hidden bg-white py-10 sm:py-12">
+<section
+  className="relative overflow-hidden py-10 sm:py-12"
+  style={{
+    background: "#F7F8FB",
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+    backgroundSize: "56px 100px",
+  }}
+>
   <div className="pointer-events-none absolute inset-0">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_20%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.04),transparent_18%)]" />
-    <div
-      className="absolute inset-0 opacity-[0.08]"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.05) 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-        maskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
-        WebkitMaskImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.12))",
-      }}
-    />
-    <div className="absolute right-[-60px] top-[-30px] h-36 w-36 rounded-full bg-emerald-200/30 blur-3xl" />
-    <div className="absolute left-[-50px] bottom-[-50px] h-40 w-40 rounded-full bg-indigo-100/35 blur-3xl" />
+    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#F7F8FB]/60 to-transparent" />
+    <div className="absolute right-[-60px] top-[-30px] h-36 w-36 rounded-full bg-emerald-200/20 blur-3xl" />
+    <div className="absolute left-[-50px] bottom-[-50px] h-40 w-40 rounded-full bg-indigo-100/25 blur-3xl" />
   </div>
 
   <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
@@ -563,12 +559,18 @@ const wideContainer =
 
 
       {/* ================= EMPOWERING ================= */}
-      <section className={`relative overflow-hidden bg-white ${sectionPadding}`}>
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.10)] blur-3xl" />
-          <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
-        </div>
-
+    <section
+  className={`relative overflow-hidden ${sectionPadding}`}
+  style={{
+    background: "#F7F8FB",
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.06)' stroke-width='0.8'/%3E%3C/svg%3E\")",
+    backgroundSize: "56px 100px",
+  }}
+>
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -top-28 -left-28 h-[420px] w-[420px] rounded-full bg-[rgba(106,111,242,0.08)] blur-3xl" />
+    <div className="absolute -bottom-36 right-[-140px] h-[520px] w-[520px] rounded-full bg-[rgba(106,111,242,0.06)] blur-3xl" />
+  </div>
         <div className={`relative ${container}`}>
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
             <div className="flex justify-center lg:justify-start">
