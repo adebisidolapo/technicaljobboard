@@ -432,16 +432,14 @@ export default function FeaturedJobsSection() {
     {/* Very subtle overall tint — much lighter than hero */}
     <div className="absolute inset-0 bg-[radial-gradient(900px_500px_at_15%_-10%,rgba(124,58,237,0.04),transparent),radial-gradient(700px_400px_at_85%_0%,rgba(16,185,129,0.03),transparent)]" />
 
-    {/* THE hex cluster top-right — the one the client loved */}
-    <div
-      className="absolute right-0 top-0 h-[320px] w-[340px]"
-      style={{
-        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.12)' stroke-width='1'/%3E%3C/svg%3E\")",
-        backgroundSize: "56px 100px",
-        maskImage: "radial-gradient(ellipse 90% 90% at 100% 0%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 75%)",
-        WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 100% 0%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 75%)",
-      }}
-    />
+  {/* Square grid — full section */}
+<div
+  className="absolute inset-0"
+  style={{
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Crect width='34' height='34' fill='none' stroke='rgba(99%2C102%2C241%2C0.10)' stroke-width='0.8'/%3E%3Ccircle cx='17' cy='17' r='1.2' fill='rgba(99%2C102%2C241%2C0.10)'/%3E%3C/svg%3E\")",
+    backgroundSize: "34px 34px",
+  }}
+/>
 
     {/* Small hex cluster bottom-left for balance */}
     <div
