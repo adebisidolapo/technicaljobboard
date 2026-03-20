@@ -207,11 +207,11 @@ const wideContainer =
     <main className="min-h-screen bg-[#F6F8FC] font-sans text-[#0F172A]">
 
 {/* ================= HERO ================= */}
-<section className="relative isolate overflow-hidden bg-white">
-  {/* Background Layer */}
+<section className="relative isolate overflow-hidden bg-[#F8FAFC]">
+    {/* Background Layer */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-white" />
-
+<div className="absolute inset-0 bg-[#F8FAFC]" />
+<div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(255,255,255,0.85),transparent_60%)]" />
     {/* Aurora sweep — subtle, cleaner, more premium */}
     <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
       <div
