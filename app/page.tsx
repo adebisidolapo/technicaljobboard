@@ -212,16 +212,14 @@ const wideContainer =
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
   <div className="absolute inset-0 bg-white" />
 
-  {/* Honeycomb hex — hero's main techy element, fades from top-right */}
-  <div
-    className="absolute inset-0"
-    style={{
-      backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V66l28 16 28-16v18L28 100z' fill='none' stroke='rgba(99%2C102%2C241%2C0.12)' stroke-width='1'/%3E%3C/svg%3E\")",
-      backgroundSize: "56px 100px",
-      maskImage: "radial-gradient(ellipse 80% 80% at 85% 20%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)",
-      WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 85% 20%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)",
-    }}
-  />
+  {/* Techy grid — full hero, similar to featured jobs but slightly different */}
+<div
+  className="absolute inset-0"
+  style={{
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none' stroke='rgba(99%2C102%2C241%2C0.07)' stroke-width='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='40' cy='0' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='0' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3Ccircle cx='40' cy='40' r='1.2' fill='rgba(99%2C102%2C241%2C0.09)'/%3E%3C/svg%3E\")",
+    backgroundSize: "40px 40px",
+  }}
+/>
 
   {/* Aurora sweep on top */}
   <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden">
