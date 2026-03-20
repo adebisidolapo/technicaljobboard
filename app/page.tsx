@@ -290,11 +290,8 @@ const wideContainer =
       {/* Title */}
       <h1 className="mx-auto mt-6 text-[clamp(2rem,4.5vw,3.8rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[#0F172A]">
         Discover Top{" "}
-       <span className="relative bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent">
+       <span className="bg-gradient-to-r from-[#0ea5e9] via-[#06b6d4] to-[#10b981] bg-clip-text text-transparent">
   Technical
-
-  {/* subtle glow */}
-  <span className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-400 opacity-20 blur-[10px]" />
 </span>{" "}
         Jobs
       </h1>
